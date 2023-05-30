@@ -1,0 +1,110 @@
+.title-container {
+	width: 330px;
+	height: 54px;
+	display: flex;
+	align-items: center;
+	margin-top: 57px;
+	margin-left: 212px;
+}
+.notifications-title {
+	/* H1 */
+	font-family: "Poppins";
+	font-style: normal;
+	font-weight: 600;
+	font-size: 36px;
+	line-height: 54px;
+
+	/* identical to box height */
+
+	color: #000000;
+}
+.notifications-new-notify {
+	margin-left: 29px;
+	margin-top: 6px;
+	margin-bottom: 0px;
+	font-family: "Poppins";
+	font-style: normal;
+	font-weight: 700;
+	font-size: 20px;
+	line-height: 30px;
+	/* identical to box height */
+	color: #999999;
+}
+.notifications-container {
+	width: 1059px;
+	height: 833px;
+	margin-left: 212px;
+	margin-top: 24px;
+	border-radius: 10px;
+}
+
+.notifications-container-left {
+	float: left;
+	display: flex;
+	flex-direction: column;
+	width: 340px;
+	height: 833px;
+	gap: 16px;
+}
+
+.display-new-notifications-title {
+	width: 340px;
+	height: 69px;
+	background: #d9d9d9;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	text-align: left;
+	text-indent: 30px;
+	margin-right: 20px;
+	/* font */
+	font-family: "Poppins";
+	font-weight: 700;
+	/* identical to box height */
+	color: #000000;
+}
+.display-notifications-title {
+	width: 340px;
+	height: 69px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	text-align: left;
+	text-indent: 30px;
+	border-radius: 10px;
+	/* Inside auto layout */
+	background: #d9d9d9;
+	border-radius: 10px;
+	/* font */
+	font-family: "Poppins";
+	font-weight: 700;
+	/* identical to box height */
+	color: #666666;
+}
+.notifications-container-right {
+	float: right;
+	width: 699px;
+	height: 722px;
+}
+.notifications-container-right-image-holder {
+	width: 612.87px;
+	height: 320px;
+	margin-top: 37px;
+	margin-left: 43px;
+	background: #a9a9a9;
+	border-radius: 10px;
+}
+.notifications-container-right-contain {
+	width: 615.08px;
+	height: 216px;
+	margin-top: 20px;
+	margin-left: 43px;
+	/* font */
+	font-family: "Poppins";
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+	color: #000000;
+}
