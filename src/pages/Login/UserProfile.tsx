@@ -12,8 +12,8 @@ import Link from '@mui/material/Link';
 import { FaFacebookF, FaTwitter } from 'react-icons/fa';
 import { AiOutlineInstagram } from 'react-icons/ai';
 import SimpleCard from '../../components/SimpleCard/SimpleCard';
+import RadarGraph from '../../components/RadarGraph/RadarGraph';
 
-import { CChart } from '@coreui/react-chartjs';
 let currentLevel = 0;
 let diffToNextLevel = 0;
 const randomImage =
@@ -167,21 +167,6 @@ const UserProfile = () => {
         setOpen(!open);
     };
     const [progress, setProgress] = useState(0);
-
-    // useEffect(() => {
-    //     const timer = setInterval(() => {
-    //         setProgress((oldProgress) => {
-    //             if (oldProgress === 100) {
-    //                 return 0;
-    //             }
-    //             const diff = Math.random() * 10;
-    //             return Math.min(oldProgress + diff, 100);
-    //         });
-    //     }, 500);
-    //     return () => {
-    //         clearInterval(timer);
-    //     };
-    // }, []);
     return (
         <Container>
             <BackgroundImgContainer
@@ -209,75 +194,16 @@ const UserProfile = () => {
 
                 </SocialDiv>
                 <ParentCardContainer>
-
                     <CardContainer>
-                        <CardStyle
-                        >
-
+                        <CardStyle>
                             <CardHeader
                                 title='Skills'
                                 style={{ textAlign: 'left' }}
-                            // subheader={
-                            //     // <SkillsContainer>
-                            //     //     <ListOfSkills skills={['Communication', 'Organized', 'Driver', 'Program Manager', 'Gardening']} />
-
-                            //     // </SkillsContainer>
-                            // }
                             >
                             </CardHeader>
-                            <CChart
-                                style={{ width: '90%', marginLeft: 'auto', marginRight: 'auto' }}
-                                type="radar"
-                                data={{
-                                    labels: [
-                                        'Rites',
-                                        'Numeracy',
-                                        'Literacy',
-                                        'Charioteering',
-                                        'Archery',
-                                        'Music',
-                                    ],
-                                    datasets: [
-                                        {
-                                            label: 'Communication',
-                                            backgroundColor: 'rgba(164, 206, 57, 255)',
-                                            borderColor: 'rgba(164, 206, 57, 255)',
-                                            pointBackgroundColor: 'rgba(164, 206, 57, 255)',
-                                            pointBorderColor: '#fff',
-                                            data: [65, 59, 90, 81, 56, 55],
-                                        },
-                                        {
-                                            label: 'Organized',
-                                            backgroundColor: 'rgba(164, 206, 57, 255)',
-                                            borderColor: 'rgba(164, 206, 57, 255)',
-                                            pointBackgroundColor: 'rgba(164, 206, 57, 255)',
-                                            pointBorderColor: '#fff',
-                                            hidden: true,
-                                            data: [28, 48, 40, 19, 96, 27],
-                                        },
-                                        {
-                                            label: 'Driver',
-                                            backgroundColor: 'rgba(164, 206, 57, 255)',
-                                            borderColor: 'rgba(164, 206, 57, 255)',
-                                            pointBackgroundColor: 'rgba(164, 206, 57, 255)',
-                                            pointBorderColor: '#fff',
-                                            hidden: true,
-
-                                            data: [40, 41, 42, 43, 44, 45],
-                                        },
-                                    ],
-                                }}
-
-                            />
-
-
-
-
+                            <RadarGraph />
                         </CardStyle>
-
-                        <CardStyle
-                        >
-
+                        <CardStyle>
                             <CardHeader
                                 title='Progress'
                                 style={{ textAlign: 'left' }}
@@ -318,7 +244,6 @@ const UserProfile = () => {
                             }
                         }}
                         />
-
                     </CardContainer>
                     <CardContainer>
 

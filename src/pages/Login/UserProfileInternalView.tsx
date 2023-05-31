@@ -17,7 +17,6 @@ import { AiOutlineInstagram } from 'react-icons/ai';
 import SimpleCard from '../../components/SimpleCard/SimpleCard';
 import ReorderIcon from '@mui/icons-material/Reorder';
 import QrCodeIcon from '@mui/icons-material/QrCode';
-import { CChart } from '@coreui/react-chartjs';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
@@ -30,11 +29,11 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import GroupsIcon from "@mui/icons-material/Groups";
 
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { MdLocationPin } from 'react-icons/md';
+import RadarGraph from '../../components/RadarGraph/RadarGraph';
 let currentLevel = 0;
 let diffToNextLevel = 0;
 const randomImage =
@@ -83,13 +82,26 @@ const BackgroundImgContainer = styled.div({
     backgroundImage: `url(${randomImage})`,
 });
 const Text1 = styled(Typography)({
-    position: 'relative',
+
     fontSize: '23px',
     lineHeight: '18px',
     fontWeight: 600,
     color: '#000000',
     marginTop: 225,
     marginLeft: 10,
+});
+const UserName = styled(Typography)({
+    fontSize: '23px',
+    lineHeight: '18px',
+    fontWeight: 600,
+    color: '#000000',
+    marginTop: 10,
+});
+const Greeting = styled(Typography)({
+    fontSize: '18px',
+    lineHeight: '18px',
+    fontWeight: 500,
+    color: '#000000',
 });
 const SocialDiv = styled.div({
     marginTop: -5,
@@ -239,13 +251,13 @@ const UserProfileInternalView = () => {
             aria-describedby="alert-dialog-description"
             style={{ display: 'flex', flexDirection: 'column' }}
         >
-            <DialogContent style={{ marginRight: "100", marginLeft: "100", marginTop: 100, marginBottom: 40 }}>
+            <DialogContent>
                 <BallStyleProfile style={{ position: 'absolute', marginTop: -75, left: '31.9%', display: "block" }} />
-                <InnerCard style={{}}>
+                <InnerCard>
                     <Box style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: "100%" }}>
-                        <div>hello</div>
-                        <Typography>Username</Typography>
-                        <img style={{ width: 200, height: 200 }} src={qr_api_url + link} />
+                        <Greeting>hello</Greeting>
+                        <UserName>Username</UserName>
+                        <img style={{ width: 200, height: 200, marginTop: 20 }} src={qr_api_url + link} />
                     </Box>
 
                 </InnerCard>
@@ -418,71 +430,15 @@ const UserProfileInternalView = () => {
                     <CardContainer>
                         <CardStyle
                         >
-
                             <CardHeader
                                 title='Skills'
                                 style={{ textAlign: 'left' }}
-                            // subheader={
-                            //     // <SkillsContainer>
-                            //     //     <ListOfSkills skills={['Communication', 'Organized', 'Driver', 'Program Manager', 'Gardening']} />
-
-                            //     // </SkillsContainer>
-                            // }
                             >
                             </CardHeader>
-                            <CChart
-                                style={{ width: '90%', marginLeft: 'auto', marginRight: 'auto' }}
-                                type="radar"
-                                data={{
-                                    labels: [
-                                        'Rites',
-                                        'Numeracy',
-                                        'Literacy',
-                                        'Charioteering',
-                                        'Archery',
-                                        'Music',
-                                    ],
-                                    datasets: [
-                                        {
-                                            label: 'Communication',
-                                            backgroundColor: 'rgba(164, 206, 57, 255)',
-                                            borderColor: 'rgba(164, 206, 57, 255)',
-                                            pointBackgroundColor: 'rgba(164, 206, 57, 255)',
-                                            pointBorderColor: '#fff',
-                                            data: [65, 59, 90, 81, 56, 55],
-                                        },
-                                        {
-                                            label: 'Organized',
-                                            backgroundColor: 'rgba(164, 206, 57, 255)',
-                                            borderColor: 'rgba(164, 206, 57, 255)',
-                                            pointBackgroundColor: 'rgba(164, 206, 57, 255)',
-                                            pointBorderColor: '#fff',
-                                            hidden: true,
-                                            data: [28, 48, 40, 19, 96, 27],
-                                        },
-                                        {
-                                            label: 'Driver',
-                                            backgroundColor: 'rgba(164, 206, 57, 255)',
-                                            borderColor: 'rgba(164, 206, 57, 255)',
-                                            pointBackgroundColor: 'rgba(164, 206, 57, 255)',
-                                            pointBorderColor: '#fff',
-                                            hidden: true,
-
-                                            data: [40, 41, 42, 43, 44, 45],
-                                        },
-                                    ],
-                                }}
-
-                            />
-
-
-
-
+                            <RadarGraph />
                         </CardStyle>
-
                         <CardStyle
                         >
-
                             <CardHeader
                                 title='Progress'
                                 style={{ textAlign: 'left' }}
@@ -503,7 +459,6 @@ const UserProfileInternalView = () => {
                             </ProgressContainer>
                             <LinearProgress style={{ marginBottom: '10px', marginLeft: '15px', marginRight: '15px', height: '10px', borderRadius: '10px' }} color='success' variant="determinate" value={currentLevel} />
                         </CardStyle>
-
                         <SimpleCard cardProperty={{
                             label: 'Recommendations',
                             tabProps: {
@@ -636,5 +591,4 @@ const UserProfileInternalView = () => {
         </Container >
     );
 };
-
 export default UserProfileInternalView;
