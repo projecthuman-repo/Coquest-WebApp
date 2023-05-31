@@ -14,7 +14,7 @@ import { useState } from 'react';
 import Link from '@mui/material/Link';
 import { FaFacebookF, FaTwitter } from 'react-icons/fa';
 import { AiOutlineInstagram } from 'react-icons/ai';
-import SimpleCard from '../../components/SimpleCard/SimpleCard';
+import SimpleCard from '../../../components/SimpleCard/SimpleCard';
 import ReorderIcon from '@mui/icons-material/Reorder';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import Menu from '@mui/material/Menu';
@@ -33,7 +33,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { MdLocationPin } from 'react-icons/md';
-import RadarGraph from '../../components/RadarGraph/RadarGraph';
+import RadarGraph from '../../../components/RadarGraph/RadarGraph';
 let currentLevel = 0;
 let diffToNextLevel = 0;
 const randomImage =

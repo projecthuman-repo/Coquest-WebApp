@@ -11,8 +11,8 @@ import { useState } from 'react';
 import Link from '@mui/material/Link';
 import { FaFacebookF, FaTwitter } from 'react-icons/fa';
 import { AiOutlineInstagram } from 'react-icons/ai';
-import SimpleCard from '../../components/SimpleCard/SimpleCard';
-import RadarGraph from '../../components/RadarGraph/RadarGraph';
+import SimpleCard from '../../../components/SimpleCard/SimpleCard';
+import RadarGraph from '../../../components/RadarGraph/RadarGraph';
 
 let currentLevel = 0;
 let diffToNextLevel = 0;

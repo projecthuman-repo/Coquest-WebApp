@@ -23,7 +23,7 @@ import VerifyUserLogin from './pages/Login/VerifyUserLogin';
 import WhyAreYouHere from './pages/Login/Register/WhyAreYouHere';
 import Interests from './pages/Login/Register/Interests';
 import Community from './pages/Login/Register/Community';
-import UserProfile from './pages/Login/UserProfile';
+import UserProfile from './pages/Login/UserProfile/UserProfile';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import APIReferenceComponent from './components/dataBase/APIReferenceComponent';
 import SideBar from './components/LeftSideBar/index';
