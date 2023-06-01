@@ -35,8 +35,8 @@ import {
 	Operations,
 	Promotion,
 } from "./pages/Programs/CreateProgram";
-import UserProfileInternalView from "./pages/Login/UserProfileInternalView";
-import UserProfileExternalView from "./pages/Login/Register/UserProfileExternalView";
+import UserProfileExternalView from "./pages/Login/UserProfile/UserProfileExternalView";
+import UserProfileInternalView from "./pages/Login/UserProfile/UserProfileInternalView";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement

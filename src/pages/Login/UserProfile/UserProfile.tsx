@@ -1,4 +1,3 @@
-
 import {
     Card,
     CardHeader,
@@ -25,8 +24,7 @@ const ProgressContainer = styled.div({
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-
-})
+});
 const BallStyleProfile = styled.div({
     display: 'flex',
     alignItems: 'center',
@@ -126,23 +124,22 @@ const CardStyle = styled(Card)({
     width: '90%',
     borderColor: 'divider',
     height: 'fit-content',
-
-})
+});
 const SeeAllLink = styled(Typography)({
     fontWeight: 400,
-    fontSize: "12px",
-    lineHeight: "18px",
-    color: "#000000",
+    fontSize: '12px',
+    lineHeight: '18px',
+    color: '#000000',
     marginTop: -25,
-    textAlign: 'right'
-})
+    textAlign: 'right',
+});
 
 const LabelContainer = styled.div({
-    width: "80px",
-    height: "24px",
-    bottom: "1193px",
-    left: "0px",
-    position: "relative",
+    width: '80px',
+    height: '24px',
+    bottom: '1193px',
+    left: '0px',
+    position: 'relative',
 });
 const SkillsContainer = styled.div({
     marginTop: 20,
@@ -169,16 +166,13 @@ const UserProfile = () => {
     const [progress, setProgress] = useState(0);
     return (
         <Container>
-            <BackgroundImgContainer
-            >
-
+            <BackgroundImgContainer>
                 <BallStyleProfile
                     style={{
                         backgroundImage: `url(${randomImage})`,
                     }}
                 />
                 <Text1>UserName</Text1>
-
             </BackgroundImgContainer>
             <BodyContainer>
                 <SocialDiv>
@@ -191,7 +185,6 @@ const UserProfile = () => {
                     <IconButton>
                         <StyledTwitter />
                     </IconButton>
-
                 </SocialDiv>
                 <ParentCardContainer>
                     <CardContainer>
@@ -199,8 +192,7 @@ const UserProfile = () => {
                             <CardHeader
                                 title='Skills'
                                 style={{ textAlign: 'left' }}
-                            >
-                            </CardHeader>
+                            ></CardHeader>
                             <RadarGraph />
                         </CardStyle>
                         <CardStyle>
@@ -208,152 +200,175 @@ const UserProfile = () => {
                                 title='Progress'
                                 style={{ textAlign: 'left' }}
                                 subheader={
-                                    <SeeAllLink
-                                    >
-                                        <Link href="#" color="#000000">
+                                    <SeeAllLink>
+                                        <Link href='#' color='#000000'>
                                             See Points history
                                         </Link>
-                                    </SeeAllLink>}
-                            >
-                            </CardHeader>
+                                    </SeeAllLink>
+                                }
+                            ></CardHeader>
                             <ProgressContainer>
-                                <Typography
-                                    style={{ marginRight: 230 }}
-                                >level {currentLevel}</Typography>
-                                <Typography>{diffToNextLevel} points to the next level</Typography>
+                                <Typography style={{ marginRight: 230 }}>
+                                    level {currentLevel}
+                                </Typography>
+                                <Typography>
+                                    {diffToNextLevel} points to the next level
+                                </Typography>
                             </ProgressContainer>
-                            <LinearProgress style={{ marginBottom: '10px', marginLeft: '15px', marginRight: '15px', height: '10px', borderRadius: '10px' }} color='success' variant="determinate" value={currentLevel} />
+                            <LinearProgress
+                                style={{
+                                    marginBottom: '10px',
+                                    marginLeft: '15px',
+                                    marginRight: '15px',
+                                    height: '10px',
+                                    borderRadius: '10px',
+                                }}
+                                color='success'
+                                variant='determinate'
+                                value={currentLevel}
+                            />
                         </CardStyle>
 
-                        <SimpleCard cardProperty={{
-                            label: 'Recommendations',
-                            tabProps: {
-                                tabLabels: ['Given', 'Received'],
-                                tabContexts: [{
-                                    taskName: '',
-                                    type: 'Given',
-                                    communityName: '',
-                                    location: '',
-                                    description: '',
-                                    projectName: '',
-                                    projectDescription: '',
-                                    userName: 'Username',
-                                    recommendationText: 'Recommendation text',
-
-                                }]
-                            }
-                        }}
+                        <SimpleCard
+                            cardProperty={{
+                                label: 'Recommendations',
+                                tabProps: {
+                                    tabLabels: ['Given', 'Received'],
+                                    tabContexts: [
+                                        {
+                                            taskName: '',
+                                            type: 'Given',
+                                            communityName: '',
+                                            location: '',
+                                            description: '',
+                                            projectName: '',
+                                            projectDescription: '',
+                                            userName: 'Username',
+                                            recommendationText:
+                                                'Recommendation text',
+                                        },
+                                    ],
+                                },
+                            }}
                         />
                     </CardContainer>
                     <CardContainer>
-
-                        <SimpleCard cardProperty={{
-                            label: 'Tasks',
-                            tabProps: {
-                                tabLabels: ['Ongoing', 'Completed'],
-                                tabContexts: [{
-                                    taskName: 'Task name',
-                                    type: 'Ongoing',
-                                    communityName: 'Community name',
-                                    location: 'location',
-                                    description: 'description',
-                                    projectName: '',
-                                    projectDescription: '',
-                                    userName: '',
-                                    recommendationText: '',
-
-                                }, {
-                                    taskName: 'Task name',
-                                    type: 'Ongoing',
-                                    communityName: 'Community name',
-                                    location: 'location',
-                                    description: 'description',
-                                    projectName: '',
-                                    projectDescription: '',
-                                    userName: '',
-                                    recommendationText: '',
-
-                                }, {
-                                    taskName: 'Task name',
-                                    type: 'Ongoing',
-                                    communityName: 'Community name',
-                                    location: 'location',
-                                    description: 'description',
-                                    projectName: '',
-                                    projectDescription: '',
-                                    userName: '',
-                                    recommendationText: '',
-
-                                }, {
-                                    taskName: 'Task name',
-                                    type: 'Ongoing',
-                                    communityName: 'Community name',
-                                    location: 'location',
-                                    description: 'description',
-                                    projectName: '',
-                                    projectDescription: '',
-                                    userName: '',
-                                    recommendationText: '',
-
-                                }, {
-                                    taskName: 'Task name',
-                                    type: 'Ongoing',
-                                    communityName: 'Community name',
-                                    location: 'location',
-                                    description: 'description',
-                                    projectName: '',
-                                    projectDescription: '',
-                                    userName: '',
-                                    recommendationText: '',
-
-                                }]
-                            }
-                        }} />
-                        <SimpleCard cardProperty={{
-                            label: 'Your Groups',
-                            tabProps: {
-                                tabLabels: ['Projects', 'Programs', 'Co-ops'],
-                                tabContexts: [{
-                                    taskName: '',
-                                    type: 'Project',
-                                    communityName: '',
-                                    location: '',
-                                    description: '',
-                                    projectName: 'Project name',
-                                    projectDescription: 'Description',
-                                    userName: '',
-                                    recommendationText: '',
-
-                                }, {
-                                    taskName: '',
-                                    type: 'Project',
-                                    communityName: '',
-                                    location: '',
-                                    description: '',
-                                    projectName: 'Project name',
-                                    projectDescription: 'Description',
-                                    userName: '',
-                                    recommendationText: '',
-
-                                }, {
-                                    taskName: '',
-                                    type: 'Project',
-                                    communityName: '',
-                                    location: '',
-                                    description: '',
-                                    projectName: 'Project name',
-                                    projectDescription: 'Description',
-                                    userName: '',
-                                    recommendationText: '',
-
-                                }]
-                            }
-                        }} />
+                        <SimpleCard
+                            cardProperty={{
+                                label: 'Tasks',
+                                tabProps: {
+                                    tabLabels: ['Ongoing', 'Completed'],
+                                    tabContexts: [
+                                        {
+                                            taskName: 'Task name',
+                                            type: 'Ongoing',
+                                            communityName: 'Community name',
+                                            location: 'location',
+                                            description: 'description',
+                                            projectName: '',
+                                            projectDescription: '',
+                                            userName: '',
+                                            recommendationText: '',
+                                        },
+                                        {
+                                            taskName: 'Task name',
+                                            type: 'Ongoing',
+                                            communityName: 'Community name',
+                                            location: 'location',
+                                            description: 'description',
+                                            projectName: '',
+                                            projectDescription: '',
+                                            userName: '',
+                                            recommendationText: '',
+                                        },
+                                        {
+                                            taskName: 'Task name',
+                                            type: 'Ongoing',
+                                            communityName: 'Community name',
+                                            location: 'location',
+                                            description: 'description',
+                                            projectName: '',
+                                            projectDescription: '',
+                                            userName: '',
+                                            recommendationText: '',
+                                        },
+                                        {
+                                            taskName: 'Task name',
+                                            type: 'Ongoing',
+                                            communityName: 'Community name',
+                                            location: 'location',
+                                            description: 'description',
+                                            projectName: '',
+                                            projectDescription: '',
+                                            userName: '',
+                                            recommendationText: '',
+                                        },
+                                        {
+                                            taskName: 'Task name',
+                                            type: 'Ongoing',
+                                            communityName: 'Community name',
+                                            location: 'location',
+                                            description: 'description',
+                                            projectName: '',
+                                            projectDescription: '',
+                                            userName: '',
+                                            recommendationText: '',
+                                        },
+                                    ],
+                                },
+                            }}
+                        />
+                        <SimpleCard
+                            cardProperty={{
+                                label: 'Your Groups',
+                                tabProps: {
+                                    tabLabels: [
+                                        'Projects',
+                                        'Programs',
+                                        'Co-ops',
+                                    ],
+                                    tabContexts: [
+                                        {
+                                            taskName: '',
+                                            type: 'Project',
+                                            communityName: '',
+                                            location: '',
+                                            description: '',
+                                            projectName: 'Project name',
+                                            projectDescription: 'Description',
+                                            userName: '',
+                                            recommendationText: '',
+                                        },
+                                        {
+                                            taskName: '',
+                                            type: 'Project',
+                                            communityName: '',
+                                            location: '',
+                                            description: '',
+                                            projectName: 'Project name',
+                                            projectDescription: 'Description',
+                                            userName: '',
+                                            recommendationText: '',
+                                        },
+                                        {
+                                            taskName: '',
+                                            type: 'Project',
+                                            communityName: '',
+                                            location: '',
+                                            description: '',
+                                            projectName: 'Project name',
+                                            projectDescription: 'Description',
+                                            userName: '',
+                                            recommendationText: '',
+                                        },
+                                    ],
+                                },
+                            }}
+                        />
                     </CardContainer>
                 </ParentCardContainer>
-
-            </BodyContainer >
-        </Container >
+            </BodyContainer>
+        </Container>
     );
 };
 
