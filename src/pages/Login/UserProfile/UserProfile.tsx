@@ -17,8 +17,6 @@ let currentLevel = 0;
 let diffToNextLevel = 0;
 const randomImage =
     'https://source.unsplash.com/1600x900/?nature,photography,technology';
-//styles for this page
-//this page is incomplete
 
 const ProgressContainer = styled.div({
     display: 'inline-flex',
