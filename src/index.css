@@ -1,0 +1,44 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.dateTimefield { 
+  width: 100%;
+  height: 56px;
+  border: none;
+  outline: none;
+}
+
+.timeField {
+  width: 100%;
+  height: 56px;
+}
+.react-time-picker__wrapper {
+  border: none !important;
+}
+
+.react-time-picker__wrapper * {color: #2c2b2b;
+}
+.MuiButtonBase-root.MuiIconButton-root.MuiPickersArrowSwitcher-button {
+  margin-right: 200%;
+  margin-left: -60%;
+}
+.MuiButtonBase-root.MuiIconButton-root.MuiPickersCalendarHeader-switchViewButton {
+  display: none;
+}
+.MuiPickersCalendarHeader-root {
+  justify-content: center;
+}
+.MuiPickersCalendarHeader-labelContainer {
+  position: absolute;
+}

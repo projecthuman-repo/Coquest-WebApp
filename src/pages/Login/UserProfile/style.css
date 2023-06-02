@@ -1,0 +1,13 @@
+.MuiButtonBase-root.MuiIconButton-root.MuiPickersArrowSwitcher-button {
+  margin-right: 200%;
+  margin-left: -60%;
+}
+.MuiButtonBase-root.MuiIconButton-root.MuiPickersCalendarHeader-switchViewButton {
+  display: none;
+}
+.MuiPickersCalendarHeader-root {
+  justify-content: center;
+}
+.MuiPickersCalendarHeader-labelContainer {
+  position: absolute;
+}
