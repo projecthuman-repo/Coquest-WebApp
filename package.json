@@ -1,0 +1,101 @@
+{
+<<<<<<< HEAD
+  "devDependencies": {
+    "@types/react": "^18.2.6"
+=======
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@amraneze/react-instagram-login": "^3.0.3",
+    "@apollo/client": "^3.7.10",
+    "@aws-amplify/ui-react": "^4.4.1",
+    "@coreui/react-chartjs": "^2.1.2",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@greatsumini/react-facebook-login": "^3.3.1",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/lab": "^4.0.0-alpha.61",
+    "@material-ui/styles": "^4.11.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/joy": "^5.0.0-alpha.70",
+    "@mui/lab": "^5.0.0-alpha.124",
+    "@mui/material": "^5.11.8",
+    "@mui/x-date-pickers": "^6.3.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.12",
+    "@types/nodemailer": "^6.4.7",
+    "@types/react": "^18.0.27",
+    "@types/react-datepicker": "^4.10.0",
+    "@types/react-dom": "^18.0.10",
+    "@types/react-time-picker": "^4.0.3",
+    "apollo-server-cloud-functions": "^3.12.0",
+    "assert": "^2.0.0",
+    "aws-amplify": "^5.0.22",
+    "cloudmailin": "^0.0.3",
+    "date-fns": "^2.29.3",
+    "dayjs": "^1.11.7",
+    "email-verification-code": "^2.0.4",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "graphql": "^16.6.0",
+    "https": "^1.0.0",
+    "https-browserify": "^1.0.0",
+    "install": "^0.13.0",
+    "latest": "^0.2.0",
+    "material-ui": "^0.15.0",
+    "mongoose": "^7.0.1",
+    "mui": "^0.0.1",
+    "node-polyfill-webpack-plugin": "^2.0.1",
+    "nodemailer": "^6.9.1",
+    "os": "^0.1.2",
+    "os-browserify": "^0.3.0",
+    "react": "^18.2.0",
+    "react-datepicker": "^4.10.0",
+    "react-dom": "^18.2.0",
+    "react-google-login": "^5.2.2",
+    "react-icons": "^4.8.0",
+    "react-loader-spinner": "^5.3.4",
+    "react-router": "^6.8.1",
+    "react-router-dom": "^6.8.1",
+    "react-scripts": "^5.0.1",
+    "react-time-picker": "^5.2.0",
+    "react-twitter-login": "^1.5.0",
+    "setimmediate": "^1.0.5",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "react-app-rewired": "^2.2.1"
+>>>>>>> login
+  }
+}
