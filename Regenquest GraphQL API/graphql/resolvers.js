@@ -211,12 +211,13 @@ module.exports = {
     //this method is used to login a regenquest user
     async loginRegenquestUser(parent, { username, password }, context, info) {
       //check if the user exists
-      if (!(await User.exists({ username: username }))) {
+      const user = await User.findOne({ username: username });
+      if (!user) {
         throw new Error("user not found");
       }
 
       //check if password matches
-      const result = await bcrypt.compare(password, tmpUser.password);
+      const result = await bcrypt.compare(password, user.password);
 
       if (!result) {
         throw new Error("Password does not match");
@@ -224,7 +225,7 @@ module.exports = {
 
       //generate a user token and add it to the db
       const newLogin = new LoggedIn({
-        userID: tmpUser.userID,
+        userID: user.userID,
         sessionToken: uuid.v4(),
       });
 
