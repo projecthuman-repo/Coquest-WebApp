@@ -1,18 +1,19 @@
-const User = require("../models/regenquestUser");
-const Task = require("../models/regenquestTask");
-const Quest = require("../models/regenquestQuest");
-const Post = require("../models/regenquestPost");
-const Inventory = require("../models/regenquestInventory");
-const Event = require("../models/regenquestEvent");
-const Community = require("../models/regenquestCommunity");
-const Genres = require("../models/regenquestGenres");
-const LoggedIn = require("../models/regenquestLoggedInUsers");
-const Notification = require("../models/regenquestNotification");
-const Chat = require("../models/regenquestChat");
-const Message = require("../models/regenquestMessage");
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const uuid = require("uuid");
+const User = require('../models/regenquestUser');
+const Task = require('../models/regenquestTask');
+const Quest = require('../models/regenquestQuest');
+const Post = require('../models/regenquestPost');
+const Inventory = require('../models/regenquestInventory');
+const Event = require('../models/regenquestEvent');
+const Community = require('../models/regenquestCommunity');
+const Genres = require('../models/regenquestGenres');
+const LoggedIn = require('../models/regenquestLoggedInUsers');
+const Notification = require('../models/regenquestNotification');
+const Chat = require('../models/regenquestChat');
+const Message = require('../models/regenquestMessage');
+const CrossPlatformUser = require('../models/crossPlatform/User');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const uuid = require('uuid');
 
 module.exports = {
   Query: {
@@ -22,7 +23,7 @@ module.exports = {
         const result = await User.find();
         return result;
       } catch (err) {
-        throw new Error("Error getting users");
+        throw new Error('Error getting users');
       }
     },
 
@@ -32,7 +33,7 @@ module.exports = {
         const result = await Task.find();
         return result;
       } catch (err) {
-        throw new Error("Error getting tasks");
+        throw new Error('Error getting tasks');
       }
     },
 
@@ -42,7 +43,7 @@ module.exports = {
         const result = await Quest.find();
         return result;
       } catch (err) {
-        throw new Error("Error getting quests");
+        throw new Error('Error getting quests');
       }
     },
 
@@ -52,7 +53,7 @@ module.exports = {
         const result = await Post.find();
         return result;
       } catch (err) {
-        throw new Error("Error getting posts");
+        throw new Error('Error getting posts');
       }
     },
 
@@ -62,7 +63,7 @@ module.exports = {
         const result = await Inventory.find();
         return result;
       } catch (err) {
-        throw new Error("Error getting items");
+        throw new Error('Error getting items');
       }
     },
 
@@ -72,7 +73,7 @@ module.exports = {
         const result = await Event.find();
         return result;
       } catch (err) {
-        throw new Error("Error getting events");
+        throw new Error('Error getting events');
       }
     },
 
@@ -82,7 +83,7 @@ module.exports = {
         const result = await Community.find();
         return result;
       } catch (err) {
-        throw new Error("Error getting communities");
+        throw new Error('Error getting communities');
       }
     },
 
@@ -92,7 +93,7 @@ module.exports = {
         const result = await User.findOne({ userID: userID });
         return result;
       } catch (err) {
-        throw new Error("Error finding user by ID");
+        throw new Error('Error finding user by ID');
       }
     },
 
@@ -102,7 +103,7 @@ module.exports = {
         result = await Task.findOne({ taskID: taskID });
         return result;
       } catch (err) {
-        throw new Error("Error finding task by id");
+        throw new Error('Error finding task by id');
       }
     },
 
@@ -112,7 +113,7 @@ module.exports = {
         result = await Quest.findOne({ questID: questID });
         return result;
       } catch (err) {
-        throw new Error("Error finding quest by id");
+        throw new Error('Error finding quest by id');
       }
     },
 
@@ -122,7 +123,7 @@ module.exports = {
         result = await Post.findOne({ postID: postID });
         return result;
       } catch (err) {
-        throw new Error("Error finding post by id");
+        throw new Error('Error finding post by id');
       }
     },
 
@@ -132,7 +133,7 @@ module.exports = {
         result = await Inventory.findOne({ itemID: itemID });
         return result;
       } catch (err) {
-        throw new Error("Error finding item by id");
+        throw new Error('Error finding item by id');
       }
     },
 
@@ -142,7 +143,7 @@ module.exports = {
         result = await Event.findOne({ eventID: eventID });
         return result;
       } catch (err) {
-        throw new Error("Error finding event by id");
+        throw new Error('Error finding event by id');
       }
     },
 
@@ -152,7 +153,7 @@ module.exports = {
         result = await Community.findOne({ communityID: communityID });
         return result;
       } catch (err) {
-        throw new Error("Error finding community by id");
+        throw new Error('Error finding community by id');
       }
     },
 
@@ -160,12 +161,12 @@ module.exports = {
     async getChatsByUserID(parent, { userID }, context, info) {
       //check if userID was provided as a parameter
       if (!userID) {
-        throw new Error("Must provide userID");
+        throw new Error('Must provide userID');
       }
 
       //check if the user exists
       if (!(await User.exists({ userID: userID }))) {
-        throw new Error("User not Found.");
+        throw new Error('User not Found.');
       }
 
       //get the chats from the db
@@ -173,7 +174,7 @@ module.exports = {
         const result = await Chat.find({ members: { $in: [userID] } });
         return result;
       } catch (err) {
-        throw new Error("Error finding chats by user id");
+        throw new Error('Error finding chats by user id');
       }
     },
 
@@ -181,12 +182,12 @@ module.exports = {
     async getMessagesByChatID(parent, { chatID }, context, info) {
       //check if chatID was provided
       if (!chatID) {
-        throw new Error("Must provide chatID.");
+        throw new Error('Must provide chatID.');
       }
 
       //check if that chat exists in the db
       if (!(await Chat.exists({ chatID: chatID }))) {
-        throw new Error("Chat not Found.");
+        throw new Error('Chat not Found.');
       }
 
       //get all the messages belonging to that chat
@@ -194,7 +195,7 @@ module.exports = {
         const result = await Message.find({ chatID: chatID });
         return result;
       } catch (err) {
-        throw new Error("Error finding messages by chat id");
+        throw new Error('Error finding messages by chat id');
       }
     },
 
@@ -204,7 +205,7 @@ module.exports = {
         result = await Genres.findOne();
         return result;
       } catch (err) {
-        throw new Error("Error getting genres");
+        throw new Error('Error getting genres');
       }
     },
 
@@ -213,14 +214,14 @@ module.exports = {
       //check if the user exists
       const user = await User.findOne({ username: username });
       if (!user) {
-        throw new Error("user not found");
+        throw new Error('user not found');
       }
 
       //check if password matches
       const result = await bcrypt.compare(password, user.password);
 
       if (!result) {
-        throw new Error("Password does not match");
+        throw new Error('Password does not match');
       }
 
       //generate a user token and add it to the db
@@ -233,7 +234,7 @@ module.exports = {
         const res = await newLogin.save();
         return { userID: newLogin.userID, sessionToken: newLogin.sessionToken };
       } catch (err) {
-        throw new Error("Error logging in");
+        throw new Error('Error logging in');
       }
     },
 
@@ -241,18 +242,18 @@ module.exports = {
     async logoutRegenquestUser(parent, { sessionToken }, context, info) {
       //check if a session token is provided
       if (!sessionToken) {
-        throw new Error("Must provide a session token");
+        throw new Error('Must provide a session token');
       }
 
       //check if the session token exists in the db
       if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        throw new Error("Invalid session token");
+        throw new Error('Invalid session token');
       } else {
         try {
           const res = await LoggedIn.remove({ sessionToken: sessionToken });
-          return { code: 0, response: "successful" };
+          return { code: 0, response: 'successful' };
         } catch (err) {
-          throw new Error("Error logging out");
+          throw new Error('Error logging out');
         }
       }
     },
@@ -261,7 +262,7 @@ module.exports = {
     async getNotifications(parent, { userID }, context, info) {
       //check if userID is provided
       if (!userID) {
-        throw new Error("Please provide a userID");
+        throw new Error('Please provide a userID');
       }
 
       //get all the notifications from the db
@@ -269,7 +270,7 @@ module.exports = {
         const res = await Notification.find({ userID: userID });
         return res;
       } catch (err) {
-        throw new Error("Error gettign notifications");
+        throw new Error('Error gettign notifications');
       }
     },
 
@@ -277,14 +278,14 @@ module.exports = {
     async getUnreadNotifications(parent, { userID }, context, info) {
       //check if a userID is provided
       if (!userID) {
-        throw new Error("Please provide userID");
+        throw new Error('Please provide userID');
       }
 
       try {
         const res = await Notification.find({ userID: userID, isRead: false });
         return res;
       } catch (err) {
-        throw new Error("Error getting unread notifications");
+        throw new Error('Error getting unread notifications');
       }
     },
 
@@ -292,7 +293,7 @@ module.exports = {
     async markNotificationAsRead(parent, { notificationID }, context, info) {
       //check if notification id is provided
       if (!notificationID) {
-        throw new Error("Please provide notificationID");
+        throw new Error('Please provide notificationID');
       }
 
       //update the notification document in the db
@@ -301,9 +302,9 @@ module.exports = {
           { notificationID: notificationID },
           { isRead: true }
         );
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        throw new Error("Error marking notification as read");
+        throw new Error('Error marking notification as read');
       }
     },
 
@@ -311,7 +312,7 @@ module.exports = {
     async markAllNotificationsAsRead(parent, { userID }, context, info) {
       //check if userID is provided
       if (!userID) {
-        throw new Error("Please provide userID");
+        throw new Error('Please provide userID');
       }
 
       //update all the notification for the user in the db
@@ -320,9 +321,9 @@ module.exports = {
           { userID: userID },
           { isRead: true }
         );
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        throw new Error("Error marking all notification as read");
+        throw new Error('Error marking all notification as read');
       }
     },
 
@@ -330,7 +331,7 @@ module.exports = {
     async deleteNotification(parent, { notificationID }, context, info) {
       //check if notification id is provided
       if (!notificationID) {
-        throw new Error("Please provide notificationID");
+        throw new Error('Please provide notificationID');
       }
 
       //remove the notification from the db
@@ -338,9 +339,9 @@ module.exports = {
         const res = await Notification.remove({
           notificationID: notificationID,
         });
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        throw new Error("Error deleting notification");
+        throw new Error('Error deleting notification');
       }
     },
   },
@@ -394,12 +395,35 @@ module.exports = {
         recommendations: recommendations ? recommendations : null,
       });
 
+      // dummy phone number
+      const phoneNumber = '1234567890';
+
+      // CrossPlatformUser manages the 3 web app users (lotuslearning, regenquest, spotstitch)
+      // If the CrossPlatformUser has not been created with other platform, create a new one
+      const crossPlatformUserExists = await CrossPlatformUser.findOne({
+        $or: [{ email: newUser.email }, { phoneNumber: phoneNumber }],
+      });
+
       //add the user to the db
       try {
         const res = await newUser.save();
-        return { code: 0, response: "successful" };
+
+        if (crossPlatformUserExists) {
+          crossPlatformUserExists.regenquestUserId = newUser._id;
+          await crossPlatformUserExists.save();
+        } else {
+          const newCrossPlatformUser = new CrossPlatformUser({
+            email: newUser.email,
+            phoneNumber: '1234567890', // dummy phone number
+            regenquestUserId: newUser._id,
+          });
+          await newCrossPlatformUser.save();
+        }
+
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error creating user." };
+        console.log(err);
+        return { code: 1, response: 'Error creating user.' };
       }
     },
 
@@ -427,13 +451,13 @@ module.exports = {
       if (!sessionToken) {
         return {
           code: 1,
-          response: "Error! Must provide session token of the user",
+          response: 'Error! Must provide session token of the user',
         };
       }
 
       //check if its a valid session token
       if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: "Error! invalid session token" };
+        return { code: 1, response: 'Error! invalid session token' };
       }
 
       //create a new task object
@@ -452,9 +476,9 @@ module.exports = {
       //add the task to the db
       try {
         const res = await newTask.save();
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error creating task." };
+        return { code: 1, response: 'Error creating task.' };
       }
     },
 
@@ -490,13 +514,13 @@ module.exports = {
       if (!sessionToken) {
         return {
           code: 1,
-          response: "Error! Must provide session token of the user",
+          response: 'Error! Must provide session token of the user',
         };
       }
 
       //check if its a valid session token
       if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: "Error! invalid session token" };
+        return { code: 1, response: 'Error! invalid session token' };
       }
 
       //create a new Quest object
@@ -522,9 +546,9 @@ module.exports = {
       //add the quest to the db
       try {
         const res = await newQuest.save();
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error creating quest." };
+        return { code: 1, response: 'Error creating quest.' };
       }
     },
 
@@ -550,13 +574,13 @@ module.exports = {
       if (!sessionToken) {
         return {
           code: 1,
-          response: "Error! Must provide session token of the user",
+          response: 'Error! Must provide session token of the user',
         };
       }
 
       //check if its a valid session token
       if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: "Error! invalid session token" };
+        return { code: 1, response: 'Error! invalid session token' };
       }
 
       //create a new Post object
@@ -574,9 +598,9 @@ module.exports = {
       //add the post to the db
       try {
         const res = await newPost.save();
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error creating post." };
+        return { code: 1, response: 'Error creating post.' };
       }
     },
 
@@ -603,13 +627,13 @@ module.exports = {
       if (!sessionToken) {
         return {
           code: 1,
-          response: "Error! Must provide session token of the user",
+          response: 'Error! Must provide session token of the user',
         };
       }
 
       //check if its a valid session token
       if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: "Error! invalid session token" };
+        return { code: 1, response: 'Error! invalid session token' };
       }
 
       //create a new Inventory item object
@@ -627,9 +651,9 @@ module.exports = {
       //add the item to the db
       try {
         const res = await newInventory.save();
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error creating item." };
+        return { code: 1, response: 'Error creating item.' };
       }
     },
 
@@ -657,13 +681,13 @@ module.exports = {
       if (!sessionToken) {
         return {
           code: 1,
-          response: "Error! Must provide session token of the user",
+          response: 'Error! Must provide session token of the user',
         };
       }
 
       //check if its a valid session token
       if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: "Error! invalid session token" };
+        return { code: 1, response: 'Error! invalid session token' };
       }
 
       //create a new event object
@@ -681,9 +705,9 @@ module.exports = {
       //add the event to the db
       try {
         const res = await newEvent.save();
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error creating Event." };
+        return { code: 1, response: 'Error creating Event.' };
       }
     },
 
@@ -709,13 +733,13 @@ module.exports = {
       if (!sessionToken) {
         return {
           code: 1,
-          response: "Error! Must provide session token of the user",
+          response: 'Error! Must provide session token of the user',
         };
       }
 
       //check if its a valid session token
       if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: "Error! invalid session token" };
+        return { code: 1, response: 'Error! invalid session token' };
       }
 
       //create a new community object
@@ -731,9 +755,9 @@ module.exports = {
       //add the community to the db
       try {
         const res = await newCommunity.save();
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error creating community." };
+        return { code: 1, response: 'Error creating community.' };
       }
     },
 
@@ -759,12 +783,12 @@ module.exports = {
     ) {
       //check if the userID is provided
       if (!userID) {
-        return { code: 1, response: "Error! must provide userID" };
+        return { code: 1, response: 'Error! must provide userID' };
       }
 
       //check if the notificationID is provided
       if (!notificationID) {
-        return { code: 1, response: "Error! must provide notificationID" };
+        return { code: 1, response: 'Error! must provide notificationID' };
       }
 
       //create a new notificaiton object
@@ -783,9 +807,9 @@ module.exports = {
       //try to save the notification to the db
       try {
         const res = await newNotification.save();
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error creating notification." };
+        return { code: 1, response: 'Error creating notification.' };
       }
     },
 
@@ -799,11 +823,11 @@ module.exports = {
     ) {
       //check if chatid is provided
       if (!chatID) {
-        return { code: 1, response: "Error! must provide chatID" };
+        return { code: 1, response: 'Error! must provide chatID' };
       }
       //check if member list is provided
       if (!members) {
-        return { code: 1, response: "Error! must provide list of members" };
+        return { code: 1, response: 'Error! must provide list of members' };
       }
 
       //create a new chat object
@@ -818,9 +842,9 @@ module.exports = {
       //try adding the chat to the db
       try {
         const res = await newChat.save();
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error creating chat." };
+        return { code: 1, response: 'Error creating chat.' };
       }
     },
 
@@ -834,24 +858,24 @@ module.exports = {
     ) {
       //check if message id is provided
       if (!messageID) {
-        return { code: 1, response: "Error! must provide messageID" };
+        return { code: 1, response: 'Error! must provide messageID' };
       }
       //check is chat id is provided
       if (!chatID) {
-        return { code: 1, response: "Error! must provide chatID" };
+        return { code: 1, response: 'Error! must provide chatID' };
       }
       //check if sentFrom is provided
       if (!sentFrom) {
-        return { code: 1, response: "Error! must provide sentFrom" };
+        return { code: 1, response: 'Error! must provide sentFrom' };
       }
       //check if message is provided
       if (!message) {
-        return { code: 1, response: "Error! must provide message" };
+        return { code: 1, response: 'Error! must provide message' };
       }
 
       //check if the chat exists
       if (!(await Chat.exists({ chatID: chatID }))) {
-        return { code: 1, response: "Error! chat not found" };
+        return { code: 1, response: 'Error! chat not found' };
       }
 
       //get all the members from the chat
@@ -870,9 +894,9 @@ module.exports = {
       //add the message to the db
       try {
         const res = await newMessage.save();
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error creating message." };
+        return { code: 1, response: 'Error creating message.' };
       }
     },
 
@@ -886,21 +910,21 @@ module.exports = {
     ) {
       //check if chatID is provided
       if (!chatID) {
-        return { code: 1, response: "Error! must provide chatID" };
+        return { code: 1, response: 'Error! must provide chatID' };
       }
       //check if userID is provided
       if (!userID) {
-        return { code: 1, response: "Error! must provide userID" };
+        return { code: 1, response: 'Error! must provide userID' };
       }
 
       //check if the chat exists
       if (!(await Chat.exists({ chatID: chatID }))) {
-        return { code: 1, response: "Error! chat does not exist" };
+        return { code: 1, response: 'Error! chat does not exist' };
       }
 
       //check if the user exists
       if (!(await User.exists({ userID: userID }))) {
-        return { code: 1, response: "Error! must provide user does not exist" };
+        return { code: 1, response: 'Error! must provide user does not exist' };
       }
 
       //update the member list of the chat
@@ -909,9 +933,9 @@ module.exports = {
           { chatID: chatID },
           { $push: { members: userID } }
         );
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error adding member to chat." };
+        return { code: 1, response: 'Error adding member to chat.' };
       }
     },
 
@@ -925,15 +949,15 @@ module.exports = {
     ) {
       //check if message id was provided
       if (!messageID) {
-        return { code: 1, response: "Error! must provide messageID" };
+        return { code: 1, response: 'Error! must provide messageID' };
       }
       //check if user id was provided
       if (!userID) {
-        return { code: 1, response: "Error! must provide userID" };
+        return { code: 1, response: 'Error! must provide userID' };
       }
       //check if the message exists
       if (!(await Message.exists({ messageID: messageID }))) {
-        return { code: 1, response: "Error! message does not exist" };
+        return { code: 1, response: 'Error! message does not exist' };
       }
 
       //mark the message as read for the given user
@@ -942,9 +966,9 @@ module.exports = {
           { messageID: messageID },
           { $pull: { unreadBy: userID } }
         );
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error marking message as read." };
+        return { code: 1, response: 'Error marking message as read.' };
       }
     },
 
@@ -978,23 +1002,23 @@ module.exports = {
       if (!sessionToken) {
         return {
           code: 1,
-          response: "Error! Must provide session token of the user",
+          response: 'Error! Must provide session token of the user',
         };
       }
 
       //check if its a valid session token
       if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: "Error! invalid session token" };
+        return { code: 1, response: 'Error! invalid session token' };
       }
 
       //check if user id is provided
       if (!userID) {
-        return { code: 1, response: "Error! must provide userID" };
+        return { code: 1, response: 'Error! must provide userID' };
       }
 
       //check is user is valid
       if (!(await User.exists({ userID: userID }))) {
-        return { code: 1, response: "Error! user not found" };
+        return { code: 1, response: 'Error! user not found' };
       }
 
       //create an update user object
@@ -1049,9 +1073,9 @@ module.exports = {
 
       try {
         const res = await User.updateOne({ userID: userID }, updateUser);
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error updating user." };
+        return { code: 1, response: 'Error updating user.' };
       }
     },
 
@@ -1078,23 +1102,23 @@ module.exports = {
       if (!sessionToken) {
         return {
           code: 1,
-          response: "Error! Must provide session token of the user",
+          response: 'Error! Must provide session token of the user',
         };
       }
 
       //check if its a valid session token
       if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: "Error! invalid session token" };
+        return { code: 1, response: 'Error! invalid session token' };
       }
 
       //check if task id is provided
       if (!taskID) {
-        return { code: 1, response: "Error! must provide taskID" };
+        return { code: 1, response: 'Error! must provide taskID' };
       }
 
       //check if task exists
       if (!(await Task.exists({ taskID: taskID }))) {
-        return { code: 1, response: "Error! task not found" };
+        return { code: 1, response: 'Error! task not found' };
       }
 
       const updateTask = { taskID: taskID };
@@ -1124,9 +1148,9 @@ module.exports = {
 
       try {
         const res = await Task.updateOne({ taskID: taskID }, updateTask);
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error updating task." };
+        return { code: 1, response: 'Error updating task.' };
       }
     },
 
@@ -1161,23 +1185,23 @@ module.exports = {
       if (!sessionToken) {
         return {
           code: 1,
-          response: "Error! Must provide session token of the user",
+          response: 'Error! Must provide session token of the user',
         };
       }
 
       //check if its a valid session token
       if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: "Error! invalid session token" };
+        return { code: 1, response: 'Error! invalid session token' };
       }
 
       //check is quest id is provided
       if (!questID) {
-        return { code: 1, response: "Error! must provide questID" };
+        return { code: 1, response: 'Error! must provide questID' };
       }
 
       //check is quest id is valid
       if (!(await Quest.exists({ questID: questID }))) {
-        return { code: 1, response: "Error! quest not found" };
+        return { code: 1, response: 'Error! quest not found' };
       }
 
       const updateQuest = { questID: questID };
@@ -1231,9 +1255,9 @@ module.exports = {
 
       try {
         const res = await Quest.updateOne({ questID: questID }, updateQuest);
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error updating quest." };
+        return { code: 1, response: 'Error updating quest.' };
       }
     },
 
@@ -1258,23 +1282,23 @@ module.exports = {
       if (!sessionToken) {
         return {
           code: 1,
-          response: "Error! Must provide session token of the user",
+          response: 'Error! Must provide session token of the user',
         };
       }
 
       //check if its a valid session token
       if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: "Error! invalid session token" };
+        return { code: 1, response: 'Error! invalid session token' };
       }
 
       //check if post id is provided
       if (!postID) {
-        return { code: 1, response: "Error! must provide postID" };
+        return { code: 1, response: 'Error! must provide postID' };
       }
 
       //check if its a valid post
       if (!(await Post.exists({ postID: postID }))) {
-        return { code: 1, response: "Error! post not found" };
+        return { code: 1, response: 'Error! post not found' };
       }
 
       const updatePost = { postID: postID };
@@ -1298,9 +1322,9 @@ module.exports = {
 
       try {
         const res = await Post.updateOne({ postID: postID }, updatePost);
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error updating post." };
+        return { code: 1, response: 'Error updating post.' };
       }
     },
 
@@ -1326,22 +1350,22 @@ module.exports = {
       if (!sessionToken) {
         return {
           code: 1,
-          response: "Error! Must provide session token of the user",
+          response: 'Error! Must provide session token of the user',
         };
       }
 
       //check if its a valid session token
       if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: "Error! invalid session token" };
+        return { code: 1, response: 'Error! invalid session token' };
       }
 
       //check if item id is provided
       if (!itemID) {
-        return { code: 1, response: "Error! must provide itemID" };
+        return { code: 1, response: 'Error! must provide itemID' };
       }
       //check if item is valid
       if (!(await Inventory.exists({ itemID: itemID }))) {
-        return { code: 1, response: "Error! item not found" };
+        return { code: 1, response: 'Error! item not found' };
       }
 
       const updateItem = { itemID: itemID };
@@ -1367,9 +1391,9 @@ module.exports = {
 
       try {
         const res = await Inventory.updateOne({ itemID: itemID }, updateItem);
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error updating inventory." };
+        return { code: 1, response: 'Error updating inventory.' };
       }
     },
 
@@ -1396,23 +1420,23 @@ module.exports = {
       if (!sessionToken) {
         return {
           code: 1,
-          response: "Error! Must provide session token of the user",
+          response: 'Error! Must provide session token of the user',
         };
       }
 
       //check if its a valid session token
       if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: "Error! invalid session token" };
+        return { code: 1, response: 'Error! invalid session token' };
       }
 
       //check if event id is provided
       if (!eventID) {
-        return { code: 1, response: "Error! must provide eventID" };
+        return { code: 1, response: 'Error! must provide eventID' };
       }
 
       //check if its a valid event
       if (!(await Event.exists({ eventID: eventID }))) {
-        return { code: 1, response: "Error! event not found" };
+        return { code: 1, response: 'Error! event not found' };
       }
 
       const updateEvent = { eventID: eventID };
@@ -1441,9 +1465,9 @@ module.exports = {
 
       try {
         const res = await Event.updateOne({ eventID: eventID }, updateEvent);
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error updating event." };
+        return { code: 1, response: 'Error updating event.' };
       }
     },
 
@@ -1468,23 +1492,23 @@ module.exports = {
       if (!sessionToken) {
         return {
           code: 1,
-          response: "Error! Must provide session token of the user",
+          response: 'Error! Must provide session token of the user',
         };
       }
 
       //check if its a valid session token
       if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: "Error! invalid session token" };
+        return { code: 1, response: 'Error! invalid session token' };
       }
 
       //check if community id is provided
       if (!communityID) {
-        return { code: 1, response: "Error! must provide communityID" };
+        return { code: 1, response: 'Error! must provide communityID' };
       }
 
       //check if community id is valid
       if (!(await Community.exists({ communityID: communityID }))) {
-        return { code: 1, response: "Error! community not found" };
+        return { code: 1, response: 'Error! community not found' };
       }
 
       const updateCommunity = { communityID: communityID };
@@ -1510,9 +1534,9 @@ module.exports = {
           { communityID: communityID },
           updateCommunity
         );
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error updating community." };
+        return { code: 1, response: 'Error updating community.' };
       }
     },
 
@@ -1525,7 +1549,7 @@ module.exports = {
     ) {
       //check if list of genres is provided
       if (!genre) {
-        return { code: 1, response: "Error! must provide genre list" };
+        return { code: 1, response: 'Error! must provide genre list' };
       }
 
       try {
@@ -1539,9 +1563,9 @@ module.exports = {
           const res = await Genres.updateMany(updateGenres);
         }
 
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error updating genres." };
+        return { code: 1, response: 'Error updating genres.' };
       }
     },
 
@@ -1565,12 +1589,12 @@ module.exports = {
     ) {
       //check if notification id is provided
       if (!notificationID) {
-        return { code: 1, response: "Error! must provide notificationID" };
+        return { code: 1, response: 'Error! must provide notificationID' };
       }
 
       //check if notification id is valid
       if (!(await Notification.exists({ notificationID: notificationID }))) {
-        return { code: 1, response: "Error! notification not found" };
+        return { code: 1, response: 'Error! notification not found' };
       }
 
       const updateNotification = {
@@ -1604,9 +1628,9 @@ module.exports = {
           { notificationID: notificationID },
           updateNotification
         );
-        return { code: 0, response: "successful" };
+        return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: "Error updating notification." };
+        return { code: 1, response: 'Error updating notification.' };
       }
     },
   },
