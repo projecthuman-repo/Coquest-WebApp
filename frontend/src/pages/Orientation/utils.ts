@@ -6,7 +6,7 @@ import RelativeLocation from "./Pages/RelativeLocation";
 import { UserModelSubject } from "../../observers/userobserver";
 import { Motive, Topic, Location, Image } from "../../models/common";
 import { UserOptional, UserRequired } from "../../models/usermodel";
-import ProfilePictureWrapper from "./Pages/ProfilePicture/ProfilePictureWrapper";
+import UploadWrapper from "./Pages/ProfilePicture/UploadWrapper";
 
 // Represents the metadata of a particular step in the registration process. 
 type RegistrationPage = {
@@ -33,7 +33,7 @@ export const RegistrationPages: RegistrationPage[] = [
     {
         // Initially, we only expect the user to only upload one image, but they can opt to upload more later down the line
         title: "Profile Picture",
-        view: ProfilePictureWrapper,
+        view: UploadWrapper,
         dataSetter: (images: Image[]) => {update({images: images})},
     },
     {
