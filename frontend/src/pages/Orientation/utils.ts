@@ -34,7 +34,7 @@ export const RegistrationPages: RegistrationPage[] = [
         // Initially, we only expect the user to only upload one image, but they can opt to upload more later down the line
         title: "Profile Picture",
         view: ProfilePictureWrapper,
-        dataSetter: (image: Image[]) => {update({images: image})},
+        dataSetter: (images: Image[]) => {update({images: images})},
     },
     {
         title: "Purpose",
