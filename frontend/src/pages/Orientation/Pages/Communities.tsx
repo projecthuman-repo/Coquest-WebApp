@@ -2,18 +2,6 @@ import React, { useState } from "react";
 import SimpleCard from "../../../components/SimpleCard/SimpleCard";
 
 function Communities() {
-    /*
-    // TODO: Curate a short list of communities near the user, based on their interests
-    const [communities, setCommunities] = useState(Community[]);
-    
-    useEffect(() {
-        const subscribtion = communityCuratedObserver.subscribe(setCommunities)
-        return () => {
-            subscribtion.unsubscribe();
-        }
-    }, []);
-    */
-    
     // Temporary simulation
     function curateCommunityList() {
         let sampleresponse =  {

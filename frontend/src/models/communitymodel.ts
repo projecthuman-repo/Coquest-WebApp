@@ -1,5 +1,5 @@
 import { Topic, Image, Location } from "./common";
-import { User } from "./userobserver";
+import { User } from "./usermodel";
 
 export type Community = {
     id: String;

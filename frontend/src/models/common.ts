@@ -1,3 +1,5 @@
+import { Community } from "./communitymodel";
+
 /* 
 Calling code of a Model's business logic can request the depth of the data of interest, controlling how much of the component instances 
 to return from the back-end's object manager, Mongoose.
@@ -49,4 +51,20 @@ export type Badge = {
 export type Recommendations = {
     name: string
     comment: string
+}
+
+export enum ExpandedRepType {
+    EXPANDED_OBJ = "obj",
+    ID_STRING = "string",
+}
+
+// Including this in the user model module might introduce a circular dependancy
+export type ExpandableCommunity = {
+    readonly __typename: ExpandedRepType,
+    value: string,
+    objValue?: never,
+} | {
+    readonly __typename: ExpandedRepType,
+    objValue: Community,
+    value?: never,
 }

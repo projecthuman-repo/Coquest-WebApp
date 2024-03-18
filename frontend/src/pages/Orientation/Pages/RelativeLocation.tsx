@@ -3,9 +3,8 @@ import InputMask from 'react-input-mask';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { fromAddress, fromLatLng } from 'react-geocode';
 import setupGeocode from "../../../config/geocodeConfig";
-import { userModel, userObservable } from "../../../models/userobserver";
 
-const POSTAL_CODE_LEN = 7;
+const POSTAL_CODE_LEN = 6;
 const MAP_ZOOM_LEVEL = 11;
 
 const mapContainerStyle = {
@@ -22,33 +21,33 @@ function RelativeLocation(props: any) {
         id: 'google-map-script',
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY!
       })
-    
-    const [user, setUser] = useState(userModel);
+
     const [center, setCenter] = useState({ lat: -34.397, lng: 150.644 });
     const [inputError, setInputError] = useState(null);
 
     const [postalCode, setPostalCode] = useState("");
     useEffect(() => {
-        if (user.location) {
-            convertToPostal(user.location);
+        if (props.user.location) {
+            convertToPostal(props.user.location)
+                .then((postal) => {
+                    if(postal.length === POSTAL_CODE_LEN) {
+                        setCenter(props.user.location);
+                        setPostalCode(postal);
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         }
-    }, [user.location]);
-
-    // Watch changes to shared userModel
-    useEffect(() => {
-        const subscription = userObservable.subscribe(setUser);
-        return () => {
-            // TODO: PUT updated data to the back-end API
-            subscription.unsubscribe();
-        }
-    }, []);
+    }, [props.user.location]);
 
     async function handlePostalCodeChange(e: React.ChangeEvent<HTMLInputElement>) {
         const newPostal = e.target.value.toUpperCase();
         setPostalCode(newPostal);
 
-        if(postalCode.length === POSTAL_CODE_LEN) {
-            fromAddress(postalCode)
+        // Note: Cannot use stateful postal code data after setting it
+        if(newPostal.length === POSTAL_CODE_LEN) {
+            fromAddress(newPostal)
             .then((res) => {
                 const loc = res.results[0].geometry.location;
                 console.log(`Using the following coordinates: lat: ${loc.lat}, lng:${loc.lng}`);
@@ -64,20 +63,28 @@ function RelativeLocation(props: any) {
 
     // 
     async function convertToPostal(loc: {lat: number, lng: number}) {
+        let postal = "";
         try {
             const {results} = await fromLatLng(loc.lat, loc.lng);
-            const postal = results[0].address_components[8].long_name;
-            setPostalCode(postal);
+            // Find commponent that has postal code information
+            const index = results[0].address_components.findIndex((component: any) => {
+                return component.types.includes('postal_code');
+            });
+            if(index >= 0) {
+                postal = results[0].address_components[index].long_name.replace(" ", "");
+            }
         } catch (err: any) {
             console.error("Geocoding error:", err.message);
             setInputError(err);
         }
+        return postal;
     }
 
     return (
         <div>
             <p>Where is your community?</p>
-            <InputMask mask="a9a 9a9"
+            {/* TODO: Find out how to place a space in the middle of the postal code mask without introducing inconsistencies */}
+            <InputMask mask="a9a9a9"
                 maskChar={null}
                 value={postalCode}
                 onChange={handlePostalCodeChange}

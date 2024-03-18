@@ -1,20 +1,25 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { userModel } from '../../models/userobserver';
+import { useNavigate, Outlet } from 'react-router-dom';
+import { useUserRegistration } from '../../components/AutoRedirector/UserRegistration';
+import { getRegistrationProgress } from '../../models/usermodel';
 
 function OrientationRedirector() {
+    let {registered, done} = useUserRegistration();
     let navigate = useNavigate();
 
     useEffect(() => {
-        // TODO:
-        // Attempt to create user that shares the same ID as their newly created identity on the identity server (Login-Process)
-        // Store the ID in the shared user modal.
-        // If the user already exists, subscribe to the userObservable and initilize the shared user modal.
+        if(done) {
+            navigate(`/registration/${getRegistrationProgress(registered)}`, { replace: true });
+        }
+    }, [done]);
 
-        navigate(`/registration/${typeof userModel.registered === "number" ? userModel.registered : 1}`, { replace: true });
-    }, [navigate]);
-
-    return null; // Component does not render anything
+    if(done) {
+        return (
+            <Outlet />
+        )
+    } else {
+        return null;
+    }
 }
 
 export default OrientationRedirector;

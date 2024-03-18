@@ -1,21 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import onCheck from "./utils";
-import { userModel, userObservable } from "../../../models/userobserver";
 import { Topic } from "../../../models/common";
 import { capitalize } from "./utils";
 
-function Interests(props: any) {    
-    const [user, setUser] = useState(userModel);
-    const [topics, setTopics] = useState(new Set<string>(user.topics));
-
-    // Watch changes to shared userModel
-    useEffect(() => {
-        const subscription = userObservable.subscribe(setUser);
-        return () => {
-            // TODO: PUT updated data to the back-end API
-            subscription.unsubscribe();
-        }
-    }, []);
+function Interests(props: any) {
+    const [topics, setTopics] = useState(new Set<string>(props.user.topics));
 
     return (
         <div>
