@@ -138,7 +138,7 @@ module.exports = gql`
 
   type regenquestNotification {
     _id: String
-    notificationID: String
+    userID: String
     title: String
     content: String
     image: [image]
@@ -150,7 +150,7 @@ module.exports = gql`
 
   input regenquestNotificationInput {
     id: String
-    notificationID: String
+    userID: String
     title: String
     content: String
     image: [imageInput]
@@ -372,7 +372,8 @@ module.exports = gql`
   }
 
   type regenquestLoggedInUsers {
-    _id: String
+    id: String
+    userID: String
   }
 
   input loginUser {
