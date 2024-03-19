@@ -27,7 +27,7 @@ const fetchUserQuery = gql`
             communities {
                 __typename
                 ... on string {
-                    value
+                    strValue
                 }
             }
             _id
@@ -87,13 +87,6 @@ class UserRepository {
     
         if(copy.communities.length > 0) {
             copy.communities = copy.communities.map((community: any) => {
-                if('value' in community) {
-                    community = {
-                        ...community,
-                        strValue: community.value,
-                        value: undefined,
-                    };
-                }
                 return {
                     type: getOutputType(community.__typename),
                     ...community,

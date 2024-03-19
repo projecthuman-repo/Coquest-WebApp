@@ -22,7 +22,7 @@ module.exports = gql`
   }
 
   type string {
-    value: String!
+    strValue: String!
   }
 
   """

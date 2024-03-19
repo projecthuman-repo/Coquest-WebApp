@@ -37,7 +37,7 @@ function coerceExpandable(expandable, propName) {
 // Introspects the type of an expandable instance and sniffs out the type of the object `expandableObj`.
 // Returns one of the valid expandable member types: string or `expandedTypeName`
 function deduceExpandableType(expandableObj, expandedTypeName) {
-  if ('value' in expandableObj) {
+  if ('strValue' in expandableObj) {
     return 'string';
   } else if ('id' in expandableObj) {
     return expandedTypeName;
@@ -51,7 +51,7 @@ function deduceExpandableType(expandableObj, expandedTypeName) {
 function toOutputFormat(arr) {
   return arr.map((elem) => {
     if(elem instanceof ObjectId) {
-      return { value: elem.toString() };
+      return { strValue: elem.toString() };
     } else if(typeof elem === 'object') {
       return elem;
     } else {

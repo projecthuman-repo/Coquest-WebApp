@@ -61,10 +61,10 @@ export enum ExpandedRepType {
 // Including this in the user model module might introduce a circular dependancy
 export type ExpandableCommunity = {
     readonly __typename: ExpandedRepType,
-    value: string,
+    strValue: string,
     objValue?: never,
 } | {
     readonly __typename: ExpandedRepType,
     objValue: Community,
-    value?: never,
+    strValue?: never,
 }
