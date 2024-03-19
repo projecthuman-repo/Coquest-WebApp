@@ -1,7 +1,7 @@
 import { map, from, Observable, BehaviorSubject } from 'rxjs';
 import { User, UserOptional, UserRequired } from '../models/usermodel';
 import { request, gql } from 'graphql-request';
-import { getOutputType } from './common';
+import { toOutputFormat } from './common';
 
 const fetchUserQuery = gql`
     query Query($id: String) {
@@ -16,7 +16,7 @@ const fetchUserQuery = gql`
             }
             biography
             registered {
-                __typename
+                type: __typename
                 ... on bool {
                     boolValue
                 }
@@ -25,7 +25,7 @@ const fetchUserQuery = gql`
                 }
             }
             communities {
-                __typename
+                type: __typename
                 ... on string {
                     strValue
                 }
@@ -78,21 +78,11 @@ class UserRepository {
     // TODO: Find a way to generalize this function
     private toOutputFormat(user: User): any {
         let copy: any = { ...user };
-    
-        copy.registered = {
-            type: getOutputType(copy.registered.__typename),
-            ...copy.registered,
-            __typename: undefined,
-        }
-    
+
+        copy.registered = toOutputFormat(copy.registered);
+
         if(copy.communities.length > 0) {
-            copy.communities = copy.communities.map((community: any) => {
-                return {
-                    type: getOutputType(community.__typename),
-                    ...community,
-                    __typename: undefined,
-                }
-            });
+            copy.communities = copy.communities.map(toOutputFormat);
         } else {
             copy.communities = null;
         }

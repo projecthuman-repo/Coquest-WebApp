@@ -10,18 +10,18 @@ export enum RegisteredRepType {
 // Disallow numValue and boolValue fields from co-existing
 // https://stackoverflow.com/a/44425486
 export type Registered = {
-    readonly __typename: RegisteredRepType,
+    readonly type: RegisteredRepType,
     boolValue: boolean,
     numValue?: never,
 } | {
-    readonly __typename: RegisteredRepType,
+    readonly type: RegisteredRepType,
     numValue: number,
     boolValue?: never,
 }
 
 export function isCompleteRegistration(registered: Registered): boolean {
     let complete: boolean = false;
-    if(registered.__typename === 'bool') {
+    if(registered.type === 'bool') {
         complete = registered.boolValue!;
     }
     return complete;
@@ -29,13 +29,13 @@ export function isCompleteRegistration(registered: Registered): boolean {
 
 export function getRegistrationProgress(registered: Registered): number {
     let progress: number = 0;
-    if(registered.__typename === 'bool') {
+    if(registered.type === 'bool') {
         if(!registered.boolValue) {
             progress = 1;
         } else {
             throw new Error('Registration is complete. No need to call this function.');
         }
-    } else if(registered.__typename === 'int') {
+    } else if(registered.type === 'int') {
         progress = registered.numValue!;
     } else {
         throw new Error('Unknown registration value')
@@ -96,14 +96,14 @@ export class User {
 
     setNumRegistered(newStep: number) {
         this.registered = {
-            __typename: RegisteredRepType.NUMBER,
+            type: RegisteredRepType.NUMBER,
             numValue: newStep,
         }
     }
 
     setBoolRegistered(newStatus: boolean) {
         this.registered = {
-            __typename: RegisteredRepType.BOOLEAN,
+            type: RegisteredRepType.BOOLEAN,
             boolValue: newStatus,
         };
     }
@@ -118,13 +118,13 @@ export class User {
         this.username = params.username;
         this.email = params.email;
 
-        this.registered = {__typename: RegisteredRepType.BOOLEAN, boolValue: false};
+        this.registered = {type: RegisteredRepType.BOOLEAN, boolValue: false};
         if(params.registered) {
             if(typeof params.registered === 'boolean') {
                 this.setBoolRegistered(params.registered);
             } else if(typeof params.registered === 'number') {
                 this.setNumRegistered(params.registered);
-            } else if('__typename' in params.registered) {
+            } else if('type' in params.registered) {
                 this.registered = params.registered;
             }
         }

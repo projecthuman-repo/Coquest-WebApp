@@ -26,7 +26,7 @@ interface UserRegistrationProps {
 
 // Provider component
 export function UserRegistrationProvider({ children }: UserRegistrationProps) {
-    const [registered, setRegistered] = useState<Registered>({__typename: RegisteredRepType.BOOLEAN, boolValue: false});
+    const [registered, setRegistered] = useState<Registered>({type: RegisteredRepType.BOOLEAN, boolValue: false});
     const [done, setDone] = useState(false);
 
     useEffect(() => {

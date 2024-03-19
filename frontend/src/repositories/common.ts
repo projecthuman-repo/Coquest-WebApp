@@ -1,7 +1,7 @@
 // Repositories contain our service logic to bridge application with web API
 
 
-export function getOutputType(inType: string) {
+function getOutputType(inType: string) {
     if(inType === 'int') {
         return 'NUMBER';
     } else if(inType === 'bool') {
@@ -12,5 +12,13 @@ export function getOutputType(inType: string) {
         return 'EXPANDED_OBJ';
     } else {
         return '';
+    }
+}
+
+// Converts any expandable object into the format that GrpahQL expects 
+export function toOutputFormat(obj: { type: string; [key: string]: any }) {
+    return {
+        ...obj,
+        type: getOutputType(obj.type),
     }
 }
