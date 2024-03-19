@@ -1,7 +1,8 @@
 import { map, from, Observable, BehaviorSubject } from 'rxjs';
-import { User, UserOptional, UserRequired } from '../models/usermodel';
+import { RegisteredRepType, User, UserOptional, UserRequired } from '../models/usermodel';
 import { request, gql } from 'graphql-request';
 import { toOutputFormat } from './common';
+import { ExpandableCommunity, ExpandedRepType } from '../models/common';
 
 const fetchUserQuery = gql`
     query Query($id: String) {
@@ -79,10 +80,12 @@ class UserRepository {
     private toOutputFormat(user: User): any {
         let copy: any = { ...user };
 
-        copy.registered = toOutputFormat(copy.registered);
+        copy.registered = toOutputFormat(RegisteredRepType, copy.registered);
 
         if(copy.communities.length > 0) {
-            copy.communities = copy.communities.map(toOutputFormat);
+            copy.communities = copy.communities.map(
+                (community: ExpandableCommunity) => toOutputFormat(ExpandedRepType, community)
+            );
         } else {
             copy.communities = null;
         }
