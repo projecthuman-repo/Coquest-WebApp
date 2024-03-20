@@ -10,15 +10,15 @@ export interface UserRequired {
 export interface UserOptional {
     registered: Registered | number | boolean;
     location: Location | null;
-    images: Image[];
-    motives: Motive[];
-    biography: string;
-    topics: Topic[];
-    communities: ExpandableCommunity[];
-    skills: Skill[];
-    badges: Badge[];
+    images: Image[] | null;
+    motives: Motive[] | null;
+    biography: string | null;
+    topics: Topic[] | null;
+    communities: ExpandableCommunity[] | null;
+    skills: Skill[] | null;
+    badges: Badge[] | null;
     currentLevel: number;
-    recommendations: Recommendations[];
+    recommendations: Recommendations[] | null;
 }
 
 export class User {
@@ -39,17 +39,17 @@ export class User {
     when geolocating for the first time  
     */
     location: Location | null;
-    images: Image[];
-    motives: Motive[];
-    biography: string;
-    topics: Topic[];
+    images: Image[] | null;
+    motives: Motive[] | null;
+    biography: string | null;
+    topics: Topic[] | null;
     // Expandable set of affliated communities
-    communities: ExpandableCommunity[];
+    communities: ExpandableCommunity[] | null;
     // The following properties are a part of the reputation system
-    skills: Skill[];
-    badges: Badge[];
+    skills: Skill[] | null;
+    badges: Badge[] | null;
     currentLevel: number;
-    recommendations: Recommendations[];
+    recommendations: Recommendations[] | null;
 
     setNumRegistered(newStep: number) {
         this.registered = {
@@ -86,16 +86,16 @@ export class User {
             }
         }
         
-        this.location = params?.location ?? {lat: 0, lng: 0};
-        this.images = params?.images ?? [];
-        this.motives = params?.motives ?? [];
-        this.biography = params?.biography ?? "";
-        this.topics = params?.topics ?? [];
+        this.location = params?.location ?? null;
+        this.images = params?.images ?? null;
+        this.motives = params?.motives ?? null;
+        this.biography = params?.biography ?? null;
+        this.topics = params?.topics ?? null;
         // Note: on instantiation, assume the user passes a list of strings
-        this.communities = params?.communities ?? [];
-        this.skills = params?.skills ?? [];
-        this.badges = params?.badges ?? [];
+        this.communities = params?.communities ?? null;
+        this.skills = params?.skills ?? null;
+        this.badges = params?.badges ?? null;
         this.currentLevel = params?.currentLevel ?? 0;
-        this.recommendations = params?.recommendations ?? [];
+        this.recommendations = params?.recommendations ?? null;
     }
 }
