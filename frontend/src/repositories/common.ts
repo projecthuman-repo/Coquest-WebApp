@@ -1,6 +1,6 @@
 // Repositories contain our service logic to bridge application with web API
 
-import { EnumType, TypedObject, getAssociatedEnum, isExpandableType } from "../models/common";
+import { EnumType, Model, TypedObject, getAssociatedEnum, isExpandableType } from "../models/common";
 
 
 function getOutputType<T extends EnumType>(enumObj: T, value: string): keyof T | undefined {
@@ -47,4 +47,15 @@ export function toOutputFormat(inputObj: any): any {
         // Return the input as-is if it doesn't meet any criteria for processing
         return inputObj;
     }
+}
+
+export function replaceNullsWithDefaults<T extends Model>(obj: T): T {
+    let copy: T = { ...obj };
+
+    for (const key in copy) {
+        if (copy[key] === null) {
+            copy[key] = obj['getDefaultForProperty'](key);
+        }
+    }
+    return copy;
 }

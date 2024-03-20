@@ -1,4 +1,4 @@
-import { Topic, Motive, Image, Location, Skill, Badge, Recommendations, ExpandableCommunity, Registered, RegisteredRepType } from "./common";
+import { Topic, Motive, Image, Location, Skill, Badge, Recommendations, ExpandableCommunity, Registered, RegisteredRepType, Model } from "./common";
 
 export interface UserRequired {
     readonly _id: string;
@@ -21,7 +21,7 @@ export interface UserOptional {
     recommendations: Recommendations[] | null;
 }
 
-export class User {
+export class User implements Model {
     readonly id: string;
     name: string;
     username: string;
@@ -67,6 +67,21 @@ export class User {
 
     isValid() {
         return this.currentLevel >= 0;
+    }
+
+    getDefaultForProperty(key: string): any {
+        const defaultValues: { [key: string]: any } = {
+            images: [],
+            motives: [],
+            biography: "",
+            topics: [],
+            communities: [],
+            skills: [],
+            badges: [],
+            recommendations: [],
+        };
+
+        return defaultValues.hasOwnProperty(key) ? defaultValues[key] : null;
     }
 
     constructor(params: UserRequired & Partial<UserOptional> = {_id: "", name: "", email: "", username: "", currentLevel: -1}) {

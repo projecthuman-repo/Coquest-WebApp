@@ -1,7 +1,7 @@
 import { map, from, Observable, BehaviorSubject } from 'rxjs';
 import { User, UserOptional, UserRequired } from '../models/usermodel';
 import { request, gql } from 'graphql-request';
-import { toOutputFormat } from './common';
+import { replaceNullsWithDefaults, toOutputFormat } from './common';
 
 const fetchUserQuery = gql`
     query Query($id: String) {
@@ -81,8 +81,13 @@ class UserRepository {
                 request(process.env.REACT_APP_API!, fetchUserQuery, {"id": id})
             ).pipe(
                 map((data: any): User => {
-                    let res = data.findUserbyID as User;
-                    this.user = res;
+                    this.user = new User(data.findUserbyID);
+
+                    // Because we fetch all the User data,
+                    // there is no lack of data as defined in this Stackoverflow post: https://stackoverflow.com/questions/1626597/should-functions-return-null-or-an-empty-object
+                    // Thus, we should remove all `null`s and replace it with some valid data.
+                    const res: User = replaceNullsWithDefaults(this.user);
+
                     updateUserSub(res);
                     return res;
                 })

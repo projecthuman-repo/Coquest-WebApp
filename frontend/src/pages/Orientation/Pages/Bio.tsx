@@ -11,7 +11,8 @@ function Bio(props: any) {
         props.updateData(newBio);
     }
 
-    if(biography) {
+    // Explicity check for empty string as TS treats empty strings as falsy
+    if(biography || biography === "") {
         return (
             <div>
                 <h1>Welcome to Regenquest&#44; {props.user?.name}</h1>

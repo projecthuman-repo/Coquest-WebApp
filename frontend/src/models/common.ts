@@ -12,6 +12,11 @@ By default, the properties are curtailed, or more simply, not expanded; curtaile
 export type EnumType = { [index: string]: string };
 export type TypedObject = { type: string; [key: string]: any };
 
+export interface Model {
+    isValid(): boolean;
+    getDefaultForProperty(key: string): any;
+}
+
 // TODO: For both Topic and Motive, define a collection with these enum variants as documents within MongoDB.
 // For simplicity, sample values are hard-coded here. 
 export enum Topic {
