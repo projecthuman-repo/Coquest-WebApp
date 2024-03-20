@@ -1,47 +1,4 @@
-import { Topic, Motive, Image, Location, Skill, Badge, Recommendations, ExpandableCommunity } from "./common";
-
-export enum RegisteredRepType {
-    BOOLEAN = "bool",
-    NUMBER = "int",
-}
-
-// TODO: Convert Registered type into a class and encapsulate free helpers assisting the type
-
-// Disallow numValue and boolValue fields from co-existing
-// https://stackoverflow.com/a/44425486
-export type Registered = {
-    readonly type: RegisteredRepType,
-    boolValue: boolean,
-    numValue?: never,
-} | {
-    readonly type: RegisteredRepType,
-    numValue: number,
-    boolValue?: never,
-}
-
-export function isCompleteRegistration(registered: Registered): boolean {
-    let complete: boolean = false;
-    if(registered.type === 'bool') {
-        complete = registered.boolValue!;
-    }
-    return complete;
-}
-
-export function getRegistrationProgress(registered: Registered): number {
-    let progress: number = 0;
-    if(registered.type === 'bool') {
-        if(!registered.boolValue) {
-            progress = 1;
-        } else {
-            throw new Error('Registration is complete. No need to call this function.');
-        }
-    } else if(registered.type === 'int') {
-        progress = registered.numValue!;
-    } else {
-        throw new Error('Unknown registration value')
-    }
-    return progress
-}
+import { Topic, Motive, Image, Location, Skill, Badge, Recommendations, ExpandableCommunity, Registered, RegisteredRepType } from "./common";
 
 export interface UserRequired {
     readonly _id: string;

@@ -1,8 +1,7 @@
 import { map, from, Observable, BehaviorSubject } from 'rxjs';
-import { RegisteredRepType, User, UserOptional, UserRequired } from '../models/usermodel';
+import { User, UserOptional, UserRequired } from '../models/usermodel';
 import { request, gql } from 'graphql-request';
 import { toOutputFormat } from './common';
-import { ExpandableCommunity, ExpandedRepType } from '../models/common';
 
 const fetchUserQuery = gql`
     query Query($id: String) {
@@ -76,23 +75,6 @@ const updateUserMut = gql`
 class UserRepository {
     private user: User;
 
-    // TODO: Find a way to generalize this function
-    private toOutputFormat(user: User): any {
-        let copy: any = { ...user };
-
-        copy.registered = toOutputFormat(RegisteredRepType, copy.registered);
-
-        if(copy.communities.length > 0) {
-            copy.communities = copy.communities.map(
-                (community: ExpandableCommunity) => toOutputFormat(ExpandedRepType, community)
-            );
-        } else {
-            copy.communities = null;
-        }
-
-        return copy;
-    }
-
     fetchUser(id: string): Observable<User> {
         if(id) {
             return from(
@@ -128,7 +110,7 @@ class UserRepository {
     updateUser(user: User) {
         // TODO: only update the changed fields 
         request(process.env.REACT_APP_API!, updateUserMut, {
-            userInput: this.toOutputFormat(user)
+            userInput: toOutputFormat(user)
         })
         .then((res: any) => {
             console.log(res);

@@ -1,8 +1,7 @@
 // Repositories contain our service logic to bridge application with web API
 
+import { EnumType, TypedObject, getAssociatedEnum, isExpandableType } from "../models/common";
 
-type EnumType = { [index: string]: string };
-type ExpandableType = { type: string; [key: string]: any };
 
 function getOutputType<T extends EnumType>(enumObj: T, value: string): keyof T | undefined {
     // Iterate over all keys of the enum object
@@ -16,12 +15,36 @@ function getOutputType<T extends EnumType>(enumObj: T, value: string): keyof T |
 }
 
 // Converts any expandable object into the format that GrpahQL expects 
-export function toOutputFormat<T extends EnumType, K extends ExpandableType>(
+function transformProp<T extends EnumType, K extends TypedObject>(
     enumObj: T,
     obj: K
 ): Omit<K, 'type'> & { type: keyof T | undefined } {
     return {
         ...obj,
         type: getOutputType(enumObj, obj.type),
+    }
+}
+
+// Transforms the entire object parameter, `inputObj`, into the format GraphQL expects.
+export function toOutputFormat(inputObj: any): any {
+    if (Array.isArray(inputObj)) {
+        // Treat empty arrays as lack of any data
+        if (inputObj.length === 0) {
+            return null;
+        } else {
+            return inputObj.map(item => toOutputFormat(item));
+        }
+    } else if (isExpandableType(inputObj)) {
+        const enumObj = getAssociatedEnum(inputObj);
+        return transformProp(enumObj, inputObj);
+    } else if (typeof inputObj === 'object' && inputObj !== null) {
+        const processedObj: { [key: string]: any } = {};
+        for (const key of Object.keys(inputObj)) {
+            processedObj[key] = toOutputFormat(inputObj[key]);
+        }
+        return processedObj;
+    } else {
+        // Return the input as-is if it doesn't meet any criteria for processing
+        return inputObj;
     }
 }

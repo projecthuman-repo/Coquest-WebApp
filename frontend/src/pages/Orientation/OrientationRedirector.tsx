@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { useUserRegistration } from '../../components/AutoRedirector/UserRegistration';
-import { getRegistrationProgress } from '../../models/usermodel';
+import { getRegistrationProgress } from '../../models/common';
 
 function OrientationRedirector() {
     let {registered, done} = useUserRegistration();

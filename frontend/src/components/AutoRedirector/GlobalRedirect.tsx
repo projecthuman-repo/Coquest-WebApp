@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserRegistration } from './UserRegistration';
-import { isCompleteRegistration } from '../../models/usermodel';
+import { isCompleteRegistration } from '../../models/common';
 
 function GlobalRedirect() {
     // TODO: Obtain the authenticated boolean from a valid JWT token and the registered flag from session storage

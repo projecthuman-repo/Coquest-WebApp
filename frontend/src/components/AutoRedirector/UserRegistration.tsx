@@ -1,5 +1,5 @@
 import React, { ReactNode, createContext, useContext, useEffect, useState } from 'react';
-import { Registered, RegisteredRepType } from '../../models/usermodel';
+import { Registered, RegisteredRepType } from '../../models/common';
 import { userObservable } from '../../observers/userobserver';
 
 interface UserRegistrationType {
