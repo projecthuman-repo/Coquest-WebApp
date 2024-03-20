@@ -49,7 +49,7 @@ function deduceExpandableType(expandableObj, expandedTypeName) {
 
 // Convert expandable array elements to shape that GraphQL expects based on the output type definition in `typeDefs.js`.
 function toOutputFormat(arr) {
-  return arr.map((elem) => {
+  return arr?.map((elem) => {
     if(elem instanceof ObjectId) {
       return { strValue: elem.toString() };
     } else if(typeof elem === 'object') {
@@ -58,7 +58,7 @@ function toOutputFormat(arr) {
       // *Shouldn't happen*
       return { value: '' };
     }
-  });
+  }) ?? null;
 }
 
 module.exports = {
@@ -1112,58 +1112,37 @@ module.exports = {
         return { code: 1, response: 'Error! user not found' };
       }
 
-      //create an update user object
-      const updateUser = { _id: id };
-
-      //update all the properties that were provided
-      if (motives) {
-        updateUser.motives = motives;
-      }
-      if (name) {
-        updateUser.name = name;
-      }
-      if (username) {
-        updateUser.username = username;
-      }
-      if (email) {
-        updateUser.email = email;
-      }
-      if (registered) {
+      const getRegisteredValue = (registered) => {
         if(registered.type === "BOOLEAN") {
-          updateUser.registered = registered.boolValue;
+          return registered.boolValue;
         } else if(registered.type === "NUMBER") {
-          updateUser.registered = registered.numValue;
+          return registered.numValue;
         } else {
-          registered.registered = null;
+          return null;
         }
       }
-      if (location) {
-        updateUser.location = location;
-      }
-      if (images) {
-        updateUser.images = images;
-      }
-      if (biography) {
-        updateUser.biography = biography;
-      }
-      if (topics) {
-        updateUser.topics = topics;
-      }
-      if (communities) {
-        updateUser.communities = coerceExpandable(communities, 'id');
-      }
-      if (skills) {
-        updateUser.skills = skills;
-      }
-      if (badges) {
-        updateUser.badges = badges;
-      }
-      if (currentLevel) {
-        updateUser.currentLevel = currentLevel;
-      }
-      if (recommendations) {
-        updateUser.recommendations = recommendations;
-      }
+
+      //create an update user object
+      const updateUser = { 
+        _id: id,
+        motives: motives,
+        username: username,
+        email: email,
+        registered: getRegisteredValue(registered),
+        motives: motives,
+        name: name,
+        username: username,
+        email: email,
+        location: location,
+        images: images,
+        biography: biography,
+        topics: topics,
+        communities: coerceExpandable(communities, 'id'),
+        skills: skills,
+        badges: badges,
+        currentLevel: currentLevel,
+        recommendations: recommendations,
+      };
 
       try {
         const res = await User.updateOne(
@@ -1581,7 +1560,7 @@ module.exports = {
           members,
           tags,
           location,
-          image,
+          images,
         },
       },
       context,
@@ -1599,26 +1578,15 @@ module.exports = {
         return { code: 1, response: 'Error! community not found' };
       }
 
-      const updateCommunity = { id: id };
-      //update all the given properties of the community
-      if (name) {
-        updateCommunity.name = name;
-      }
-      if (description) {
-        updateCommunity.description = description;
-      }
-      if (members) {
-        updateCommunity.members = coerceExpandable(members, 'id');
-      }
-      if(tags) {
-        updateCommunity.tags = tags;
-      }
-      if (location) {
-        updateCommunity.location = location;
-      }
-      if (image) {
-        updateCommunity.images = images;
-      }
+      const updateCommunity = {
+        id: id,
+        name: name,
+        description: description,
+        members: coerceExpandable(members, 'id'),
+        tags: tags,
+        location: location,
+        images: images,
+      };
 
       try {
         const res = await Community.updateOne(
