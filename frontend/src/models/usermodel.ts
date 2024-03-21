@@ -38,18 +38,18 @@ export class User implements Model {
     Location uses null to represent safe empty state to prevent prepopulating map data
     when geolocating for the first time  
     */
-    location: Location | null;
-    images: Image[] | null;
-    motives: Motive[] | null;
-    biography: string | null;
-    topics: Topic[] | null;
+    location: Location | null | undefined;
+    images: Image[] | null | undefined;
+    motives: Motive[] | null | undefined;
+    biography: string | null | undefined;
+    topics: Topic[] | null | undefined;
     // Expandable set of affliated communities
-    communities: ExpandableCommunity[] | null;
+    communities: ExpandableCommunity[] | null | undefined;
     // The following properties are a part of the reputation system
-    skills: Skill[] | null;
-    badges: Badge[] | null;
+    skills: Skill[] | null | undefined;
+    badges: Badge[] | null | undefined;
     currentLevel: number;
-    recommendations: Recommendations[] | null;
+    recommendations: Recommendations[] | null | undefined;
 
     setNumRegistered(newStep: number) {
         this.registered = {
@@ -66,7 +66,7 @@ export class User implements Model {
     }
 
     isValid() {
-        return this.currentLevel >= 0;
+        return (this.currentLevel ?? -1) >= 0;
     }
 
     getDefaultForProperty(key: string): any {
@@ -101,16 +101,16 @@ export class User implements Model {
             }
         }
         
-        this.location = params?.location ?? null;
-        this.images = params?.images ?? null;
-        this.motives = params?.motives ?? null;
-        this.biography = params?.biography ?? null;
-        this.topics = params?.topics ?? null;
+        this.location = params.location;
+        this.images = params.images;
+        this.motives = params.motives;
+        this.biography = params.biography;
+        this.topics = params.topics;
         // Note: on instantiation, assume the user passes a list of strings
-        this.communities = params?.communities ?? null;
-        this.skills = params?.skills ?? null;
-        this.badges = params?.badges ?? null;
-        this.currentLevel = params?.currentLevel ?? 0;
-        this.recommendations = params?.recommendations ?? null;
+        this.communities = params.communities;
+        this.skills = params.skills;
+        this.badges = params.badges;
+        this.currentLevel = params.currentLevel ?? 0;
+        this.recommendations = params.recommendations;
     }
 }
