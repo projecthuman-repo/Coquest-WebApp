@@ -1,5 +1,5 @@
-import { map, from, Observable, BehaviorSubject } from 'rxjs';
-import { User, UserOptional, UserRequired } from '../models/usermodel';
+import { map, from, Observable, of } from 'rxjs';
+import { User } from '../models/usermodel';
 import { request, gql } from 'graphql-request';
 import { replaceNullsWithDefaults, toOutputFormat } from './common';
 
@@ -75,7 +75,7 @@ const updateUserMut = gql`
 class UserRepository {
     private user: User;
 
-    fetchUser(id: string): Observable<User> {
+    fetchUser(id?: string): Observable<User> {
         if(id) {
             return from(
                 request(process.env.REACT_APP_API!, fetchUserQuery, {"id": id})
@@ -87,19 +87,22 @@ class UserRepository {
                     // there is no lack of data as defined in this Stackoverflow post: https://stackoverflow.com/questions/1626597/should-functions-return-null-or-an-empty-object
                     // Thus, we should remove all `null`s and replace it with some valid data.
                     const res: User = replaceNullsWithDefaults(this.user);
-
-                    updateUserSub(res);
                     return res;
                 })
             );
         } else {
+            // TODO: have back-end return more meaningful data, then
+            // rework this procedure to use the from(), pipe() pattern
+            //
             // Retrieve data from JWT token
+            const userInput: any = {
+                "name": "tmp",
+                "username": "tmp",
+                "email": "tmp@email.com",
+            };
+
             request(process.env.REACT_APP_API!, createUserMut, {
-                "userInput": {
-                    "name": "tmp",
-                    "username": "tmp",
-                    "email": "tmp@email.com",
-                }
+                "userInput": userInput
             })
             .then((data: any) => {
                 console.log(data.createRegenquestUser);
@@ -107,8 +110,8 @@ class UserRepository {
                 // updateUser(...);
             })
             .catch(error => console.error(error))
-    
-            return userModelSubject.asObservable();
+
+            return of(new User(userInput));
         }
     }
 
@@ -130,14 +133,3 @@ class UserRepository {
 }
 
 export const userRepository: UserRepository = new UserRepository();
-
-// TODO: Decouple Subject and free helper function from this module and place them in the userobservable module
-export function updateUserSub(updatedUserData: Partial<UserRequired> & Partial<UserOptional>) {
-    const { id, ...rest } = userModelSubject.value;
-    const userModel = new User({ _id: id, ...rest, ...updatedUserData });
-    // Notify subscribers by emitting the updated User instance
-    userModelSubject.next(userModel);
-}
-
-// Initialize userModel as the initial value for BehaviorSubject
-export const userModelSubject = new BehaviorSubject<User>(new User());

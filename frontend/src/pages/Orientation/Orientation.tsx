@@ -8,7 +8,8 @@ import { useNavigate } from "react-router";
 import { sanitizePage, RegistrationPages } from "./utils";
 import { Link } from "react-router-dom";
 import { User } from "../../models/usermodel";
-import { userModelSubject, updateUserSub, userRepository } from "../../repositories/userrepository";
+import { userRepository } from "../../repositories/userrepository";
+import { updateUserSub, userModelSubject } from "../../observers/userobserver";
 
 function Orientation() {
     const [user, setUser] = useState<User>();

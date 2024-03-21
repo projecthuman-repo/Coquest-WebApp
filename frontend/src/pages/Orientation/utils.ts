@@ -3,7 +3,7 @@ import Purpose from "./Pages/Purpose";
 import Interests from "./Pages/Interests";
 import Communities from "./Pages/Communities";
 import RelativeLocation from "./Pages/RelativeLocation";
-import { updateUserSub } from "../../repositories/userrepository";
+import { updateUserSub } from "../../observers/userobserver";
 import { Motive, Topic, Location } from "../../models/common";
 
 // Represents the metadata of a particular step in the registration process. 
