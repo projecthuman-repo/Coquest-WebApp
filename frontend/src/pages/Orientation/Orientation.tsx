@@ -5,11 +5,11 @@ import { useParams } from "react-router";
 import { IconButton } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { useNavigate } from "react-router";
-import { sanitizePage, RegistrationPages } from "./utils";
+import { sanitizePage, RegistrationPages, update } from "./utils";
 import { Link } from "react-router-dom";
 import { User } from "../../models/usermodel";
 import { userRepository } from "../../repositories/userrepository";
-import { updateUserSub, userModelSubject } from "../../observers/userobserver";
+import { subscribeToUserModelSubject } from "../../observers/userobserver";
 
 function Orientation() {
     const [user, setUser] = useState<User>();
@@ -22,23 +22,20 @@ function Orientation() {
     let navigate = useNavigate();
 
     useEffect(() => {
-        const subscription = userModelSubject.subscribe({
-            next: (user: User) => {
-                if(!done) {
-                    // Note: This statement won't cause the subsequent if(done) to be true
-                    setDone(true);
-                }
-                setUser(user);
-                
-                // Only update when the user actually makes changes after the content fully renders.
-                if(done) {
-                    userRepository.updateUser(user);    
-                }
-            },
-            error: (error) => console.error('Error fetching user data:', error),
+        const unsubscribe = subscribeToUserModelSubject((user: User) => {
+            if(!done) {
+                // Note: This statement won't cause the subsequent if(done) to be true
+                setDone(true);
+            }
+            setUser(user);
+            
+            // Only update when the user actually makes changes after the content fully renders.
+            if(done) {
+                userRepository.updateUser(user);    
+            }
         });
         return () => {
-            subscription.unsubscribe();
+            unsubscribe.then(cleanup => cleanup && cleanup());
         }
     }, [done]);
 
@@ -52,7 +49,7 @@ function Orientation() {
     const changePage = useCallback((page: number) => {
         const newPage = sanitizePage(page);
         // Save page progress as the user progresses through the orientation process
-        updateUserSub({registered: newPage})
+        update({registered: newPage})
         changeSlug(newPage.toString());
         setPage(newPage);
     }, [changeSlug]);

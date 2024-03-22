@@ -3,8 +3,9 @@ import Purpose from "./Pages/Purpose";
 import Interests from "./Pages/Interests";
 import Communities from "./Pages/Communities";
 import RelativeLocation from "./Pages/RelativeLocation";
-import { updateUserSub } from "../../observers/userobserver";
+import { UserModelSubject } from "../../observers/userobserver";
 import { Motive, Topic, Location } from "../../models/common";
+import { UserOptional, UserRequired } from "../../models/usermodel";
 
 // Represents the metadata of a particular step in the registration process. 
 type RegistrationPage = {
@@ -13,26 +14,35 @@ type RegistrationPage = {
     dataSetter: any;
 }
 
+export async function update(updatedUserData: Partial<UserRequired> & Partial<UserOptional>) {
+    try {
+        const userModelSubject = await UserModelSubject.getInstance();
+        userModelSubject.update(updatedUserData);
+    } catch(err) {
+        console.error('Error initializing UserModelSubject:', err);
+    }
+}
+
 export const RegistrationPages: RegistrationPage[] = [
     {
         title: "Bio",
         view: Bio,
-        dataSetter: (bio: string) => {updateUserSub({biography: bio})},
+        dataSetter: async (bio: string) => {update({biography: bio})},
     },
     {
         title: "Purpose",
         view: Purpose,
-        dataSetter: (motives: Motive[]) => {updateUserSub({motives: Array.from(motives)})},
+        dataSetter: (motives: Motive[]) => {update({motives: Array.from(motives)})},
     },
     {
         title: "Interests",
         view: Interests,
-        dataSetter: (topics: Topic[]) => {updateUserSub({topics: Array.from(topics)})},
+        dataSetter: (topics: Topic[]) => {update({topics: Array.from(topics)})},
     },
     {
         title: "Relative location",
         view: RelativeLocation,
-        dataSetter: (location: Location) => {updateUserSub({location: location})},
+        dataSetter: (location: Location) => {update({location: location})},
     },
     {
         title: "Layers",

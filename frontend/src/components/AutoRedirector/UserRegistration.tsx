@@ -1,6 +1,6 @@
 import React, { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { Registered, RegisteredRepType } from '../../models/common';
-import { userObservable } from '../../observers/userobserver';
+import { subscribeToUserModelSubject } from '../../observers/userobserver';
 
 interface UserRegistrationType {
     registered: Registered;
@@ -30,15 +30,13 @@ export function UserRegistrationProvider({ children }: UserRegistrationProps) {
     const [done, setDone] = useState(false);
 
     useEffect(() => {
-        const subscription = userObservable.subscribe({
-            next: (userData) => {
-                setRegistered(userData.registered);
-                setDone(true);
-            },
-            error: (error) => console.error('Error fetching user data:', error),
+        const unsubscribe = subscribeToUserModelSubject((userData) => {
+            setRegistered(userData.registered);
+            setDone(true);
         });
-
-        return () => subscription.unsubscribe();
+        return () => {
+            unsubscribe.then(cleanup => cleanup && cleanup());
+        }
     }, []);
 
     return (
