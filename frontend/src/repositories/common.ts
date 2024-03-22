@@ -34,6 +34,8 @@ export function toOutputFormat(inputObj: any): any {
         } else {
             return inputObj.map(item => toOutputFormat(item));
         }
+    } else if(inputObj === '') {
+        return null
     } else if (isExpandableType(inputObj)) {
         const enumObj = getAssociatedEnum(inputObj);
         return transformProp(enumObj, inputObj);
