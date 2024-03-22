@@ -349,7 +349,7 @@ module.exports = {
       //update the notification document in the db
       try {
         const res = await Notification.updateOne(
-          { notificationID: notificationID },
+          { _id: notificationID },
           { isRead: true }
         );
         return { code: 0, response: 'successful' };
@@ -387,7 +387,7 @@ module.exports = {
       //remove the notification from the db
       try {
         const res = await Notification.remove({
-          notificationID: notificationID,
+          _id: notificationID,
         });
         return { code: 0, response: 'successful' };
       } catch (err) {
@@ -489,8 +489,7 @@ module.exports = {
             phoneNumber: '1234567890', // dummy phone number
             regenquestUserId: newUser._id,
           });
-          const res = await newCrossPlatformUser.save();
-          newUser.userID = res._id;
+          await newCrossPlatformUser.save();
         }
 
         await newUser.save();
@@ -508,7 +507,6 @@ module.exports = {
       parent,
       {
         userInput: {
-          taskID,
           userID,
           questID,
           name,
@@ -526,7 +524,6 @@ module.exports = {
 
       //create a new task object
       const newTask = new Task({
-        taskID: taskID ? taskID : null,
         userID: userID ? userID : null,
         questID: questID ? questID : null,
         createdAt: new Date().toLocaleString(),
@@ -552,7 +549,6 @@ module.exports = {
       parent,
       {
         userInput: {
-          questID,
           name,
           description,
           objective,
@@ -578,7 +574,6 @@ module.exports = {
 
       //create a new Quest object
       const newQuest = new Quest({
-        questID: questID ? questID : null,
         name: name ? name : null,
         description: description ? description : null,
         objective: objective ? objective : null,
@@ -611,7 +606,6 @@ module.exports = {
       parent,
       {
         userInput: {
-          postID,
           userID,
           title,
           description,
@@ -626,7 +620,6 @@ module.exports = {
 
       //create a new Post object
       const newPost = new Post({
-        postID: postID ? postID : null,
         userID: userID ? userID : null,
         title: title ? title : null,
         description: description ? description : null,
@@ -651,7 +644,6 @@ module.exports = {
       parent,
       {
         userInput: {
-          itemID,
           userID,
           taskLink,
           itemName,
@@ -667,7 +659,6 @@ module.exports = {
 
       //create a new Inventory item object
       const newInventory = new Inventory({
-        itemID: itemID ? itemID : null,
         userID: userID ? userID : null,
         taskLink: taskLink ? taskLink : null,
         itemName: itemName ? itemName : null,
@@ -692,7 +683,6 @@ module.exports = {
       parent,
       {
         userInput: {
-          eventID,
           name,
           theme,
           location,
@@ -709,7 +699,6 @@ module.exports = {
 
       //create a new event object
       const newEvent = new Event({
-        eventID: eventID ? eventID : null,
         name: name ? name : null,
         theme: theme ? theme : null,
         location: location ? location : null,
@@ -817,14 +806,11 @@ module.exports = {
     //this method creates and add a chat to the db
     async createRegenquestChat(
       parent,
-      { userInput: { chatID, members, name, description } },
+      { userInput: { members, name, description } },
       context,
       info
     ) {
-      //check if chatid is provided
-      if (!chatID) {
-        return { code: 1, response: 'Error! must provide chatID' };
-      }
+
       //check if member list is provided
       if (!members) {
         return { code: 1, response: 'Error! must provide list of members' };
@@ -832,7 +818,6 @@ module.exports = {
 
       //create a new chat object
       const newChat = new Chat({
-        chatID: chatID,
         members: members,
         name: name ? name : null,
         description: description ? description : null,
@@ -852,14 +837,11 @@ module.exports = {
     //this method creates and stores messages to the db
     async sendRegenquestMessage(
       parent,
-      { userInput: { messageID, chatID, sentFrom, message } },
+      { userInput: { chatID, sentFrom, message } },
       context,
       info
     ) {
-      //check if message id is provided
-      if (!messageID) {
-        return { code: 1, response: 'Error! must provide messageID' };
-      }
+
       //check is chat id is provided
       if (!chatID) {
         return { code: 1, response: 'Error! must provide chatID' };
@@ -883,7 +865,6 @@ module.exports = {
 
       //create a new message object
       const newMessage = new Message({
-        messageID: messageID,
         chatID: chatID,
         sentFrom: sentFrom,
         message: message,
@@ -1059,7 +1040,7 @@ module.exports = {
       parent,
       {
         userInput: {
-          taskID,
+          id,
           userID,
           questID,
           name,
@@ -1076,16 +1057,16 @@ module.exports = {
       //TODO: check Auth token
 
       //check if task id is provided
-      if (!taskID) {
+      if (!id) {
         return { code: 1, response: 'Error! must provide taskID' };
       }
 
       //check if task exists
-      if (!(await Task.exists({ taskID: taskID }))) {
+      if (!(await Task.exists({ _id: id }))) {
         return { code: 1, response: 'Error! task not found' };
       }
 
-      const updateTask = { taskID: taskID };
+      const updateTask = { _id: id };
 
       //update all the given properties
       if (userID) {
@@ -1111,7 +1092,7 @@ module.exports = {
       }
 
       try {
-        const res = await Task.updateOne({ taskID: taskID }, updateTask);
+        const res = await Task.updateOne({ _id: id }, updateTask);
         return { code: 0, response: 'successful' };
       } catch (err) {
         return { code: 1, response: 'Error updating task.' };
@@ -1123,7 +1104,7 @@ module.exports = {
       parent,
       {
         userInput: {
-          questID,
+          id,
           name,
           description,
           objective,
@@ -1147,16 +1128,16 @@ module.exports = {
       //TODO: check Auth token
 
       //check is quest id is provided
-      if (!questID) {
+      if (!id) {
         return { code: 1, response: 'Error! must provide questID' };
       }
 
       //check is quest id is valid
-      if (!(await Quest.exists({ questID: questID }))) {
+      if (!(await Quest.exists({ _id: id }))) {
         return { code: 1, response: 'Error! quest not found' };
       }
 
-      const updateQuest = { questID: questID };
+      const updateQuest = { _id: id };
 
       //update all the given properties of the quest
       if (name) {
@@ -1206,7 +1187,7 @@ module.exports = {
       }
 
       try {
-        const res = await Quest.updateOne({ questID: questID }, updateQuest);
+        const res = await Quest.updateOne({ _id: id }, updateQuest);
         return { code: 0, response: 'successful' };
       } catch (err) {
         return { code: 1, response: 'Error updating quest.' };
@@ -1218,7 +1199,7 @@ module.exports = {
       parent,
       {
         userInput: {
-          postID,
+          id,
           userID,
           title,
           description,
@@ -1232,16 +1213,16 @@ module.exports = {
       //TODO: check Auth token
 
       //check if post id is provided
-      if (!postID) {
+      if (!id) {
         return { code: 1, response: 'Error! must provide postID' };
       }
 
       //check if its a valid post
-      if (!(await Post.exists({ postID: postID }))) {
+      if (!(await Post.exists({ _id: id }))) {
         return { code: 1, response: 'Error! post not found' };
       }
 
-      const updatePost = { postID: postID };
+      const updatePost = { _id: id };
 
       //update all the given properties of the post
       if (userId) {
@@ -1261,7 +1242,7 @@ module.exports = {
       }
 
       try {
-        const res = await Post.updateOne({ postID: postID }, updatePost);
+        const res = await Post.updateOne({ _id: id }, updatePost);
         return { code: 0, response: 'successful' };
       } catch (err) {
         return { code: 1, response: 'Error updating post.' };
@@ -1273,7 +1254,7 @@ module.exports = {
       parent,
       {
         userInput: {
-          itemID,
+          id,
           userID,
           taskLink,
           itemName,
@@ -1288,15 +1269,15 @@ module.exports = {
       //TODO: check Auth token
 
       //check if item id is provided
-      if (!itemID) {
-        return { code: 1, response: 'Error! must provide itemID' };
+      if (!id) {
+        return { code: 1, response: 'Error! must provide id' };
       }
       //check if item is valid
-      if (!(await Inventory.exists({ itemID: itemID }))) {
+      if (!(await Inventory.exists({ _id: id }))) {
         return { code: 1, response: 'Error! item not found' };
       }
 
-      const updateItem = { itemID: itemID };
+      const updateItem = { _id: id };
       //update all the given properties of the item
       if (userID) {
         updateItem.userID = userID;
@@ -1318,7 +1299,7 @@ module.exports = {
       }
 
       try {
-        const res = await Inventory.updateOne({ itemID: itemID }, updateItem);
+        const res = await Inventory.updateOne({ _id: id }, updateItem);
         return { code: 0, response: 'successful' };
       } catch (err) {
         return { code: 1, response: 'Error updating inventory.' };
@@ -1330,7 +1311,7 @@ module.exports = {
       parent,
       {
         userInput: {
-          eventID,
+          id,
           name,
           theme,
           location,
@@ -1346,16 +1327,16 @@ module.exports = {
       //TODO: check Auth token
 
       //check if event id is provided
-      if (!eventID) {
-        return { code: 1, response: 'Error! must provide eventID' };
+      if (!id) {
+        return { code: 1, response: 'Error! must provide id' };
       }
 
       //check if its a valid event
-      if (!(await Event.exists({ eventID: eventID }))) {
+      if (!(await Event.exists({ _id: id }))) {
         return { code: 1, response: 'Error! event not found' };
       }
 
-      const updateEvent = { eventID: eventID };
+      const updateEvent = { _id: id };
       //update all the given properties of the event
       if (name) {
         updateEvent.name = name;
@@ -1380,7 +1361,7 @@ module.exports = {
       }
 
       try {
-        const res = await Event.updateOne({ eventID: eventID }, updateEvent);
+        const res = await Event.updateOne({ _id: id }, updateEvent);
         return { code: 0, response: 'successful' };
       } catch (err) {
         return { code: 1, response: 'Error updating event.' };
@@ -1473,8 +1454,8 @@ module.exports = {
       parent,
       {
         userInput: {
+          id,
           userID,
-          notificationID,
           title,
           content,
           image,
@@ -1487,17 +1468,17 @@ module.exports = {
       info
     ) {
       //check if notification id is provided
-      if (!notificationID) {
-        return { code: 1, response: 'Error! must provide notificationID' };
+      if (!id) {
+        return { code: 1, response: 'Error! must provide id' };
       }
 
       //check if notification id is valid
-      if (!(await Notification.exists({ notificationID: notificationID }))) {
+      if (!(await Notification.exists({ _id: id }))) {
         return { code: 1, response: 'Error! notification not found' };
       }
 
       const updateNotification = {
-        notificationID: notificationID,
+        _id: id,
       };
       //update all the given properties of the notification
       if (userID) {
@@ -1524,7 +1505,7 @@ module.exports = {
 
       try {
         const res = await Notification.updateOne(
-          { notificationID: notificationID },
+          { _id: id },
           updateNotification
         );
         return { code: 0, response: 'successful' };
