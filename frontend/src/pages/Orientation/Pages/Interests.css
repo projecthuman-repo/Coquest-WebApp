@@ -1,0 +1,29 @@
+.interests-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.main-heading{
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 26px;
+    text-align: center;
+}
+.sub-heading{
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 20px;
+    text-align: center;
+}
+.sub-text{
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 12px;
+    text-align: center;
+}
+.search{
+    border-radius: 20px;
+    width: 328px;
+    height: 48.91px;
+}
