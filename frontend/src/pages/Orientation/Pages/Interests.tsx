@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import onCheck, { fetchEnumerable } from "./utils";
 import { capitalize } from "./utils";
 import { gql } from "graphql-request";
@@ -15,6 +15,7 @@ const topicsQuery = gql`
 function Interests(props: any) {
     const [options, setOptions] = useState<Array<string>>();
     const [topics, setTopics] = useState(new Set<string>(props.user.topics));
+    const input = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         fetchEnumerable(topicsQuery)
@@ -30,11 +31,14 @@ function Interests(props: any) {
                 <h3 className="main-heading">Let's get you stiched in</h3>
                 <p className="sub-heading">What are your interests?</p>
                 <p className="sub-text">Select all that apply</p>
-                
+                <input type="search" className="search" name="search" />
+                <i className="fa-solid fa-magnifying-glass"></i>
+
                 {options.map(
                         (topic) => (
                             <div className="select-container" key={topic}>
                                 <input
+                                    ref={input}
                                     className="click-button"
                                     onChange={(e) => onCheck([setTopics, props.updateData], topics, e)}
                                     type="checkbox"

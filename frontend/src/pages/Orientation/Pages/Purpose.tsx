@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import onCheck, { fetchEnumerable } from "./utils";
+import { useRef } from 'react';
 import { capitalize } from "./utils";
 import { gql } from "graphql-request";
 import './Purpose.css';
@@ -15,6 +16,7 @@ const motivesQuery = gql`
 function Purpose(props: any) {
     const [options, setOptions] = useState<Array<string>>();
     const [motives, setMotives] = useState<Set<string>>(new Set(props.user.motives));
+    const input = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         fetchEnumerable(motivesQuery)
@@ -35,6 +37,7 @@ function Purpose(props: any) {
                         (motive) => (
                             <div className="select-container" key={motive}>
                                 <input
+                                    ref={input}
                                     className="click-button"
                                     onChange={(e) => onCheck([setMotives, props.updateData], motives, e)}
                                     type="checkbox"
