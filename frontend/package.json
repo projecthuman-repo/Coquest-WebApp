@@ -5,7 +5,7 @@
   "dependencies": {
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.8",
-    "@react-google-maps/api": "^2.18.1",
+    "@react-google-maps/api": "^2.19.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -20,6 +20,8 @@
     "react-datepicker": "^4.10.0",
     "react-dom": "^18.2.0",
     "react-drag-drop-files": "^2.3.9",
+    "react-geocode": "^1.0.0-alpha.1",
+    "react-input-mask": "^2.0.4",
     "react-router": "^6.8.1",
     "react-router-dom": "^6.8.1",
     "react-scripts": "^5.0.1",
@@ -52,6 +54,7 @@
     ]
   },
   "devDependencies": {
-    "@types/googlemaps": "^3.43.3"
+    "@types/googlemaps": "^3.43.3",
+    "@types/react-input-mask": "^3.0.5"
   }
 }

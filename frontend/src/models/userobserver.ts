@@ -36,7 +36,7 @@ export type User = {
 // A data modal backed by the corresponding document on MongoDB
 export const userModel: User = {
     id: "",
-    name: "",
+    name: "test",
     username: "",
     email: "",
     registered: false,

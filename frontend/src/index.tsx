@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter, createBrowserRouter, RouterProvider } from "react-router-dom";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import Toolbar from "./components/Toolbar";
@@ -33,6 +33,10 @@ import {
 import { EditProfile } from "./pages/Programs/EditProfile";
 import { ProgramView } from "./pages/Programs/ProgramView";
 import styled from "@emotion/styled";
+import { Orientation } from "./pages/Orientation";
+import RemoveNavComponents from "./components/RemoveNavComponents";
+import OrientationRedirector from "./pages/Orientation/OrientationRedirector";
+import GlobalRedirect from "./components/AutoRedirector/GlobalRedirect";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement
@@ -42,6 +46,14 @@ const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <Dashboard />,
+	},
+	{
+		path: "/registration",
+		element: <OrientationRedirector />,
+	},
+	{
+		path: "/registration/:id",
+		element: <Orientation />
 	},
 	{
 		path: "/home",
@@ -149,8 +161,11 @@ root.render(
 	<Container>
 		<React.StrictMode>
 			<ThemeProvider theme={theme}>
-				<Toolbar />
-				<LeftSideBar />
+				<BrowserRouter>
+					<GlobalRedirect />
+					{/* Prevent the user from accessing links to top-level views while registering */}
+					<RemoveNavComponents pathPrefix="/registration" />
+				</BrowserRouter>
 				<RouterProvider router={router} />
 			</ThemeProvider>
 		</React.StrictMode>
