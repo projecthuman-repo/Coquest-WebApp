@@ -1,6 +1,7 @@
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { User, UserOptional, UserRequired } from '../models/usermodel';
 import { userRepository } from '../repositories/userrepository';
+import { getUserFromJWT } from '../models/jwt';
 
 export class UserModelSubject {
     private static instancePromise: Promise<UserModelSubject>; 
@@ -20,8 +21,7 @@ export class UserModelSubject {
     }
 
     private static async getInitialInstance(): Promise<UserModelSubject> {
-        // TODO: examine the claims in the JWT
-        const value = await firstValueFrom(userRepository.fetchUser("65f34816fa6022357f6513b1"));
+        const value = await firstValueFrom(userRepository.fetchUser(await getUserFromJWT()));
         return new UserModelSubject({ _id: value.id, ...value });
     }
 

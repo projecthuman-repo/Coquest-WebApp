@@ -197,6 +197,13 @@ module.exports = gql`
     recommendations: [recommendationsInput]
   }
 
+  type regenquestCrossUser {
+    _id: String
+    email: String
+    phoneNumber: String
+    regenquestUserId: String
+  }
+
   type regenquestTask {
     taskID: String
     userID: String
@@ -366,6 +373,7 @@ module.exports = gql`
   type mutationResponse {
     code: Int
     response: String
+    id: String
   }
 
   type regenquestLoggedInUsers {
@@ -436,6 +444,7 @@ module.exports = gql`
     findInventoryItembyID(itemID: String): regenquestInventory
     findEventbyID(eventID: String): regenquestEvent
     findCommunitybyID(id: String): regenquestCommunity
+    findCrossUser(email: String): regenquestCrossUser
 
     getChatsByUserID(userID: String): [regenquestChat]
     getMessagesByChatID(chatID: String): [regenquestMessage]

@@ -1,7 +1,7 @@
 import { Topic, Motive, Image, Location, Skill, Badge, Recommendations, ExpandableCommunity, Registered, RegisteredRepType, Model } from "./common";
 
 export interface UserRequired {
-    readonly _id: string;
+    readonly _id: string | undefined;
     name: string;
     username: string;
     email: string;
@@ -22,7 +22,8 @@ export interface UserOptional {
 }
 
 export class User implements Model {
-    readonly id: string;
+    // Note: ID field can be undefined when the instance represents a brand new user  
+    readonly id: string | undefined;
     name: string;
     username: string;
     email: string;
@@ -84,7 +85,7 @@ export class User implements Model {
         return defaultValues.hasOwnProperty(key) ? defaultValues[key] : null;
     }
 
-    constructor(params: UserRequired & Partial<UserOptional> = {_id: "", name: "", email: "", username: "", currentLevel: -1}) {
+    constructor(params: UserRequired & Partial<UserOptional> = {_id: undefined, name: "", email: "", username: ""}) {
         this.id = params._id;
         this.name = params.name;
         this.username = params.username;
@@ -110,7 +111,12 @@ export class User implements Model {
         this.communities = params.communities;
         this.skills = params.skills;
         this.badges = params.badges;
-        this.currentLevel = params.currentLevel ?? 0;
+        // Use currentLevel property to indicate the state status. (That is, whether the instance is in safe empty state.)
+        if(params._id && params.name && params.email && params.username) {
+            this.currentLevel = params.currentLevel ?? 0;
+        } else {
+            this.currentLevel = -1;
+        }
         this.recommendations = params.recommendations;
     }
 }

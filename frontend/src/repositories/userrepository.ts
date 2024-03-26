@@ -1,7 +1,7 @@
 import { map, from, Observable, of } from 'rxjs';
 import { User } from '../models/usermodel';
 import { request, gql } from 'graphql-request';
-import { replaceNullsWithDefaults, toOutputFormat } from './common';
+import { replaceNullsWithDefaults, replaceUndefinedWithNulls, toOutputFormat } from './common';
 
 const fetchUserQuery = gql`
     query Query($id: String) {
@@ -59,6 +59,7 @@ const createUserMut = gql`
         createRegenquestUser(userInput: $userInput) {
             code
             response
+            id
         }
     }
 `;
@@ -75,10 +76,10 @@ const updateUserMut = gql`
 class UserRepository {
     private user: User;
 
-    fetchUser(id?: string): Observable<User> {
-        if(id) {
+    fetchUser(inputUser: User): Observable<User> {
+        if(inputUser.isValid()) {
             return from(
-                request(process.env.REACT_APP_API!, fetchUserQuery, {"id": id})
+                request(process.env.REACT_APP_API!, fetchUserQuery, {"id": inputUser.id})
             ).pipe(
                 map((data: any): User => {
                     this.user = new User(data.findUserbyID);
@@ -91,27 +92,20 @@ class UserRepository {
                 })
             );
         } else {
-            // TODO: have back-end return more meaningful data, then
-            // rework this procedure to use the from(), pipe() pattern
-            //
-            // Retrieve data from JWT token
-            const userInput: any = {
-                "name": "tmp",
-                "username": "tmp",
-                "email": "tmp@email.com",
-            };
+            return from(
+                request(process.env.REACT_APP_API!, createUserMut, {"userInput": toOutputFormat(inputUser)})
+            ).pipe(
+                map((data: any): User => {
+                    // New users lack most data, so we must replace unassigned fields with null to
+                    // match the data in the DB after a successful insert.
+                    //
+                    // Note: must overwrite current level to ensure the user is now in a valid state.
+                    this.user = new User(replaceUndefinedWithNulls({_id: data.createRegenquestUser.id, ...inputUser, currentLevel: 0}));
 
-            request(process.env.REACT_APP_API!, createUserMut, {
-                "userInput": userInput
-            })
-            .then((data: any) => {
-                console.log(data.createRegenquestUser);
-                // TODO: get ID of newly created user
-                // updateUser(...);
-            })
-            .catch(error => console.error(error))
-
-            return of(new User(userInput));
+                    const res: User = replaceNullsWithDefaults(this.user);
+                    return res;
+                })
+            );
         }
     }
 

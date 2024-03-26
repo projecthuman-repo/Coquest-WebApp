@@ -297,6 +297,15 @@ module.exports = {
       }
     },
 
+    async findCrossUser(parent, { email }, context, info) {
+      try {
+        const result = await CrossPlatformUser.findOne({ email }, ['_id', 'email', 'phoneNumber', 'regenquestUserId']);
+        return result;
+      } catch(err) {
+        throw new Error('Error finding cross-platform user:', err.message);
+      }
+    },
+
     //this method is used to login a regenquest user
     async loginRegenquestUser(parent, { username, password }, context, info) {
       //check if the user exists
@@ -533,7 +542,7 @@ module.exports = {
 
         await newUser.save();
 
-        return { code: 0, response: 'successful' };
+        return { code: 0, response: 'successful', id: newUser._id };
       } catch (err) {
         console.log(err);
         return { code: 1, response: 'Error creating user.' };

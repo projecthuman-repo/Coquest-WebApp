@@ -61,3 +61,14 @@ export function replaceNullsWithDefaults<T extends Model>(obj: T): T {
     }
     return copy;
 }
+
+export function replaceUndefinedWithNulls(obj: any) {
+    let copy = { ...obj };
+
+    for (const key in copy) {
+        if (copy[key] === undefined) {
+            copy[key] = null;
+        }
+    }
+    return copy; 
+}
