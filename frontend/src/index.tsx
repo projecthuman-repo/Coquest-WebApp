@@ -37,6 +37,7 @@ import { Orientation } from "./pages/Orientation";
 import RemoveNavComponents from "./components/RemoveNavComponents";
 import OrientationRedirector from "./pages/Orientation/OrientationRedirector";
 import GlobalRedirect from "./components/AutoRedirector/GlobalRedirect";
+import { UserRegistrationProvider } from "./components/AutoRedirector/UserRegistration";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement
@@ -49,11 +50,17 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/registration",
-		element: <OrientationRedirector />,
-	},
-	{
-		path: "/registration/:id",
-		element: <Orientation />
+		element: (
+			<UserRegistrationProvider>
+				<OrientationRedirector />
+			</UserRegistrationProvider>
+		),
+		children: [
+			{
+				path: ":id",
+				element: <Orientation />,
+			},
+		]
 	},
 	{
 		path: "/home",
@@ -162,7 +169,9 @@ root.render(
 		<React.StrictMode>
 			<ThemeProvider theme={theme}>
 				<BrowserRouter>
-					<GlobalRedirect />
+					<UserRegistrationProvider>
+						<GlobalRedirect />
+					</UserRegistrationProvider>
 					{/* Prevent the user from accessing links to top-level views while registering */}
 					<RemoveNavComponents pathPrefix="/registration" />
 				</BrowserRouter>
