@@ -402,6 +402,14 @@ module.exports = gql`
     userID: String
   }
 
+  type regenquestTopic {
+    name: String
+  }
+
+  type regenquestMotive {
+    name: String
+  }
+
   type Query {
     getUsers: [regenquestUser]
     getTasks: [regenquestTask]
