@@ -72,7 +72,9 @@ export class User implements Model {
 
     getDefaultForProperty(key: string): any {
         const defaultValues: { [key: string]: any } = {
-            images: [],
+            images: [
+                generateProfileImg(),
+            ],
             motives: [],
             biography: "",
             topics: [],
@@ -119,4 +121,13 @@ export class User implements Model {
         }
         this.recommendations = params.recommendations;
     }
+}
+
+export function generateProfileImg(): Image {
+    const randString = Math.random().toString(36).substring(2);
+
+    return {
+        contentType: "image/svg+xml",
+        path: `https://api.dicebear.com/7.x/thumbs/svg?size=400&radius=50&backgroundColor=transparent&seed=${randString}`,
+    };
 }
