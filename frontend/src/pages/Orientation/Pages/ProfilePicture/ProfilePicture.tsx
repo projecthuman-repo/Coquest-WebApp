@@ -6,8 +6,8 @@ import { UploadPreview } from "@rpldy/upload-preview"
 import styled from "styled-components";
 import { Button } from "@mui/material";
 import CropperComponent from "./Cropper";
-import { generateProfileImg, userModel } from "../../../../models/userobserver";
 import { useCroppedImage } from "./CropperContext";
+import { generateProfileImg } from "../../../../models/usermodel";
 
 const CenterContainer = styled.div`
 display: flex;
@@ -54,7 +54,7 @@ const itemPreview = withRequestPreSendUpdate(({id, url, updateRequest, requestDa
 });
 
 function ProfilePicture(props: any) {
-    const [user, setUser] = useState(userModel);
+    const [images, setImages] = useState(props.user.images);
     const [filesAdded, setFilesAdded] = useState(false);
     const [inputError, setInputError] = useState<FileInvalidEventDetail | null>(null);
     const { imageRemotePath, setImageType, imageType } = useCroppedImage();
@@ -84,7 +84,10 @@ function ProfilePicture(props: any) {
     });
 
     function generateImg() {
-        setUser(prevUser => ({...prevUser, images: [generateProfileImg()]}));
+        const images = [generateProfileImg()];
+
+        setImages(images);
+        props.updateData(images);
     }
 
     return (
@@ -98,7 +101,7 @@ function ProfilePicture(props: any) {
             {!filesAdded ?
                 <>
                     <img 
-                        src={user.images[0].path}
+                        src={images[0].path}
                         alt="default upload" 
                     />
                     <Button onClick={generateImg}>Generate New Profile Image</Button>

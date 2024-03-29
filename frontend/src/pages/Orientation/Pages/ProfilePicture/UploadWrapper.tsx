@@ -4,7 +4,7 @@ import ProfilePictureWrapper from "./Uploader";
 function UploadWrapper(props: any) {
     return (
         <CroppedImageProvider>
-            <ProfilePictureWrapper updateData={props.updateData} />
+            <ProfilePictureWrapper user={props.user} updateData={props.updateData} />
         </CroppedImageProvider>
     )
 }

@@ -41,7 +41,7 @@ function Uploader(props: any) {
                 Future Plan:
                 - Allow uploading more than one image if the user is registered
                 */}
-                <ProfilePicture updateData={props.updateData} />
+                <ProfilePicture user={props.user} updateData={props.updateData} />
             </Uploady>
         </>
     );
