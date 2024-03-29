@@ -58,7 +58,7 @@ function CropperComponent({id, src, updateRequest, requestData}: any) {
                 }
             }, imageType ?? undefined);
         }
-    }, [updateRequest, requestData, setImageUrl]);
+    }, [updateRequest, requestData, setImageUrl, imageType]);
 
     return (
         <CropContainer>

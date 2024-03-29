@@ -23,7 +23,7 @@ function Uploader(props: any) {
                 setSignedUrl(data.generatePresignedURL);
             })
             .catch((error) => console.error(error));
-    }, []);
+    }, [setImageRemotePath]);
 
     return (
         <>
