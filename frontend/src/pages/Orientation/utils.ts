@@ -4,7 +4,7 @@ import Interests from "./Pages/Interests";
 import Communities from "./Pages/Communities";
 import RelativeLocation from "./Pages/RelativeLocation";
 import { UserModelSubject } from "../../observers/userobserver";
-import { Motive, Topic, Location, Image } from "../../models/common";
+import { Location, Image } from "../../models/common";
 import { UserOptional, UserRequired } from "../../models/usermodel";
 import UploadWrapper from "./Pages/ProfilePicture/UploadWrapper";
 
@@ -39,12 +39,12 @@ export const RegistrationPages: RegistrationPage[] = [
     {
         title: "Purpose",
         view: Purpose,
-        dataSetter: (motives: Motive[]) => {update({motives: Array.from(motives)})},
+        dataSetter: (motives: string[]) => {update({motives: Array.from(motives)})},
     },
     {
         title: "Interests",
         view: Interests,
-        dataSetter: (topics: Topic[]) => {update({topics: Array.from(topics)})},
+        dataSetter: (topics: string[]) => {update({topics: Array.from(topics)})},
     },
     {
         title: "Relative location",
