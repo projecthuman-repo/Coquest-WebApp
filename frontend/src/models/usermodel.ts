@@ -1,4 +1,4 @@
-import { Topic, Motive, Image, Location, Skill, Badge, Recommendations, ExpandableCommunity, Registered, RegisteredRepType, Model } from "./common";
+import { Image, Location, Skill, Badge, Recommendations, ExpandableCommunity, Registered, RegisteredRepType, Model } from "./common";
 
 export interface UserRequired {
     readonly _id: string | undefined;
@@ -11,9 +11,9 @@ export interface UserOptional {
     registered: Registered | number | boolean;
     location: Location | null;
     images: Image[] | null;
-    motives: Motive[] | null;
+    motives: string[] | null;
     biography: string | null;
-    topics: Topic[] | null;
+    topics: string[] | null;
     communities: ExpandableCommunity[] | null;
     skills: Skill[] | null;
     badges: Badge[] | null;
@@ -41,9 +41,9 @@ export class User implements Model {
     */
     location: Location | null | undefined;
     images: Image[] | null | undefined;
-    motives: Motive[] | null | undefined;
+    motives: string[] | null | undefined;
     biography: string | null | undefined;
-    topics: Topic[] | null | undefined;
+    topics: string[] | null | undefined;
     // Expandable set of affliated communities
     communities: ExpandableCommunity[] | null | undefined;
     // The following properties are a part of the reputation system

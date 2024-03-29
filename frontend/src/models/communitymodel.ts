@@ -1,4 +1,4 @@
-import { Topic, Image, Location } from "./common";
+import { Image, Location } from "./common";
 import { User } from "./usermodel";
 
 export type Community = {
@@ -8,7 +8,7 @@ export type Community = {
     // Expandable
     members: User[] | string[];
     // Set of descriptors to help distinguish communities  
-    tags: [Topic];
+    tags: [string];
     // Coordinate on the world map situated in the relative area of a community 
     location: Location;
     images: Image[];

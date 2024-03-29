@@ -10,6 +10,8 @@ const LoggedIn = require('../models/regenquestLoggedInUsers');
 const Notification = require('../models/regenquestNotification');
 const Chat = require('../models/regenquestChat');
 const Message = require('../models/regenquestMessage');
+const Topic = require('../models/regenquestTopic');
+const Motive = require('../models/regenquestMotive');
 const CrossPlatformUser = require('../models/crossPlatform/User');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
@@ -151,6 +153,26 @@ module.exports = {
         return result;
       } catch (err) {
         throw new Error('Error getting communities');
+      }
+    },
+
+    //this method returns all the regenquest topics
+    async getTopics() {
+      try {
+        const result = await Topic.find();
+        return result;
+      } catch (err) {
+        throw new Error('Error getting topics');
+      }
+    },
+
+    //this method returns all the regenquest motives
+    async getMotives() {
+      try {
+        const result = await Motive.find();
+        return result;
+      } catch (err) {
+        throw new Error('Error getting motives');
       }
     },
 
@@ -307,53 +329,6 @@ module.exports = {
     },
 
     //this method is used to login a regenquest user
-    async loginRegenquestUser(parent, { username, password }, context, info) {
-      //check if the user exists
-      const user = await User.findOne({ username: username });
-      if (!user) {
-        throw new Error('user not found');
-      }
-
-      //check if password matches
-      const result = await bcrypt.compare(password, user.password);
-
-      if (!result) {
-        throw new Error('Password does not match');
-      }
-
-      //generate a user token and add it to the db
-      const newLogin = new LoggedIn({
-        userID: user.userID,
-        sessionToken: uuid.v4(),
-      });
-
-      try {
-        const res = await newLogin.save();
-        return { userID: newLogin.userID, sessionToken: newLogin.sessionToken };
-      } catch (err) {
-        throw new Error('Error logging in');
-      }
-    },
-
-    //this method logs out a regenquest user
-    async logoutRegenquestUser(parent, { sessionToken }, context, info) {
-      //check if a session token is provided
-      if (!sessionToken) {
-        throw new Error('Must provide a session token');
-      }
-
-      //check if the session token exists in the db
-      if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        throw new Error('Invalid session token');
-      } else {
-        try {
-          const res = await LoggedIn.remove({ sessionToken: sessionToken });
-          return { code: 0, response: 'successful' };
-        } catch (err) {
-          throw new Error('Error logging out');
-        }
-      }
-    },
 
     //this method gets all the notification for a user by thier id
     async getNotifications(parent, { userID }, context, info) {
@@ -396,7 +371,7 @@ module.exports = {
       //update the notification document in the db
       try {
         const res = await Notification.updateOne(
-          { notificationID: notificationID },
+          { _id: notificationID },
           { isRead: true }
         );
         return { code: 0, response: 'successful' };
@@ -434,7 +409,7 @@ module.exports = {
       //remove the notification from the db
       try {
         const res = await Notification.remove({
-          notificationID: notificationID,
+          _id: notificationID,
         });
         return { code: 0, response: 'successful' };
       } catch (err) {
@@ -493,7 +468,6 @@ module.exports = {
       context,
       info
     ) {
-      //TODO: check if session token in Auth header is valid
 
       //create a User object
       const newUser = new User({
@@ -545,7 +519,7 @@ module.exports = {
         return { code: 0, response: 'successful', id: newUser._id };
       } catch (err) {
         console.log(err);
-        return { code: 1, response: 'Error creating user.' };
+        return { code: 1, response: `Error creating user: ${err.message}` };
       }
     },
 
@@ -555,7 +529,6 @@ module.exports = {
       parent,
       {
         userInput: {
-          taskID,
           userID,
           questID,
           name,
@@ -563,28 +536,16 @@ module.exports = {
           requirements,
           completionStatus,
           history,
-          sessionToken,
         },
       },
       context,
       info
     ) {
-      //check if a session token is provided
-      if (!sessionToken) {
-        return {
-          code: 1,
-          response: 'Error! Must provide session token of the user',
-        };
-      }
 
-      //check if its a valid session token
-      if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: 'Error! invalid session token' };
-      }
+      //TODO: check Auth token
 
       //create a new task object
       const newTask = new Task({
-        taskID: taskID ? taskID : null,
         userID: userID ? userID : null,
         questID: questID ? questID : null,
         createdAt: new Date().toLocaleString(),
@@ -600,7 +561,7 @@ module.exports = {
         const res = await newTask.save();
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error creating task.' };
+        return { code: 1, response: `Error creating task: ${err.message}` };
       }
     },
 
@@ -610,7 +571,6 @@ module.exports = {
       parent,
       {
         userInput: {
-          questID,
           name,
           description,
           objective,
@@ -625,29 +585,17 @@ module.exports = {
           history,
           budget,
           tasks,
-          sessionToken,
           hashtags,
         },
       },
       context,
       info
     ) {
-      //check if a session token is provided
-      if (!sessionToken) {
-        return {
-          code: 1,
-          response: 'Error! Must provide session token of the user',
-        };
-      }
 
-      //check if its a valid session token
-      if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: 'Error! invalid session token' };
-      }
+      //TODO: check Auth token
 
       //create a new Quest object
       const newQuest = new Quest({
-        questID: questID ? questID : null,
         name: name ? name : null,
         description: description ? description : null,
         objective: objective ? objective : null,
@@ -670,7 +618,7 @@ module.exports = {
         const res = await newQuest.save();
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error creating quest.' };
+        return { code: 1, response: `Error creating quest: ${err.message}` };
       }
     },
 
@@ -680,34 +628,20 @@ module.exports = {
       parent,
       {
         userInput: {
-          postID,
           userID,
           title,
           description,
           attachments,
           comments,
-          sessionToken,
         },
       },
       context,
       info
     ) {
-      //check if a session token is provided
-      if (!sessionToken) {
-        return {
-          code: 1,
-          response: 'Error! Must provide session token of the user',
-        };
-      }
-
-      //check if its a valid session token
-      if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: 'Error! invalid session token' };
-      }
+      //TODO: check Auth token
 
       //create a new Post object
       const newPost = new Post({
-        postID: postID ? postID : null,
         userID: userID ? userID : null,
         title: title ? title : null,
         description: description ? description : null,
@@ -722,7 +656,7 @@ module.exports = {
         const res = await newPost.save();
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error creating post.' };
+        return { code: 1, response: `Error creating post: ${err.message}` };
       }
     },
 
@@ -732,35 +666,21 @@ module.exports = {
       parent,
       {
         userInput: {
-          itemID,
           userID,
           taskLink,
           itemName,
           description,
           image,
           history,
-          sessionToken,
         },
       },
       context,
       info
     ) {
-      //check if session token is provided
-      if (!sessionToken) {
-        return {
-          code: 1,
-          response: 'Error! Must provide session token of the user',
-        };
-      }
-
-      //check if its a valid session token
-      if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: 'Error! invalid session token' };
-      }
+      //TODO: check Auth token
 
       //create a new Inventory item object
       const newInventory = new Inventory({
-        itemID: itemID ? itemID : null,
         userID: userID ? userID : null,
         taskLink: taskLink ? taskLink : null,
         itemName: itemName ? itemName : null,
@@ -775,7 +695,7 @@ module.exports = {
         const res = await newInventory.save();
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error creating item.' };
+        return { code: 1, response: `Error creating item: ${err.message}` };
       }
     },
 
@@ -785,7 +705,6 @@ module.exports = {
       parent,
       {
         userInput: {
-          eventID,
           name,
           theme,
           location,
@@ -793,28 +712,15 @@ module.exports = {
           description,
           layer,
           hashtags,
-          sessionToken,
         },
       },
       context,
       info
     ) {
-      //check if a session token is provided
-      if (!sessionToken) {
-        return {
-          code: 1,
-          response: 'Error! Must provide session token of the user',
-        };
-      }
-
-      //check if its a valid session token
-      if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: 'Error! invalid session token' };
-      }
+      //TODO: check Auth token
 
       //create a new event object
       const newEvent = new Event({
-        eventID: eventID ? eventID : null,
         name: name ? name : null,
         theme: theme ? theme : null,
         location: location ? location : null,
@@ -829,7 +735,7 @@ module.exports = {
         const res = await newEvent.save();
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error creating Event.' };
+        return { code: 1, response: `Error creating Event: ${err.message}` };
       }
     },
 
@@ -869,7 +775,7 @@ module.exports = {
         return { code: 0, response: 'successful' };
       } catch (err) {
         console.log(err);
-        return { code: 1, response: 'Error creating community.' };
+        return { code: 1, response: `Error creating community: ${err.message}` };
       }
     },
 
@@ -880,7 +786,6 @@ module.exports = {
       {
         userInput: {
           userID,
-          notificationID,
           title,
           content,
           image,
@@ -898,15 +803,9 @@ module.exports = {
         return { code: 1, response: 'Error! must provide userID' };
       }
 
-      //check if the notificationID is provided
-      if (!notificationID) {
-        return { code: 1, response: 'Error! must provide notificationID' };
-      }
-
       //create a new notificaiton object
       const newNotification = new Notification({
         userID: userID,
-        notificationID: notificationID,
         title: title ? title : null,
         content: content ? content : null,
         image: image ? image : null,
@@ -921,7 +820,7 @@ module.exports = {
         const res = await newNotification.save();
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error creating notification.' };
+        return { code: 1, response: `Error creating notification: ${err.message}` };
       }
     },
 
@@ -929,14 +828,11 @@ module.exports = {
     //this method creates and add a chat to the db
     async createRegenquestChat(
       parent,
-      { userInput: { chatID, members, name, description } },
+      { userInput: { members, name, description } },
       context,
       info
     ) {
-      //check if chatid is provided
-      if (!chatID) {
-        return { code: 1, response: 'Error! must provide chatID' };
-      }
+
       //check if member list is provided
       if (!members) {
         return { code: 1, response: 'Error! must provide list of members' };
@@ -944,7 +840,6 @@ module.exports = {
 
       //create a new chat object
       const newChat = new Chat({
-        chatID: chatID,
         members: members,
         name: name ? name : null,
         description: description ? description : null,
@@ -956,7 +851,7 @@ module.exports = {
         const res = await newChat.save();
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error creating chat.' };
+        return { code: 1, response: `Error creating chat: ${err.message}` };
       }
     },
 
@@ -964,14 +859,11 @@ module.exports = {
     //this method creates and stores messages to the db
     async sendRegenquestMessage(
       parent,
-      { userInput: { messageID, chatID, sentFrom, message } },
+      { userInput: { chatID, sentFrom, message } },
       context,
       info
     ) {
-      //check if message id is provided
-      if (!messageID) {
-        return { code: 1, response: 'Error! must provide messageID' };
-      }
+
       //check is chat id is provided
       if (!chatID) {
         return { code: 1, response: 'Error! must provide chatID' };
@@ -995,7 +887,6 @@ module.exports = {
 
       //create a new message object
       const newMessage = new Message({
-        messageID: messageID,
         chatID: chatID,
         sentFrom: sentFrom,
         message: message,
@@ -1008,7 +899,7 @@ module.exports = {
         const res = await newMessage.save();
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error creating message.' };
+        return { code: 1, response: `Error creating message: ${err.message}` };
       }
     },
 
@@ -1047,7 +938,7 @@ module.exports = {
         );
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error adding member to chat.' };
+        return { code: 1, response: `Error adding member to chat: ${err.message}` };
       }
     },
 
@@ -1080,7 +971,7 @@ module.exports = {
         );
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error marking message as read.' };
+        return { code: 1, response: `Error marking message as read: ${err.message}` };
       }
     },
 
@@ -1162,7 +1053,7 @@ module.exports = {
         return { code: 0, response: 'successful' };
       } catch (err) {
         console.log(err);
-        return { code: 1, response: 'Error updating user.' };
+        return { code: 1, response: `Error updating user: ${err.message}` };
       }
     },
 
@@ -1171,7 +1062,7 @@ module.exports = {
       parent,
       {
         userInput: {
-          taskID,
+          id,
           userID,
           questID,
           name,
@@ -1179,36 +1070,25 @@ module.exports = {
           requirements,
           completionStatus,
           history,
-          sessionToken,
         },
       },
       context,
       info
     ) {
-      //check if session token is provided
-      if (!sessionToken) {
-        return {
-          code: 1,
-          response: 'Error! Must provide session token of the user',
-        };
-      }
 
-      //check if its a valid session token
-      if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: 'Error! invalid session token' };
-      }
+      //TODO: check Auth token
 
       //check if task id is provided
-      if (!taskID) {
+      if (!id) {
         return { code: 1, response: 'Error! must provide taskID' };
       }
 
       //check if task exists
-      if (!(await Task.exists({ taskID: taskID }))) {
+      if (!(await Task.exists({ _id: id }))) {
         return { code: 1, response: 'Error! task not found' };
       }
 
-      const updateTask = { taskID: taskID };
+      const updateTask = { _id: id };
 
       //update all the given properties
       if (userID) {
@@ -1234,10 +1114,10 @@ module.exports = {
       }
 
       try {
-        const res = await Task.updateOne({ taskID: taskID }, updateTask);
+        const res = await Task.updateOne({ _id: id }, updateTask);
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error updating task.' };
+        return { code: 1, response: `Error updating task: ${err.message}` };
       }
     },
 
@@ -1246,7 +1126,7 @@ module.exports = {
       parent,
       {
         userInput: {
-          questID,
+          id,
           name,
           description,
           objective,
@@ -1261,37 +1141,25 @@ module.exports = {
           history,
           budget,
           tasks,
-          sessionToken,
           hashtags,
         },
       },
       context,
       info
     ) {
-      //check if session token is provided
-      if (!sessionToken) {
-        return {
-          code: 1,
-          response: 'Error! Must provide session token of the user',
-        };
-      }
-
-      //check if its a valid session token
-      if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: 'Error! invalid session token' };
-      }
+      //TODO: check Auth token
 
       //check is quest id is provided
-      if (!questID) {
+      if (!id) {
         return { code: 1, response: 'Error! must provide questID' };
       }
 
       //check is quest id is valid
-      if (!(await Quest.exists({ questID: questID }))) {
+      if (!(await Quest.exists({ _id: id }))) {
         return { code: 1, response: 'Error! quest not found' };
       }
 
-      const updateQuest = { questID: questID };
+      const updateQuest = { _id: id };
 
       //update all the given properties of the quest
       if (name) {
@@ -1341,10 +1209,10 @@ module.exports = {
       }
 
       try {
-        const res = await Quest.updateOne({ questID: questID }, updateQuest);
+        const res = await Quest.updateOne({ _id: id }, updateQuest);
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error updating quest.' };
+        return { code: 1, response: `Error updating quest: ${err.message}` };
       }
     },
 
@@ -1353,42 +1221,30 @@ module.exports = {
       parent,
       {
         userInput: {
-          postID,
+          id,
           userID,
           title,
           description,
           attachments,
           comments,
-          sessionToken,
         },
       },
       context,
       info
     ) {
-      //check if session token is provided
-      if (!sessionToken) {
-        return {
-          code: 1,
-          response: 'Error! Must provide session token of the user',
-        };
-      }
-
-      //check if its a valid session token
-      if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: 'Error! invalid session token' };
-      }
+      //TODO: check Auth token
 
       //check if post id is provided
-      if (!postID) {
+      if (!id) {
         return { code: 1, response: 'Error! must provide postID' };
       }
 
       //check if its a valid post
-      if (!(await Post.exists({ postID: postID }))) {
+      if (!(await Post.exists({ _id: id }))) {
         return { code: 1, response: 'Error! post not found' };
       }
 
-      const updatePost = { postID: postID };
+      const updatePost = { _id: id };
 
       //update all the given properties of the post
       if (userId) {
@@ -1408,10 +1264,10 @@ module.exports = {
       }
 
       try {
-        const res = await Post.updateOne({ postID: postID }, updatePost);
+        const res = await Post.updateOne({ _id: id }, updatePost);
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error updating post.' };
+        return { code: 1, response: `Error updating post: ${err.message}` };
       }
     },
 
@@ -1420,42 +1276,30 @@ module.exports = {
       parent,
       {
         userInput: {
-          itemID,
+          id,
           userID,
           taskLink,
           itemName,
           description,
           image,
           history,
-          sessionToken,
         },
       },
       context,
       info
     ) {
-      //check if session token is provided
-      if (!sessionToken) {
-        return {
-          code: 1,
-          response: 'Error! Must provide session token of the user',
-        };
-      }
-
-      //check if its a valid session token
-      if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: 'Error! invalid session token' };
-      }
+      //TODO: check Auth token
 
       //check if item id is provided
-      if (!itemID) {
-        return { code: 1, response: 'Error! must provide itemID' };
+      if (!id) {
+        return { code: 1, response: 'Error! must provide id' };
       }
       //check if item is valid
-      if (!(await Inventory.exists({ itemID: itemID }))) {
+      if (!(await Inventory.exists({ _id: id }))) {
         return { code: 1, response: 'Error! item not found' };
       }
 
-      const updateItem = { itemID: itemID };
+      const updateItem = { _id: id };
       //update all the given properties of the item
       if (userID) {
         updateItem.userID = userID;
@@ -1477,10 +1321,10 @@ module.exports = {
       }
 
       try {
-        const res = await Inventory.updateOne({ itemID: itemID }, updateItem);
+        const res = await Inventory.updateOne({ _id: id }, updateItem);
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error updating inventory.' };
+        return { code: 1, response: `Error updating inventory: ${err.message}` };
       }
     },
 
@@ -1489,7 +1333,7 @@ module.exports = {
       parent,
       {
         userInput: {
-          eventID,
+          id,
           name,
           theme,
           location,
@@ -1497,36 +1341,24 @@ module.exports = {
           description,
           layer,
           hashtags,
-          sessionToken,
         },
       },
       context,
       info
     ) {
-      //check if session token is provided
-      if (!sessionToken) {
-        return {
-          code: 1,
-          response: 'Error! Must provide session token of the user',
-        };
-      }
-
-      //check if its a valid session token
-      if (!(await LoggedIn.exists({ sessionToken: sessionToken }))) {
-        return { code: 1, response: 'Error! invalid session token' };
-      }
+      //TODO: check Auth token
 
       //check if event id is provided
-      if (!eventID) {
-        return { code: 1, response: 'Error! must provide eventID' };
+      if (!id) {
+        return { code: 1, response: 'Error! must provide id' };
       }
 
       //check if its a valid event
-      if (!(await Event.exists({ eventID: eventID }))) {
+      if (!(await Event.exists({ _id: id }))) {
         return { code: 1, response: 'Error! event not found' };
       }
 
-      const updateEvent = { eventID: eventID };
+      const updateEvent = { _id: id };
       //update all the given properties of the event
       if (name) {
         updateEvent.name = name;
@@ -1551,10 +1383,10 @@ module.exports = {
       }
 
       try {
-        const res = await Event.updateOne({ eventID: eventID }, updateEvent);
+        const res = await Event.updateOne({ _id: id }, updateEvent);
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error updating event.' };
+        return { code: 1, response: `Error updating event: ${err.message}` };
       }
     },
 
@@ -1606,7 +1438,7 @@ module.exports = {
         return { code: 0, response: 'successful' };
       } catch (err) {
         console.log(err);
-        return { code: 1, response: 'Error updating community.' };
+        return { code: 1, response: `Error updating community: ${err.message}` };
       }
     },
 
@@ -1635,7 +1467,7 @@ module.exports = {
 
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error updating genres.' };
+        return { code: 1, response: `Error updating genres: ${err.message}` };
       }
     },
 
@@ -1644,8 +1476,8 @@ module.exports = {
       parent,
       {
         userInput: {
+          id,
           userID,
-          notificationID,
           title,
           content,
           image,
@@ -1658,17 +1490,17 @@ module.exports = {
       info
     ) {
       //check if notification id is provided
-      if (!notificationID) {
-        return { code: 1, response: 'Error! must provide notificationID' };
+      if (!id) {
+        return { code: 1, response: 'Error! must provide id' };
       }
 
       //check if notification id is valid
-      if (!(await Notification.exists({ notificationID: notificationID }))) {
+      if (!(await Notification.exists({ _id: id }))) {
         return { code: 1, response: 'Error! notification not found' };
       }
 
       const updateNotification = {
-        notificationID: notificationID,
+        _id: id,
       };
       //update all the given properties of the notification
       if (userID) {
@@ -1695,12 +1527,12 @@ module.exports = {
 
       try {
         const res = await Notification.updateOne(
-          { notificationID: notificationID },
+          { _id: id },
           updateNotification
         );
         return { code: 0, response: 'successful' };
       } catch (err) {
-        return { code: 1, response: 'Error updating notification.' };
+        return { code: 1, response: `Error updating notification: ${err.message}` };
       }
     },
   },

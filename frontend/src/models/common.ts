@@ -17,23 +17,6 @@ export interface Model {
     getDefaultForProperty(key: string): any;
 }
 
-// TODO: For both Topic and Motive, define a collection with these enum variants as documents within MongoDB.
-// For simplicity, sample values are hard-coded here. 
-export enum Topic {
-    SPORTS = "SPORTS",
-    ARTS = "ARTS",
-    MUSIC = "MUSIC",
-    GENERATIVE_ART = "GENERATIVE_ART",
-    BASKETBALL = "BASKETBALL",
-}
-
-export enum Motive {
-    VOLUNTEER = "VOLUNTEER",
-    INITIATER = "INITIATER",
-    ORGANIZER = "ORGANIZER",
-    SPECTATOR = "SPECTATOR",
-}
-
 export type Location = {
     lat: number;
     lng: number;
