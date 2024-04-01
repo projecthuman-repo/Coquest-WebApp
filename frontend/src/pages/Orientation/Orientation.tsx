@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { User } from "../../models/usermodel";
 import { userRepository } from "../../repositories/userrepository";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
+import './Orientation.css';
 
 function Orientation() {
     const [user, setUser] = useState<User>();
@@ -89,24 +90,28 @@ function Orientation() {
 
         const SelectedPageView = RegistrationPages[index].view;
         return (
-            <Container>
-                <h1>Step {page}: {RegistrationPages[index].title}</h1>
-
-                <SelectedPageView user={user} updateData={updateData} />
-
-                <IconButton title="Previous page" onClick={() => {
+            <Container className="orientation">
+                
+                <div className="content">
+                    <SelectedPageView user={user} updateData={updateData} />
+                </div>
+                <div className="icon-button-container">
+                <IconButton className="icon-button" title="Previous page" onClick={() => {
                     const newPage = page - 1;
                     changePage(newPage)
                     }}>
                     <ChevronLeft />
 
                 </IconButton>
-                <IconButton title="Next page" onClick={() => {
+                
+                
+                <IconButton className="icon-button"title="Next page" onClick={() => {
                     const newPage = page + 1;
                     changePage(newPage)
                     }}>
                     <ChevronRight />
                 </IconButton>
+                </div>
             </Container>
         );
     } else {

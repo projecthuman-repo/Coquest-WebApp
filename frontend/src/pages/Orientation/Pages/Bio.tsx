@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './Bio.css';
 
 const MAX_CHAR_COUNT = 1000;
 
@@ -14,9 +15,13 @@ function Bio(props: any) {
     // Explicity check for empty string as TS treats empty strings as falsy
     if(biography || biography === "") {
         return (
-            <div>
-                <h1>Welcome to Regenquest&#44; {props.user?.name}</h1>
+            <div className="bio-page">
+                <h3 className="main-heading">Welcome to Regenquest&#44; {props.user?.name}</h3>
+                <h4>Let's get to know you</h4>
+
                 <textarea
+                    className="bio-input"
+                    placeholder="Add your bio"
                     value={biography}
                     onChange={onEdit}
                     maxLength={MAX_CHAR_COUNT}>
