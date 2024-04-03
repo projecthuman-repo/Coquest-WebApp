@@ -1535,5 +1535,19 @@ module.exports = {
         return { code: 1, response: `Error updating notification: ${err.message}` };
       }
     },
+
+    async setCookieWithToken(
+      parent,
+      {
+        token,
+      },
+      context,
+      info
+    ) {
+      console.log(context.req.origin);
+      context.res.cookie('phc', token, { httpOnly: false, secure: false, path: '/'}); // Adjust options as needed
+
+      return { code: 0, response: 'successful' };
+    }
   },
 };

@@ -23,7 +23,27 @@ const server = new ApolloServer({
   resolvers,
   csrfPrevention: true,
   cache: 'bounded',
+  context: ({ req, res }) => ({ req, res }),
   plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
 });
 
-exports.handler = server.createHandler();
+// TODO: find out how to integrate CORS with Apollo Server Cloud Functions
+// exports.handler = server.createHandler();
+exports.handler = server.createHandler({
+  // cors: {
+  //   origin: [
+  //     'http://127.0.0.1:3000',
+  //     'http://localhost:3000',
+  //   ],
+  //   methods: [
+  //     'GET',
+  //     'HEAD',
+  //     'PUT',
+  //     'PATCH',
+  //     'POST',
+  //     'DELETE',
+  //     'OPTIONS'
+  //   ],
+  //   credentials: true,
+  // },
+});

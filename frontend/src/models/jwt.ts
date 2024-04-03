@@ -23,6 +23,7 @@ const getCrossUserQuery = gql`
 // Constructs a new user instance using the custom claims from the JWT token
 // and the `regenquestUserId` property from the associating CrossPlatform.user document
 export async function getUserFromJWT(): Promise<User> {
+    // TODO: move cookie parsing logic to the back-end
     const phcCookie = new Cookies().get(process.env.REACT_APP_JWT_COOKIE!);
     const token: JWT | null = decodeToken(phcCookie);
 

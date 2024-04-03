@@ -483,5 +483,7 @@ module.exports = gql`
     updateRegenquestNotification(
       userInput: regenquestNotificationInput
     ): mutationResponse
+
+    setCookieWithToken(token: String!): mutationResponse
   }
 `;
