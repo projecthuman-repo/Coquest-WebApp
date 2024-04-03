@@ -58,7 +58,7 @@ export const RegistrationPages: RegistrationPage[] = [
     },
 ];
 
-const NUMPAGES = RegistrationPages.length;
+export const NUMPAGES = RegistrationPages.length;
 
 export function sanitizePage(page: number) {    
     if(page <= 1) {
