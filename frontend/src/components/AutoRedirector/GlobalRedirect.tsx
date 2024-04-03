@@ -1,14 +1,12 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useUserRegistration } from './UserRegistration';
 import { isCompleteRegistration } from '../../models/common';
 
 function GlobalRedirect() {
-    // TODO: Obtain the authenticated boolean from a valid JWT token and the registered flag from session storage
-    // These hard-coded booleans help devs simulate different possible activation statuses.
-    const authenticated = true;
-    let {registered, done} = useUserRegistration();
+    let {registered, done, authenticated, setAuthenticated} = useUserRegistration();
 
+    const loc = useLocation();
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -20,11 +18,15 @@ function GlobalRedirect() {
         if(!authenticated) {
             // TODO: Redirect to login process
         } else if(done) {
-            if(!isCompleteRegistration(registered)) {
+            if(!isCompleteRegistration(registered) && loc.pathname !== "/registration") {
+                // TODO: replace temporary navigation solution with one that doesn't briefly display originally requested page
                 navigate('/registration', {replace: true});
+                // Temporary fix: refresh page after navigating to /registration
+                // https://stackoverflow.com/a/71642098
+                navigate(0);
             }
         }
-    }, [navigate, authenticated, done, registered]);
+    }, [done, authenticated, registered, loc]);
 
     return null;
 }
