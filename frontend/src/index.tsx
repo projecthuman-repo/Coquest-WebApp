@@ -171,9 +171,9 @@ root.render(
 				<BrowserRouter>
 					<UserRegistrationProvider>
 						<GlobalRedirect />
+						{/* Prevent the user from accessing links to top-level views while registering */}
+						<RemoveNavComponents pathPrefix="/registration" />
 					</UserRegistrationProvider>
-					{/* Prevent the user from accessing links to top-level views while registering */}
-					<RemoveNavComponents pathPrefix="/registration" />
 				</BrowserRouter>
 				<RouterProvider router={router} />
 			</ThemeProvider>
