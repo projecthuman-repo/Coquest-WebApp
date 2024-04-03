@@ -76,6 +76,10 @@ function Orientation() {
         handlePageId();
     }, [id, navigate, changePage]);
 
+    function submit() {
+        update({registered: true});
+    }
+
     if(hasError) {
         return (
             <Container>
@@ -108,13 +112,15 @@ function Orientation() {
                     </div>
                     
                     <div>
-                        { page < NUMPAGES &&
+                        { page < NUMPAGES ?
                             <IconButton className="icon-button"title="Next page" onClick={() => {
                                 const newPage = page + 1;
                                 changePage(newPage)
                                 }}>
                                 <ChevronRight />
                             </IconButton>
+                            :
+                            <button onClick={submit}>Continue</button>
                         }
                     </div>
                 </div>

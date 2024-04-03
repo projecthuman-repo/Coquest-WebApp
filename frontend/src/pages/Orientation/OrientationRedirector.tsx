@@ -1,19 +1,26 @@
 import { useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { useUserRegistration } from '../../components/AutoRedirector/UserRegistration';
-import { getRegistrationProgress } from '../../models/common';
+import { getRegistrationProgress, isCompleteRegistration } from '../../models/common';
 
 function OrientationRedirector() {
-    let {registered, done} = useUserRegistration();
+    let {registered, done, authenticated} = useUserRegistration();
     let navigate = useNavigate();
 
     useEffect(() => {
-        if(done) {
-            navigate(`/registration/${getRegistrationProgress(registered)}`, { replace: true });
+        // Must check if user is authenticated to ensure `registered` mirrors the user subject's value   
+        if(done && authenticated) {
+            if(!isCompleteRegistration(registered)) {
+                navigate(`/registration/${getRegistrationProgress(registered)}`, { replace: true });
+           } else {
+                navigate('/', { replace: true });
+           }
         }
-    }, [done]);
+        // Note: do not include navigate in the dependancy list
+    }, [done, authenticated, registered]);
 
-    if(done) {
+    // Stop mounting process of Orientation component from overwriting a completely registered profile
+    if(authenticated && !isCompleteRegistration(registered)) {
         return (
             <Outlet />
         )
