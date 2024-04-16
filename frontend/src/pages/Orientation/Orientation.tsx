@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 import { IconButton } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { useNavigate } from "react-router";
-import { sanitizePage, RegistrationPages, update } from "./utils";
+import { sanitizePage, RegistrationPages, update, NUMPAGES } from "./utils";
 import { Link } from "react-router-dom";
 import { User } from "../../models/usermodel";
 import { userRepository } from "../../repositories/userrepository";
@@ -76,6 +76,10 @@ function Orientation() {
         handlePageId();
     }, [id, navigate, changePage]);
 
+    function submit() {
+        update({registered: true});
+    }
+
     if(hasError) {
         return (
             <Container>
@@ -96,21 +100,29 @@ function Orientation() {
                     <SelectedPageView user={user} updateData={updateData} />
                 </div>
                 <div className="icon-button-container">
-                <IconButton className="icon-button" title="Previous page" onClick={() => {
-                    const newPage = page - 1;
-                    changePage(newPage)
-                    }}>
-                    <ChevronLeft />
-
-                </IconButton>
-                
-                
-                <IconButton className="icon-button"title="Next page" onClick={() => {
-                    const newPage = page + 1;
-                    changePage(newPage)
-                    }}>
-                    <ChevronRight />
-                </IconButton>
+                    <div>
+                        { page > 1 &&
+                            <IconButton className="icon-button" title="Previous page" onClick={() => {
+                                const newPage = page - 1;
+                                changePage(newPage)
+                                }}>
+                                <ChevronLeft />
+                            </IconButton>
+                        }
+                    </div>
+                    
+                    <div>
+                        { page < NUMPAGES ?
+                            <IconButton className="icon-button"title="Next page" onClick={() => {
+                                const newPage = page + 1;
+                                changePage(newPage)
+                                }}>
+                                <ChevronRight />
+                            </IconButton>
+                            :
+                            <button onClick={submit}>Continue</button>
+                        }
+                    </div>
                 </div>
             </Container>
         );

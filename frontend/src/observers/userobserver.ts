@@ -36,7 +36,7 @@ export class UserModelSubject {
 // Free helper function
 // Subscribes to the BehaviourSubject managed by the UserModelSubject singleton.
 // Returns an unsubscribe callback to give the calller the flexibility to act on the disassociation as required. 
-export async function subscribeToUserModelSubject(nextCb: ((value: User) => void)) {
+export async function subscribeToUserModelSubject(nextCb: ((value: User) => void), errorCb?: ((error: any) => void)) {
     try {
         const userModelSubject = await UserModelSubject.getInstance();
         const subscription = userModelSubject.sub.subscribe({
@@ -47,6 +47,10 @@ export async function subscribeToUserModelSubject(nextCb: ((value: User) => void
         // Return the cleanup function directly from the async function
         return () => subscription.unsubscribe();
     } catch (error) {
-        console.error('Error initializing UserModelSubject:', error);
+        if(errorCb) {
+            errorCb(error);
+        } else {
+            console.error('Error initializing UserModelSubject:', error);
+        }
     }
 };

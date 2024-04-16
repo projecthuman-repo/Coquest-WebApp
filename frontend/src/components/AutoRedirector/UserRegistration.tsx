@@ -7,6 +7,8 @@ interface UserRegistrationType {
     setRegistered: (registered: Registered) => void;
     done: boolean;
     setDone: (done: boolean) => void;
+    authenticated: boolean;
+    setAuthenticated: (authenticated: boolean) => void;
 }
 
 // Creating the context
@@ -28,19 +30,25 @@ interface UserRegistrationProps {
 export function UserRegistrationProvider({ children }: UserRegistrationProps) {
     const [registered, setRegistered] = useState<Registered>({type: RegisteredRepType.BOOLEAN, boolValue: false});
     const [done, setDone] = useState(false);
+    const [authenticated, setAuthenticated] = useState(false);
 
     useEffect(() => {
         const unsubscribe = subscribeToUserModelSubject((userData) => {
-            setRegistered(userData.registered);
-            setDone(true);
-        });
+                setRegistered(userData.registered);
+                setDone(true);
+                setAuthenticated(true);
+            },
+            (_error) => {
+                setAuthenticated(false);
+                setDone(true);
+            });
         return () => {
             unsubscribe.then(cleanup => cleanup && cleanup());
         }
     }, []);
 
     return (
-        <UserContext.Provider value={{ registered, setRegistered, done, setDone }}>
+        <UserContext.Provider value={{ registered, setRegistered, done, setDone, authenticated, setAuthenticated }}>
             {children}
         </UserContext.Provider>
     );
