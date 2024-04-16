@@ -1544,8 +1544,10 @@ module.exports = {
       context,
       info
     ) {
-      console.log(context.req.origin);
-      context.res.cookie('phc', token, { httpOnly: false, secure: false, path: '/'}); // Adjust options as needed
+      // TODO: verify token before setting cookie
+
+      // TODO: set httpOnly to true and signed to true
+      context.res.cookie(process.env.AUTH_COOKIE_NAME, token, { httpOnly: false, secure: process.env.NODE_ENV === 'production', path: '/'});
 
       return { code: 0, response: 'successful' };
     }
