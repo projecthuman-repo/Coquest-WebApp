@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useUserRegistration } from './UserRegistration';
 import { isCompleteRegistration } from '../../models/common';
-import { gql, GraphQLClient } from 'graphql-request';
+import { gql } from 'graphql-request';
+import graphQLClient from '../../apiInterface/client';
 
 const setAuthCookieMutation = gql`
     mutation SetCookieWithToken($token: String!) {
@@ -28,12 +29,6 @@ function GlobalRedirect() {
             if(!authenticated) {
                 if(token) {
                     console.log('setting cookie with token', token);
-                    // TODO: establish CORS policy to create auth cookie
-                    const graphQLClient = new GraphQLClient(process.env.REACT_APP_API!, {
-                        // credentials: 'include',
-                        // mode: 'cors',
-                        method: 'POST',
-                    });
                     graphQLClient.request(setAuthCookieMutation, {token: token})
                         .then(() => {
                             setAuthenticated(true);

@@ -1,7 +1,8 @@
 import { map, from, Observable, of } from 'rxjs';
 import { User } from '../models/usermodel';
-import { request, gql } from 'graphql-request';
+import { gql } from 'graphql-request';
 import { replaceNullsWithDefaults, replaceUndefinedWithNulls, toOutputFormat } from './common';
+import graphQLClient from '../apiInterface/client';
 
 const fetchUserQuery = gql`
     query Query($id: String) {
@@ -79,7 +80,7 @@ class UserRepository {
     fetchUser(inputUser: User): Observable<User> {
         if(inputUser.isValid()) {
             return from(
-                request(process.env.REACT_APP_API!, fetchUserQuery, {"id": inputUser.id})
+                graphQLClient.request(fetchUserQuery, {"id": inputUser.id})
             ).pipe(
                 map((data: any): User => {
                     this.user = new User(data.findUserbyID);
@@ -93,7 +94,7 @@ class UserRepository {
             );
         } else {
             return from(
-                request(process.env.REACT_APP_API!, createUserMut, {"userInput": toOutputFormat(inputUser)})
+                graphQLClient.request(createUserMut, {"userInput": toOutputFormat(inputUser)})
             ).pipe(
                 map((data: any): User => {
                     // New users lack most data, so we must replace unassigned fields with null to
@@ -111,7 +112,7 @@ class UserRepository {
 
     updateUser(user: User) {
         // TODO: only update the changed fields 
-        request(process.env.REACT_APP_API!, updateUserMut, {
+        graphQLClient.request(updateUserMut, {
             userInput: toOutputFormat(user)
         })
         .then((res: any) => {
