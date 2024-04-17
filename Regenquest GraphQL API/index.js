@@ -8,6 +8,9 @@ const cors = require("cors");
 const { connectToDatabases } = require('./db/connection');
 const cookieParser = require("cookie-parser");
 
+const AuthDirective = require("./graphql/auth");
+const VerifyTokenDirective = require("./graphql/verifyToken");
+
 // Construct a schema, using GraphQL schema language
 const typeDefs = require('./graphql/typeDefs');
 
@@ -33,6 +36,10 @@ async function startServer() {
     cors: false,
     typeDefs,
     resolvers,
+    schemaDirectives: {
+      auth: AuthDirective,
+      verifyToken: VerifyTokenDirective,
+    },
     csrfPrevention: true,
     cache: 'bounded',
     context: ({ req, res }) => ({ req, res }),
