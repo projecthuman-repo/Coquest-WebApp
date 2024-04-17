@@ -410,37 +410,40 @@ module.exports = gql`
     name: String
   }
 
+  directive @auth on FIELD_DEFINITION
+  directive @verifyToken on FIELD_DEFINITION
+
   type Query {
-    getUsers: [regenquestUser]
-    getTasks: [regenquestTask]
-    getQuests: [regenquestQuest]
-    getPosts: [regenquestPost]
-    getItems: [regenquestInventory]
-    getEvents: [regenquestEvent]
-    getCommunities: [regenquestCommunity]
-    getGenres: [regenquestGenres]
-    getTopics: [regenquestTopic]
-    getMotives: [regenquestMotive]
+    getUsers: [regenquestUser] @auth
+    getTasks: [regenquestTask] @auth
+    getQuests: [regenquestQuest] @auth
+    getPosts: [regenquestPost] @auth
+    getItems: [regenquestInventory] @auth
+    getEvents: [regenquestEvent] @auth
+    getCommunities: [regenquestCommunity] @auth
+    getGenres: [regenquestGenres] @auth
+    getTopics: [regenquestTopic] @auth
+    getMotives: [regenquestMotive] @auth
 
-    findUserbyID(id: String): regenquestUser
-    findTaskbyID(taskID: String): regenquestTask
-    findQuestbyID(questID: String): regenquestQuest
-    findPostbyID(postID: String): regenquestPost
-    findInventoryItembyID(itemID: String): regenquestInventory
-    findEventbyID(eventID: String): regenquestEvent
-    findCommunitybyID(id: String): regenquestCommunity
-    findCrossUser(email: String): regenquestCrossUser
+    findUserbyID(id: String): regenquestUser @auth
+    findTaskbyID(taskID: String): regenquestTask @auth
+    findQuestbyID(questID: String): regenquestQuest @auth
+    findPostbyID(postID: String): regenquestPost @auth
+    findInventoryItembyID(itemID: String): regenquestInventory @auth
+    findEventbyID(eventID: String): regenquestEvent @auth
+    findCommunitybyID(id: String): regenquestCommunity @auth
+    findCrossUser(email: String): regenquestCrossUser @auth
 
-    getChatsByUserID(userID: String): [regenquestChat]
-    getMessagesByChatID(chatID: String): [regenquestMessage]
+    getChatsByUserID(userID: String): [regenquestChat] @auth
+    getMessagesByChatID(chatID: String): [regenquestMessage] @auth
 
-    getNotifications(userID: String): [regenquestNotification]
-    getUnreadNotifications(userID: String): [regenquestNotification]
-    markNotificationAsRead(notificationID: String): mutationResponse
-    markAllNotificationsAsRead(userID: String): mutationResponse
-    deleteNotification(notificationID: String): mutationResponse
+    getNotifications(userID: String): [regenquestNotification] @auth
+    getUnreadNotifications(userID: String): [regenquestNotification] @auth
+    markNotificationAsRead(notificationID: String): mutationResponse @auth
+    markAllNotificationsAsRead(userID: String): mutationResponse @auth
+    deleteNotification(notificationID: String): mutationResponse @auth
 
-    generatePresignedURL: String!
+    generatePresignedURL: String! @auth
   }
 
   
@@ -448,40 +451,42 @@ module.exports = gql`
   TODO: Declare and implement delete routines for all necessary models
   """
   type Mutation {
-    createRegenquestUser(userInput: regenquestUserInput): mutationResponse
-    createRegenquestTask(userInput: regenquestTaskInput): mutationResponse
-    createRegenquestQuest(userInput: regenquestQuestInput): mutationResponse
-    createRegenquestPost(userInput: regenquestPostInput): mutationResponse
+    createRegenquestUser(userInput: regenquestUserInput): mutationResponse @auth
+    createRegenquestTask(userInput: regenquestTaskInput): mutationResponse @auth
+    createRegenquestQuest(userInput: regenquestQuestInput): mutationResponse @auth
+    createRegenquestPost(userInput: regenquestPostInput): mutationResponse @auth
     createRegenquestInventory(
       userInput: regenquestInventoryInput
-    ): mutationResponse
-    createRegenquestEvent(userInput: regenquestEventInput): mutationResponse
+    ): mutationResponse @auth
+    createRegenquestEvent(userInput: regenquestEventInput): mutationResponse @auth
     createRegenquestCommunity(
       userInput: regenquestCommunityInput
-    ): mutationResponse
+    ): mutationResponse @auth
     createRegenquestNotification(
       userInput: regenquestNotificationInput
-    ): mutationResponse
+    ): mutationResponse @auth
 
-    createRegenquestChat(userInput: regenquestChatInput): mutationResponse
-    sendRegenquestMessage(userInput: regenquestMessageInput): mutationResponse
-    addMemberToChat(userInput: addMemberToChatInput): mutationResponse
-    markMessageAsRead(userInput: markMessageAsReadInput): mutationResponse
+    createRegenquestChat(userInput: regenquestChatInput): mutationResponse @auth
+    sendRegenquestMessage(userInput: regenquestMessageInput): mutationResponse @auth
+    addMemberToChat(userInput: addMemberToChatInput): mutationResponse @auth
+    markMessageAsRead(userInput: markMessageAsReadInput): mutationResponse @auth
 
-    updateRegenquestUser(userInput: regenquestUserInput): mutationResponse
-    updateRegenquestTask(userInput: regenquestTaskInput): mutationResponse
-    updateRegenquestQuest(userInput: regenquestQuestInput): mutationResponse
-    updateRegenquestPost(userInput: regenquestPostInput): mutationResponse
+    updateRegenquestUser(userInput: regenquestUserInput): mutationResponse @auth
+    updateRegenquestTask(userInput: regenquestTaskInput): mutationResponse @auth
+    updateRegenquestQuest(userInput: regenquestQuestInput): mutationResponse  @auth
+    updateRegenquestPost(userInput: regenquestPostInput): mutationResponse @auth
     updateRegenquestInventory(
       userInput: regenquestInventoryInput
-    ): mutationResponse
-    updateRegenquestEvent(userInput: regenquestEventInput): mutationResponse
+    ): mutationResponse @auth
+    updateRegenquestEvent(userInput: regenquestEventInput): mutationResponse @auth
     updateRegenquestCommunity(
       userInput: regenquestCommunityInput
-    ): mutationResponse
-    updateRegenquestGenres(userInput: regenquestGenresInput): mutationResponse
+    ): mutationResponse @auth
+    updateRegenquestGenres(userInput: regenquestGenresInput): mutationResponse @auth
     updateRegenquestNotification(
       userInput: regenquestNotificationInput
-    ): mutationResponse
+    ): mutationResponse @auth
+
+    setCookieWithToken(token: String!): mutationResponse @verifyToken
   }
 `;

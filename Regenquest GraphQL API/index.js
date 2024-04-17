@@ -1,8 +1,15 @@
-const { ApolloServer, gql } = require('apollo-server-cloud-functions');
-const {
-  ApolloServerPluginLandingPageLocalDefault,
-} = require('apollo-server-core');
+const express = require('express');
+const { ApolloServer } = require('apollo-server-express');
+// TODO: find out how to reinclude this plugin
+// const {
+//   ApolloServerPluginLandingPageLocalDefault,
+// } = require('apollo-server-core');
+const cors = require("cors");
 const { connectToDatabases } = require('./db/connection');
+const cookieParser = require("cookie-parser");
+
+const AuthDirective = require("./graphql/auth");
+const VerifyTokenDirective = require("./graphql/verifyToken");
 
 // Construct a schema, using GraphQL schema language
 const typeDefs = require('./graphql/typeDefs');
@@ -10,20 +17,48 @@ const typeDefs = require('./graphql/typeDefs');
 // Provide resolver functions for your schema fields
 const resolvers = require('./graphql/resolvers');
 
-connectToDatabases()
-  .then(() => {
-    console.log('All mongodb connection successful.');
-  })
-  .catch((err) => {
-    console.error(err);
+const corsOptions = {
+  credentials: true,
+  origin: [
+    process.env.CROSS_ORIGIN,
+  ]
+};
+
+async function startServer() {
+  await connectToDatabases();
+
+  const app = express();
+  app.use(cors(corsOptions));
+  app.use(cookieParser());
+
+  const server = new ApolloServer({
+    // Disable Apollo Server's built-in CORS policy definition option because it does not work  
+    cors: false,
+    typeDefs,
+    resolvers,
+    schemaDirectives: {
+      auth: AuthDirective,
+      verifyToken: VerifyTokenDirective,
+    },
+    csrfPrevention: true,
+    cache: 'bounded',
+    context: ({ req, res }) => ({ req, res }),
+    // plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
   });
+  
+  await server.start();
+  // Disabling CORS again here
+  server.applyMiddleware({ app, cors: false, path: '/' });
+  
+  return app;
+}
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  csrfPrevention: true,
-  cache: 'bounded',
-  plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
-});
+let appPromise = startServer();
 
-exports.handler = server.createHandler();
+exports.handler = (req, res) => {
+  appPromise.then(app => {
+    app(req, res);
+  }).catch(err => {
+    console.error('Error starting server:', err);
+  });
+};

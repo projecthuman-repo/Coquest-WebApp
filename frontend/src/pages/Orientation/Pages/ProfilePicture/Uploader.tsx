@@ -2,7 +2,8 @@ import Uploady from '@rpldy/uploady';
 import ProfilePicture from './ProfilePicture';
 import { useCroppedImage } from './CropperContext';
 import { useEffect, useState } from 'react';
-import { request, gql } from 'graphql-request';
+import { gql } from 'graphql-request';
+import graphQLClient from '../../../../apiInterface/client';
 
 function Uploader(props: any) {
     const [signedUrl, setSignedUrl] = useState<string>();
@@ -15,7 +16,7 @@ function Uploader(props: any) {
         }
         `;
 
-        request(process.env.REACT_APP_API!, document)
+        graphQLClient.request(document)
             .then((data: any) => {
                 let url = new URL(data.generatePresignedURL);
                 // Remove leading forward slash
