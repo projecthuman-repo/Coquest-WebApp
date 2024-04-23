@@ -1,4 +1,4 @@
-import graphQLClient from "../../../apiInterface/client";
+import graphQLClient from "../../apiInterface/client";
 
 function onCheck(setFuncs: React.Dispatch<React.SetStateAction<Set<string>>>[], prev: Set<any>, e: React.ChangeEvent<HTMLInputElement>) {
     const { name, checked } = e.target;
