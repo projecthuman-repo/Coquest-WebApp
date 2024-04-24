@@ -1,10 +1,10 @@
 import { CroppedImageProvider } from './CropperContext';
-import ProfilePictureWrapper from "./Uploader";
+import UploadImageWrapper from "./Uploader";
 
 function UploadWrapper(props: any) {
     return (
         <CroppedImageProvider>
-            <ProfilePictureWrapper user={props.user} updateData={props.updateData} />
+            <UploadImageWrapper images={props.images} updateData={props.updateData} multiUpload={props.multiUpload} generateImgCb={props.generateImgCb} />
         </CroppedImageProvider>
     )
 }
