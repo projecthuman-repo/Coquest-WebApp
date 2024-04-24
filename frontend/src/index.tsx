@@ -38,6 +38,7 @@ import RemoveNavComponents from "./components/RemoveNavComponents";
 import OrientationRedirector from "./pages/Orientation/OrientationRedirector";
 import GlobalRedirect from "./components/AutoRedirector/GlobalRedirect";
 import { UserRegistrationProvider } from "./components/AutoRedirector/UserRegistration";
+import CreateCommunity from "./pages/Community/Create";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement
@@ -69,6 +70,16 @@ const router = createBrowserRouter([
 				<b>Home</b>
 			</div>
 		),
+	},
+	{
+		path: "/communities",
+		element: <Outlet />,
+		children: [
+			{
+				path: "create",
+				element: <CreateCommunity />
+			}
+		]
 	},
 	{
 		path: "/programs",
