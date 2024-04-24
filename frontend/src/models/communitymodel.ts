@@ -1,17 +1,17 @@
-import { Image, Location } from "./common";
-import { User } from "./usermodel";
+import { ExpandableUser, Image, Location } from "./common";
 
+// TODO: Convert to class to encapsulate property manipulations
 export type Community = {
-    id: String;
-    name: String;
-    description: String;
+    readonly id: string | undefined;
+    name: string;
+    description: string;
     // Expandable
-    members: User[] | string[];
+    members: ExpandableUser[] | string[] | null | undefined;
     // Set of descriptors to help distinguish communities  
-    tags: [string];
+    tags: string[] | null | undefined;
     // Coordinate on the world map situated in the relative area of a community 
-    location: Location;
-    images: Image[];
+    location: Location | null | undefined;
+    images: Image[] | null | undefined;
 };
 
 // TODO: Business logic to bridge application with web API

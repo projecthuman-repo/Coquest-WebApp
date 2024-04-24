@@ -1,4 +1,5 @@
 import { Community } from "./communitymodel";
+import { User } from "./usermodel";
 
 /* 
 Calling code of a Model's business logic can request the depth of the data of interest, controlling how much of the component instances 
@@ -57,12 +58,19 @@ interface CommunityObj extends TypedObject {
     objValue: Community
 }
 
-interface CommunityString extends TypedObject {
+interface StringValue extends TypedObject {
     readonly type: "string",
     strValue: string,
 }
 
-export type ExpandableCommunity = CommunityString | CommunityObj;
+export type ExpandableCommunity = StringValue | CommunityObj;
+
+interface UserObj extends TypedObject {
+    readonly type: "obj",
+    objValue: User
+}
+
+export type ExpandableUser = StringValue | UserObj;
 
 export enum RegisteredRepType {
     BOOLEAN = "bool",
