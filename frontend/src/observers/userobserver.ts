@@ -1,6 +1,6 @@
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { User, UserOptional, UserRequired } from '../models/usermodel';
-import { userRepository } from '../repositories/userrepository';
+import Repository from '../repositories/repository';
 import { getUserFromJWT } from '../models/jwt';
 
 export class UserModelSubject {
@@ -21,7 +21,7 @@ export class UserModelSubject {
     }
 
     private static async getInitialInstance(): Promise<UserModelSubject> {
-        const value = await firstValueFrom(userRepository.fetchUser(await getUserFromJWT()));
+        const value = await firstValueFrom(Repository.getInstance('User', User).fetch(await getUserFromJWT(), {currentLevel: 0}));
         return new UserModelSubject({ _id: value.id, ...value });
     }
 

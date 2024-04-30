@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import { sanitizePage, RegistrationPages, update, NUMPAGES } from "./utils";
 import { Link } from "react-router-dom";
 import { User } from "../../models/usermodel";
-import { userRepository } from "../../repositories/userrepository";
+import Repository from "../../repositories/repository";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
 import './Orientation.css';
 
@@ -32,7 +32,8 @@ function Orientation() {
             
             // Only update when the user actually makes changes after the content fully renders.
             if(done) {
-                userRepository.updateUser(user);    
+                const repo = Repository.getInstance('User', User);
+                repo.update(user);
             }
         });
         return () => {

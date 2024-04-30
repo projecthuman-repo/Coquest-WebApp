@@ -13,6 +13,8 @@ export type EnumType = { [index: string]: string };
 export type TypedObject = { type: string; [key: string]: any };
 
 export interface Model {
+    readonly id: string | undefined;
+
     isValid(): boolean;
     getDefaultForProperty(key: string): any;
 }
