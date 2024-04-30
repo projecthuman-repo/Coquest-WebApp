@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import TagList from "../../components/CheckboxList";
 import RelativeLocation from "../Orientation/Pages/RelativeLocation";
-import { Image, Location } from "../../models/common";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
 import { User, generateProfileImg } from "../../models/usermodel";
 import { Community } from "../../models/communitymodel";
@@ -39,10 +38,12 @@ function CreateCommunity() {
         }
     }, [setUser]);
 
-    // TODO: create one parametric (template) to handle all updates indiscriminately 
-    const handleSimpleChange = (event: any) => {
-        const { name, value } = event.target;
-        setCommunity((prevFormData) => ({ ...prevFormData, [name]: value }));
+    const handleInputChange = (name: string, value: any) => {
+        setCommunity(prev => new Community({
+            _id: undefined,
+            ...prev,
+            [name]: value
+        }));
     };
 
     async function onSubmit(e: any) {
@@ -63,20 +64,20 @@ function CreateCommunity() {
             <>
                 <form id="community-form" onSubmit={onSubmit}>
                     <label htmlFor="name">Name:</label>
-                    <input id="name" name="name" type="text" value={community.name!} onChange={handleSimpleChange} />
-        
+                    <input id="name" name="name" type="text" value={community.name!} onChange={e => handleInputChange(e.target.name, e.target.value)} />
+
                     <label htmlFor="description">Description:</label>
-                    <input id="description" name="description" type="text" value={community.description!} onChange={handleSimpleChange} />
-        
-                    <TagList setFuncs={[setSelectedTags]} checkedData={new Set<string>(community.tags)} query={topicsQuery} />
-        
-                    <RelativeLocation user={user} updateData={setSelectedLocation} />
+                    <input id="description" name="description" type="text" value={community.description!} onChange={e => handleInputChange(e.target.name, e.target.value)} />
+
+                    <TagList setFuncs={[(tags: any) => handleInputChange('tags', Array.from(tags))]} checkedData={new Set<string>(community.tags)} query={topicsQuery} />
+
+                    <RelativeLocation user={user} updateData={(location: any) => handleInputChange('location', location)} />
                 </form>
 
                 {/* Uploady component is outside of the form to prevent it from triggering the form's submit event on use */}
                 <UploadWrapper
                     images={community.images}
-                    updateData={setImages}
+                    updateData={(images: any) => handleInputChange('images', images)}
                     multiUpload={true}
                     generateImgCb={generateProfileImg}
                 />
