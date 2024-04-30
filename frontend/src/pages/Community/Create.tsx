@@ -1,4 +1,3 @@
-import { gql } from "graphql-request";
 import { useEffect, useState } from "react";
 import TagList from "../../components/CheckboxList";
 import RelativeLocation from "../Orientation/Pages/RelativeLocation";
@@ -10,23 +9,7 @@ import UploadWrapper from "../../components/UploadImage/UploadWrapper";
 import { useNavigate } from "react-router";
 import Repository from "../../repositories/repository";
 import { firstValueFrom } from "rxjs";
-
-const topicsQuery = gql`
-    query GetTopics {
-        options: getTopics {
-            name
-        }
-    }
-`;
-
-const createCommunityMut = gql`
-    mutation CreateRegenquestCommunity($userInput: regenquestCommunityInput) {
-        createRegenquestCommunity(userInput: $userInput) {
-            code
-            response
-        }
-    }
-`;
+import { topicsQuery } from "../../apiInterface/gqlOperations";
 
 function CreateCommunity() {
     // TODO: Use a routine to create a new Community with default values 
