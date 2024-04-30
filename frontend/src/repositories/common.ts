@@ -32,23 +32,27 @@ export function toOutputFormat(inputObj: any): any {
         if (inputObj.length === 0) {
             return null;
         } else {
-            return inputObj.map(item => toOutputFormat(item));
+            return inputObj.map(item => {
+                return toOutputFormat(item);
+            });
         }
     } else if(inputObj === '') {
         return null
-    } else if (isExpandableType(inputObj)) {
-        const enumObj = getAssociatedEnum(inputObj);
-        return transformProp(enumObj, inputObj);
     } else if (typeof inputObj === 'object' && inputObj !== null) {
-        const processedObj: { [key: string]: any } = {};
+        const processedObj: TypedObject = {} as TypedObject;
         for (const key of Object.keys(inputObj)) {
             processedObj[key] = toOutputFormat(inputObj[key]);
         }
-        return processedObj;
-    } else {
-        // Return the input as-is if it doesn't meet any criteria for processing
-        return inputObj;
+
+        if (isExpandableType(inputObj)) {
+            const enumObj = getAssociatedEnum(inputObj);
+            return transformProp(enumObj, processedObj);
+        } else {
+            return processedObj;
+        }
     }
+    // Return the input as-is if it doesn't meet any criteria for processing
+    return inputObj;
 }
 
 export function replaceNullsWithDefaults<T extends Model>(obj: T): T {
