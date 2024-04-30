@@ -1,16 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import onCheck, { fetchEnumerable } from "./utils";
 import { capitalize } from "./utils";
-import { gql } from "graphql-request";
 import './Interests.css';
-
-const topicsQuery = gql`
-    query GetTopics {
-        options: getTopics {
-            name
-        }
-    }
-`;
+import { topicsQuery } from "../../../apiInterface/gqlOperations";
 
 function Interests(props: any) {
     const [options, setOptions] = useState<Array<string>>();

@@ -2,16 +2,8 @@ import React, { useEffect, useState } from "react";
 import onCheck, { fetchEnumerable } from "./utils";
 import { useRef } from 'react';
 import { capitalize } from "./utils";
-import { gql } from "graphql-request";
 import './Purpose.css';
-
-const motivesQuery = gql`
-    query GetMotives {
-        options: getMotives {
-            name
-        }
-    }
-`;
+import { motivesQuery } from "../../../apiInterface/gqlOperations";
 
 function Purpose(props: any) {
     const [options, setOptions] = useState<Array<string>>();
