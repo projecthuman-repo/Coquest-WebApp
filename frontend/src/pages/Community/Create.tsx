@@ -29,8 +29,9 @@ const createCommunityMut = gql`
 `;
 
 function CreateCommunity() {
-    const [community, setCommunity] = useState<Community>({
-        id: undefined,
+    // TODO: Use a routine to create a new Community with default values 
+    const [community, setCommunity] = useState<Community>(new Community({
+        _id: undefined,
         name: "",
         description: "",
         images: [
@@ -39,7 +40,7 @@ function CreateCommunity() {
         location: null,
         members: null,
         tags: [],
-    });
+    }));
     const [user, setUser] = useState<User | undefined>(undefined);
     let navigate = useNavigate();
 
@@ -48,7 +49,7 @@ function CreateCommunity() {
             setUser(user);
 
             // Add current user as the first member of the community
-            setCommunity(prev => ({...prev, members: [{type: "string", strValue: user.id!}], location: user.location}));
+            setCommunity(prev => new Community({_id: undefined, ...prev, members: [{type: "obj", objValue: user!}], location: user.location ?? null}));
         });
         return () => {
             unsubscribe.then(cleanup => cleanup && cleanup());
