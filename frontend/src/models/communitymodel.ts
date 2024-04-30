@@ -1,22 +1,54 @@
-import { Image, Location } from "./common";
-import { User } from "./usermodel";
+import { ExpandableUser, Image, Location, Model } from "./common";
+import { generateProfileImg } from "./usermodel";
 
-export type Community = {
-    id: String;
-    name: String;
-    description: String;
+export interface CommunityRequired {
+    readonly _id: string | undefined;
+    name: string;
+    description: string;
+    location: Location | null;
+}
+
+export interface CommunityOptional {
+    members: ExpandableUser[] | string[] | null;
+    tags: string[] | null;
+    images: Image[] | null;
+}
+
+// TODO: Convert to class to encapsulate property manipulations
+export class Community implements Model {
+    readonly id: string | undefined;
+    name: string;
+    description: string;
+    location: Location | null;
     // Expandable
-    members: User[] | string[];
+    members: ExpandableUser[] | string[] | null | undefined;
     // Set of descriptors to help distinguish communities  
-    tags: [string];
+    tags: string[] | null | undefined;
     // Coordinate on the world map situated in the relative area of a community 
-    location: Location;
-    images: Image[];
+    images: Image[] | null | undefined;
+
+    isValid(): boolean {
+        return !!this.id;
+    }
+    getDefaultForProperty(key: string): any {
+        const defaultValues: { [key: string]: any } = {
+            members: [],
+            tags: [],
+            images: [
+                generateProfileImg(),
+            ],
+        };
+
+        return defaultValues.hasOwnProperty(key) ? defaultValues[key] : null;
+    }
+
+    constructor(params: CommunityRequired & Partial<CommunityOptional> = {_id: undefined, name: "", description: "", location: {lng: 0, lat: 0}}) {
+        this.id = params._id;
+        this.name = params.name;
+        this.description = params.description;
+        this.location = params.location;
+        this.members = params.members;
+        this.tags = params.tags;
+        this.images = params.images;
+    }
 };
-
-// TODO: Business logic to bridge application with web API
-
-// TODO: Use RXJS to fetch communities based on interest and location
-// const endpoint = https://my-gateway-1njig8y6.uc.gateway.dev/regenquest?query={getRelevantCommunitiesByTags(topics, location){communityID name}}
-// communities = ajax.getJson(endpoint);
-// see https://www.learnrxjs.io/learn-rxjs/operators/creation/ajax
