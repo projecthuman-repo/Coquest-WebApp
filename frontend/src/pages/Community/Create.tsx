@@ -6,10 +6,10 @@ import { Image, Location } from "../../models/common";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
 import { User, generateProfileImg } from "../../models/usermodel";
 import { Community } from "../../models/communitymodel";
-import graphQLClient from "../../apiInterface/client";
 import UploadWrapper from "../../components/UploadImage/UploadWrapper";
-import { toOutputFormat } from "../../repositories/common";
 import { useNavigate } from "react-router";
+import Repository from "../../repositories/repository";
+import { firstValueFrom } from "rxjs";
 
 const topicsQuery = gql`
     query GetTopics {
@@ -62,34 +62,17 @@ function CreateCommunity() {
         setCommunity((prevFormData) => ({ ...prevFormData, [name]: value }));
     };
 
-    function setSelectedTags(tags: Set<string>) {
-        let copy = {...community} as Community;
-        copy.tags = Array.from(tags);
-        setCommunity(copy);
-    }
-
-    function setSelectedLocation(location: Location) {
-        let copy = {...community} as Community;
-        copy.location = location;
-        setCommunity(copy);
-    }
-
-    function setImages(imgs: Image[] | null | undefined) {
-        let copy = {...community} as Community;
-        copy.images = imgs;
-        setCommunity(copy);
-    }
-
-    function onSubmit(e: any) {
+    async function onSubmit(e: any) {
         e.preventDefault();
-        graphQLClient.request(createCommunityMut, {
-            userInput: toOutputFormat(community)
-        }).then((res: any) => {
-            console.log(res);
+        try {
+            const repo = Repository.getInstance('Community', Community);
+            await firstValueFrom(repo.fetch(community));
+            // TODO: Display success message to the user
             navigate('/');
-        }).catch(error => {
-            console.error(error)
-        });
+        } catch(error) {
+            // TODO: Report errors to user
+            console.error(error);
+        }
     }
 
     if(user) {

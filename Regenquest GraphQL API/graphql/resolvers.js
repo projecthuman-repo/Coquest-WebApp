@@ -744,7 +744,7 @@ module.exports = {
     async createRegenquestCommunity(
       parent,
       {
-        userInput: {
+        communityInput: {
           name,
           description,
           members,
@@ -756,8 +756,6 @@ module.exports = {
       context,
       info
     ) {
-      // TODO: check if session token in Auth header is valid
-
       //create a new community object
       const newCommunity = new Community({
         name: name,

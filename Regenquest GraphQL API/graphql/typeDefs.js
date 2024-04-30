@@ -328,7 +328,7 @@ module.exports = gql`
   }
 
   input regenquestCommunityInput {
-    id: String,
+    id: String
     name: String
     description: String
     members: [userInput]
@@ -460,7 +460,7 @@ module.exports = gql`
     ): mutationResponse @auth
     createRegenquestEvent(userInput: regenquestEventInput): mutationResponse @auth
     createRegenquestCommunity(
-      userInput: regenquestCommunityInput
+      communityInput: regenquestCommunityInput
     ): mutationResponse @auth
     createRegenquestNotification(
       userInput: regenquestNotificationInput
