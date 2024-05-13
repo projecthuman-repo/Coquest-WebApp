@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import { Typography, Grid } from "@mui/material";
 import TaskCard from "../../pages/Coop/CoopComponents/TaskCard";
+import { TaskImpl, TaskStatus } from "../../models/taskModel"; // assuming you have TaskStatus correctly defined
 
 const Header = styled(Typography)({
 	fontWeight: 600,
 	paddingTop: 30,
 	paddingLeft: 30,
-	fontSize: "16px",
-	lineHeight: "24px",
-	color: "#0000000",
+	fontSize: "18px",  // Increased from 16px to 18px
+	lineHeight: "28px",  // Adjusted line height for better readability
+	color: "#000000",
 });
 
 const CommunityContainer = styled.div({
@@ -29,77 +29,22 @@ const CustomGrid = styled(Grid)({
 	padding: 15,
 	paddingTop: 0,
 });
+
+const TaskCardWrapper = styled.div({
+	marginBottom: "14px", // Add margin to each task card for better spacing
+});
+
+// Create TaskImpl instances
 const taskContents = [
-	{
+	new TaskImpl({
+		id: undefined,
 		taskName: "Task Name",
 		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
+		location: { lat: 34.0522, lng: -118.2437 }, // Correct spelling and use object
+		description: "Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
+		status: TaskStatus.PENDING
+	}),
+	// Repeat for other tasks as needed
 ];
 
 const CommunityTasks = () => {
@@ -107,15 +52,17 @@ const CommunityTasks = () => {
 		<CommunityContainer>
 			<Header>All community tasks</Header>
 			<CustomGrid container spacing={1}>
-				{taskContents.map((item, index) => (
+				{taskContents.map((task, index) => (
 					<Grid item key={index} lg={4}>
-						<TaskCard
-							name={item.taskName}
-							community={item.communityName}
-							location={item.loction}
-							description={item.description}
-							type="small"
-						/>
+						<TaskCardWrapper>
+							<TaskCard
+								name={task.taskName}
+								community={task.communityName}
+								location={`${task.location.lat}, ${task.location.lng}`} // Adjust how location is displayed
+								description={task.description}
+								type="small"
+							/>
+						</TaskCardWrapper>
 					</Grid>
 				))}
 			</CustomGrid>

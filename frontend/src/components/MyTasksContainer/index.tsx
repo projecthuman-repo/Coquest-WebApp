@@ -3,43 +3,25 @@ import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
 import Link from "@mui/material/Link";
 import TaskCard from "../../pages/Coop/CoopComponents/TaskCard";
+import { TaskImpl, TaskStatus } from "../../models/taskModel"; // Make sure to import TaskImpl and TaskStatus
 
-//props for task label and link to task page
-type MyTasksContainerProps = {
+// props for task label and link to task page
+interface MyTasksContainerProps {
 	label: string;
 	seeAllLink: string;
-};
+}
 
-//array of task contents
-let taskContents: any[] = [
-	{
+// Example tasks matching the Task model
+const taskContents: TaskImpl[] = [
+	new TaskImpl({
+		id: undefined,
 		taskName: "Task Name",
 		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
+		location: { lat: 34.0522, lng: -118.2437 },
+		description: "Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
+		status: TaskStatus.PENDING
+	}),
+	// Additional tasks can be added here
 ];
 
 const SeeAllLink = styled(Link)({
@@ -59,7 +41,7 @@ const TasksContainer = styled.div({
 	backgroundColor: "#F3F3F3",
 	borderRadius: "10px",
 	padding: 30,
-	height: "91%",
+	height: "88%",
 	maxHeight: 638,
 	paddingTop: 20,
 });
@@ -75,9 +57,14 @@ const TasksListWrapper = styled.div({
 	height: 538,
 	overflow: "auto",
 });
-//maps through data to display on each task card
-//places the link in upper right hand corner
-const MyTasksContainer = ({ label, seeAllLink }: MyTasksContainerProps) => {
+
+const TaskCardWrapper = styled.div({
+	marginBottom: "14px",
+});
+
+// Maps through data to display on each task card
+// Places the link in upper right hand corner
+const MyTasksContainer: React.FC<MyTasksContainerProps> = ({ label, seeAllLink }) => {
 	return (
 		<TasksContainer>
 			<ContainerHeader>
@@ -87,20 +74,17 @@ const MyTasksContainer = ({ label, seeAllLink }: MyTasksContainerProps) => {
 				</SeeAllLink>
 			</ContainerHeader>
 			<TasksListWrapper>
-				{taskContents.map((item) => {
-					return (
+				{taskContents.map((task, index) => (
+					<TaskCardWrapper key={index}>
 						<TaskCard
-							name={item.taskName}
-							community={item.communityName}
-							location={item.location}
-							description={item.description}
+							name={task.taskName}
+							community={task.communityName}
+							location={`${task.location.lat}, ${task.location.lng}`}
+							description={task.description}
 							type="large"
-							style={{
-								marginBottom: "14px",
-							}}
 						/>
-					);
-				})}
+					</TaskCardWrapper>
+				))}
 			</TasksListWrapper>
 		</TasksContainer>
 	);

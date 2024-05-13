@@ -15,7 +15,7 @@ const setAuthCookieMutation = gql`
 `;
 
 function GlobalRedirect() {
-    let {registered, done, authenticated, setAuthenticated} = useUserRegistration();
+    let { registered, done, authenticated, setAuthenticated } = useUserRegistration();
 
     const loc = useLocation();
     let navigate = useNavigate();

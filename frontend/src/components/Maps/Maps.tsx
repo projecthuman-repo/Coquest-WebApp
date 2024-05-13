@@ -15,7 +15,7 @@ const Maps = () => {
 			<img
 				style={{
 					width: "100%",
-					height: "98%",
+					height: "95.7%",
 					borderRadius: "10px",
 					objectFit: "cover",
 				}}
