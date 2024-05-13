@@ -15,11 +15,52 @@ const Motive = require('../models/regenquestMotive');
 const CrossPlatformUser = require('../models/crossPlatform/User');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
+const mongoose = require('mongoose');
 const { Types: { ObjectId }} = require('mongoose');
 const { Storage } = require("@google-cloud/storage");
 const path = require("path");
 
 const storage = new Storage();
+
+// Constructs an object parameter for the Mongoose `.populate()` routine, specifying which properties to expand.
+function buildPopulateOptions(info, modelName, userRequestedFields) {
+  // Helper function to recursively find population options
+  const findPopulationFields = (selections, modelName, subUserRequestedFields) => {
+    const populateOptions = [];
+
+      selections.forEach(field => {
+        const fieldName = field.name.value;
+        const model = mongoose.model(modelName);
+        const tree = model.schema.tree[fieldName];
+        const requestedField = subUserRequestedFields.find(elem => elem === fieldName || elem[fieldName]);
+
+        // Check if the field is expandable, exists in userRequestedFields, and is included in the current query structure
+        if (field.selectionSet && tree?.metadata?.expandable && requestedField) {
+          const popOption = { path: fieldName };
+
+          if(typeof requestedField === 'object') {
+            const namedType = tree?.type[0]?.ref;
+            const selections = field.selectionSet.selections.find(elem => elem.typeCondition?.name.value === namedType);
+            popOption.populate = findPopulationFields(selections.selectionSet.selections, namedType, requestedField[fieldName]);
+          }
+          populateOptions.push(popOption);
+        }
+      });
+
+      return populateOptions.length > 0 ? populateOptions : null;
+  };
+
+  const node = info.fieldNodes.find(node => node.name.value === info.fieldName);
+  return findPopulationFields(node.selectionSet.selections, modelName, userRequestedFields[modelName]);
+}
+
+function getJson(str) {
+  try {
+      return JSON.parse(str);
+  } catch (e) {
+      return "";
+  }
+}
 
 // Convert a list of expandable type schemas, `expandable`, into a list of ID strings.
 // If the object is expandable, function expects the property named `propName` to be present for use as the ID.
@@ -41,8 +82,8 @@ function coerceExpandable(expandable, propName) {
 function deduceExpandableType(expandableObj, expandedTypeName) {
   if ('strValue' in expandableObj) {
     return 'string';
-  } else if ('id' in expandableObj) {
-    return expandedTypeName;
+  } else if ('objValue' in expandableObj) {
+    return expandedTypeName + 'Output';
   } else {
     // *Shouldn't happen*
     return null;
@@ -55,7 +96,7 @@ function toOutputFormat(arr) {
     if(elem instanceof ObjectId) {
       return { strValue: elem.toString() };
     } else if(typeof elem === 'object') {
-      return elem;
+      return { objValue: elem };
     } else {
       // *Shouldn't happen*
       return { value: '' };
@@ -177,9 +218,15 @@ module.exports = {
     },
 
     //this method finds a user by their id
-    async findUserbyID(parent, { id }, context, info) {
+    async findUserbyID(parent, { id, expand }, context, info) {
       try {
-        const result = await User.findOne({ _id: id });
+        let result = await User.findOne({ _id: id });
+        const expandParsed = getJson(expand);
+
+        if(expandParsed) {
+          const populateOptions = buildPopulateOptions(info, 'regenquestUser', expandParsed);
+          result = await result.populate(populateOptions);
+        }
 
         if(typeof result.registered === 'boolean') {
           result.registered = {

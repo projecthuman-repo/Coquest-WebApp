@@ -48,9 +48,10 @@ const regenquestUserSchema = new Schema({
     type: [{
       type: mongoose.ObjectId,
       ref: 'regenquestCommunity',
-      validate: validators.idValidators(() => require("./regenquestCommunity"), 'community')
+      validate: validators.idValidators(() => require("./regenquestCommunity"), 'community'),
     }],
-    validate: validators.arrValidators('communities')
+    validate: validators.arrValidators('communities'),
+    metadata: { expandable: true },
   },
   skills: [skillSchema],
   badges: [badgeSchema],
