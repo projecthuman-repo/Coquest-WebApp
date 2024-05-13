@@ -25,11 +25,11 @@ function GlobalRedirect() {
     const token = searchParams.get('token');
 
     useEffect(() => {
-        if(done) {
-            if(!authenticated) {
-                if(token) {
+        if (done) {
+            if (!authenticated) {
+                if (token) {
                     console.log('setting cookie with token', token);
-                    graphQLClient.request(setAuthCookieMutation, {token: token})
+                    graphQLClient.request(setAuthCookieMutation, { token: token })
                         .then(() => {
                             setAuthenticated(true);
                         });
@@ -38,9 +38,9 @@ function GlobalRedirect() {
                     window.location.href = `${process.env.REACT_APP_AUTH_URI}?appId=2`;
                 }
                 // Explicitly check for "/registration" pathname to prevent endless reload loop
-            } else if(!isCompleteRegistration(registered) && loc.pathname !== "/registration") {
+            } else if (!isCompleteRegistration(registered) && loc.pathname !== "/registration") {
                 // TODO: replace temporary navigation solution with one that doesn't briefly display originally requested page
-                navigate('/registration', {replace: true});
+                navigate('/registration', { replace: true });
                 // Temporary fix: refresh page after navigating to /registration
                 // https://stackoverflow.com/a/71642098
                 navigate(0);
