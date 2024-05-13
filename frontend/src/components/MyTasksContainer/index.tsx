@@ -1,43 +1,52 @@
+// MyTasksContainer/index.tsx
 import React from "react";
 import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
 import Link from "@mui/material/Link";
 import TaskCard from "../../pages/Coop/CoopComponents/TaskCard";
-import { TaskImpl, TaskStatus } from "../../models/taskModel"; // Make sure to import TaskImpl and TaskStatus
+import { TaskImpl, TaskStatus } from "../../models/taskModel"; // Import TaskImpl and TaskStatus
 
-// props for task label and link to task page
+// Define component props
 interface MyTasksContainerProps {
 	label: string;
 	seeAllLink: string;
 }
 
-// Example tasks matching the Task model
+// Sample task data
 const taskContents: TaskImpl[] = [
 	new TaskImpl({
-		id: undefined,
-		taskName: "Task Name",
-		communityName: "Community name",
+		id: "1",
+		taskName: "Task Review",
+		communityName: "Legal Team",
 		location: { lat: 34.0522, lng: -118.2437 },
-		description: "Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-		status: TaskStatus.PENDING
+		description: "Review all documents related to the upcoming case.",
+		status: TaskStatus.PENDING,
+		userID: "user123",
+		questID: "quest001",
+		requirements: ["Complete by EOD Friday"],
+		completionStatus: false,
+		history: ["Task created on 2023-05-10"],
+		createdAt: new Date(),
+		updatedAt: new Date()
 	}),
-	// Additional tasks can be added here
+	// Additional static tasks can be added here
 ];
 
-const SeeAllLink = styled(Link)({
+// Styled components for UI
+const SeeAllLinkStyled = styled(Link)({
 	fontWeight: 400,
 	fontSize: "13px",
 	color: "#000000",
 });
 
-const Label = styled(Typography)({
+const LabelStyled = styled(Typography)({
 	fontWeight: 600,
 	fontSize: 16,
 	color: "#000000",
 	lineHeight: "24px",
 });
 
-const TasksContainer = styled.div({
+const TasksContainerStyled = styled.div({
 	backgroundColor: "#F3F3F3",
 	borderRadius: "10px",
 	padding: 30,
@@ -46,36 +55,33 @@ const TasksContainer = styled.div({
 	paddingTop: 20,
 });
 
-const ContainerHeader = styled.div({
+const ContainerHeaderStyled = styled.div({
 	display: "flex",
 	justifyContent: "space-between",
 });
 
-const TasksListWrapper = styled.div({
+const TasksListWrapperStyled = styled.div({
 	padding: 10,
 	paddingTop: 30,
 	height: 538,
 	overflow: "auto",
 });
 
-const TaskCardWrapper = styled.div({
+const TaskCardWrapperStyled = styled.div({
 	marginBottom: "14px",
 });
 
-// Maps through data to display on each task card
-// Places the link in upper right hand corner
+// Component function
 const MyTasksContainer: React.FC<MyTasksContainerProps> = ({ label, seeAllLink }) => {
 	return (
-		<TasksContainer>
-			<ContainerHeader>
-				<Label>{label}</Label>
-				<SeeAllLink href={seeAllLink} color="#000000">
-					See all
-				</SeeAllLink>
-			</ContainerHeader>
-			<TasksListWrapper>
+		<TasksContainerStyled>
+			<ContainerHeaderStyled>
+				<LabelStyled>{label}</LabelStyled>
+				<SeeAllLinkStyled href={seeAllLink}>See all</SeeAllLinkStyled>
+			</ContainerHeaderStyled>
+			<TasksListWrapperStyled>
 				{taskContents.map((task, index) => (
-					<TaskCardWrapper key={index}>
+					<TaskCardWrapperStyled key={index}>
 						<TaskCard
 							name={task.taskName}
 							community={task.communityName}
@@ -83,10 +89,10 @@ const MyTasksContainer: React.FC<MyTasksContainerProps> = ({ label, seeAllLink }
 							description={task.description}
 							type="large"
 						/>
-					</TaskCardWrapper>
+					</TaskCardWrapperStyled>
 				))}
-			</TasksListWrapper>
-		</TasksContainer>
+			</TasksListWrapperStyled>
+		</TasksContainerStyled>
 	);
 };
 

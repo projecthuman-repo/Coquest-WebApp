@@ -24,6 +24,33 @@ function GlobalRedirect() {
     let [searchParams] = useSearchParams();
     const token = searchParams.get('token');
 
+    // Improved Integration with Authentication Flow
+    // useEffect(() => {
+    //     // Check if process is done and user is not yet authenticated
+    //     if (done && !authenticated) {
+    //         if (token) {
+    //             console.log('setting cookie with token', token);
+    //             graphQLClient.request(setAuthCookieMutation, { token: token })
+    //                 .then(() => {
+    //                     setAuthenticated(true);
+    //                     // After setting authenticated, redirect away or reset the URL to clean the token
+    //                     navigate('/path-after-auth', { replace: true });  // Adjust the path as needed
+    //                 })
+    //                 .catch((error) => {
+    //                     console.error('Authentication error:', error);
+    //                     // Handle error, maybe navigate to an error page or login page
+    //                     navigate('/login', { replace: true });
+    //                 });
+    //         } else {
+    //             // Redirect to authentication URI
+    //             window.location.href = `${process.env.REACT_APP_AUTH_URI}?appId=2`;
+    //         }
+    //     } else if (authenticated && !isCompleteRegistration(registered) && loc.pathname !== "/registration") {
+    //         navigate('/registration', { replace: true });
+    //     }
+    // }, [done, authenticated, registered, token, loc, navigate]);
+    
+
     useEffect(() => {
         if (done) {
             if (!authenticated) {

@@ -1,71 +1,80 @@
-import React from "react";
+// CommunityTasks/index.tsx
+import React from 'react';
 import styled from "@emotion/styled";
-import { Typography, Grid } from "@mui/material";
-import TaskCard from "../../pages/Coop/CoopComponents/TaskCard";
-import { TaskImpl, TaskStatus } from "../../models/taskModel"; // assuming you have TaskStatus correctly defined
+import { Typography, Link } from "@mui/material";
+import TaskCard from "../../pages/Coop/CoopComponents/TaskCard"; // Ensure correct path for TaskCard
+import { Community } from "../../models/communitymodel";  // Ensure this path is correct
 
-const Header = styled(Typography)({
-	fontWeight: 600,
-	paddingTop: 30,
-	paddingLeft: 30,
-	fontSize: "18px",  // Increased from 16px to 18px
-	lineHeight: "28px",  // Adjusted line height for better readability
-	color: "#000000",
-});
+interface CommunityTasksProps {
+	label: string;
+	seeAllLink: string;
+}
 
-const CommunityContainer = styled.div({
-	backgroundColor: "#D9D9D9",
-	borderRadius: 10,
-	width: "95%",
-	height: 329,
-	margin: "auto",
-});
-
-const CustomGrid = styled(Grid)({
-	width: "100%",
-	height: 250,
-	overflow: "auto",
-	margin: "auto",
-	padding: 15,
-	paddingTop: 0,
-});
-
-const TaskCardWrapper = styled.div({
-	marginBottom: "14px", // Add margin to each task card for better spacing
-});
-
-// Create TaskImpl instances
-const taskContents = [
-	new TaskImpl({
-		id: undefined,
-		taskName: "Task Name",
-		communityName: "Community name",
-		location: { lat: 34.0522, lng: -118.2437 }, // Correct spelling and use object
-		description: "Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-		status: TaskStatus.PENDING
+// Sample community data
+const communityData: Community[] = [
+	new Community({
+		_id: '1',
+		name: 'Green Thumbs',
+		description: 'Community for gardening enthusiasts.',
+		location: { lat: 34.0522, lng: -118.2437 },
+		members: [],
+		tags: ['gardening', 'sustainability'],
+		images: [{
+			contentType: 'image/jpeg',
+			path: 'path_to_gardening_community_image.jpg'
+		}]
 	}),
-	// Repeat for other tasks as needed
+	// Add more communities as needed
 ];
 
-const CommunityTasks = () => {
+// Styled components
+const CommunityContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    background-color: #F3F3F3; // Light grey background for the container
+    border-radius: 10px;
+    padding: 30px;
+    max-height: 638px;
+    overflow: auto;
+`;
+
+const ContainerHeaderStyled = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+`;
+
+const LabelStyled = styled(Typography)`
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+`;
+
+const SeeAllLinkStyled = styled(Link)`
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+`;
+
+// Component to display communities using TaskCard
+const CommunityTasks: React.FC<CommunityTasksProps> = ({ label, seeAllLink }) => {
 	return (
 		<CommunityContainer>
-			<Header>All community tasks</Header>
-			<CustomGrid container spacing={1}>
-				{taskContents.map((task, index) => (
-					<Grid item key={index} lg={4}>
-						<TaskCardWrapper>
-							<TaskCard
-								name={task.taskName}
-								community={task.communityName}
-								location={`${task.location.lat}, ${task.location.lng}`} // Adjust how location is displayed
-								description={task.description}
-								type="small"
-							/>
-						</TaskCardWrapper>
-					</Grid>
-				))}
-			</CustomGrid>
+			<ContainerHeaderStyled>
+				<LabelStyled>{label}</LabelStyled>
+				<SeeAllLinkStyled href={seeAllLink}>See all</SeeAllLinkStyled>
+			</ContainerHeaderStyled>
+			{communityData.map((community, index) => (
+				<TaskCard
+					key={community.id}
+					name={community.name}
+					community={community.description}
+					location={`${community.location?.lat}, ${community.location?.lng}`}
+					description={`Tags: ${community.tags?.join(', ')}`}
+					type="large"
+				/>
+			))}
 		</CommunityContainer>
 	);
 };

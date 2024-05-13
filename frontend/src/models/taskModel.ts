@@ -1,13 +1,11 @@
 // taskModel.ts
-import { Location, Image, ExpandableUser } from "./common";
+import { Location, Image, ExpandableUser, Registered } from "./common";
 
 export enum TaskStatus {
   PENDING = "pending",
   IN_PROGRESS = "in_progress",
   COMPLETED = "completed",
 }
-
-// Separating properties and methods into different interfaces
 
 export interface TaskProperties {
   readonly id: string | undefined;
@@ -20,14 +18,14 @@ export interface TaskProperties {
   assignedTo?: ExpandableUser;
   createdAt?: Date;
   updatedAt?: Date;
+  userID: string;
+  questID: string;
+  requirements: string[];
+  completionStatus: boolean;
+  history: string[];
 }
 
-export interface Task extends TaskProperties {
-  isValid(): boolean;
-  getDefaultForProperty(key: string): any;
-}
-
-export class TaskImpl implements Task {
+export class TaskImpl implements TaskProperties {
   readonly id: string | undefined;
   taskName: string;
   communityName: string;
@@ -38,9 +36,13 @@ export class TaskImpl implements Task {
   assignedTo?: ExpandableUser;
   createdAt?: Date;
   updatedAt?: Date;
+  userID: string;
+  questID: string;
+  requirements: string[];
+  completionStatus: boolean;
+  history: string[];
 
   constructor(params: TaskProperties) {
-    // Change to TaskProperties
     this.id = params.id;
     this.taskName = params.taskName;
     this.communityName = params.communityName;
@@ -51,20 +53,14 @@ export class TaskImpl implements Task {
     this.assignedTo = params.assignedTo;
     this.createdAt = params.createdAt;
     this.updatedAt = params.updatedAt;
+    this.userID = params.userID;
+    this.questID = params.questID;
+    this.requirements = params.requirements || [];
+    this.completionStatus = params.completionStatus || false;
+    this.history = params.history || [];
   }
 
   isValid(): boolean {
     return !!this.taskName && !!this.communityName && !!this.description;
-  }
-
-  getDefaultForProperty(key: string): any {
-    const defaults: { [key: string]: any } = {
-      images: [],
-      assignedTo: null,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-
-    return defaults[key] || null;
   }
 }
