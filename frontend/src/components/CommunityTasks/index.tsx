@@ -31,13 +31,16 @@ const communityData: Community[] = [
 const CommunityContainer = styled.div`
     display: flex;
     flex-direction: column;
-    margin: 20px;
-    background-color: #F3F3F3; // Light grey background for the container
+    margin-right: 20px; // Add 20px margin to the right
+    background-color: #d9d9d9;
     border-radius: 10px;
     padding: 30px;
-    max-height: 638px;
+    height: 329px;
+    box-sizing: border-box;
     overflow: auto;
+	margin-left: 10px;
 `;
+
 
 const ContainerHeaderStyled = styled.div`
     display: flex;
@@ -57,13 +60,14 @@ const SeeAllLinkStyled = styled(Link)`
     text-decoration: none;
 `;
 
+
+
 // Component to display communities using TaskCard
 const CommunityTasks: React.FC<CommunityTasksProps> = ({ label, seeAllLink }) => {
 	return (
 		<CommunityContainer>
 			<ContainerHeaderStyled>
 				<LabelStyled>{label}</LabelStyled>
-				<SeeAllLinkStyled href={seeAllLink}>See all</SeeAllLinkStyled>
 			</ContainerHeaderStyled>
 			{communityData.map((community, index) => (
 				<TaskCard
