@@ -23,6 +23,7 @@ const path = require("path");
 const storage = new Storage();
 
 // Constructs an object parameter for the Mongoose `.populate()` routine, specifying which properties to expand.
+// TODO: Automatically redact redundant list entries
 function buildPopulateOptions(info, modelName, userRequestedFields) {
   // Helper function to recursively find population options
   const findPopulationFields = (selections, modelName, subUserRequestedFields) => {
@@ -40,7 +41,11 @@ function buildPopulateOptions(info, modelName, userRequestedFields) {
 
           if(typeof requestedField === 'object') {
             const namedType = tree?.type[0]?.ref;
-            const selections = field.selectionSet.selections.find(elem => elem.typeCondition?.name.value === namedType);
+            let selections = field.selectionSet.selections.find(elem => elem.typeCondition?.name.value === namedType + "Output");
+            // Follow the objValue path to the actual object value
+            if(selections.selectionSet.selections.length === 1 && selections.selectionSet.selections[0].name.value === 'objValue') {
+              selections = selections.selectionSet.selections[0];
+            }
             popOption.populate = findPopulationFields(selections.selectionSet.selections, namedType, requestedField[fieldName]);
           }
           populateOptions.push(popOption);
