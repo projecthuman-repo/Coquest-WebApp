@@ -90,18 +90,37 @@ function deduceExpandableType(expandableObj, expandedTypeName) {
   }
 }
 
-// Convert expandable array elements to shape that GraphQL expects based on the output type definition in `typeDefs.js`.
-function toOutputFormat(arr) {
-  return arr?.map((elem) => {
-    if(elem instanceof ObjectId) {
-      return { strValue: elem.toString() };
-    } else if(typeof elem === 'object') {
-      return { objValue: elem };
-    } else {
-      // *Shouldn't happen*
-      return { value: '' };
+// Convert expandable properties to a shape that GraphQL expects based on the output type definition in `typeDefs.js`.
+// Expects an input object, `obj`, and the MongoDB schema of that object. 
+function toOutputFormat(obj, schema) {
+  if (Array.isArray(obj)) {
+    return obj.map((elem) => toOutputFormat(elem, schema));
+  } else if (obj instanceof ObjectId) {
+    return { strValue: obj.toString() };
+  } else if (typeof obj === 'object' && obj !== null) {
+    const processedObj = {};
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const fieldSchema = schema[key];
+        if (!fieldSchema) continue;
+
+        const isExpandable = fieldSchema.metadata?.expandable;
+        const newSchemaName = Array.isArray(fieldSchema?.type) ? fieldSchema?.type[0]?.ref : fieldSchema?.type?.ref;
+        if (isExpandable && newSchemaName) {
+          processedObj[key] = toOutputFormat(
+            obj[key], 
+            mongoose.model(newSchemaName).schema.tree
+          );
+        } else {
+          processedObj[key] = obj[key];
+        }
+      }
     }
-  }) ?? null;
+    return { objValue: processedObj };
+  } else {
+    // Return the value as is for non-expandable fields
+    return obj;
+  }
 }
 
 module.exports = {
@@ -242,9 +261,9 @@ module.exports = {
         }
 
         let user = result.toObject();
-        user.communities = toOutputFormat(user.communities);
+        user = toOutputFormat(user, User.schema.tree);
 
-        return user;
+        return user.objValue;
       } catch (err) {
         throw new Error('Error finding user by ID');
       }
