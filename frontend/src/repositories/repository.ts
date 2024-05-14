@@ -58,6 +58,22 @@ function getFetchQuery(typeName: RepoTypeName): string {
                                         contentType
                                         path
                                     }
+                                    members {
+                                        type: __typename
+                                        ... on string {
+                                            strValue
+                                        }
+                                        ... on regenquestUserOutput {
+                                            objValue {
+                                                _id
+                                                username
+                                                images {
+                                                    contentType
+                                                    path
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }

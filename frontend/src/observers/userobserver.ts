@@ -21,7 +21,12 @@ export class UserModelSubject {
     }
 
     private static async getInitialInstance(): Promise<UserModelSubject> {
-        const value = await firstValueFrom(Repository.getInstance('User', User).fetch(await getUserFromJWT(), {currentLevel: 0}));
+        const value = await firstValueFrom(Repository.getInstance('User', User).fetch(await getUserFromJWT(), {currentLevel: 0}, {
+            expand: JSON.stringify({
+                'regenquestUser': [
+                    {'communities': ['members']}
+                ]
+            })}));
         return new UserModelSubject({ _id: value.id, ...value });
     }
 
