@@ -19,8 +19,8 @@ function getFetchQuery(typeName: RepoTypeName): string {
     switch(typeName) {
         case 'User':
             ret = gql`
-                query Query($id: String) {
-                    findUserbyID(id: $id) {
+                query Query($id: String $expand: String) {
+                    findUserbyID(id: $id expand: $expand) {
                         userID
                         name
                         username
@@ -43,6 +43,38 @@ function getFetchQuery(typeName: RepoTypeName): string {
                             type: __typename
                             ... on string {
                                 strValue
+                            }
+                            ... on regenquestCommunityOutput {
+                                objValue {
+                                    _id
+                                    name
+                                    description
+                                    tags
+                                    location {
+                                        lat
+                                        lng
+                                    }
+                                    images {
+                                        contentType
+                                        path
+                                    }
+                                    members {
+                                        type: __typename
+                                        ... on string {
+                                            strValue
+                                        }
+                                        ... on regenquestUserOutput {
+                                            objValue {
+                                                _id
+                                                username
+                                                images {
+                                                    contentType
+                                                    path
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                         _id
@@ -90,10 +122,10 @@ class Repository<T extends Model> {
     private readonly createMut: string;
     private readonly fetchQuery: string;
 
-    fetch(inputObj: T, overrideProps?: Partial<T>): Observable<T> {
+    fetch(inputObj: T, overrideProps?: Partial<T>, additionalParams?: any): Observable<T> {
         if(inputObj.isValid()) {
             return from(
-                graphQLClient.request(this.fetchQuery, {"id": inputObj.id})
+                graphQLClient.request(this.fetchQuery, {"id": inputObj.id, ...additionalParams})
             ).pipe(
                 map((data: any): T => {
                     this.obj = this.factory.create(data[`find${this.typeName}byID`]);

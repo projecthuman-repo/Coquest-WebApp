@@ -115,6 +115,29 @@ export function getRegistrationProgress(registered: Registered): number {
     return progress
 }
 
+// Processes incoming data for any expandable type
+export function initExpandable<T extends Model>(expandableObj: TypedObject | TypedObject[], expandedTypeName: string, type: new (data?: any) => T): TypedObject | TypedObject[] {
+    
+    const _initExpandable = function(expandableObj: TypedObject, expandedTypeName: string, type: new (data?: any) => T) {
+        if(expandableObj.type === 'string') {
+            return expandableObj;
+        } else if(expandableObj.type === expandedTypeName + 'Output' || expandableObj.type === 'obj') {
+            return {
+                type: 'obj',
+                objValue: new type({...expandableObj.objValue, _id: expandableObj.objValue.id ?? expandableObj.objValue._id }),
+            };
+        } else {
+            throw new Error('Unknown type');
+        }
+    };
+
+    if(Array.isArray(expandableObj)) {
+        return expandableObj.map(obj => _initExpandable(obj, expandedTypeName, type) as TypedObject);
+    } else {
+        return _initExpandable(expandableObj, expandedTypeName, type);
+    }
+}
+
 export interface EnumMap {
     Registered: RegisteredRepType;
     ExpandableCommunity: ExpandedRepType;

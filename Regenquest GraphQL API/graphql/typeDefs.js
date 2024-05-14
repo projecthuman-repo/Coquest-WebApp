@@ -113,8 +113,16 @@ module.exports = gql`
 
   union registered = bool | int
 
-  union expandableUser = regenquestUser | string
-  union expandableCommunity = regenquestCommunity | string
+  type regenquestUserOutput {
+    objValue: regenquestUser!
+  }
+
+  type regenquestCommunityOutput {
+    objValue: regenquestCommunity!
+  }
+
+  union expandableUser = regenquestUserOutput | string
+  union expandableCommunity = regenquestCommunityOutput | string
 
   type regenquestNotification {
     _id: String
@@ -425,7 +433,7 @@ module.exports = gql`
     getTopics: [regenquestTopic] @auth
     getMotives: [regenquestMotive] @auth
 
-    findUserbyID(id: String): regenquestUser @auth
+    findUserbyID(id: String, expand: String): regenquestUser @auth
     findTaskbyID(taskID: String): regenquestTask @auth
     findQuestbyID(questID: String): regenquestQuest @auth
     findPostbyID(postID: String): regenquestPost @auth

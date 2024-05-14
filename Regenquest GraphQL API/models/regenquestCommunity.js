@@ -16,7 +16,8 @@ const regenquestCommunitySchema = new Schema({
       ref: 'regenquestUser',
       validate: validators.idValidators(() => require("./regenquestUser"), 'member')
     }],
-    validate: validators.arrValidators('members')
+    validate: validators.arrValidators('members'),
+    metadata: { expandable: true },
   },
   tags: [String],
   location: {type: locationSchema, required: true},

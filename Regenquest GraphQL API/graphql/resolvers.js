@@ -15,11 +15,57 @@ const Motive = require('../models/regenquestMotive');
 const CrossPlatformUser = require('../models/crossPlatform/User');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
+const mongoose = require('mongoose');
 const { Types: { ObjectId }} = require('mongoose');
 const { Storage } = require("@google-cloud/storage");
 const path = require("path");
 
 const storage = new Storage();
+
+// Constructs an object parameter for the Mongoose `.populate()` routine, specifying which properties to expand.
+// TODO: Automatically redact redundant list entries
+function buildPopulateOptions(info, modelName, userRequestedFields) {
+  // Helper function to recursively find population options
+  const findPopulationFields = (selections, modelName, subUserRequestedFields) => {
+    const populateOptions = [];
+
+      selections.forEach(field => {
+        const fieldName = field.name.value;
+        const model = mongoose.model(modelName);
+        const tree = model.schema.tree[fieldName];
+        const requestedField = subUserRequestedFields.find(elem => elem === fieldName || elem[fieldName]);
+
+        // Check if the field is expandable, exists in userRequestedFields, and is included in the current query structure
+        if (field.selectionSet && tree?.metadata?.expandable && requestedField) {
+          const popOption = { path: fieldName };
+
+          if(typeof requestedField === 'object') {
+            const namedType = tree?.type[0]?.ref;
+            let selections = field.selectionSet.selections.find(elem => elem.typeCondition?.name.value === namedType + "Output");
+            // Follow the objValue path to the actual object value
+            if(selections.selectionSet.selections.length === 1 && selections.selectionSet.selections[0].name.value === 'objValue') {
+              selections = selections.selectionSet.selections[0];
+            }
+            popOption.populate = findPopulationFields(selections.selectionSet.selections, namedType, requestedField[fieldName]);
+          }
+          populateOptions.push(popOption);
+        }
+      });
+
+      return populateOptions.length > 0 ? populateOptions : null;
+  };
+
+  const node = info.fieldNodes.find(node => node.name.value === info.fieldName);
+  return findPopulationFields(node.selectionSet.selections, modelName, userRequestedFields[modelName]);
+}
+
+function getJson(str) {
+  try {
+      return JSON.parse(str);
+  } catch (e) {
+      return "";
+  }
+}
 
 // Convert a list of expandable type schemas, `expandable`, into a list of ID strings.
 // If the object is expandable, function expects the property named `propName` to be present for use as the ID.
@@ -41,26 +87,45 @@ function coerceExpandable(expandable, propName) {
 function deduceExpandableType(expandableObj, expandedTypeName) {
   if ('strValue' in expandableObj) {
     return 'string';
-  } else if ('id' in expandableObj) {
-    return expandedTypeName;
+  } else if ('objValue' in expandableObj) {
+    return expandedTypeName + 'Output';
   } else {
     // *Shouldn't happen*
     return null;
   }
 }
 
-// Convert expandable array elements to shape that GraphQL expects based on the output type definition in `typeDefs.js`.
-function toOutputFormat(arr) {
-  return arr?.map((elem) => {
-    if(elem instanceof ObjectId) {
-      return { strValue: elem.toString() };
-    } else if(typeof elem === 'object') {
-      return elem;
-    } else {
-      // *Shouldn't happen*
-      return { value: '' };
+// Convert expandable properties to a shape that GraphQL expects based on the output type definition in `typeDefs.js`.
+// Expects an input object, `obj`, and the MongoDB schema of that object. 
+function toOutputFormat(obj, schema) {
+  if (Array.isArray(obj)) {
+    return obj.map((elem) => toOutputFormat(elem, schema));
+  } else if (obj instanceof ObjectId) {
+    return { strValue: obj.toString() };
+  } else if (typeof obj === 'object' && obj !== null) {
+    const processedObj = {};
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const fieldSchema = schema[key];
+        if (!fieldSchema) continue;
+
+        const isExpandable = fieldSchema.metadata?.expandable;
+        const newSchemaName = Array.isArray(fieldSchema?.type) ? fieldSchema?.type[0]?.ref : fieldSchema?.type?.ref;
+        if (isExpandable && newSchemaName) {
+          processedObj[key] = toOutputFormat(
+            obj[key], 
+            mongoose.model(newSchemaName).schema.tree
+          );
+        } else {
+          processedObj[key] = obj[key];
+        }
+      }
     }
-  }) ?? null;
+    return { objValue: processedObj };
+  } else {
+    // Return the value as is for non-expandable fields
+    return obj;
+  }
 }
 
 module.exports = {
@@ -177,9 +242,15 @@ module.exports = {
     },
 
     //this method finds a user by their id
-    async findUserbyID(parent, { id }, context, info) {
+    async findUserbyID(parent, { id, expand }, context, info) {
       try {
-        const result = await User.findOne({ _id: id });
+        let result = await User.findOne({ _id: id });
+        const expandParsed = getJson(expand);
+
+        if(expandParsed) {
+          const populateOptions = buildPopulateOptions(info, 'regenquestUser', expandParsed);
+          result = await result.populate(populateOptions);
+        }
 
         if(typeof result.registered === 'boolean') {
           result.registered = {
@@ -195,9 +266,9 @@ module.exports = {
         }
 
         let user = result.toObject();
-        user.communities = toOutputFormat(user.communities);
+        user = toOutputFormat(user, User.schema.tree);
 
-        return user;
+        return user.objValue;
       } catch (err) {
         throw new Error('Error finding user by ID');
       }

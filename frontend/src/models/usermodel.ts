@@ -1,4 +1,5 @@
-import { Image, Location, Skill, Badge, Recommendations, ExpandableCommunity, Registered, RegisteredRepType, Model } from "./common";
+import { Image, Location, Skill, Badge, Recommendations, ExpandableCommunity, Registered, RegisteredRepType, Model, initExpandable } from "./common";
+import { Community } from "./communitymodel";
 
 export interface UserRequired {
     readonly _id: string | undefined;
@@ -109,8 +110,7 @@ export class User implements Model {
         this.motives = params.motives;
         this.biography = params.biography;
         this.topics = params.topics;
-        // Note: on instantiation, assume the user passes a list of strings
-        this.communities = params.communities;
+        this.communities = params.communities ? initExpandable(params.communities, 'regenquestCommunity', Community) as ExpandableCommunity[] : params.communities;
         this.skills = params.skills;
         this.badges = params.badges;
         // Use currentLevel property to indicate the state status. (That is, whether the instance is in safe empty state.)
