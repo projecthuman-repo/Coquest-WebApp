@@ -23,7 +23,8 @@ function RelativeLocation(props: any) {
       })
 
     const [center, setCenter] = useState({ lat: -34.397, lng: 150.644 });
-    const [inputError, setInputError] = useState(null);
+    // GeolocationPositionError does not have a `name` property.
+    const [inputError, setInputError] = useState<Omit<Error, 'name'> | null>(null);
 
     const [postalCode, setPostalCode] = useState("");
     useEffect(() => {
@@ -38,8 +39,35 @@ function RelativeLocation(props: any) {
                 .catch((error) => {
                     console.error(error);
                 });
+        } else {
+            getBrowserLocation();
         }
     }, [props.user.location]);
+
+    const getBrowserLocation = () => {
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const coords = {lat: position.coords.latitude, lng: position.coords.longitude};
+                    convertToPostal(coords)
+                        .then((postal) => {
+                            setCenter(coords);
+                            setPostalCode(postal);
+                            props.updateData(coords);
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                },
+                (error) => {
+                    console.error(error.message);
+                    setInputError(error);
+                }
+            )
+        } else {
+            console.error("Geolocation is not supported by this browser.");
+        }
+    }
 
     async function handlePostalCodeChange(e: React.ChangeEvent<HTMLInputElement>) {
         const newPostal = e.target.value.toUpperCase();
@@ -105,6 +133,8 @@ function RelativeLocation(props: any) {
                 {postalCode.length === POSTAL_CODE_LEN && inputError && (
                     <p>Please insert a valid postal code</p>
                 )}
+
+                <button onClick={getBrowserLocation}>Get&nbsp;Current&nbsp;Location</button>
         </div>
     );
 }
