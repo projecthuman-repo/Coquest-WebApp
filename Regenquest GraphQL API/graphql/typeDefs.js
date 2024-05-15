@@ -430,6 +430,7 @@ module.exports = gql`
 
   directive @auth on FIELD_DEFINITION
   directive @verifyToken on FIELD_DEFINITION
+  directive @formatObj(modelName: String) on FIELD_DEFINITION
 
   type Query {
     getUsers: [regenquestUser] @auth
@@ -443,7 +444,7 @@ module.exports = gql`
     getTopics: [regenquestTopic] @auth
     getMotives: [regenquestMotive] @auth
 
-    findUserbyID(id: String, expand: String): regenquestUser @auth
+    findUserbyID(id: String, expand: String): regenquestUser @auth @formatObj(modelName: "regenquestUser")
     findTaskbyID(taskID: String): regenquestTask @auth
     findQuestbyID(questID: String): regenquestQuest @auth
     findPostbyID(postID: String): regenquestPost @auth

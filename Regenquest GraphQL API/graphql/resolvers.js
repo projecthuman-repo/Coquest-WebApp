@@ -20,8 +20,7 @@ const { Types: { ObjectId }} = require('mongoose');
 const { Storage } = require("@google-cloud/storage");
 const path = require("path");
 var jwt = require('jsonwebtoken');
-const {buildPopulateOptions, coerceExpandable, deduceExpandableType, toOutputFormat} = require("../utils/expandable");
-const { getJson } = require("../utils/misc");
+const {coerceExpandable, deduceExpandableType, toOutputFormat} = require("../utils/expandable");
 
 const storage = new Storage();
 
@@ -142,12 +141,6 @@ module.exports = {
     async findUserbyID(parent, { id, expand }, context, info) {
       try {
         let result = await User.findOne({ _id: id });
-        const expandParsed = getJson(expand);
-
-        if(expandParsed) {
-          const populateOptions = buildPopulateOptions(info, 'regenquestUser', expandParsed);
-          result = await result.populate(populateOptions);
-        }
 
         if(typeof result.registered === 'boolean') {
           result.registered = {
@@ -162,10 +155,7 @@ module.exports = {
           result.registered = { boolValue: false };
         }
 
-        let user = result.toObject();
-        user = toOutputFormat(user, User.schema.tree);
-
-        return user.objValue;
+        return result;
       } catch (err) {
         throw new Error('Error finding user by ID');
       }

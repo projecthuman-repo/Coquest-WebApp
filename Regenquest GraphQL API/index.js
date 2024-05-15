@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 
 const AuthDirective = require("./graphql/auth");
 const VerifyTokenDirective = require("./graphql/verifyToken");
+const FormatObjDirective = require("./graphql/formatObj");
 
 // Construct a schema, using GraphQL schema language
 const typeDefs = require('./graphql/typeDefs');
@@ -39,6 +40,7 @@ async function startServer() {
     schemaDirectives: {
       auth: AuthDirective,
       verifyToken: VerifyTokenDirective,
+      formatObj: FormatObjDirective,
     },
     csrfPrevention: true,
     cache: 'bounded',
