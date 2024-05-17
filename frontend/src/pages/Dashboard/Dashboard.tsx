@@ -130,7 +130,7 @@ function Dashboard() {
 			</DashColumns>
 			<Footer>
 				<CommunityTaskContainer>
-					<CommunityTasks label="My Tasks" seeAllLink="#" />
+					<CommunityTasks label="Community Tasks" seeAllLink="#" />
 				</CommunityTaskContainer>
 				<MembersContainer>
 					<Members
