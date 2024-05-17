@@ -8,7 +8,7 @@ import Maps from "../../components/Maps/Maps";
 import CommunityTasks from "../../components/CommunityTasks";
 import Members from "../../components/Members";
 import ExtendedSimpleCard from "../../components/ExtendedSimpleCard/SimpleCard";
-import { subscribeToUserModelSubject } from "../../observers/userobserver"
+import { subscribeToUserModelSubject } from "../../observers/userobserver";
 
 const Container = styled("div")({
 	display: "flex",
@@ -17,8 +17,6 @@ const Container = styled("div")({
 	marginBottom: 100,
 	justifyContent: "center",
 });
-
-// const SearchContainer = styled("div")({});
 
 const Header = styled("div")({
 	width: "90%",
@@ -104,13 +102,16 @@ function Dashboard() {
 			}
 		};
 	}, []);
+
+	const members = [userName]; // List of members with the current user
+
 	return (
 		<Container>
 			<Header>
 				<WelcomeMessage name={userName || "User"} communityName="Community name" />
 				{/* <SearchContainer>
-					<SearchBar />
-				</SearchContainer> */}
+                    <SearchBar />
+                </SearchContainer> */}
 			</Header>
 			<DashColumns>
 				<DashColumn>
@@ -134,9 +135,9 @@ function Dashboard() {
 				</CommunityTaskContainer>
 				<MembersContainer>
 					<Members
-						users={["You", "Username", "Username", "Username"]}
+						users={members}  // Pass the list of members
+						userRole={["Role"]}  // Placeholder for user roles, you can expand this in the future
 						showAllLink="#"
-						userRole={["Role", "Role", "Role", "Role"]}
 					/>
 				</MembersContainer>
 			</Footer>
