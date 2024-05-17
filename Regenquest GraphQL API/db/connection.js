@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-require('dotenv').config();
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 // Connection options (optional)
 const dbOptions = {
@@ -21,7 +21,7 @@ const connectToRegenquestDatabase = async () => {
       dbOptions
     );
 
-    console.log('Connected to the regenquest database');
+    console.log("Connected to the regenquest database");
   } catch (error) {
     throw new Error(`Connecting to the regenquest database: ${error}`);
   }
@@ -30,7 +30,7 @@ const connectToRegenquestDatabase = async () => {
 const connectToCrossPlatformDatabase = async () => {
   try {
     await crossPlatformDatabase.asPromise();
-    console.log('Connected to the CrossPlatform database');
+    console.log("Connected to the CrossPlatform database");
   } catch (error) {
     throw new Error(`Connecting to the CrossPlatform database: ${error}`);
   }

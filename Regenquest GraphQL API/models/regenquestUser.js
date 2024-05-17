@@ -27,6 +27,8 @@ const regenquestUserSchema = new Schema({
     validate: validators.idValidators(() => require("./crossPlatform/User"), 'crossplatform user')
   },
   name: { type: String, required: true },
+  firstName: { type: String, required: true },  // New field for first name
+  lastName: { type: String, required: true },   // New field for last name
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   registered: {

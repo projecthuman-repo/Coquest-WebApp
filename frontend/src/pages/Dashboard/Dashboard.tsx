@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import WelcomeMessage from "../../components/WelcomeMessage";
 import SearchBar from "../../components/SearchBar";
 import SimpleCard from "../../components/SimpleCard/SimpleCard";
@@ -8,6 +8,7 @@ import Maps from "../../components/Maps/Maps";
 import CommunityTasks from "../../components/CommunityTasks";
 import Members from "../../components/Members";
 import ExtendedSimpleCard from "../../components/ExtendedSimpleCard/SimpleCard";
+import { subscribeToUserModelSubject } from "../../observers/userobserver"
 
 const Container = styled("div")({
 	display: "flex",
@@ -74,6 +75,7 @@ const CommunityTaskContainer = styled("div")({
 		width: "100%",
 	},
 });
+
 const MembersContainer = styled("div")({
 	width: "33%",
 	"@media (max-width: 600px)": {
@@ -81,14 +83,31 @@ const MembersContainer = styled("div")({
 		width: "95%",
 	},
 });
+
 function Dashboard() {
+	const [userName, setUserName] = useState('');
+
+	useEffect(() => {
+		let unsubscribe: (() => void) | null | undefined = null;
+
+		const setupSubscription = async () => {
+			unsubscribe = await subscribeToUserModelSubject(user => {
+				setUserName(user.name);  // Update to use the 'name' field
+			});
+		};
+
+		setupSubscription();
+
+		return () => {
+			if (unsubscribe) {
+				unsubscribe();
+			}
+		};
+	}, []);
 	return (
 		<Container>
 			<Header>
-				<WelcomeMessage
-					name="John Dory"
-					communityName="Community name"
-				/>
+				<WelcomeMessage name={userName || "User"} communityName="Community name" />
 				{/* <SearchContainer>
 					<SearchBar />
 				</SearchContainer> */}
@@ -111,7 +130,7 @@ function Dashboard() {
 			</DashColumns>
 			<Footer>
 				<CommunityTaskContainer>
-					<CommunityTasks label="Community Tasks" seeAllLink="#" />
+					<CommunityTasks label="My Tasks" seeAllLink="#" />
 				</CommunityTaskContainer>
 				<MembersContainer>
 					<Members
