@@ -1,124 +1,84 @@
-import React from "react";
+// CommunityTasks/index.tsx
+import React from 'react';
 import styled from "@emotion/styled";
-import { Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import TaskCard from "../../pages/Coop/CoopComponents/TaskCard";
+import { Typography, Link } from "@mui/material";
+import TaskCard from "../../pages/Coop/CoopComponents/TaskCard"; // Ensure correct path for TaskCard
+import { Community } from "../../models/communitymodel";  // Ensure this path is correct
 
-const Header = styled(Typography)({
-	fontWeight: 600,
-	paddingTop: 30,
-	paddingLeft: 30,
-	fontSize: "16px",
-	lineHeight: "24px",
-	color: "#0000000",
-});
+interface CommunityTasksProps {
+	label: string;
+	seeAllLink: string;
+}
 
-const CommunityContainer = styled.div({
-	backgroundColor: "#D9D9D9",
-	borderRadius: 10,
-	width: "95%",
-	height: 329,
-	margin: "auto",
-});
-
-const CustomGrid = styled(Grid)({
-	width: "100%",
-	height: 250,
-	overflow: "auto",
-	margin: "auto",
-	padding: 15,
-	paddingTop: 0,
-});
-const taskContents = [
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
-	{
-		taskName: "Task Name",
-		communityName: "Community name",
-		loction: "Location",
-		description:
-			"Description. Lorem ipsum dolor sit amet consectetur. Nisl sollicitudin aliquam quam.",
-	},
+// Sample community data
+const communityData: Community[] = [
+	new Community({
+		_id: '1',
+		name: 'Green Thumbs',
+		description: 'Community for gardening enthusiasts.',
+		location: { lat: 34.0522, lng: -118.2437 },
+		members: [],
+		tags: ['gardening', 'sustainability'],
+		images: [{
+			contentType: 'image/jpeg',
+			path: 'path_to_gardening_community_image.jpg'
+		}]
+	}),
+	// Add more communities as needed
 ];
 
-const CommunityTasks = () => {
+// Styled components
+const CommunityContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px; // Add 20px margin to the right
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    padding: 30px;
+    height: 329px;
+    box-sizing: border-box;
+    overflow: auto;
+	margin-left: 10px;
+`;
+
+
+const ContainerHeaderStyled = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+`;
+
+const LabelStyled = styled(Typography)`
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+`;
+
+const SeeAllLinkStyled = styled(Link)`
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+`;
+
+
+
+// Component to display communities using TaskCard
+const CommunityTasks: React.FC<CommunityTasksProps> = ({ label, seeAllLink }) => {
 	return (
 		<CommunityContainer>
-			<Header>All community tasks</Header>
-			<CustomGrid container spacing={1}>
-				{taskContents.map((item, index) => (
-					<Grid item key={index} lg={4}>
-						<TaskCard
-							name={item.taskName}
-							community={item.communityName}
-							location={item.loction}
-							description={item.description}
-							type="small"
-						/>
-					</Grid>
-				))}
-			</CustomGrid>
+			<ContainerHeaderStyled>
+				<LabelStyled>{label}</LabelStyled>
+			</ContainerHeaderStyled>
+			{communityData.map((community, index) => (
+				<TaskCard
+					key={community.id}
+					name={community.name}
+					community={community.description}
+					location={`${community.location?.lat}, ${community.location?.lng}`}
+					description={`Tags: ${community.tags?.join(', ')}`}
+					type="large"
+				/>
+			))}
 		</CommunityContainer>
 	);
 };

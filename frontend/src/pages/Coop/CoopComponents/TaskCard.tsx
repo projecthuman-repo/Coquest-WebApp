@@ -1,13 +1,12 @@
 import React from "react";
-import Card, { CardProps } from "@mui/material/Card";
+import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-
 import styled from "@emotion/styled";
 
-type TaskCardProps = CardProps & {
+type TaskCardProps = {
 	name: string;
 	community: string;
 	location: string;
@@ -17,24 +16,20 @@ type TaskCardProps = CardProps & {
 
 const Name = styled(Typography)({
 	fontWeight: 600,
-	fontSize: 16,
+	fontSize: 16, // More readable font size for the name
 	color: "black",
 	lineHeight: "24px",
 });
 
 const Body = styled(Typography)({
 	fontWeight: 400,
-	fontSize: 5,
-	lineHeight: "8px",
-});
-
-const Spacer = styled.div({
-	height: 8,
+	fontSize: 12, // More readable font size for the body text
+	lineHeight: "18px",
 });
 
 const ChevronIcon = styled(ChevronRightIcon)({
 	color: "black",
-	fontSize: 16,
+	fontSize: 24, // Slightly larger icon size for better interaction
 });
 
 const TaskCard = ({
@@ -46,8 +41,8 @@ const TaskCard = ({
 	...rest
 }: TaskCardProps) => {
 	const CustomCard = styled(Card)({
-		height: type === "large" ? 130 : 104,
-		width: type === "large" ? 234 : 161,
+		height: type === "large" ? 148 : 164,
+		width: type === "large" ? 234 : 234,
 	});
 
 	return (
@@ -61,11 +56,8 @@ const TaskCard = ({
 				title={<Name>{name}</Name>}
 				subheader={
 					<>
-						<Body>
-							{community} <br /> {location}
-						</Body>
-						<Spacer />
-						<Body> {description}</Body>
+						<Body>{community} <br /> {location}</Body>
+						<Body>{description}</Body>
 					</>
 				}
 			/>

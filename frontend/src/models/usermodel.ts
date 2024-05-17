@@ -28,6 +28,8 @@ export class User implements Model {
     name: string;
     username: string;
     email: string;
+    firstName: string;
+    lastName: string;
     /*
     The progress of registration; it is either a boolean or a Number[1, NUM_OF_STEPS].
     
@@ -88,11 +90,13 @@ export class User implements Model {
         return defaultValues.hasOwnProperty(key) ? defaultValues[key] : null;
     }
 
-    constructor(params: UserRequired & Partial<UserOptional> = {_id: undefined, name: "", email: "", username: ""}) {
+    constructor(params: UserRequired & Partial<UserOptional> & { firstName?: string; lastName?: string } = {_id: undefined, name: "", email: "", username: "", firstName: "", lastName: ""}) {
         this.id = params._id;
         this.name = params.name;
         this.username = params.username;
         this.email = params.email;
+        this.firstName = params.firstName || "";
+        this.lastName = params.lastName || "";
 
         this.registered = {type: RegisteredRepType.BOOLEAN, boolValue: false};
         if(params.registered) {
