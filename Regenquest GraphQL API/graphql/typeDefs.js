@@ -39,6 +39,16 @@ module.exports = gql`
   }
 
   """"""
+
+  type JWT {
+    name: String,
+    username: String,
+    email: String,
+    iat: String,
+    exp: String,
+    sub: String,
+  }
+
   type skill {
     skillName: String
     skillLevel: String
@@ -450,6 +460,8 @@ module.exports = gql`
     markNotificationAsRead(notificationID: String): mutationResponse @auth
     markAllNotificationsAsRead(userID: String): mutationResponse @auth
     deleteNotification(notificationID: String): mutationResponse @auth
+
+    getToken: JWT @auth
 
     generatePresignedURL: String! @auth
   }

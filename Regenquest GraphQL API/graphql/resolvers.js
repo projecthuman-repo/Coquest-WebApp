@@ -19,7 +19,9 @@ const mongoose = require('mongoose');
 const { Types: { ObjectId }} = require('mongoose');
 const { Storage } = require("@google-cloud/storage");
 const path = require("path");
+var jwt = require('jsonwebtoken');
 const {buildPopulateOptions, coerceExpandable, deduceExpandableType, toOutputFormat} = require("../utils/expandable");
+const { getJson } = require("../utils/misc");
 
 const storage = new Storage();
 
@@ -381,6 +383,10 @@ module.exports = {
       } catch (err) {
         throw new Error('Error deleting notification');
       }
+    },
+
+    async getToken(parent, {}, context, info) {
+      return jwt.verify(context.req.cookies[process.env.AUTH_COOKIE_NAME], 'your-access-token-secret');
     },
 
     async generatePresignedURL() {
@@ -1508,10 +1514,7 @@ module.exports = {
       context,
       info
     ) {
-      // TODO: verify token before setting cookie
-
-      // TODO: set httpOnly to true and signed to true
-      context.res.cookie(process.env.AUTH_COOKIE_NAME, token, { httpOnly: false, secure: process.env.NODE_ENV === 'production', path: '/'});
+      context.res.cookie(process.env.AUTH_COOKIE_NAME, token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', path: '/'});
 
       return { code: 0, response: 'successful' };
     }
