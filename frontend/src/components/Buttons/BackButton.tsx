@@ -1,10 +1,10 @@
 import React from 'react';
-// import './BackButton.css';
+import './Buttons.css';
 
 function BackButton() {
     return (
         <button className="back-button">
-            <img src="/icons/back-button-chevron.png" height="12"></img>
+            <img src="/icons/back-button-chevron.png" height="12" alt="Back Button Chevron"></img>
             Back
         </button>
     );
