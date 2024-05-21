@@ -61,6 +61,7 @@ const FindTasksButton = styled(Button)({
 		backgroundColor: "#e0e0e0",
 	},
 	padding: "10px 20px",
+	borderRadius: "40px"
 });
 
 // Component function

@@ -1,27 +1,25 @@
-import React from "react";
-import styled from "@emotion/styled";
+import React from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
-//container that holds the map data
-const MapContainer = styled.div({
-	width: "100%",
-	height: "100%",
-	maxWeight: "100%",
-	radius: "10px",
-});
 
-const Maps = () => {
+const Maps: React.FC = () => {
 	return (
-		<MapContainer>
-			<img
-				style={{
-					width: "100%",
-					height: "95.7%",
-					borderRadius: "10px",
-					objectFit: "cover",
-				}}
-				src="/map_image.png"
-				alt="Map graphic"
+		<MapContainer
+			center={[43.6514990607, -79.3834667995]}
+			zoom={13}
+			scrollWheelZoom={false}
+			style={{ height: '100%', width: '99%' }} // Ensure the map container has a defined height
+		>
+			<TileLayer
+				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
+			<Marker position={[51.505, -0.09]}>
+				<Popup>
+					A pretty CSS3 popup. <br /> Easily customizable.
+				</Popup>
+			</Marker>
 		</MapContainer>
 	);
 };
