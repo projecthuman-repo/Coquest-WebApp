@@ -12,13 +12,14 @@ function Interests(props: any) {
    
     return (
         <div className="interests-page">
-            <h3 className="main-heading">Let's get you stiched in</h3>
-            <p className="sub-heading">What are your interests?</p>
-            <p className="sub-text">Select all that apply</p>
-            <input type="search" className="search" name="search" />
-            <i className="fa-solid fa-magnifying-glass"></i>
-
-            
+            <h3 className="main-heading">Let's get you stitched in.</h3>
+            <p className="sub-heading">What are your interests? Select all that apply.</p>
+            <br />
+            <div className="search-container">
+                <input type="search" className="search" name="search" placeholder="Search" />
+                <img src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png" className="search-icon" />
+            </div>
+            <br />
             <InterestList setFuncs={[setInterests, props.updateData]} checkedData={topics} query={topicsQuery} />
         </div>
     );

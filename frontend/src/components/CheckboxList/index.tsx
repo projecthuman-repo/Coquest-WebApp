@@ -21,14 +21,14 @@ function CheckboxList(props: any) {
                         <div className="select-container" key={option}>
                             <input
                                 ref={input}
-                                className="click-button"
+                                className="checkbox-size"
                                 onChange={(e) => onCheck(props.setFuncs, props.checkedData, e)}
                                 type="checkbox"
                                 id={option.toLowerCase()}
                                 name={option}
                                 defaultChecked={props.checkedData.has(option)} />
     
-                            <label htmlFor={option.toLowerCase()}>{capitalize(option)}</label>
+                            <label className="label-padding" htmlFor={option.toLowerCase()}>{capitalize(option)}</label>
                         </div>
                     )
                 )}

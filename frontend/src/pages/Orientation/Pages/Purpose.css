@@ -19,14 +19,18 @@
 .sub-text{
     font-family: Poppins;
     font-weight: 400;
-    font-size: 12px;
+    font-size: 16px;
     text-align: center;
 }
 .select-container{
-    padding-top: 10px;
+    display: flex;
+    align-items: center; 
 }
-.click-button{
-    width:299px;
-    height:60px;
-    background-color: white;
+
+.checkbox-size{
+    transform: scale(2.5); 
+}
+
+.label-padding{
+    padding: 10px 15px; 
 }
