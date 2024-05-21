@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import './Bio.css';
-import BackButton from "../../../components/Buttons/BackButton";
+
 
 const MAX_CHAR_COUNT = 1000;
 
@@ -18,22 +18,28 @@ function Bio(props: any) {
         return (
             <div className="bio-page">
                 <h3 className="main-heading">Welcome to Regenquest&#44; {props.user?.name}</h3>
-                <h4>Let's get to know you</h4>
+                <br></br>
+                <p>Let's get to know you.</p>
 
-                <textarea
-                    className="bio-input"
-                    placeholder="Add your bio"
-                    value={biography}
-                    onChange={onEdit}
-                    maxLength={MAX_CHAR_COUNT}>
-                </textarea>
-                <p>{biography.length}&nbsp;/&nbsp;{MAX_CHAR_COUNT}</p>
-                <input type="text" className="location-input" placeholder="Location"></input>
-                <div>
-                    <BackButton />
-                    {/* <button className="back-button" onClick={() => props.prevPage()}>Back</button>
-                    <button className="skip-button" onClick={() => props.nextPage()}>Skip</button>
-                    <button className="next-button" type="submit" onClick={() => props.nextPage()}>Next</button> */}
+                <br></br>
+                <br></br>
+
+                <div className="bio-wrapper">
+                    <textarea
+                        className="bio-input"
+                        placeholder="Add your bio"
+                        value={biography}
+                        onChange={onEdit}
+                        maxLength={MAX_CHAR_COUNT}>
+                    </textarea>
+                    <small className="char-count">{biography.length}&nbsp;/&nbsp;{MAX_CHAR_COUNT}</small>
+                </div>
+
+                <br></br>
+
+                <div className="location-input">
+                    <input type="text" placeholder="Location"></input>
+                    <img src="/icons/location.png" height="20" alt="Location Icon"></img>
                 </div>
             </div>
         );
