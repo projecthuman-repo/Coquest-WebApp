@@ -22,21 +22,3 @@
     font-size: 12px;
     text-align: center;
 }
-.search{
-    border-radius: 25px;
-    border: 1px solid black;
-    padding-left: 40px;
-    width: 328px;
-    height: 48px;
-}
-.search-container{
-    position: relative;
-}
-.search-icon{
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 25px;
-    height: 25px;
-}

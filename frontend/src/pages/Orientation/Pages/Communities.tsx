@@ -34,8 +34,10 @@ function Communities() {
 
     return (
         <div>
-            <h1>Check out these layers</h1>
-            <p>Layers are small communities with like-minded people. You can participate in group activities and projects here.</p>
+            <h3 className="main-heading">Check out these Layers!</h3>
+            <br />
+            <p className="sub-heading">Layers are small communities with like-minded people. You can participate in group activities and projects here.</p>
+            <br />
 
             {communities.map(
                 (community) => (

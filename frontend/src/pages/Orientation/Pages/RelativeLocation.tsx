@@ -110,7 +110,10 @@ function RelativeLocation(props: any) {
 
     return (
         <div>
-            <p>Where is your community?</p>
+            <h3 className="main-heading">Discover your community.</h3>
+            <br />
+            <p className="sub-heading">Enter your postal code to have your account better tailored just for you.</p>
+            <br />
             {/* TODO: Find out how to place a space in the middle of the postal code mask without introducing inconsistencies */}
             <InputMask mask="a9a9a9"
                 maskChar={null}
