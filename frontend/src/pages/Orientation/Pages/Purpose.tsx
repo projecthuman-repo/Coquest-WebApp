@@ -9,9 +9,11 @@ function Purpose(props: any) {
     return (
         <div className="purpose-page">
             <h3 className="main-heading">Let's get you stitched in.</h3>
+            <br />
             <p className="sub-heading">What brings you to Coquest? Select all that apply.</p>
             <br />
             <p>I am a...</p>
+            <br />
             <PurposeList setFuncs={[setMotives, props.updateData]} checkedData={motives} query={motivesQuery} />
         </div>
     );

@@ -24,6 +24,7 @@
 }
 .search{
     border-radius: 25px;
+    border: 1px solid black;
     padding-left: 40px;
     width: 328px;
     height: 48px;
@@ -38,4 +39,14 @@
     transform: translateY(-50%);
     width: 25px;
     height: 25px;
+}
+.select-container{
+    display: flex;
+    align-items: center; 
+}
+.checkbox-size{
+    transform: scale(2.5); 
+}
+.label-padding{
+    padding: 10px 15px; 
 }

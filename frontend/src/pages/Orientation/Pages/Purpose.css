@@ -26,11 +26,9 @@
     display: flex;
     align-items: center; 
 }
-
 .checkbox-size{
     transform: scale(2.5); 
 }
-
 .label-padding{
     padding: 10px 15px; 
 }
