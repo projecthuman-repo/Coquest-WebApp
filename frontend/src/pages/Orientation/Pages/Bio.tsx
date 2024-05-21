@@ -31,9 +31,9 @@ function Bio(props: any) {
                 <input type="text" className="location-input" placeholder="Location"></input>
                 <div>
                     <BackButton />
-                    <button className="back-button" onClick={() => props.prevPage()}>Back</button>
+                    {/* <button className="back-button" onClick={() => props.prevPage()}>Back</button>
                     <button className="skip-button" onClick={() => props.nextPage()}>Skip</button>
-                    <button className="next-button" type="submit" onClick={() => props.nextPage()}>Next</button>
+                    <button className="next-button" type="submit" onClick={() => props.nextPage()}>Next</button> */}
                 </div>
             </div>
         );
