@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './Bio.css';
+import BackButton from "../../../components/Buttons/BackButton";
 
 const MAX_CHAR_COUNT = 1000;
 
@@ -27,6 +28,13 @@ function Bio(props: any) {
                     maxLength={MAX_CHAR_COUNT}>
                 </textarea>
                 <p>{biography.length}&nbsp;/&nbsp;{MAX_CHAR_COUNT}</p>
+                <input type="text" className="location-input" placeholder="Location"></input>
+                <div>
+                    <BackButton />
+                    <button className="back-button" onClick={() => props.prevPage()}>Back</button>
+                    <button className="skip-button" onClick={() => props.nextPage()}>Skip</button>
+                    <button className="next-button" type="submit" onClick={() => props.nextPage()}>Next</button>
+                </div>
             </div>
         );
     } else {

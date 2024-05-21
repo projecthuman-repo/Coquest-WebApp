@@ -1,3 +1,7 @@
+* {
+    font-family: Poppins;
+}
+
 .bio-page{
     display: flex;
     flex-direction: column;
@@ -5,12 +9,11 @@
     align-items: center;
 }
 .main-heading{
-    font-family: Poppins;
     font-weight: 600;
     font-size: 26px;
     text-align: center;
 }
 .bio-input{
-    width: 330px;
+    width: 430px;
     height: 150px;
 }
