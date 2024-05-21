@@ -82,6 +82,23 @@ const MembersContainer = styled("div")({
 	},
 });
 
+// Styled component to ensure the map container has consistent height and width
+const MapsContainer = styled.div({
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+	
+    height: "95.7%",
+    borderRadius: "10px",
+    overflow: "hidden",
+    // Ensure the map takes the full height of its container
+    '& .leaflet-container': {
+        flex: 1,
+        height: '100%',
+        width: '100%',
+    },
+});
+
 function Dashboard() {
 	const [userName, setUserName] = useState('');
 
@@ -109,9 +126,7 @@ function Dashboard() {
 		<Container>
 			<Header>
 				<WelcomeMessage name={userName || "User"} communityName="Community name" />
-				{/* <SearchContainer>
-                    <SearchBar />
-                </SearchContainer> */}
+				<SearchBar />
 			</Header>
 			<DashColumns>
 				<DashColumn>
@@ -126,7 +141,9 @@ function Dashboard() {
 					<MyTasksContainer label="My Tasks" seeAllLink="#" />
 				</DashColumn>
 				<DashColumn>
-					<Maps />
+					<MapsContainer>
+						<Maps />
+					</MapsContainer>
 				</DashColumn>
 			</DashColumns>
 			<Footer>
