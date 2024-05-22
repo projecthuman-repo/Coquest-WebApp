@@ -5,15 +5,8 @@
     align-items: center;
 }
 
-.select-container {
-    display: flex;
-    align-items: center;
-}
-
 .checkbox-size {
     transform: scale(2.5);
+    margin: 15px;
 }
 
-.label-padding {
-    padding: 10px 15px;
-}

@@ -19,7 +19,7 @@ function Communities() {
                     },
                     {
                         communityID: 3,
-                        name: "Digital art",
+                        name: "Digital Art",
                     },
                     {
                         communityID: 4,
@@ -43,7 +43,10 @@ function Communities() {
 
             {communities.map(
                 (community) => (
+                    <>
                     <SimpleCard key={community.communityID} label={community.name} />
+                    <br />
+                    </>
                 )
             )}
         </div>

@@ -18,7 +18,7 @@ function CheckboxList(props: any) {
             <div>
                 {options.map(
                     (option) => (
-                        <div className="select-container" key={option}>
+                        <div key={option}>
                             <input
                                 ref={input}
                                 className="checkbox-size"
@@ -28,7 +28,7 @@ function CheckboxList(props: any) {
                                 name={option}
                                 defaultChecked={props.checkedData.has(option)} />
     
-                            <label className="label-padding" htmlFor={option.toLowerCase()}>{capitalize(option)}</label>
+                            <label htmlFor={option.toLowerCase()}>{capitalize(option)}</label>
                         </div>
                     )
                 )}

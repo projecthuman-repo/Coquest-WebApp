@@ -13,7 +13,7 @@ function Interests(props: any) {
    
     return (
         <div className="interests-page">
-            <h3 className="main-heading">Let's get you stitched in.</h3>
+            <h3 className="main-heading">Time to learn more about you.</h3>
             <br />
             <p className="sub-heading">What are your interests? Select all that apply.</p>
             <br />

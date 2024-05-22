@@ -113,7 +113,7 @@ function RelativeLocation(props: any) {
         <div className="location-page">
             <h3 className="main-heading">Discover your community.</h3>
             <br />
-            <p className="sub-heading">Enter your postal code to have your account better tailored just for you.</p>
+            <p className="sub-heading">Enter your postal code to have your account better suit your needs.</p>
             <br />
             <div className="location-container">
                 <InputMask mask="a9a9a9"
@@ -139,7 +139,7 @@ function RelativeLocation(props: any) {
                         </GoogleMap>
                 )}
                 {postalCode.length === POSTAL_CODE_LEN && inputError && (
-                    <p>Please insert a valid postal code.</p>
+                    <p className="error">Please insert a valid postal code.</p>
                 )}
 
                 <br />

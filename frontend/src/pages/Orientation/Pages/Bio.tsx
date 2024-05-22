@@ -18,7 +18,7 @@ function Bio(props: any) {
     if(biography || biography === "") {
         return (
             <div className="bio-page">
-                <h3 className="main-heading">Welcome to Regenquest&#44; {props.user?.name}</h3>
+                <h3 className="main-heading">Welcome to Coquest&#44; {props.user?.name}!</h3>
                 <br></br>
                 <p className="sub-heading">Let's get to know you.</p>
 

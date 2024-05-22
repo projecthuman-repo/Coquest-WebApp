@@ -1,26 +1,33 @@
-.location-page{
+.location-page {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.input{
+
+.input {
     border-radius: 25px;
     border: 1px solid black;
     padding-left: 40px;
     width: 328px;
     height: 48px;
 }
-.location-container{
+
+.location-container {
     position: relative;
     align-items: center;
     
 }
-.location-icon{
+
+.location-icon {
     position: absolute;
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
     width: 25px;
     height: 25px;
+}
+
+.error {
+    color: red;
 }
