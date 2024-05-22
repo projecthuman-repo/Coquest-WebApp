@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { User } from "../../models/usermodel";
 import Repository from "../../repositories/repository";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
+// import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import BackButton from "../../components/Buttons/BackButton";
 import SkipButton from "../../components/Buttons/SkipButton";
 import NextButton from "../../components/Buttons/NextButton";
@@ -100,6 +101,11 @@ function Orientation() {
             <div className="orientation">
 
                 <br></br>
+                <br></br>
+
+                {/* TODO: would make sense to add a progress bar to show progress in onboarding completion */}
+                {/* <ProgressBar numOfSteps={6} /> */}
+                
                 <br></br>
                 
                 <div className="content">
