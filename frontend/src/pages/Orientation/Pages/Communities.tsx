@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import SimpleCard from "../../../components/SimpleCard/SimpleCard";
+import '../Orientation.css';
+import './Communities.css';
 
 function Communities() {
     // Temporary simulation

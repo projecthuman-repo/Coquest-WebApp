@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import './Purpose.css';
 import { motivesQuery } from "../../../apiInterface/gqlOperations";
 import PurposeList from "../../../components/CheckboxList";
+import '../Orientation.css';
+import './Purpose.css';
 
 function Purpose(props: any) {
     const [motives, setMotives] = useState<Set<string>>(new Set(props.user.motives));
