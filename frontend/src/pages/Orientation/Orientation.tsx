@@ -10,8 +10,8 @@ import { User } from "../../models/usermodel";
 import Repository from "../../repositories/repository";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
 import BackButton from "../../components/Buttons/BackButton";
-import SkipButton from "../../components/Buttons/SkipButton"
-import NextButton from "../../components/Buttons/NextButton"
+import SkipButton from "../../components/Buttons/SkipButton";
+import NextButton from "../../components/Buttons/NextButton";
 import './Orientation.css';
 
 function Orientation() {

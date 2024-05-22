@@ -1,34 +1,19 @@
-.purpose-page{
+.purpose-page {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.main-heading{
-    font-family: Poppins;
-    font-weight: 600;
-    font-size: 26px;
-    text-align: center;
-}
-.sub-heading{
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 20px;
-    text-align: center;
-}
-.sub-text{
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 16px;
-    text-align: center;
-}
-.select-container{
+
+.select-container {
     display: flex;
-    align-items: center; 
+    align-items: center;
 }
-.checkbox-size{
-    transform: scale(2.5); 
+
+.checkbox-size {
+    transform: scale(2.5);
 }
-.label-padding{
-    padding: 10px 15px; 
+
+.label-padding {
+    padding: 10px 15px;
 }

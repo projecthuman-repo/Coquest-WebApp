@@ -1,4 +1,5 @@
 import Bio from "./Pages/Bio";
+import ProfilePicture from "./Pages/ProfilePicture";
 import Purpose from "./Pages/Purpose";
 import Interests from "./Pages/Interests";
 import Communities from "./Pages/Communities";
@@ -6,7 +7,6 @@ import RelativeLocation from "./Pages/RelativeLocation";
 import { UserModelSubject } from "../../observers/userobserver";
 import { Location, Image } from "../../models/common";
 import { UserOptional, UserRequired } from "../../models/usermodel";
-import ProfilePicture from "./Pages/ProfilePicture/ProfilePicture";
 
 // Represents the metadata of a particular step in the registration process. 
 type RegistrationPage = {

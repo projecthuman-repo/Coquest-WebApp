@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import '../Orientation.css';
 import './Bio.css';
 
 
@@ -19,7 +20,7 @@ function Bio(props: any) {
             <div className="bio-page">
                 <h3 className="main-heading">Welcome to Regenquest&#44; {props.user?.name}</h3>
                 <br></br>
-                <p>Let's get to know you.</p>
+                <p className="sub-heading">Let's get to know you.</p>
 
                 <br></br>
                 <br></br>

@@ -1,5 +1,6 @@
-import UploadWrapper from "../../../../components/UploadImage/UploadWrapper";
-import { generateProfileImg } from "../../../../models/usermodel";
+import UploadWrapper from "../../../components/UploadImage/UploadWrapper";
+import { generateProfileImg } from "../../../models/usermodel";
+import '../Orientation.css';
 import './ProfilePicture.css';
 
 function ProfilePicture(props: any) {

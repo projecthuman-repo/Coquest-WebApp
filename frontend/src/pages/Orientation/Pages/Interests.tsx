@@ -1,7 +1,8 @@
 import React, { useState, } from "react";
-import './Interests.css';
 import { topicsQuery } from "../../../apiInterface/gqlOperations";
 import InterestList from "../../../components/CheckboxList";
+import '../Orientation.css';
+import './Interests.css';
 
 function Interests(props: any) {
     const [topics, setTopics] = useState(new Set<string>(props.user.topics));

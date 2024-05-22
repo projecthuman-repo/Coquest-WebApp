@@ -36,3 +36,24 @@
   flex-direction: row;
   gap: 16px;
 }
+
+
+/* General Text Styles */
+.main-heading{
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 28px;
+  text-align: center;
+}
+.sub-heading{
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 18px;
+  text-align: center;
+}
+.sub-text{
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 12px;
+  text-align: center;
+}

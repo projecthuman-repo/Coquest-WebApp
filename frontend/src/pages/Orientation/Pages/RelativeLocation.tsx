@@ -3,6 +3,7 @@ import InputMask from 'react-input-mask';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { fromAddress, fromLatLng } from 'react-geocode';
 import setupGeocode from "../../../config/geocodeConfig";
+import '../Orientation.css';
 
 const POSTAL_CODE_LEN = 6;
 const MAP_ZOOM_LEVEL = 11;
