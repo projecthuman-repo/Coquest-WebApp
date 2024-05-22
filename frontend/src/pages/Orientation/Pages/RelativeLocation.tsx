@@ -3,6 +3,7 @@ import InputMask from 'react-input-mask';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { fromAddress, fromLatLng } from 'react-geocode';
 import setupGeocode from "../../../config/geocodeConfig";
+import './RelativeLocation.css';
 
 const POSTAL_CODE_LEN = 6;
 const MAP_ZOOM_LEVEL = 11;
@@ -109,21 +110,25 @@ function RelativeLocation(props: any) {
     }
 
     return (
-        <div>
+        <div className="location-page">
             <h3 className="main-heading">Discover your community.</h3>
             <br />
             <p className="sub-heading">Enter your postal code to have your account better tailored just for you.</p>
             <br />
-            {/* TODO: Find out how to place a space in the middle of the postal code mask without introducing inconsistencies */}
-            <InputMask mask="a9a9a9"
-                maskChar={null}
-                value={postalCode}
-                onChange={handlePostalCodeChange}
-                alt="Postal code"
-                title="Postal code input"
-                placeholder="Enter your postal code"
-                type="text"
-            />
+            <div className="location-container">
+                <InputMask mask="a9a9a9"
+                    maskChar={null}
+                    value={postalCode}
+                    className="input"
+                    onChange={handlePostalCodeChange}
+                    alt="Postal Code"
+                    title="Postal Code Input"
+                    placeholder="Postal Code"
+                    type="text"
+                />
+                <img src="/icons/location.png" className="location-icon" />
+            </div>
+            <br />
                 {isLoaded && postalCode.length === POSTAL_CODE_LEN && !inputError && (              
                         <GoogleMap
                         mapContainerStyle={mapContainerStyle}
@@ -134,9 +139,10 @@ function RelativeLocation(props: any) {
                         </GoogleMap>
                 )}
                 {postalCode.length === POSTAL_CODE_LEN && inputError && (
-                    <p>Please insert a valid postal code</p>
+                    <p>Please insert a valid postal code.</p>
                 )}
 
+                <br />
                 <button onClick={getBrowserLocation}>Get&nbsp;Current&nbsp;Location</button>
         </div>
     );
