@@ -87,7 +87,6 @@ const MapsContainer = styled.div({
     flex: 1,
     display: "flex",
     flexDirection: "column",
-	
     height: "95.7%",
     borderRadius: "10px",
     overflow: "hidden",
