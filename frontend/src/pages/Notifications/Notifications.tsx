@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./style.css";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import styled from "@emotion/styled";
@@ -17,6 +17,7 @@ const StyledBox = styled(Box)({
 	},
 	borderRadius: 10,
 });
+
 const StyledButton = styled(Button)({
 	width: 91.49,
 	height: 40,
@@ -29,6 +30,7 @@ const StyledButton = styled(Button)({
 	fontWeight: 600,
 	lineHeight: 24,
 });
+
 const StyledArrowIcon = styled(KeyboardArrowRightIcon)({
 	marginRight: 20,
 });
@@ -100,84 +102,40 @@ const Notifications: React.FC = () => {
 	const [selectedNotification, setSelectedNotification] = useState<
 		number | null
 	>(null);
-	const [unreadNotifications, setUnreadNotifications] = useState<any[]>([]);
-	const [allNotifications, setAllNotifications] = useState<any[]>([]);
 
-	useEffect(() => {
-		// Fetch unread notifications
-		fetch(
-			'https://my-gateway-1njig8y6.uc.gateway.dev/regenquest?query={getUnreadNotifications(userID: "notificationstest1") {userID notificationID title content image link date isRead isDeleted}}',
-			{
-				headers: {
-					"x-apollo-operation-name": "getUnreadNotifications",
-				},
-			}
-		)
-			.then((res) => res.json())
-			.then((result) => {
-				console.log(
-					"Unread notifications:",
-					result.data.getUnreadNotifications
-				);
-				setUnreadNotifications(result.data.getUnreadNotifications);
-			});
-
-		fetch(
-			'https://my-gateway-1njig8y6.uc.gateway.dev/regenquest?query={getNotifications(userID: "notificationstest1") {userID notificationID title content image link date isRead isDeleted}}',
-			{
-				headers: {
-					"x-apollo-operation-name": "getNotifications",
-				},
-			}
-		)
-			.then((res) => res.json())
-			.then((result) => {
-				console.log("All notifications:", result.data.getNotifications);
-				setAllNotifications(result.data.getNotifications);
-			});
-	}, []);
+	const notifications = [
+		{
+			notificationID: "1",
+			title: "New message from John",
+			content: "Hey, let's catch up tomorrow!",
+			image: "https://via.placeholder.com/150",
+			link: "https://example.com",
+			isRead: false,
+		},
+		{
+			notificationID: "2",
+			title: "Project update",
+			content: "Your project has been approved.",
+			image: "https://via.placeholder.com/150",
+			link: "https://example.com",
+			isRead: true,
+		},
+		// Add more static notifications as needed
+	];
 
 	const handleNotificationClick = (index: number) => {
 		setSelectedNotification(index);
-		if (!allNotifications[index].isRead) {
-			fetch(
-				`https://my-gateway-1njig8y6.uc.gateway.dev/regenquest?query={markNotificationAsRead(notificationID:"${allNotifications[index].notificationID}"){code response}}`,
-				{
-					headers: {
-						"x-apollo-operation-name": "markNotificationAsRead",
-					},
-				}
-			)
-				.then((res) => res.json())
-				.then((result) => {
-					console.log(result); // add this line to log the response to the console
-					if (result.data.markNotificationAsRead.code === 0) {
-						const updatedNotifications = [...allNotifications];
-						updatedNotifications[index].isRead = true;
-						setAllNotifications(updatedNotifications);
-
-						// Remove the read notification from the unreadNotifications list
-						const updatedUnreadNotifications =
-							unreadNotifications.filter(
-								(unreadNotification) =>
-									unreadNotification.notificationID !==
-									allNotifications[index].notificationID
-							);
-						setUnreadNotifications(updatedUnreadNotifications);
-					}
-				});
-		}
 	};
 
 	return (
 		<div>
 			<div className="title-container">
 				<h1 className="notifications-title">Notifications</h1>
-				<NewNotificationsNumber number={unreadNotifications.length} />
-			</div>{" "}
+				<NewNotificationsNumber number={notifications.filter(n => !n.isRead).length} />
+			</div>
 			<div className="notifications-container">
 				<div className="notifications-container-left">
-					{allNotifications.map((notification, index) => {
+					{notifications.map((notification, index) => {
 						const Card = notification.isRead
 							? OldNotificationsCard
 							: NewNotificationsCard;
@@ -193,28 +151,16 @@ const Notifications: React.FC = () => {
 				<StyledBox className="notifications-container-right">
 					<Paper elevation={3}>
 						{selectedNotification !== null &&
-							allNotifications[selectedNotification] && (
+							notifications[selectedNotification] && (
 								<>
 									<NotificationsImage
-										image={
-											allNotifications[
-												selectedNotification
-											].image
-										}
+										image={notifications[selectedNotification].image}
 									/>
 									<NotificationsContent
-										content={
-											allNotifications[
-												selectedNotification
-											].content
-										}
+										content={notifications[selectedNotification].content}
 									/>
 									<Link
-										href={
-											allNotifications[
-												selectedNotification
-											].link
-										}
+										href={notifications[selectedNotification].link}
 										target="_blank"
 										rel="noopener noreferrer"
 									>

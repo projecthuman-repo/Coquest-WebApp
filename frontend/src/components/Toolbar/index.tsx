@@ -7,6 +7,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MessageIcon from "@mui/icons-material/Message";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
 import { subscribeToUserModelSubject } from '../../observers/userobserver'; // Ensure this path is correct
 
 const Container = styled.div({
@@ -36,6 +37,7 @@ const ProfileButton = ({ name }: { name: string }) => (
 );
 
 const Toolbar = () => {
+	const navigate = useNavigate();
 	const [userName, setUserName] = useState("User"); // Default name to "User" until fetched
 
 	useEffect(() => {
@@ -56,18 +58,24 @@ const Toolbar = () => {
 		};
 	}, []);
 
+	const handleNotificationsClick = () => {
+		console.log("Notifications icon clicked");
+		navigate("/notifications");
+		console.log("Navigating to /notifications");
+		window.location.href = '/notifications'; // Force reload to ensure the component is rendered
+	};
+
 	return (
 		<Container>
 			<AppBar>
 				<MaterialToolbar>
-					<IconButton>
+					<IconButton onClick={handleNotificationsClick}>
 						<NotificationsIcon />
 					</IconButton>
 					<Spacer />
 					<IconButton>
 						<MessageIcon />
 					</IconButton>
-
 					<ProfileButton name={userName} />
 				</MaterialToolbar>
 			</AppBar>
