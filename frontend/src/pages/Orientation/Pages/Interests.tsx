@@ -1,6 +1,6 @@
 import React, { useState, } from "react";
 import { topicsQuery } from "../../../apiInterface/gqlOperations";
-import InterestList from "../../../components/CheckboxList";
+import InterestList from "../../../components/CheckboxList/InterestList";
 import '../Orientation.css';
 import './Interests.css';
 
@@ -13,9 +13,11 @@ function Interests(props: any) {
    
     return (
         <div className="interests-page">
-            <h3 className="main-heading">Time to learn more about you.</h3>
+            <h3 className="main-heading">Let’s get you stitched in</h3>
             <br />
-            <p className="sub-heading">What are your interests? Select all that apply.</p>
+            <p className="sub-heading">What are your interests?</p>
+            <br />
+            <small>Select 3 or more.</small>
             <br />
             <div className="search-container">
                 <input type="search" className="search" name="search" placeholder="Search" />

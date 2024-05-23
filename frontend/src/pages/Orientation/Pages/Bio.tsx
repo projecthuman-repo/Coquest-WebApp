@@ -7,8 +7,9 @@ const MAX_CHAR_COUNT = 1000;
 
 function Bio(props: any) {
     const [biography, setBiography] = useState(props.user?.biography);
+    const [location, setLocation] = useState(props.user?.location);
 
-    function onEdit(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    function onEditBio(e: React.ChangeEvent<HTMLTextAreaElement>) {
         const newBio = e.target.value
         setBiography(newBio);
         props.updateData(newBio);
@@ -30,17 +31,10 @@ function Bio(props: any) {
                         className="bio-input"
                         placeholder="Add your bio"
                         value={biography}
-                        onChange={onEdit}
+                        onChange={onEditBio}
                         maxLength={MAX_CHAR_COUNT}>
                     </textarea>
                     <small className="char-count">{biography.length}&nbsp;/&nbsp;{MAX_CHAR_COUNT}</small>
-                </div>
-
-                <br></br>
-
-                <div className="location-input">
-                    <input type="text" placeholder="Location"></input>
-                    <img src="/icons/location.png" height="20" alt="Location Icon"></img>
                 </div>
             </div>
         );

@@ -1,10 +1,6 @@
-.communities-page {
+.interests-page {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-small {
-    display: flex;
 }

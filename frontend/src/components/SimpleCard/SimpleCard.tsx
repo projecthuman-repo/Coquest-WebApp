@@ -3,6 +3,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import IconButton from "@mui/material/IconButton";
+import { bindCallback } from "rxjs";
 
 //uses props to take card label
 type SimpleCardProps = {
@@ -24,6 +25,7 @@ const CardContainer = styled.div({
 	paddingTop: 10,
 	paddingBottom: 10,
 	alignItems: "center",
+	boxShadow: "0 4px 10px 0 rgba(0, 0, 0, 0.25)",
 });
 //places icon button
 const ChevronIcon = styled(ChevronRightIcon)({

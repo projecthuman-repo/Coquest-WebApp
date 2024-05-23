@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import React, { useCallback } from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
@@ -135,11 +135,13 @@ function Orientation() {
                                 }}>
                                 <div className="btn-group">
                                     <SkipButton />
-                                    <NextButton />
+                                    <NextButton name="Next" />
                                 </div>
                             </IconButton>
                             :
-                            <button onClick={submit}>Continue</button>
+                            <Button  onClick={submit}>
+                                <NextButton name="Finish"/>
+                            </Button>
                         }
                     </div>
                 </div>

@@ -36,11 +36,12 @@ function Communities() {
 
     return (
         <div>
-            <h3 className="main-heading">Check out these Layers!</h3>
+            <h3 className="main-heading">Let’s get you stitched in</h3>
             <br />
-            <p className="sub-heading">Layers are small communities with like-minded people. You can participate in group activities and projects here.</p>
+            <p className="sub-heading">Check out these layers!</p>
             <br />
-
+            <small style={{textAlign: "center"}}>Layers are small communities with like-minded people. You can participate in group activities and projects here.</small>
+            <br />
             {communities.map(
                 (community) => (
                     <>

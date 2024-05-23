@@ -48,14 +48,16 @@ const itemPreview = withRequestPreSendUpdate(({id, url, updateRequest, requestDa
                 id={id}
                 src={url}
                 updateRequest={updateRequest}
-                requestData={requestData} />
+                requestData={requestData}
+                />
         </div>
     );
 });
 
 function UploadImage(props: any) {
-    const [images, setImages] = useState(props.images);
     const [filesAdded, setFilesAdded] = useState(false);
+    const [imgCropped, setImgCropped] = useState(false);
+    const [images, setImages] = useState(props.images);
     const [inputErrors, setInputErrors] = useState<FileInvalidEventDetail[] | null>(null);
     const { imageRemotePath, imageType, setImageType } = useCroppedImage();
 
@@ -101,9 +103,6 @@ function UploadImage(props: any) {
 
     return (
         <CenterContainer>
-            {inputErrors && inputErrors.map(error => 
-                <div>{getErrorMsg(error)}</div>
-            )}
             
             <UploadButton  />
 
@@ -111,14 +110,21 @@ function UploadImage(props: any) {
                 <>
                     <img 
                         src={images[0].path}
-                        alt="default upload" 
-                    />
+                        alt="generated img" 
+                        style={{ height: '175px' }}
+                    /> 
                     <Button onClick={generateImg}>Generate New Image</Button>
-                </> :            
+                </> :
                 <UploadPreview
                     PreviewComponent={itemPreview}
                 />
             }
+
+            {inputErrors && inputErrors.map(error => 
+                <div key={error.file.name} style={{ backgroundColor: 'rgba(255, 0, 0, 0.3)', padding: '16px', borderRadius: '5px'}}>
+                    {getErrorMsg(error)}
+                </div>
+            )}
         </CenterContainer>
     );
 }

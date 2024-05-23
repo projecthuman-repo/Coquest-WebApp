@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motivesQuery } from "../../../apiInterface/gqlOperations";
-import PurposeList from "../../../components/CheckboxList";
+import PurposeList from "../../../components/CheckboxList/PurposeList";
 import '../Orientation.css';
 import './Purpose.css';
 
@@ -9,11 +9,11 @@ function Purpose(props: any) {
 
     return (
         <div className="purpose-page">
-            <h3 className="main-heading">Time to learn more about you.</h3>
+            <h3 className="main-heading">Let’s get you stitched in</h3>
             <br />
-            <p className="sub-heading">What brings you to Coquest? Select all that apply.</p>
+            <p className="sub-heading">Find your team. What brings you to Regenquest? I am a...</p>
             <br />
-            <p>I am a...</p>
+            <small>Select all that apply.</small>
             <br />
             <PurposeList setFuncs={[setMotives, props.updateData]} checkedData={motives} query={motivesQuery} />
         </div>

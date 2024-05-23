@@ -31,18 +31,3 @@
     color: rgba(0, 0, 0, 0.7);
     margin-top: 8px;
 }
-
-/* Location Input */
-.location-input {
-    height: 40px;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-input {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-}
