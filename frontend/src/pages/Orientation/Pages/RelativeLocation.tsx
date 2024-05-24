@@ -71,7 +71,8 @@ function RelativeLocation(props: any) {
     }
 
     async function handlePostalCodeChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const newPostal = e.target.value.toUpperCase();
+        let newPostal = e.target.value.toUpperCase();
+        newPostal = newPostal.replace(/\s/g, '');
         setPostalCode(newPostal);
 
         // Note: Cannot use stateful postal code data after setting it
@@ -90,7 +91,6 @@ function RelativeLocation(props: any) {
         }
     }
 
-    // 
     async function convertToPostal(loc: {lat: number, lng: number}) {
         let postal = "";
         try {
@@ -116,7 +116,7 @@ function RelativeLocation(props: any) {
             <p className="sub-heading">Enter your postal code to have your account better suit your needs.</p>
             <br />
             <div className="location-container">
-                <InputMask mask="a9a9a9"
+                <InputMask mask="a9a 9a9"
                     maskChar={null}
                     value={postalCode}
                     className="input"

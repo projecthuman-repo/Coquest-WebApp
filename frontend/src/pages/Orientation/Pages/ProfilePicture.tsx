@@ -5,7 +5,7 @@ import '../Orientation.css';
 function ProfilePicture(props: any) {
     return (
     <>
-        <h3 className="main-heading">Add a profile photo</h3>
+        <h3 className="main-heading">Add a profile photo.</h3>
         <br />
         <p className="sub-heading">Upload a custom profile picture or generate one using our tools.</p>
         <br />

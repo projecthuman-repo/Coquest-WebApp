@@ -36,7 +36,7 @@ function Communities() {
 
     return (
         <div>
-            <h3 className="main-heading">Let’s get you stitched in</h3>
+            <h3 className="main-heading">Let’s get you stitched in.</h3>
             <br />
             <p className="sub-heading">Check out these layers!</p>
             <br />

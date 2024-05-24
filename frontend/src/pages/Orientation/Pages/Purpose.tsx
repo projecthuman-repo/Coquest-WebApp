@@ -9,7 +9,7 @@ function Purpose(props: any) {
 
     return (
         <div className="purpose-page">
-            <h3 className="main-heading">Let’s get you stitched in</h3>
+            <h3 className="main-heading">Let’s get you stitched in.</h3>
             <br />
             <p className="sub-heading">Find your team. What brings you to Regenquest? I am a...</p>
             <br />
