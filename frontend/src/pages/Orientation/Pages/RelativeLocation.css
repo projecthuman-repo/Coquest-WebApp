@@ -16,7 +16,7 @@
 .location-container {
     position: relative;
     align-items: center;
-    
+    margin: 0px 0px 25px 0px;
 }
 
 .location-icon {
@@ -30,4 +30,9 @@
 
 .error {
     color: red;
+    margin: 0px 0px 25px 0px;
+}
+
+.map {
+    margin: 0px 0px 25px 0px;
 }

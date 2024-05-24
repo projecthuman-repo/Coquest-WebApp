@@ -37,16 +37,14 @@ function Communities() {
     return (
         <div>
             <h3 className="main-heading">Let’s get you stitched in.</h3>
-            <br />
             <p className="sub-heading">Check out these layers!</p>
-            <br />
-            <small style={{textAlign: "center"}}>Layers are small communities with like-minded people. You can participate in group activities and projects here.</small>
-            <br />
+            <p className="sub-text">Layers are small communities with like-minded people. You can participate in group activities and projects here.</p>
             {communities.map(
                 (community) => (
                     <>
+                    <div className="card">
                     <SimpleCard key={community.communityID} label={community.name} />
-                    <br />
+                    </div>
                     </>
                 )
             )}

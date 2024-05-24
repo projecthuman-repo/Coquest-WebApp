@@ -112,9 +112,7 @@ function RelativeLocation(props: any) {
     return (
         <div className="location-page">
             <h3 className="main-heading">Discover your community.</h3>
-            <br />
             <p className="sub-heading">Enter your postal code to have your account better suit your needs.</p>
-            <br />
             <div className="location-container">
                 <InputMask mask="a9a 9a9"
                     maskChar={null}
@@ -128,7 +126,7 @@ function RelativeLocation(props: any) {
                 />
                 <img src="/icons/location.png" className="location-icon" />
             </div>
-            <br />
+            <div className="map">
                 {isLoaded && postalCode.length === POSTAL_CODE_LEN && !inputError && (              
                         <GoogleMap
                         mapContainerStyle={mapContainerStyle}
@@ -138,11 +136,10 @@ function RelativeLocation(props: any) {
                             {/* Dynamic map content */}
                         </GoogleMap>
                 )}
+            </div>
                 {postalCode.length === POSTAL_CODE_LEN && inputError && (
                     <p className="error">Please insert a valid postal code.</p>
                 )}
-
-                <br />
                 <button onClick={getBrowserLocation}>Get&nbsp;Current&nbsp;Location</button>
         </div>
     );

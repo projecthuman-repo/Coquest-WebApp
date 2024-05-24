@@ -20,12 +20,7 @@ function Bio(props: any) {
         return (
             <div className="bio-page">
                 <h3 className="main-heading">Welcome to Coquest&#44; {props.user?.name}!</h3>
-                <br></br>
                 <p className="sub-heading">Let's get to know you.</p>
-
-                <br></br>
-                <br></br>
-
                 <div className="bio-wrapper">
                     <textarea
                         className="bio-input"
