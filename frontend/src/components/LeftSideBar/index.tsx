@@ -6,6 +6,7 @@ import MapIcon from "@mui/icons-material/Map";
 import styled from "@emotion/styled";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import GroupsIcon from "@mui/icons-material/Groups";
+import { useNavigate } from "react-router-dom";
 
 const LeftToolBar = styled.div({
 	float: "left",
@@ -45,27 +46,37 @@ const Text = styled(Typography)({
 	color: "#000000",
 });
 
-const Toolbar = () => (
-	<LeftToolBar>
-		<IconContainer>
-			<Icon>
-				<DashboardIcon />
-				<Text>Home</Text>
-			</Icon>
-			<Icon>
-				<MapIcon />
-				<Text>Map</Text>
-			</Icon>
-			<Icon>
-				<AssignmentTurnedInIcon />
-				<Text>Quests</Text>
-			</Icon>
-			<Icon>
-				<GroupsIcon />
-				<Text>Groups</Text>
-			</Icon>
-		</IconContainer>
-	</LeftToolBar>
-);
+const Toolbar = () => {
+	const navigate = useNavigate();
+
+	const handleHomeClick = () => {
+		console.log("Home icon clicked");
+		navigate("/");
+		window.location.reload(); // Temporary fix to ensure the page loads
+	};
+
+	return (
+		<LeftToolBar>
+			<IconContainer>
+				<Icon onClick={handleHomeClick}>
+					<DashboardIcon />
+					<Text>Home</Text>
+				</Icon>
+				<Icon>
+					<MapIcon />
+					<Text>Map</Text>
+				</Icon>
+				<Icon>
+					<AssignmentTurnedInIcon />
+					<Text>Quests</Text>
+				</Icon>
+				<Icon>
+					<GroupsIcon />
+					<Text>Groups</Text>
+				</Icon>
+			</IconContainer>
+		</LeftToolBar>
+	);
+};
 
 export default Toolbar;

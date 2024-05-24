@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
-import { Button, Toolbar as MaterialToolbar } from "@mui/material";
+import { Toolbar as MaterialToolbar } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MessageIcon from "@mui/icons-material/Message";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom";
-import { subscribeToUserModelSubject } from '../../observers/userobserver'; // Ensure this path is correct
+import { subscribeToUserModelSubject } from '../../observers/userobserver';
 
 const Container = styled.div({
 	width: "100%",
@@ -37,8 +37,8 @@ const ProfileButton = ({ name }: { name: string }) => (
 );
 
 const Toolbar = () => {
-	const navigate = useNavigate();
 	const [userName, setUserName] = useState("User"); // Default name to "User" until fetched
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		let unsubscribe: (() => void) | null | undefined = null;
@@ -58,24 +58,30 @@ const Toolbar = () => {
 		};
 	}, []);
 
-	const handleNotificationsClick = () => {
+	const handleNotificationClick = () => {
 		console.log("Notifications icon clicked");
 		navigate("/notifications");
-		console.log("Navigating to /notifications");
-		window.location.href = '/notifications'; // Force reload to ensure the component is rendered
+		window.location.reload(); // Temporary fix to ensure the page loads
+	};
+
+	const handleMessageClick = () => {
+		console.log("Message icon clicked");
+		navigate("/message");
+		window.location.reload(); // Temporary fix to ensure the page loads
 	};
 
 	return (
 		<Container>
 			<AppBar>
 				<MaterialToolbar>
-					<IconButton onClick={handleNotificationsClick}>
+					<IconButton onClick={handleNotificationClick}>
 						<NotificationsIcon />
 					</IconButton>
 					<Spacer />
-					<IconButton>
+					<IconButton onClick={handleMessageClick}>
 						<MessageIcon />
 					</IconButton>
+
 					<ProfileButton name={userName} />
 				</MaterialToolbar>
 			</AppBar>
