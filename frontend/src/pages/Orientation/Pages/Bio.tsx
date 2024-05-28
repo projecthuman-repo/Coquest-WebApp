@@ -7,7 +7,6 @@ const MAX_CHAR_COUNT = 1000;
 
 function Bio(props: any) {
     const [biography, setBiography] = useState(props.user?.biography);
-    const [location, setLocation] = useState(props.user?.location);
 
     function onEditBio(e: React.ChangeEvent<HTMLTextAreaElement>) {
         const newBio = e.target.value

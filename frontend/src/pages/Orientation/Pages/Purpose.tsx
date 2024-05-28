@@ -10,7 +10,7 @@ function Purpose(props: any) {
     return (
         <div className="purpose-page">
             <h3 className="main-heading">Let’s get you stitched in.</h3>
-            <p className="sub-heading">Find your team. What brings you to Regenquest? I am a...</p>
+            <p className="sub-heading">Find your team. What brings you to Coquest? I am a...</p>
             <p className="sub-text">Select all that apply.</p>
             <PurposeList setFuncs={[setMotives, props.updateData]} checkedData={motives} query={motivesQuery} />
         </div>

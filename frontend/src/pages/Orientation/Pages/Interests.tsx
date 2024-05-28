@@ -14,7 +14,7 @@ function Interests(props: any) {
     return (
         <div className="interests-page">
             <h3 className="main-heading">Let’s get you stitched in.</h3>
-            <p className="sub-heading">What are your interests?</p>
+            <p className="sub-heading"></p>
             <p className="sub-text">Select 3 or more.</p>
             <div className="search-container">
                 <input type="search" className="search" name="search" placeholder="Search" />

@@ -20,6 +20,8 @@ align-items: center;
 
 const PreviewImage = styled.img`
 margin: auto;
+width: ${CROP_WIDTH}px;
+height: ${CROP_HEIGHT}px;
 max-width: ${CROP_WIDTH}px;
 max-height: ${CROP_HEIGHT}px;
 height: auto;

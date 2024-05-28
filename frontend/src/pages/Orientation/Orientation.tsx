@@ -13,6 +13,7 @@ import { subscribeToUserModelSubject } from "../../observers/userobserver";
 import BackButton from "../../components/Buttons/BackButton";
 import SkipButton from "../../components/Buttons/SkipButton";
 import NextButton from "../../components/Buttons/NextButton";
+import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import './Orientation.css';
 
 function Orientation() {
@@ -100,27 +101,19 @@ function Orientation() {
         return (
             <div className="orientation">
 
-                <br></br>
-                <br></br>
-
-                {/* TODO: would make sense to add a progress bar to show progress in onboarding completion */}
-                {/* <ProgressBar numOfSteps={6} /> */}
-                
-                <br></br>
-                
+                {/* Progress bar to show progress in onboarding completion */}
+                <ProgressBar numOfPages={6} currentPageNum={page} />
+                                
                 <div className="content">
                     <SelectedPageView user={user} updateData={updateData} />
                 </div>
-
-                <br></br>
-                <br></br>
                 
                 <div className="orientation-btn-container">
                     <div>
                         { page > 1 &&
                             <IconButton title="Previous page" onClick={() => {
                                 const newPage = page - 1;
-                                changePage(newPage)
+                                changePage(newPage);
                                 }}>
                                 <BackButton />
                             </IconButton>
@@ -131,7 +124,7 @@ function Orientation() {
                         { page < NUMPAGES ?
                             <IconButton title="Next page" onClick={() => {
                                 const newPage = page + 1;
-                                changePage(newPage)
+                                changePage(newPage);
                                 }}>
                                 <div className="btn-group">
                                     <SkipButton />

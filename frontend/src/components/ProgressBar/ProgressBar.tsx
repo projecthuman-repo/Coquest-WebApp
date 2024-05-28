@@ -2,15 +2,16 @@ import React from 'react';
 import './ProgressBar.css';
 
 interface ProgressBarProps {
-    numOfSteps: number;
+    numOfPages: number;
+    currentPageNum: number;
 }
 
-function ProgressBar({ numOfSteps }: ProgressBarProps) {
+function ProgressBar({ numOfPages, currentPageNum }: ProgressBarProps) {
     return (
         <div className='progress-bar'>
-            {Array.from({ length: numOfSteps }).map((_, index) => (
-                <div key={index} className="circle" style={{ width: `calc(100% / ${numOfSteps})` }}></div>
-            ))}
+            <div className='completed' style={{ width: `calc(100% / ${numOfPages} * ${currentPageNum})` }}>
+                <small>{Math.round(100 / numOfPages * currentPageNum)}% done</small>
+            </div>
         </div>
     );
 }
