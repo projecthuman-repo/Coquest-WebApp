@@ -8,8 +8,6 @@ export type JWT = {
     name: string,
     username: string,
     email: string,
-    firstName: string,
-    lastName: string,
     iat: string,
     exp: string,
     sub: string,
@@ -35,6 +33,6 @@ export async function getUserFromJWT(): Promise<User> {
     }
 
     const crossUser: any = await graphQLClient.request(getCrossUserQuery, {'email': token.email});
-    return new User({_id: crossUser.findCrossUser.id ?? undefined, email: token.email, name: token.name, username: token.username, firstName: token.firstName, lastName: token.lastName  });
+    return new User({_id: crossUser.findCrossUser.id ?? undefined, email: token.email, name: token.name, username: token.username });
 }
 
