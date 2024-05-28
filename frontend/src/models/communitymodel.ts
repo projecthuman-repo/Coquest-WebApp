@@ -1,5 +1,5 @@
-import { ExpandableUser, Image, Location, Model } from "./common";
-import { generateProfileImg } from "./usermodel";
+import { ExpandableUser, Image, Location, Model, initExpandable } from "./common";
+import { User, generateProfileImg } from "./usermodel";
 
 export interface CommunityRequired {
     readonly _id: string | undefined;
@@ -9,7 +9,7 @@ export interface CommunityRequired {
 }
 
 export interface CommunityOptional {
-    members: ExpandableUser[] | string[] | null;
+    members: ExpandableUser[] | null;
     tags: string[] | null;
     images: Image[] | null;
 }
@@ -21,7 +21,7 @@ export class Community implements Model {
     description: string;
     location: Location | null;
     // Expandable
-    members: ExpandableUser[] | string[] | null | undefined;
+    members: ExpandableUser[] | null | undefined;
     // Set of descriptors to help distinguish communities  
     tags: string[] | null | undefined;
     // Coordinate on the world map situated in the relative area of a community 
@@ -47,7 +47,7 @@ export class Community implements Model {
         this.name = params.name;
         this.description = params.description;
         this.location = params.location;
-        this.members = params.members;
+        this.members = params.members ? initExpandable(params.members, 'regenquestUser', User) as ExpandableUser[] : params.members;
         this.tags = params.tags;
         this.images = params.images;
     }
