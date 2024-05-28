@@ -1,0 +1,38 @@
+.hidden,
+.interest .checkbox-size {
+    display: none;
+}
+
+.checkmark {
+    margin-right: 10px;
+}
+
+.interests-wrapper {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.interest .selection-option {
+    width: fit-content;
+    background-color: #8ADC94;
+    border-radius: 8px;
+    padding: 4px 12px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 4px;
+    color: black;
+    font-size: 16px;
+    font-weight: 550;
+
+    transition: all 0.3s;
+}
+
+.interest .selection-option.selected {
+    background-color: #45C654;
+}

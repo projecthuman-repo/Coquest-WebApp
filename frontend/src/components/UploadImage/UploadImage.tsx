@@ -8,6 +8,7 @@ import { Button } from "@mui/material";
 import CropperComponent from "./Cropper";
 import { useCroppedImage } from "./CropperContext";
 import { Image } from "../../models/common";
+import './UploadImage.css';
 
 const CenterContainer = styled.div`
 display: flex;
@@ -41,6 +42,7 @@ function getErrorMsg(err: FileInvalidEventDetail) {
 }
 
 // Image Pre-processing
+// add setImages to the props
 const itemPreview = withRequestPreSendUpdate(({id, url, updateRequest, requestData }: any) => {
     return (
         <div>
@@ -48,19 +50,24 @@ const itemPreview = withRequestPreSendUpdate(({id, url, updateRequest, requestDa
                 id={id}
                 src={url}
                 updateRequest={updateRequest}
-                requestData={requestData} />
+                requestData={requestData}
+                />
         </div>
     );
 });
 
 function UploadImage(props: any) {
-    const [images, setImages] = useState(props.images);
     const [filesAdded, setFilesAdded] = useState(false);
+    const [images, setImages] = useState(props.images);
     const [inputErrors, setInputErrors] = useState<FileInvalidEventDetail[] | null>(null);
     const { imageRemotePath, imageType, setImageType } = useCroppedImage();
+    // Prevents the user from uploading/generating a new image while the current image is being processed
+    // For the clear user experience, many buttons confuse the user
+    const [displayImgBtns, setDisplayImgBtns] = useState(true);
 
     // Throw error if uploaded file is not of image type and bar Uploady from uploading the offending file
     useBatchAddListener((batch) => {
+        setDisplayImgBtns(false);
         const index = batch.items.findIndex((item) => 
             !item.file.type.startsWith("image/")
         );
@@ -72,6 +79,7 @@ function UploadImage(props: any) {
                     issues: {accept: true}
                 };
             }));
+            setDisplayImgBtns(true);
             return false; // Prevents the upload from starting
         } else {
             setImageType(batch.items.map(item => item.file.type));
@@ -90,9 +98,11 @@ function UploadImage(props: any) {
             });
             props.updateData(imgs);
         }
+        setDisplayImgBtns(true);
     });
 
     function generateImg() {
+        setFilesAdded(false);
         const images = [props.generateImgCb()];
 
         setImages(images);
@@ -101,24 +111,34 @@ function UploadImage(props: any) {
 
     return (
         <CenterContainer>
-            {inputErrors && inputErrors.map(error => 
-                <div>{getErrorMsg(error)}</div>
-            )}
-            
-            <UploadButton  />
+            {displayImgBtns && 
+                <Button onClick={generateImg}>Generate New Image</Button>
+            }
 
             {!filesAdded ?
                 <>
                     <img 
                         src={images[0].path}
-                        alt="default upload" 
+                        alt="generated img" 
+                        style={{ height: '175px' }}
                     />
-                    <Button onClick={generateImg}>Generate New Image</Button>
-                </> :            
+                </> :
                 <UploadPreview
                     PreviewComponent={itemPreview}
                 />
             }
+
+            {displayImgBtns && 
+                <div className="upload-btn-wrapper">
+                    <UploadButton  />
+                </div>
+            }
+
+            {inputErrors && inputErrors.map(error => 
+                <div key={error.file.name} style={{ backgroundColor: 'rgba(255, 0, 0, 0.3)', padding: '16px', margin: '16px 0', borderRadius: '5px'}}>
+                    {getErrorMsg(error)}
+                </div>
+            )}
         </CenterContainer>
     );
 }

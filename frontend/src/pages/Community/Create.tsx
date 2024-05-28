@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import TagList from "../../components/CheckboxList";
+import TagList from "../../components/CheckboxList/PurposeList";
 import RelativeLocation from "../Orientation/Pages/RelativeLocation";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
 import { User, generateProfileImg } from "../../models/usermodel";

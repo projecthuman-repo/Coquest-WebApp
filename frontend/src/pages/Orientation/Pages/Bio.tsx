@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import '../Orientation.css';
 import './Bio.css';
+
 
 const MAX_CHAR_COUNT = 1000;
 
 function Bio(props: any) {
     const [biography, setBiography] = useState(props.user?.biography);
 
-    function onEdit(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    function onEditBio(e: React.ChangeEvent<HTMLTextAreaElement>) {
         const newBio = e.target.value
         setBiography(newBio);
         props.updateData(newBio);
@@ -16,17 +18,18 @@ function Bio(props: any) {
     if(biography || biography === "") {
         return (
             <div className="bio-page">
-                <h3 className="main-heading">Welcome to Regenquest&#44; {props.user?.name}</h3>
-                <h4>Let's get to know you</h4>
-
-                <textarea
-                    className="bio-input"
-                    placeholder="Add your bio"
-                    value={biography}
-                    onChange={onEdit}
-                    maxLength={MAX_CHAR_COUNT}>
-                </textarea>
-                <p>{biography.length}&nbsp;/&nbsp;{MAX_CHAR_COUNT}</p>
+                <h3 className="main-heading">Welcome to Coquest&#44; {props.user?.name}!</h3>
+                <p className="sub-heading">Let's get to know you.</p>
+                <div className="bio-wrapper">
+                    <textarea
+                        className="bio-input"
+                        placeholder="Add your bio"
+                        value={biography}
+                        onChange={onEditBio}
+                        maxLength={MAX_CHAR_COUNT}>
+                    </textarea>
+                    <small className="char-count">{biography.length}&nbsp;/&nbsp;{MAX_CHAR_COUNT}</small>
+                </div>
             </div>
         );
     } else {

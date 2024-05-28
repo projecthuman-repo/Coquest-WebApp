@@ -1,11 +1,11 @@
-.interests-page {
+.location-page {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.search {
+.input {
     border-radius: 25px;
     border: 1px solid black;
     padding-left: 40px;
@@ -13,12 +13,13 @@
     height: 48px;
 }
 
-.search-container {
+.location-container {
     position: relative;
+    align-items: center;
     margin: 0px 0px 25px 0px;
 }
 
-.search-icon {
+.location-icon {
     position: absolute;
     left: 10px;
     top: 50%;
@@ -27,7 +28,13 @@
     height: 25px;
 }
 
-.checkbox-size {
-    transform: scale(2.5);
-    margin: 15px;
+.error {
+    background-color: rgba(255, 0, 0, 0.3);
+    padding: 16px;
+    border-radius: 5px;
+    margin: 0px 0px 25px 0px;
+}
+
+.map {
+    margin: 0px 0px 25px 0px;
 }
