@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import WalletIcon from '@mui/icons-material/AccountBalanceWallet';
@@ -37,14 +37,15 @@ const ProfileIcon = styled(AccountCircleIcon)({
 const ProfileName = styled.div({
     fontSize: '16px',
     fontWeight: 'bold',
-    marginBottom: '4px',
+    marginBottom: '10px',
 });
 
-const ProfileLink = styled(Link)({
+const ProfileLink = styled.div({
     fontSize: '14px',
     color: '#000',
     textDecoration: 'none',
     marginBottom: '10px',
+    cursor: 'pointer',
     '&:hover': {
         textDecoration: 'underline',
     },
@@ -57,13 +58,14 @@ const Divider = styled.div({
     margin: '10px 0',
 });
 
-const MenuItem = styled(Link)({
+const MenuItem = styled.div({
     display: 'flex',
     alignItems: 'center',
     padding: '8px 0',
     textDecoration: 'none',
     fontSize: '14px',
     color: '#000', // Updated to black color for the text
+    cursor: 'pointer',
     '&:hover': {
         backgroundColor: 'rgba(0, 0, 0, 0.05)',
         borderRadius: '10px',
@@ -78,6 +80,7 @@ const MenuItemIcon = styled.div({
 
 const DropdownMenu = () => {
     const [userName, setUserName] = useState("User"); // Default name to "User" until fetched
+    const navigate = useNavigate();
 
     useEffect(() => {
         let unsubscribe: (() => void) | null | undefined = null;
@@ -97,33 +100,41 @@ const DropdownMenu = () => {
         };
     }, []);
 
+    const handleNavigation = (path: string) => {
+        navigate(path);
+        window.location.reload();
+
+        // Future implementation without reload:
+        // navigate(path);
+    };
+
     return (
         <DropdownContainer>
             <ProfileSection>
                 <ProfileIcon />
                 <ProfileName>{userName}</ProfileName>
-                <ProfileLink to="/profile">View Profile</ProfileLink>
+                <ProfileLink onClick={() => handleNavigation('/profile')}>View Profile</ProfileLink>
             </ProfileSection>
             <Divider />
-            <MenuItem to="/wallet">
+            <MenuItem onClick={() => handleNavigation('/wallet')}>
                 <MenuItemIcon>
                     <WalletIcon />
                 </MenuItemIcon>
                 Wallet
             </MenuItem>
-            <MenuItem to="/inventory">
+            <MenuItem onClick={() => handleNavigation('/inventory')}>
                 <MenuItemIcon>
                     <InventoryIcon />
                 </MenuItemIcon>
                 Inventory
             </MenuItem>
-            <MenuItem to="/tickets">
+            <MenuItem onClick={() => handleNavigation('/tickets')}>
                 <MenuItemIcon>
                     <TicketsIcon />
                 </MenuItemIcon>
                 Tickets
             </MenuItem>
-            <MenuItem to="/settings">
+            <MenuItem onClick={() => handleNavigation('/settings')}>
                 <MenuItemIcon>
                     <SettingsIcon />
                 </MenuItemIcon>
