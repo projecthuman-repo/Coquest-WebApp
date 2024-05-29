@@ -9,28 +9,36 @@ import MessageIcon from "@mui/icons-material/Message";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import styled from "@emotion/styled";
 import { subscribeToUserModelSubject } from '../../observers/userobserver';
+import DropdownMenu from '../DropDownMenu/DropDownMenuComponent'; // Import the new dropdown menu component
 
 const Container = styled.div({
 	width: "100%",
 });
 
 const Spacer = styled.div({
-	width: 5,
+	width: 4,
 });
 
 const ProfileContainer = styled.div({
 	display: "flex",
-	marginRight: 30,
-	gap: 10,
-	paddingLeft: 25,
+	alignItems: "center",
+	gap: "10px",
+	paddingLeft: "25px",
+	position: "relative", // Add relative positioning for dropdown positioning
 });
 
 const ProfileIcon = styled(AccountCircleIcon)({
-	color: "rgba(0, 0, 0, 0.54)",
+	color: "#666666",
+	padding: '6px', 
+	cursor: 'pointer',   // Change cursor to pointer
+	'&:hover': {         // Add hover effect
+		backgroundColor: 'rgba(0, 0, 0, 0.049)',
+		borderRadius: '50%',
+	},
 });
 
-const ProfileButton = ({ name }: { name: string }) => (
-	<ProfileContainer>
+const ProfileButton = ({ name, onClick }: { name: string, onClick: () => void }) => (
+	<ProfileContainer onClick={onClick}>
 		<ProfileIcon />
 		<Typography>{name}</Typography>
 	</ProfileContainer>
@@ -38,6 +46,7 @@ const ProfileButton = ({ name }: { name: string }) => (
 
 const Toolbar = () => {
 	const [userName, setUserName] = useState("User"); // Default name to "User" until fetched
+	const [menuOpen, setMenuOpen] = useState(false);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -70,6 +79,10 @@ const Toolbar = () => {
 		window.location.reload(); // Temporary fix to ensure the page loads
 	};
 
+	const handleProfileClick = () => {
+		setMenuOpen(!menuOpen); // Toggle the dropdown menu
+	};
+
 	return (
 		<Container>
 			<AppBar>
@@ -82,7 +95,8 @@ const Toolbar = () => {
 						<MessageIcon />
 					</IconButton>
 
-					<ProfileButton name={userName} />
+					<ProfileButton name={userName} onClick={handleProfileClick} />
+					{menuOpen && <DropdownMenu />} {/* Conditionally render the dropdown menu */}
 				</MaterialToolbar>
 			</AppBar>
 		</Container>
