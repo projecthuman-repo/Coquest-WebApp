@@ -12,6 +12,7 @@ import ItemGrid from "./pages/Inventory/ItemGrid";
 import { Dashboard } from "./pages/Dashboard";
 import WalletPage from "./pages/Wallet/WalletPage";
 import { Outlet } from "react-router-dom";
+import UserProfile from "./pages/Profile/UserProfile";  // Import UserProfile page
 
 // Program flow Imports
 import {
@@ -168,6 +169,14 @@ const router = createBrowserRouter([
 	{
 		path: "/wallet",
 		element: <WalletPage />,
+	},
+	{
+		path: "/profile/:userId",
+		element: <UserProfile />,
+	},
+	{
+		path: "/profile",
+		element: <UserProfile />,
 	},
 ]);
 
