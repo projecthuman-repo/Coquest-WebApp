@@ -1,6 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { User } from '../../models/usermodel';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import SimpleCard from '../../components/SimpleCard/SimpleCard';
 
 const Container = styled.div`
   display: flex;
@@ -36,6 +42,44 @@ const Icon = styled.a`
   }
 `;
 
+const Button = styled.button`
+  padding: 8px 16px;
+  margin: 0 5px;
+  border-radius: 20px;
+  border: 1px solid black;
+  cursor: pointer;
+`;
+
+const FollowButton = styled(Button)`
+  background-color: lightgrey;
+  color: black;
+`;
+
+const MessageButton = styled(Button)`
+  background-color: white;
+  color: black;
+`;
+
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 70%;
+  margin-top: 40px;
+`;
+
+const FullWidthCard = styled(SimpleCard)`
+  grid-column: span 3;
+`;
+
+const TwoColumnCard = styled(SimpleCard)`
+  grid-column: span 2;
+`;
+
+const OneColumnCard = styled(SimpleCard)`
+  grid-column: span 1;
+`;
+
 interface UserProfileExternalProps {
     user: User;
 }
@@ -47,18 +91,27 @@ const UserProfileExternal: React.FC<UserProfileExternalProps> = ({ user }) => {
             <Username>{user.name}</Username>
             <SocialMediaIcons>
                 <Icon href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                    <i className="fab fa-facebook"></i>
+                    <FacebookIcon />
                 </Icon>
                 <Icon href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                    <i className="fab fa-twitter"></i>
+                    <TwitterIcon />
                 </Icon>
                 <Icon href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                    <i className="fab fa-instagram"></i>
+                    <InstagramIcon />
                 </Icon>
                 <Icon href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                    <i className="fab fa-linkedin"></i>
+                    <LinkedInIcon />
                 </Icon>
             </SocialMediaIcons>
+            <FollowButton>Follow</FollowButton>
+            <MessageButton>Message</MessageButton>
+            <GridContainer>
+                <OneColumnCard label="Skills" />
+                <OneColumnCard label="Tasks" />
+                <OneColumnCard label="Your Groups" />
+                <FullWidthCard label="Progress" />
+                <TwoColumnCard label="Recommendations" />
+            </GridContainer>
         </Container>
     );
 };

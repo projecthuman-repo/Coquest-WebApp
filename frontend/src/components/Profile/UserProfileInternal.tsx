@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import SimpleCard from '../../components/SimpleCard/SimpleCard';
 import { User } from '../../models/usermodel';
@@ -48,7 +48,7 @@ const UsernameContainer = styled.div`
 
 const Username = styled.h1`
   font-size: 30px;
-  margin-left: 20px;
+  margin-left: 40px;
 `;
 
 const SocialMediaIcons = styled.div`
@@ -71,7 +71,7 @@ const GridContainer = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   width: 70%;
-  margin-top: 26px;
+  margin-top: 40px;
 `;
 
 const FullWidthCard = styled(SimpleCard)`
@@ -104,6 +104,7 @@ const DropdownContainer = styled.div<DropdownProps>`
   z-index: 1000;
   padding: 10px;
   display: ${(props) => (props.visible ? 'block' : 'none')};
+
 `;
 
 const MenuItem = styled(Link)`
@@ -138,7 +139,7 @@ interface UserProfileInternalProps {
 
 const UserProfileInternal: React.FC<UserProfileInternalProps> = ({ user }) => {
     const [menuVisible, setMenuVisible] = useState(false);
-    const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+    const [menuPosition, setMenuPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
     const menuIconRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
