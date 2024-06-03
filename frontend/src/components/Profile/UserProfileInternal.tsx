@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import SimpleCard from '../../components/SimpleCard/SimpleCard';
-import { subscribeToUserModelSubject } from '../../observers/userobserver';
 import { User } from '../../models/usermodel';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -45,7 +44,6 @@ const UsernameContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 70%;
-  
 `;
 
 const Username = styled.h1`
@@ -134,29 +132,14 @@ const MenuIconContainer = styled.div`
   cursor: pointer;
 `;
 
-const UserProfileInternal: React.FC = () => {
-    const [user, setUser] = useState<User | null>(null);
+interface UserProfileInternalProps {
+    user: User;
+}
+
+const UserProfileInternal: React.FC<UserProfileInternalProps> = ({ user }) => {
     const [menuVisible, setMenuVisible] = useState(false);
     const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
     const menuIconRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        let unsubscribe: (() => void) | null | undefined = null;
-
-        const setupSubscription = async () => {
-            unsubscribe = await subscribeToUserModelSubject((user) => {
-                setUser(user);
-            });
-        };
-
-        setupSubscription();
-
-        return () => {
-            if (unsubscribe) {
-                unsubscribe();
-            }
-        };
-    }, []);
 
     useEffect(() => {
         if (menuIconRef.current) {
@@ -164,10 +147,6 @@ const UserProfileInternal: React.FC = () => {
             setMenuPosition({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX });
         }
     }, [menuVisible]);
-
-    if (!user) {
-        return <Container>Loading...</Container>;
-    }
 
     return (
         <Container>

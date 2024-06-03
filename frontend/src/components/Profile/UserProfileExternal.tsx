@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { User } from '../../models/usermodel';
-import { subscribeToUserModelSubject } from '../../observers/userobserver';
 
 const Container = styled.div`
   display: flex;
@@ -38,36 +37,10 @@ const Icon = styled.a`
 `;
 
 interface UserProfileExternalProps {
-    userId: string;
+    user: User;
 }
 
-const UserProfileExternal: React.FC<UserProfileExternalProps> = ({ userId }) => {
-    const [user, setUser] = useState<User | null>(null);
-
-    useEffect(() => {
-        let unsubscribe: (() => void) | null | undefined = null;
-
-        const setupSubscription = async () => {
-            unsubscribe = await subscribeToUserModelSubject((user) => {
-                if (user.id === userId) {
-                    setUser(user);
-                }
-            });
-        };
-
-        setupSubscription();
-
-        return () => {
-            if (unsubscribe) {
-                unsubscribe();
-            }
-        };
-    }, [userId]);
-
-    if (!user) {
-        return <Container>Loading...</Container>;
-    }
-
+const UserProfileExternal: React.FC<UserProfileExternalProps> = ({ user }) => {
     return (
         <Container>
             <Avatar src={user.images?.[0]?.path || '/default-avatar.png'} alt="User Avatar" />
