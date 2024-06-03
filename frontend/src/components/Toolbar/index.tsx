@@ -29,9 +29,10 @@ const ProfileContainer = styled.div({
 
 const ProfileIcon = styled(AccountCircleIcon)({
 	color: "#666666",
-	padding: '6px', 
-	cursor: 'pointer',   // Change cursor to pointer
-	'&:hover': {         // Add hover effect
+	padding: '6px',
+	cursor: 'pointer',
+	fontSize: '36px',  // Increase the font size
+	'&:hover': {
 		backgroundColor: 'rgba(0, 0, 0, 0.049)',
 		borderRadius: '50%',
 	},
