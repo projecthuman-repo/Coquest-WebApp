@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import InputMask from 'react-input-mask';
+import React, { useEffect, useState, useRef } from "react";
+import {useMask, InputMask, type MaskEventDetail} from '@react-input/mask';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { fromAddress, fromLatLng } from 'react-geocode';
 import setupGeocode from "../../../config/geocodeConfig";
@@ -72,12 +72,12 @@ function RelativeLocation(props: any) {
 
     async function handlePostalCodeChange(e: React.ChangeEvent<HTMLInputElement>) {
         let newPostal = e.target.value.toUpperCase();
-        newPostal = newPostal.replace(/\s/g, '');
+        let postal_combined = newPostal.replace(/\s/g, '');
         setPostalCode(newPostal);
 
         // Note: Cannot use stateful postal code data after setting it
-        if(newPostal.length === POSTAL_CODE_LEN) {
-            fromAddress(newPostal)
+        if(postal_combined.length === POSTAL_CODE_LEN) {
+            fromAddress(postal_combined)
             .then((res) => {
                 const loc = res.results[0].geometry.location;
                 console.log(`Using the following coordinates: lat: ${loc.lat}, lng:${loc.lng}`);
@@ -114,15 +114,15 @@ function RelativeLocation(props: any) {
             <h3 className="main-heading">Discover your community.</h3>
             <p className="sub-heading">Enter your postal code to have your account better suit your needs.</p>
             <div className="location-container">
-                <InputMask mask="a9a 9a9"
-                    maskChar={null}
+            <InputMask
+                    mask="_!_ !_!"
+                    replacement={{ _: /[A-Za-z]/, '!': /\d/ }}
                     value={postalCode}
                     className="input"
                     onChange={handlePostalCodeChange}
                     alt="Postal Code"
                     title="Postal Code Input"
                     placeholder="Postal Code"
-                    type="text"
                 />
                 <img src="/icons/location.png" className="location-icon" />
             </div>
