@@ -72,12 +72,11 @@ function RelativeLocation(props: any) {
 
     async function handlePostalCodeChange(e: React.ChangeEvent<HTMLInputElement>) {
         let newPostal = e.target.value.toUpperCase();
-        let postal_combined = newPostal.replace(/\s/g, '');
         setPostalCode(newPostal);
 
         // Note: Cannot use stateful postal code data after setting it
-        if(postal_combined.length === POSTAL_CODE_LEN) {
-            fromAddress(postal_combined)
+        if(newPostal.length === POSTAL_CODE_LEN) {
+            fromAddress(newPostal)
             .then((res) => {
                 const loc = res.results[0].geometry.location;
                 console.log(`Using the following coordinates: lat: ${loc.lat}, lng:${loc.lng}`);
@@ -115,7 +114,7 @@ function RelativeLocation(props: any) {
             <p className="sub-heading">Enter your postal code to have your account better suit your needs.</p>
             <div className="location-container">
             <InputMask
-                    mask="_!_ !_!"
+                    mask="_!_!_!"
                     replacement={{ _: /[A-Za-z]/, '!': /\d/ }}
                     value={postalCode}
                     className="input"
