@@ -88,7 +88,7 @@ const UserProfileExternal: React.FC<UserProfileExternalProps> = ({ user }) => {
     return (
         <Container>
             <Avatar src={user.images?.[0]?.path || '/default-avatar.png'} alt="User Avatar" />
-            <Username>{user.name}</Username>
+            <Username>{user.name.first}</Username>
             <SocialMediaIcons>
                 <Icon href="https://facebook.com" target="_blank" rel="noopener noreferrer">
                     <FacebookIcon />

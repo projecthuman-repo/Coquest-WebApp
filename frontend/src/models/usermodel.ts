@@ -1,12 +1,25 @@
 import { Image, Location, Skill, Badge, Recommendations, ExpandableCommunity, Registered, RegisteredRepType, Model, initExpandable } from "./common";
 import { Community } from "./communitymodel";
 
-export interface UserRequired {
+interface UserRequiredBase {
     readonly _id: string | undefined;
-    name: string;
     username: string;
     email: string;
 }
+
+export type Name = {
+    first: string,
+    middle?: string,
+    last: string,
+}
+
+type NameFields = {
+    firstName: string;
+    middleName?: string;
+    lastName: string;
+};
+
+export type UserRequired = UserRequiredBase & (NameFields | {name: Name});
 
 export interface UserOptional {
     registered: Registered | number | boolean;
@@ -25,7 +38,7 @@ export interface UserOptional {
 export class User implements Model {
     // Note: ID field can be undefined when the instance represents a brand new user  
     readonly id: string | undefined;
-    name: string;
+    name: Name;
     username: string;
     email: string;
     /*
@@ -88,9 +101,19 @@ export class User implements Model {
         return defaultValues.hasOwnProperty(key) ? defaultValues[key] : null;
     }
 
-    constructor(params: UserRequired & Partial<UserOptional> & { firstName?: string; lastName?: string } = {_id: undefined, name: "", email: "", username: ""}) {
+    constructor(params: UserRequired & Partial<UserOptional> = {_id: undefined, firstName: "", lastName: "", email: "", username: ""}) {
         this.id = params._id;
-        this.name = params.name;
+
+        if('name' in params) {
+            this.name = params.name;
+        } else {
+            this.name = {
+                first: params.firstName,
+                middle: params.middleName,
+                last: params.lastName,
+            };
+        }
+
         this.username = params.username;
         this.email = params.email;
 
@@ -114,7 +137,7 @@ export class User implements Model {
         this.skills = params.skills;
         this.badges = params.badges;
         // Use currentLevel property to indicate the state status. (That is, whether the instance is in safe empty state.)
-        if(params._id && params.name && params.email && params.username) {
+        if(this.id && this.name.first && this.email && this.username) {
             this.currentLevel = params.currentLevel ?? 0;
         } else {
             this.currentLevel = -1;

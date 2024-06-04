@@ -9,6 +9,7 @@ import CommunityTasks from "../../components/CommunityTasks";
 import Members from "../../components/Members";
 import ExtendedSimpleCard from "../../components/ExtendedSimpleCard/SimpleCard";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
+import { Name } from "../../models/usermodel";
 
 const Container = styled("div")({
 	display: "flex",
@@ -99,14 +100,17 @@ const MapsContainer = styled.div({
 });
 
 function Dashboard() {
-	const [userName, setUserName] = useState('');
+	const [name, setName] = useState<Name>({
+		first: "",
+		last: "",
+	});
 
 	useEffect(() => {
 		let unsubscribe: (() => void) | null | undefined = null;
 
 		const setupSubscription = async () => {
 			unsubscribe = await subscribeToUserModelSubject(user => {
-				setUserName(user.name);  // Update to use the 'name' field
+				setName(user.name);  // Update to use the 'name' field
 			});
 		};
 
@@ -119,12 +123,12 @@ function Dashboard() {
 		};
 	}, []);
 
-	const members = [userName]; // List of members with the current user
+	const members = [name.first]; // List of members with the current user
 
 	return (
 		<Container>
 			<Header>
-				<WelcomeMessage name={userName || "User"} communityName="Community name" />
+				<WelcomeMessage name={name.first || "User"} communityName="Community name" />
 				<SearchBar />
 			</Header>
 			<DashColumns>

@@ -10,6 +10,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import styled from "@emotion/styled";
 import { subscribeToUserModelSubject } from '../../observers/userobserver';
 import DropdownMenu from '../DropDownMenu/DropDownMenuComponent'; // Import the new dropdown menu component
+import { Name } from "../../models/usermodel";
 
 const Container = styled.div({
 	width: "100%",
@@ -46,8 +47,11 @@ const ProfileButton = ({ name, onClick }: { name: string, onClick: () => void })
 );
 
 const Toolbar = () => {
-	const [userName, setUserName] = useState("User"); // Default name to "User" until fetched
 	const [menuOpen, setMenuOpen] = useState(false);
+	const [name, setName] = useState<Name>({
+		first: "",
+		last: "",
+	}); // Default name to "User" until fetched
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -55,7 +59,7 @@ const Toolbar = () => {
 
 		const setupSubscription = async () => {
 			unsubscribe = await subscribeToUserModelSubject(user => {
-				setUserName(user.name);  // Update to use the 'name' field
+				setName(user.name);  // Update to use the 'name' field
 			});
 		};
 
@@ -96,7 +100,7 @@ const Toolbar = () => {
 						<MessageIcon />
 					</IconButton>
 
-					<ProfileButton name={userName} onClick={handleProfileClick} />
+					<ProfileButton name={name.first} onClick={handleProfileClick} />
 					{menuOpen && <DropdownMenu />} {/* Conditionally render the dropdown menu */}
 				</MaterialToolbar>
 			</AppBar>
