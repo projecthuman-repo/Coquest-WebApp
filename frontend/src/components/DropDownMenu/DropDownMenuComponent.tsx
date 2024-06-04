@@ -7,6 +7,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import TicketsIcon from '@mui/icons-material/ConfirmationNumber';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { subscribeToUserModelSubject } from '../../observers/userobserver'; // Ensure this path is correct
+import { Name } from '../../models/usermodel';
 
 const DropdownContainer = styled.div({
     position: 'absolute',
@@ -79,7 +80,10 @@ const MenuItemIcon = styled.div({
 });
 
 const DropdownMenu = () => {
-    const [userName, setUserName] = useState("User"); // Default name to "User" until fetched
+    const [name, setName] = useState<Name>({
+        first: "",
+        last: "",
+    }); // Default name to "User" until fetched
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -87,7 +91,7 @@ const DropdownMenu = () => {
 
         const setupSubscription = async () => {
             unsubscribe = await subscribeToUserModelSubject(user => {
-                setUserName(user.name);  // Update to use the 'name' field
+                setName(user.name);  // Update to use the 'name' field
             });
         };
 
@@ -112,7 +116,7 @@ const DropdownMenu = () => {
         <DropdownContainer>
             <ProfileSection>
                 <ProfileIcon />
-                <ProfileName>{userName}</ProfileName>
+                <ProfileName>{name.first}</ProfileName>
                 <ProfileLink onClick={() => handleNavigation('/profile')}>View Profile</ProfileLink>
             </ProfileSection>
             <Divider />

@@ -40,8 +40,20 @@ module.exports = gql`
 
   """"""
 
+  type Name {
+    first: String!,
+    middle: String,
+    last: String!,
+  }
+
+  input NameInput {
+    first: String!,
+    middle: String,
+    last: String!,
+  }
+
   type JWT {
-    name: String,
+    name: Name,
     username: String,
     email: String,
     iat: String,
@@ -160,7 +172,7 @@ module.exports = gql`
   type regenquestUser {
     _id: String!
     userID: String
-    name: String
+    name: Name
     username: String
     email: String
     registered: registered
@@ -179,7 +191,7 @@ module.exports = gql`
   input regenquestUserInput {
     id: String
     userID: String
-    name: String
+    name: NameInput
     username: String
     email: String
     registered: registeredInput

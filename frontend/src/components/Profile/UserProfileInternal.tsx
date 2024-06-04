@@ -155,7 +155,7 @@ const UserProfileInternal: React.FC<UserProfileInternalProps> = ({ user }) => {
                 <Avatar src={user.images?.[0]?.path || '/default-avatar.png'} alt="User Avatar" />
             </BackgroundPhoto>
             <UsernameContainer>
-                <Username>{user.name}</Username>
+                <Username>{user.name.first}</Username>
                 <SocialMediaIcons>
                     <Icon href="https://instagram.com" target="_blank" rel="noopener noreferrer">
                         <InstagramIcon />

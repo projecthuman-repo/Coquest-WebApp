@@ -2,10 +2,10 @@ import graphQLClient from '../apiInterface/client';
 import { gql } from 'graphql-request';
 import { Cookies } from 'react-cookie';
 import { decodeToken } from 'react-jwt'
-import { User } from './usermodel';
+import { Name, User } from './usermodel';
 
 export type JWT = {
-    name: string,
+    name: Name,
     username: string,
     email: string,
     iat: string,
@@ -24,7 +24,10 @@ const getCrossUserQuery = gql`
 const getTokenQuery = gql`
     query GetToken {
         getToken {
-            name
+            name {
+                first
+                last
+            }
             username
             email
             iat
