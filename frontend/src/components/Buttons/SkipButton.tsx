@@ -3,7 +3,9 @@ import './Buttons.css';
 
 function SkipButton() {
     return (
-        <button className="skip-button">Skip</button>
+        <div className="skip-button">
+        <p className='skip-button-text'>Skip</p>
+        </div>
     );
 };
 

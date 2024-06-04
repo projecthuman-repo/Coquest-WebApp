@@ -3,7 +3,9 @@ import './Buttons.css';
 
 function NextButton(props: {name: string}) {
     return (
-        <button className="next-button">{props.name}</button>
+        <div className="next-button">
+        <p className='next-button-text'>{props.name}</p>
+        </div>
     );
 }
 
