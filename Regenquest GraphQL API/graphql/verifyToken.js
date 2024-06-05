@@ -1,22 +1,20 @@
 const { SchemaDirectiveVisitor } = require('apollo-server-express');
-const jwt = require("jsonwebtoken");
 const { defaultFieldResolver } = require('graphql');
+const { getSecret } = require('../utils/gcloud');
+const { verifyToken } = require('../utils/token');
 
 class VerifyTokenDirective extends SchemaDirectiveVisitor {
     visitFieldDefinition(field) {
         const originalResolve = field.resolve || defaultFieldResolver;
         field.resolve = async function (...args) {
+            const [, , context] = args;
             // Extract the token from arguments
             const token = args[1].token; // assuming the token is the second argument
-            try {
-                // TODO: settle on an appropriate HMAC key and possibly retrieve it securely
-                jwt.verify(token, 'your-access-token-secret');
-                // Proceed if the token is valid
-                return originalResolve.apply(this, args);
-            } catch(err) {
-                console.error("Invalid token:", err);
-                throw new Error("Invalid token provided");
-            }
+            const secret = await getSecret(process.env.ACCESS_JWT_NAME);
+
+            await verifyToken(token, secret, context);
+
+            return originalResolve.apply(this, args);
         }
     }
 }

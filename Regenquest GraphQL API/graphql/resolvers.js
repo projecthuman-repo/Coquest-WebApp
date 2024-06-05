@@ -21,6 +21,7 @@ const { Storage } = require("@google-cloud/storage");
 const path = require("path");
 var jwt = require('jsonwebtoken');
 const {coerceExpandable, deduceExpandableType, toOutputFormat} = require("../utils/expandable");
+const { getSecret } = require("../utils/gcloud");
 
 const storage = new Storage();
 
@@ -376,7 +377,7 @@ module.exports = {
     },
 
     async getToken(parent, {}, context, info) {
-      return jwt.verify(context.req.cookies[process.env.AUTH_COOKIE_NAME], 'your-access-token-secret');
+      return jwt.verify(context.req.cookies[process.env.AUTH_COOKIE_NAME], await getSecret(process.env.ACCESS_JWT_NAME));
     },
 
     async generatePresignedURL() {
