@@ -73,6 +73,8 @@ function RelativeLocation(props: any) {
     async function handlePostalCodeChange(e: React.ChangeEvent<HTMLInputElement>) {
         let newPostal = e.target.value.toUpperCase();
         setPostalCode(newPostal);
+        // Note: Original code to remove the space in the postal code and search with it.
+        // let noSpace = newPostal.replace(/\s/g, '');
 
         // Note: Cannot use stateful postal code data after setting it
         if(newPostal.length === POSTAL_CODE_LEN) {
@@ -113,6 +115,7 @@ function RelativeLocation(props: any) {
             <h3 className="main-heading">Discover your community.</h3>
             <p className="sub-heading">Enter your postal code to have your account better suit your needs.</p>
             <div className="location-container">
+            {/* Note: Figure out how to add a space in the mask without it causing unexpected issues (removes space on completed postal code, weird activity when backspacing) */}
             <InputMask
                     mask="_!_!_!"
                     replacement={{ _: /[A-Za-z]/, '!': /\d/ }}
