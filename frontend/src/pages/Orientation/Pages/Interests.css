@@ -16,6 +16,7 @@
 .search-container {
     position: relative;
     margin: 0px 0px 25px 0px;
+    padding-top: 20px;
 }
 
 .search-icon {

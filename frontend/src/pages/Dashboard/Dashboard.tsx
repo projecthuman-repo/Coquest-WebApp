@@ -9,6 +9,8 @@ import CommunityTasks from "../../components/CommunityTasks";
 import Members from "../../components/Members";
 import ExtendedSimpleCard from "../../components/ExtendedSimpleCard/SimpleCard";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
+import { useUserRegistration } from "../../components/AutoRedirector/UserRegistration";
+import Loading from "../../components/Loading";
 
 const Container = styled("div")({
 	display: "flex",
@@ -100,6 +102,7 @@ const MapsContainer = styled.div({
 
 function Dashboard() {
 	const [userName, setUserName] = useState('');
+	let { authenticated } = useUserRegistration();
 
 	useEffect(() => {
 		let unsubscribe: (() => void) | null | undefined = null;
@@ -122,42 +125,46 @@ function Dashboard() {
 	const members = [userName]; // List of members with the current user
 
 	return (
-		<Container>
-			<Header>
-				<WelcomeMessage name={userName || "User"} communityName="Community name" />
-				<SearchBar />
-			</Header>
-			<DashColumns>
-				<DashColumn>
-					<CardCont>
-						<SimpleCard label="Community overview" />
-						<SimpleCard label="My projects" />
-						<SimpleCard label="Open projects" />
-					</CardCont>
-					<ExtendedSimpleCard label="Posts" />
-				</DashColumn>
-				<DashColumn>
-					<MyTasksContainer label="My Tasks" seeAllLink="#" />
-				</DashColumn>
-				<DashColumn>
-					<MapsContainer>
-						<Maps />
-					</MapsContainer>
-				</DashColumn>
-			</DashColumns>
-			<Footer>
-				<CommunityTaskContainer>
-					<CommunityTasks label="Community Tasks" seeAllLink="#" />
-				</CommunityTaskContainer>
-				<MembersContainer>
-					<Members
-						users={members}  // Pass the list of members
-						userRole={["Role"]}  // Placeholder for user roles, you can expand this in the future
-						showAllLink="#"
-					/>
-				</MembersContainer>
-			</Footer>
-		</Container>
+		(authenticated ?
+			<Container>
+				<Header>
+					<WelcomeMessage name={userName || "User"} communityName="Community name" />
+					<SearchBar />
+				</Header>
+				<DashColumns>
+					<DashColumn>
+						<CardCont>
+							<SimpleCard label="Community overview" />
+							<SimpleCard label="My projects" />
+							<SimpleCard label="Open projects" />
+						</CardCont>
+						<ExtendedSimpleCard label="Posts" />
+					</DashColumn>
+					<DashColumn>
+						<MyTasksContainer label="My Tasks" seeAllLink="#" />
+					</DashColumn>
+					<DashColumn>
+						<MapsContainer>
+							<Maps />
+						</MapsContainer>
+					</DashColumn>
+				</DashColumns>
+				<Footer>
+					<CommunityTaskContainer>
+						<CommunityTasks label="Community Tasks" seeAllLink="#" />
+					</CommunityTaskContainer>
+					<MembersContainer>
+						<Members
+							users={members}  // Pass the list of members
+							userRole={["Role"]}  // Placeholder for user roles, you can expand this in the future
+							showAllLink="#"
+						/>
+					</MembersContainer>
+				</Footer>
+			</Container> 
+			: 
+			<Loading />
+		)
 	);
 }
 
