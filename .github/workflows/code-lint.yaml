@@ -1,0 +1,44 @@
+name: Source Code Linting
+
+on: [push, pull_request]
+
+jobs:
+  frontend-lint-check:
+    name: Frontend lint check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install frontend dependencies
+        run: npm ci
+        working-directory: ./frontend
+
+      - name: Lint frontend
+        run: npm run lint
+        working-directory: ./frontend
+
+  backend-lint-check:
+    name: Backend lint check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install backend dependencies
+        run: npm ci
+        working-directory: "./Regenquest GraphQL API"
+
+      - name: Lint backend
+        run: npm run lint
+        working-directory: "./Regenquest GraphQL API"

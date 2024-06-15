@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import {
 	GoogleMap,
 	useLoadScript,
-	useJsApiLoader,
 	Marker,
 	Autocomplete,
 	Circle,
 } from "@react-google-maps/api";
 import styled from "@emotion/styled";
-import { Grid, InputBase, MenuItem, Select, TextField } from "@mui/material";
+import { Grid, InputBase, MenuItem, Select } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 const SearchInputContainer = styled("div")({

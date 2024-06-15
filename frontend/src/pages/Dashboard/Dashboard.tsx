@@ -85,18 +85,18 @@ const MembersContainer = styled("div")({
 
 // Styled component to ensure the map container has consistent height and width
 const MapsContainer = styled.div({
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    height: "95.7%",
-    borderRadius: "10px",
-    overflow: "hidden",
-    // Ensure the map takes the full height of its container
-    '& .leaflet-container': {
-        flex: 1,
-        height: '100%',
-        width: '100%',
-    },
+	flex: 1,
+	display: "flex",
+	flexDirection: "column",
+	height: "95.7%",
+	borderRadius: "10px",
+	overflow: "hidden",
+	// Ensure the map takes the full height of its container
+	"& .leaflet-container": {
+		flex: 1,
+		height: "100%",
+		width: "100%",
+	},
 });
 
 function Dashboard() {
@@ -109,8 +109,8 @@ function Dashboard() {
 		let unsubscribe: (() => void) | null | undefined = null;
 
 		const setupSubscription = async () => {
-			unsubscribe = await subscribeToUserModelSubject(user => {
-				setName(user.name);  // Update to use the 'name' field
+			unsubscribe = await subscribeToUserModelSubject((user) => {
+				setName(user.name); // Update to use the 'name' field
 			});
 		};
 
@@ -128,7 +128,10 @@ function Dashboard() {
 	return (
 		<Container>
 			<Header>
-				<WelcomeMessage name={name.first || "User"} communityName="Community name" />
+				<WelcomeMessage
+					name={name.first || "User"}
+					communityName="Community name"
+				/>
 				<SearchBar />
 			</Header>
 			<DashColumns>
@@ -155,8 +158,8 @@ function Dashboard() {
 				</CommunityTaskContainer>
 				<MembersContainer>
 					<Members
-						users={members}  // Pass the list of members
-						userRole={["Role"]}  // Placeholder for user roles, you can expand this in the future
+						users={members} // Pass the list of members
+						userRole={["Role"]} // Placeholder for user roles, you can expand this in the future
 						showAllLink="#"
 					/>
 				</MembersContainer>

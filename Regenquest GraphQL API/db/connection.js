@@ -9,7 +9,7 @@ const dbOptions = {
 // Create a connection to the CrossPlatform database
 const crossPlatformDatabase = mongoose.createConnection(
   process.env.DATABASE_CROSS_PLATFORM_CONNECTION,
-  dbOptions
+  dbOptions,
 );
 
 // Connect to the learningsystem database
@@ -18,7 +18,7 @@ const connectToRegenquestDatabase = async () => {
     // await regenquestDatabase.asPromise();
     await mongoose.connect(
       process.env.DATABASE_REGENQUEST_CONNECTION,
-      dbOptions
+      dbOptions,
     );
 
     console.log("Connected to the regenquest database");

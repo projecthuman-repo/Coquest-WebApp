@@ -13,12 +13,12 @@ const regenquestTaskSchema = new Schema({
   userID: {
     type: mongoose.ObjectId,
     required: true,
-    ref: 'regenquestUser'
+    ref: "regenquestUser",
   },
   questID: {
     type: mongoose.ObjectId,
     required: true,
-    ref: 'regenquestQuest'
+    ref: "regenquestQuest",
   },
   createdAt: { type: Date, default: Date.now },
   name: { type: String, required: true },

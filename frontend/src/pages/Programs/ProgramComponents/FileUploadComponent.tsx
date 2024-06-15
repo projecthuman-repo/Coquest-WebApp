@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
 import React, { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";

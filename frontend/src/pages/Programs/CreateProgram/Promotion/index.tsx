@@ -1,6 +1,5 @@
 import { Button, Grid, TextField, Typography, styled } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import MapComponent from "../../ProgramComponents/MapComponent";
 import FileUploadComponent from "../../ProgramComponents/FileUploadComponent";
 import InvitePeopleComponent from "../../ProgramComponents/InvitePeopleComponent";
 
@@ -57,11 +56,11 @@ const GridItem = styled(Grid)({
 	paddingTop: 50,
 });
 const Promotion = () => {
-	const [sharelink, setShareLink] = useState("sharelink.com/program");
+	const [sharelink, _setShareLink] = useState("sharelink.com/program");
 	const [usernames, setUsernames] = useState<string[]>([]);
 
 	useEffect(() => {
-		let temp: string[] = ["@User1", "@User2", "@User3"];
+		const temp: string[] = ["@User1", "@User2", "@User3"];
 		setUsernames(temp);
 	}, []);
 

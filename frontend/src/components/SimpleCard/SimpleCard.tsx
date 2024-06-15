@@ -3,7 +3,6 @@ import React from "react";
 import styled from "@emotion/styled";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import IconButton from "@mui/material/IconButton";
-import { bindCallback } from "rxjs";
 
 //uses props to take card label
 type SimpleCardProps = {

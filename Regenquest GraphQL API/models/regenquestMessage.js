@@ -9,26 +9,28 @@ const { model, Schema, default: mongoose } = require("mongoose");
 const regenquestMessageSchema = new Schema({
   chatID: {
     type: mongoose.ObjectId,
-    ref: 'regenquestChat',
-    required: true
+    ref: "regenquestChat",
+    required: true,
   },
   sentFrom: {
     type: mongoose.ObjectId,
-    ref: 'regenquestUser',
-    required: true
+    ref: "regenquestUser",
+    required: true,
   },
   message: {
     type: String,
-    required: true
+    required: true,
   },
   time: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-  unreadBy: [{
-    type: mongoose.ObjectId,
-    ref: 'regenquestUser'
-  }],
+  unreadBy: [
+    {
+      type: mongoose.ObjectId,
+      ref: "regenquestUser",
+    },
+  ],
 });
 
 module.exports = model("regenquestMessage", regenquestMessageSchema);

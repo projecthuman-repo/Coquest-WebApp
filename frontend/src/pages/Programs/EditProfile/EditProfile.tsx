@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Typography, TextField, Grid, Card } from "@mui/material";
+import { Button, Typography, TextField, Grid } from "@mui/material";
 import { styled } from "@mui/system";
 import { Link } from "react-router-dom";
 import AddContainer from "../ProgramComponents/AddContainer";
@@ -71,27 +71,27 @@ type StyledTextFieldProps = {
 	placeholder: string;
 };
 
-type Education = {
+type _Education = {
 	level: string;
 	institute: string;
 	program: string;
 	degree: string;
 };
 
-type WorkExperience = {
+type _WorkExperience = {
 	position: string;
 	employer: string;
 	location: string;
 	jobResponsibilties: string;
 	skills: string;
 };
-type Reference = {
+type _Reference = {
 	fullName: string;
 	email: string;
 	phone: string;
 };
 
-type Project = {
+type _Project = {
 	name: string;
 	type: string;
 	description: string;
@@ -130,7 +130,7 @@ const EditProfile = () => {
 
 	// Fetches on page load
 	useEffect(() => {
-		let tempBadges: string[] = [];
+		const tempBadges: string[] = [];
 
 		for (let i = 0; i <= 3; i++) {
 			tempBadges.push(`Badge Name`);
@@ -259,7 +259,7 @@ const EditProfile = () => {
 				<AddContainer label="Add project" onClick={add} />
 			</AddWrapper>
 			<Spacer />
-			{/*  The followinhg skills and certs search feature is a reused component, 
+			{/*  The followinhg skills and certs search feature is a reused component,
 			but does not print skills and certs, instead prints badge names */}
 			<AddWrapper>
 				<SkillsCertsSearch
