@@ -55,7 +55,7 @@ const CreateProgram = () => {
 	const location = useLocation();
 	const [pageIndex, setPageIndex] = useState(0);
 	const [currentPath, setCurrentPath] = useState(
-		getCurrPath(location.pathname)
+		getCurrPath(location.pathname),
 	);
 	const paths = [
 		"basic-information",

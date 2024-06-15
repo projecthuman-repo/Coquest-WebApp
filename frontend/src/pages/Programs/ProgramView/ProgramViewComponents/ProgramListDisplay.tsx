@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { styled } from "@mui/system";
 import ProgramPane from "./ProgramPane";
 import { Program } from "../../ProgramComponents/TypeDefinitions/Program";

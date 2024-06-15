@@ -14,7 +14,7 @@ type AddEducationDialogueProps = {
 	onSave: (name: string, age: number) => void;
 };
 
-const EducationDialogue = ({
+const _EducationDialogue = ({
 	open,
 	onClose,
 	onSave,

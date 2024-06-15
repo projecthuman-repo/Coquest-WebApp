@@ -1,8 +1,8 @@
 function getJson(str) {
   try {
-      return JSON.parse(str);
-  } catch (e) {
-      return "";
+    return JSON.parse(str);
+  } catch {
+    return "";
   }
 }
 

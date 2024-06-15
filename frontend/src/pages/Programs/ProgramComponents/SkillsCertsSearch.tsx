@@ -3,7 +3,6 @@ import { InputBase, Button } from "@mui/material";
 import { styled } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import DoneIcon from "@mui/icons-material/Done";
-import { getValue } from "@testing-library/user-event/dist/utils";
 
 const CheckMark = styled(DoneIcon)({
 	marginRight: 13,
@@ -84,7 +83,7 @@ const SkillsCertsSearch = (props: SkillSearchProps) => {
 
 	const handleSelectedSkillClick: HandleSkillType = (skill) => {
 		setSelectedSkills(
-			selectedSkills.filter((selectedSkill) => selectedSkill !== skill)
+			selectedSkills.filter((selectedSkill) => selectedSkill !== skill),
 		);
 	};
 
@@ -93,7 +92,7 @@ const SkillsCertsSearch = (props: SkillSearchProps) => {
 			.filter(
 				(skill) =>
 					skill.toLowerCase().includes(searchValue) &&
-					!selectedSkills.includes(skill)
+					!selectedSkills.includes(skill),
 			)
 			.map((skill) => (
 				<HashtagButton

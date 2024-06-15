@@ -57,15 +57,18 @@ const NoTasksText = styled(Typography)({
 const FindTasksButton = styled(Button)({
 	backgroundColor: "#FFFFFF",
 	color: "#000000",
-	'&:hover': {
+	"&:hover": {
 		backgroundColor: "#e0e0e0",
 	},
 	padding: "10px 20px",
-	borderRadius: "40px"
+	borderRadius: "40px",
 });
 
 // Component function
-const MyTasksContainer: React.FC<MyTasksContainerProps> = ({ label, seeAllLink }) => {
+const MyTasksContainer: React.FC<MyTasksContainerProps> = ({
+	label,
+	seeAllLink,
+}) => {
 	return (
 		<TasksContainerStyled>
 			<ContainerHeaderStyled>

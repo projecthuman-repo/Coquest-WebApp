@@ -131,7 +131,9 @@ const Notifications: React.FC = () => {
 		<div>
 			<div className="title-container">
 				<h1 className="notifications-title">Notifications</h1>
-				<NewNotificationsNumber number={notifications.filter(n => !n.isRead).length} />
+				<NewNotificationsNumber
+					number={notifications.filter((n) => !n.isRead).length}
+				/>
 			</div>
 			<div className="notifications-container">
 				<div className="notifications-container-left">
@@ -154,13 +156,22 @@ const Notifications: React.FC = () => {
 							notifications[selectedNotification] && (
 								<>
 									<NotificationsImage
-										image={notifications[selectedNotification].image}
+										image={
+											notifications[selectedNotification]
+												.image
+										}
 									/>
 									<NotificationsContent
-										content={notifications[selectedNotification].content}
+										content={
+											notifications[selectedNotification]
+												.content
+										}
 									/>
 									<Link
-										href={notifications[selectedNotification].link}
+										href={
+											notifications[selectedNotification]
+												.link
+										}
 										target="_blank"
 										rel="noopener noreferrer"
 									>
