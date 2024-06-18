@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import InputMask from 'react-input-mask';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { fromAddress, fromLatLng } from 'react-geocode';
-import setupGeocode from "../../../config/geocodeConfig";
-import './RelativeLocation.css';
+import setupGeocode from "../../config/geocodeConfig";
+import './Location.css';
 
 const POSTAL_CODE_LEN = 6;
 const MAP_ZOOM_LEVEL = 11;
@@ -13,7 +13,7 @@ const mapContainerStyle = {
     height: '400px'
 };
 
-function RelativeLocation(props: any) {
+function Location(props: any) {
 
     useEffect(() => {
         setupGeocode();
@@ -47,6 +47,7 @@ function RelativeLocation(props: any) {
     }, [props.user.location]);
 
     const getBrowserLocation = () => {
+        console.log(navigator.geolocation)
         if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
@@ -112,38 +113,36 @@ function RelativeLocation(props: any) {
 
     return (
         <div className="location-page">
-            <h3 className="main-heading">Discover your community.</h3>
-            <p className="sub-heading">Enter your postal code to have your account better suit your needs.</p>
-                <div className="location-container">
-                    <InputMask mask="a9a 9a9"
-                        maskChar={null}
-                        value={postalCode}
-                        className="input"
-                        onChange={handlePostalCodeChange}
-                        alt="Postal Code"
-                        title="Postal Code Input"
-                        placeholder="Postal Code"
-                        type="text"
-                    />
-                    <img src="/icons/location.png" className="location-icon" />
+            <div className="location-container">
+                <InputMask mask="a9a 9a9"
+                    maskChar={null}
+                    value={postalCode}
+                    className="input"
+                    onChange={handlePostalCodeChange}
+                    alt="Postal Code"
+                    title="Postal Code Input"
+                    placeholder="Postal Code"
+                    type="text"
+                />
+                <img src="/icons/location.png" className="location-icon" />
+            </div>
+            {isLoaded && postalCode.length === POSTAL_CODE_LEN && !inputError && (         
+                <div className="map">       
+                    <GoogleMap
+                        mapContainerStyle={mapContainerStyle}
+                        center={center}
+                        zoom={MAP_ZOOM_LEVEL}
+                        >
+                        {/* Dynamic map content */}
+                    </GoogleMap>
                 </div>
-                <div className="map">
-                    {isLoaded && postalCode.length === POSTAL_CODE_LEN && !inputError && (              
-                            <GoogleMap
-                            mapContainerStyle={mapContainerStyle}
-                            center={center}
-                            zoom={MAP_ZOOM_LEVEL}
-                            >
-                                {/* Dynamic map content */}
-                            </GoogleMap>
-                    )}
-                </div>
-                {postalCode.length === POSTAL_CODE_LEN && inputError && (
-                    <p className="error">Please insert a valid postal code.</p>
-                )}
-                <button onClick={getBrowserLocation}>Get&nbsp;Current&nbsp;Location</button>
+            )}
+            {postalCode.length === POSTAL_CODE_LEN && inputError && (
+                <p className="error">Please insert a valid postal code.</p>
+            )}
+            <button onClick={getBrowserLocation}>Get&nbsp;Current&nbsp;Location</button>
         </div>
     );
 }
 
-export default RelativeLocation;
+export default Location;
