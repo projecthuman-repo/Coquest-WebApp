@@ -26,6 +26,7 @@ const BackgroundPhoto = styled.div`
   height: 200px;
   background-color: #e0e0e0;
   position: relative;
+//   padding: 0px;
 `;
 
 const Avatar = styled.img`

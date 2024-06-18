@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import WalletIcon from '@mui/icons-material/AccountBalanceWallet';
@@ -37,7 +37,7 @@ const ProfileIcon = styled(AccountCircleIcon)({
 const ProfileName = styled.div({
     fontSize: '16px',
     fontWeight: 'bold',
-    marginBottom: '10px',
+    marginBottom: '2px',
 });
 
 const ProfileLink = styled.div({

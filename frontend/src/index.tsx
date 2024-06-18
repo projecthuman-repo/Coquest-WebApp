@@ -171,7 +171,7 @@ const router = createBrowserRouter([
 		element: <WalletPage />,
 	},
 	{
-		path: "/profile/:userId",
+		path: "/profile/:userId?",
 		element: <UserProfile />,
 	},
 	{
