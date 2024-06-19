@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import InputMask from 'react-input-mask';
+import {InputMask} from '@react-input/mask';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { fromAddress, fromLatLng } from 'react-geocode';
 import setupGeocode from "../../config/geocodeConfig";
@@ -73,8 +73,10 @@ function Location(props: any) {
     }
 
     async function handlePostalCodeChange(e: React.ChangeEvent<HTMLInputElement>) {
-        let newPostal = e.target.value.toUpperCase();
-        newPostal = newPostal.replace(/\s/g, '');
+
+        let newPostal = e.target.value.toUpperCase()
+        // Old Libary Fix
+        // let postal_combined = newPostal.replace(/\s/g, '');
         setPostalCode(newPostal);
 
         // Note: Cannot use stateful postal code data after setting it
@@ -114,8 +116,11 @@ function Location(props: any) {
     return (
         <div className="location-page">
             <div className="location-container">
-                <InputMask mask="a9a 9a9"
-                    maskChar={null}
+                {/* Note: The new input mask causes issues when trying to put a space in between the postal code, 
+                the fix in handlePostalCodeChange which was created for the old library does not work anymore. */}
+                <InputMask
+                    mask="_!_!_!"
+                    replacement={{ _: /[A-Za-z]/, '!': /\d/ }}
                     value={postalCode}
                     className="input"
                     onChange={handlePostalCodeChange}
