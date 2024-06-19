@@ -3,10 +3,7 @@ import { Typography, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
 import SearchBar from "../../../components/SearchBar";
 import ProgramListDisplay from "./ProgramViewComponents/ProgramListDisplay";
-import {
-	templatePrograms,
-	populatedPrograms,
-} from "../../../testing/TestProgramsData";
+import { populatedPrograms } from "../../../testing/TestProgramsData";
 import { Program } from "../ProgramComponents/TypeDefinitions/Program";
 
 const Container = styled("div")({

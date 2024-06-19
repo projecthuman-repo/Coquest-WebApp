@@ -1,26 +1,26 @@
 .progress-bar {
-    width: 100%;
-    padding: 0;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    border-radius: 50px;
+  width: 100%;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 50px;
 
-    display: flex;
-    flex-direction: row;
-    gap: 25px;
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
 }
 
 .progress-bar small {
-    font-size: 12px;
-    color: white;
+  font-size: 12px;
+  color: white;
 }
 
 .completed {
-    height: 20px;
-    padding: 0;
-    border-radius: 50px;
-    background-color: #26A5E7;
+  height: 20px;
+  padding: 0;
+  border-radius: 50px;
+  background-color: #26a5e7;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

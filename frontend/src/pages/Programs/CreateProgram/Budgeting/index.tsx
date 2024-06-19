@@ -63,11 +63,11 @@ const CheckboxContainer = styled("div")({
 });
 
 const Budgeting = () => {
-	const [barterChoice, setBarterChoice] = useState<string>();
+	const [_barterChoice, setBarterChoice] = useState<string>();
 	const [participationCost, setParticipationCost] = useState<string>();
 	const [participationNum, setParticipationNum] = useState<string>();
 	const [noLimit, setNoLimit] = useState<boolean>(false);
-	const [crowdFundingChoice, setCrowdfundingChoice] = useState<string>();
+	const [_crowdFundingChoice, setCrowdfundingChoice] = useState<string>();
 	const [crowdfundAmount, setCrowdFundAmount] = useState<string>();
 	const [message, setMessage] = useState<string>();
 
@@ -83,27 +83,27 @@ const Budgeting = () => {
 
 	// //Handles setting participation cost
 	const handleParticipationCostChange = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
 		setParticipationCost(event.target.value);
 	};
 	// //Handles setting crowdfunding cost
 	const handleCrowdFundAmountChange = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
 		setCrowdFundAmount(event.target.value);
 	};
 
 	//Handles setting number of participants
 	const handleParticipationNumChange = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
 		setParticipationNum(event.target.value);
 	};
 
 	//Handles setting thankyou message
 	const handleMessageChange = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
 		setMessage(event.target.value);
 	};

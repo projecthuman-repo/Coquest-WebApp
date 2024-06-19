@@ -78,8 +78,8 @@ const InvitePeopleComponent = (props: UsernameSearchProps) => {
 	const handleSelectedUsernameClick: HandleUsernameType = (username) => {
 		setSelectedUsernames(
 			selectedUsernames.filter(
-				(selectedUsername) => selectedUsername !== username
-			)
+				(selectedUsername) => selectedUsername !== username,
+			),
 		);
 	};
 
@@ -88,7 +88,7 @@ const InvitePeopleComponent = (props: UsernameSearchProps) => {
 			.filter(
 				(username) =>
 					username.toLowerCase().includes(searchValue) &&
-					!selectedUsernames.includes(username)
+					!selectedUsernames.includes(username),
 			)
 			.map((username) => (
 				<UsernameButton

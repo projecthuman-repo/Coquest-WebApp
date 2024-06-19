@@ -1,5 +1,5 @@
-import React from 'react';
-import './Buttons.css';
+import React from "react";
+import "./Buttons.css";
 
 function BackButton() {
     return (

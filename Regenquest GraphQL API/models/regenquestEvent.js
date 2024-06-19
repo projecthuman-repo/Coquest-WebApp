@@ -12,19 +12,21 @@ const { locationSchema } = require("./common");
 const regenquestEventSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   theme: String,
   location: locationSchema,
   time: {
     type: Date,
-    required: true
+    required: true,
   },
   description: String,
   layer: String,
-  hashtags: [{
-    type: String
-  }],
+  hashtags: [
+    {
+      type: String,
+    },
+  ],
 });
 
 module.exports = model("regenquestEvent", regenquestEventSchema);

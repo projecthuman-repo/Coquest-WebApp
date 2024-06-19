@@ -13,8 +13,8 @@ const { imageSchema } = require("./common");
 const regenquestNotificationSchema = new Schema({
   userID: {
     type: mongoose.ObjectId,
-    ref: 'regenquestUser',
-    required: true
+    ref: "regenquestUser",
+    required: true,
   },
   title: { type: String, required: true },
   content: { type: String, required: true },

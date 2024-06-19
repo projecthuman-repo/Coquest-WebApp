@@ -1,4 +1,3 @@
-import react from "react";
 import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { styled } from "@mui/system";
@@ -56,7 +55,7 @@ const CreateCoop = () => {
 	const location = useLocation();
 	const [pageIndex, setPageIndex] = useState(0);
 	const [currentPath, setCurrentPath] = useState(
-		getCurrPath(location.pathname)
+		getCurrPath(location.pathname),
 	);
 	const paths = ["basic-information", "operations", "budgeting", "promotion"];
 

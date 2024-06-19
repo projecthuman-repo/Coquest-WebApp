@@ -2,9 +2,7 @@ import React from "react";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import styled from "@emotion/styled";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useState } from "react";
 
 export default function SearchBar() {
 	const [input, setInput] = React.useState("");

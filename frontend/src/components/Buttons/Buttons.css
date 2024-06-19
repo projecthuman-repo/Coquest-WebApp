@@ -1,28 +1,28 @@
 button {
-    font-size: 18px;
-    color: black;
-    font-weight: 550;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
+  font-size: 18px;
+  color: black;
+  font-weight: 550;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 .back-button {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 
 .next-button {
-    width: 163px;
-    height: 40px;
+  width: 163px;
+  height: 40px;
 
-    background-color: #26A5E7;
-    border-radius: 20px;
+  background-color: #26a5e7;
+  border-radius: 20px;
 
-    color: white;
+  color: white;
 }
 
 .next-button-text {

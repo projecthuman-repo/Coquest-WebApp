@@ -1,7 +1,7 @@
-const { SchemaDirectiveVisitor } = require('apollo-server-express');
-const { defaultFieldResolver } = require('graphql');
-const mongoose = require('mongoose');
-const { buildPopulateOptions, toOutputFormat} = require("../utils/expandable");
+const { SchemaDirectiveVisitor } = require("apollo-server-express");
+const { defaultFieldResolver } = require("graphql");
+const mongoose = require("mongoose");
+const { buildPopulateOptions, toOutputFormat } = require("../utils/expandable");
 const { getJson } = require("../utils/misc");
 
 class FormatObjDirective extends SchemaDirectiveVisitor {
@@ -11,12 +11,16 @@ class FormatObjDirective extends SchemaDirectiveVisitor {
 
     field.resolve = async function (...args) {
       let result = await resolve.apply(this, args);
-      const [, {_, expand}, , info] = args;
+      const [, { _, expand }, , info] = args;
       const expandParsed = getJson(expand);
 
       try {
         if (expandParsed) {
-          const populateOptions = buildPopulateOptions(info, modelName, expandParsed);
+          const populateOptions = buildPopulateOptions(
+            info,
+            modelName,
+            expandParsed,
+          );
           result = await result.populate(populateOptions);
         }
 
@@ -24,7 +28,7 @@ class FormatObjDirective extends SchemaDirectiveVisitor {
         result = toOutputFormat(result, mongoose.model(modelName).schema.tree);
 
         return result.objValue;
-      } catch(err) {
+      } catch (err) {
         console.error(err);
         throw new Error(err);
       }

@@ -1,0 +1,13 @@
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+**/LICENSE
+**/package.json
+**/package-lock.json
+**/*.png
+**/base-map-workspace-*.json
+**/.env**
+**/.gitignore
+**/.gcloudignore
+**/DS_Store

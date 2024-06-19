@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Grid, IconButton, TextField, Typography } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import AddContainer from "./AddContainer";
 interface Row {
@@ -83,7 +83,7 @@ const BudgetingGrid = () => {
 
 	const [budgetTotal, setBudgetTotal] = useState<number>(0);
 
-	const sumTotal = (index: number) => {
+	const sumTotal = (_index: number) => {
 		let sum = 0;
 		rows.forEach((row) => {
 			row.costTotal = row.costEach * row.quantity;

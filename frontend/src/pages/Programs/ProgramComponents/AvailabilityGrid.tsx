@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { RadioGridRow } from "./RadioGridRow";
-import { Grid, Typography, Button } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 const ContainerGrid = styled(Grid)({
@@ -41,9 +41,9 @@ const AvailabilityGrid = () => {
 		[key: string]: string;
 	}>({});
 
-	const handleTest = () => {
+	const _handleTest = () => {
 		console.log(
-			"test running: current state--- " + selectedValues["monday"]
+			"test running: current state--- " + selectedValues["monday"],
 		);
 	};
 	const handleSelectedValueChange = (name: string, value: string) => {
