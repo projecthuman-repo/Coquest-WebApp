@@ -5,7 +5,7 @@ import { fromAddress, fromLatLng } from 'react-geocode';
 import setupGeocode from "../../config/geocodeConfig";
 import './Location.css';
 
-const POSTAL_CODE_LEN = 6;
+const POSTAL_CODE_LEN = 7;
 const MAP_ZOOM_LEVEL = 11;
 
 const mapContainerStyle = {
@@ -74,9 +74,7 @@ function Location(props: any) {
 
     async function handlePostalCodeChange(e: React.ChangeEvent<HTMLInputElement>) {
 
-        let newPostal = e.target.value.toUpperCase()
-        // Old Libary Fix
-        // let postal_combined = newPostal.replace(/\s/g, '');
+        let newPostal = e.target.value.toUpperCase();
         setPostalCode(newPostal);
 
         // Note: Cannot use stateful postal code data after setting it
@@ -103,9 +101,6 @@ function Location(props: any) {
             const index = results[0].address_components.findIndex((component: any) => {
                 return component.types.includes('postal_code');
             });
-            if(index >= 0) {
-                postal = results[0].address_components[index].long_name.replace(" ", "");
-            }
         } catch (err: any) {
             console.error("Geocoding error:", err.message);
             setInputError(err);
@@ -116,10 +111,8 @@ function Location(props: any) {
     return (
         <div className="location-page">
             <div className="location-container">
-                {/* Note: The new input mask causes issues when trying to put a space in between the postal code, 
-                the fix in handlePostalCodeChange which was created for the old library does not work anymore. */}
                 <InputMask
-                    mask="_!_!_!"
+                    mask="_!_ !_!"
                     replacement={{ _: /[A-Za-z]/, '!': /\d/ }}
                     value={postalCode}
                     className="input"
