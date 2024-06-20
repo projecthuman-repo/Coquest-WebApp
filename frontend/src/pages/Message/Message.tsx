@@ -267,10 +267,10 @@ const Message = () => {
 	}
 
 	const [selectedChat, setSelectedChat] = useState<
-		null | typeof mockMessages[0]
+		null | (typeof mockMessages)[0]
 	>(null);
 
-	const handleChatSelection = (chat: typeof mockMessages[0]) => {
+	const handleChatSelection = (chat: (typeof mockMessages)[0]) => {
 		setSelectedChat(chat);
 		setSelectedCardId(chat.id); // Set the selected card's ID
 		setMessages([...mockMessageContents[chat.id]]);
@@ -278,7 +278,7 @@ const Message = () => {
 
 	const messageCards = mockMessages.map((chat) => {
 		const isUnread = mockMessageContents[chat.id]?.some((message) =>
-			message.unreadBy?.includes(currentUserID)
+			message.unreadBy?.includes(currentUserID),
 		);
 		const isSelected = chat.id === selectedCardId;
 		return (
@@ -344,8 +344,8 @@ const Message = () => {
 					<div className="chat-name-div">
 						{selectedChat !== null
 							? mockMessages.find(
-									(chat) => chat.id === selectedChat.id
-							  )?.name
+									(chat) => chat.id === selectedChat.id,
+								)?.name
 							: "No chat selected"}
 					</div>
 					<div className="chat-container">{renderMessages()}</div>

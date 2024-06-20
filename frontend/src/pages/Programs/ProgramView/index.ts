@@ -1,1 +1,1 @@
-export {default as ProgramView} from "./ProgramView";
+export { default as ProgramView } from "./ProgramView";

@@ -14,14 +14,16 @@ const APIReferenceComponent = () => {
 	// all find by ID functions return a single point of data
 	useEffect(() => {
 		find("findUserbyID", "k443h3", ["userID", "currentLevel"]).then(
-			setSingleUserInfo
+			setSingleUserInfo,
 		);
 	}, []);
 
 	return (
 		<div>
 			{allUsers &&
-				allUsers.map((data: any) => <div>{JSON.stringify(data)}</div>)}
+				allUsers.map((data: any) => (
+					<div key={data.userID}>{JSON.stringify(data)}</div>
+				))}
 			<br />
 			{singleUserInfo ? JSON.stringify(singleUserInfo) : "Loading..."}
 		</div>

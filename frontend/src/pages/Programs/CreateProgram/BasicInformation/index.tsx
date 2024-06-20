@@ -41,14 +41,14 @@ const BasicInformation = () => {
 	const [hashtags, setHashtags] = useState<string[]>([]);
 
 	const [projectName, setProjectName] = useState<string>(""); // Name state
-	const [selectedType, setSelectedType] = useState(""); // Program type state
+	const [_selectedType, setSelectedType] = useState(""); // Program type state
 	const [description, setDescription] = useState<string>(""); // Description state
 	const [objective, setObjective] = useState<string>(""); // Objective state
-	const [initiative, setInitiative] = useState<string>(""); // Objective state
+	const [_initiative, setInitiative] = useState<string>(""); // Objective state
 
-	const [initiativeOrCharity, setinitiativeOrCharity] = useState("yes"); // Radio choice 1
-	const [participation, setParticipation] = useState("yes"); // Radio choice 2
-	const [experience, setExperience] = useState("yes"); // Radio choice 3
+	const [_initiativeOrCharity, setinitiativeOrCharity] = useState("yes"); // Radio choice 1
+	const [_participation, setParticipation] = useState("yes"); // Radio choice 2
+	const [_experience, setExperience] = useState("yes"); // Radio choice 3
 
 	// Handles setting the program type to its state
 	const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,21 +62,21 @@ const BasicInformation = () => {
 
 	// Handles setting the decription to its state
 	const handleDescriptionChange = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
 		setDescription(event.target.value);
 	};
 
 	// Handles setting the objective to its state
 	const handleObjectiveChange = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
 		setObjective(event.target.value);
 	};
 
 	// Handles setting the decription to its state
 	const handleInitiativeChange = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
 		setInitiative(event.target.value);
 	};
@@ -98,7 +98,7 @@ const BasicInformation = () => {
 	// Fetches on page load for list of Program Types available
 	useEffect(() => {
 		setCategories(["Option 1", "Option 2", "Option 3", "Option 4"]);
-		let tempHtags: string[] = [];
+		const tempHtags: string[] = [];
 
 		for (let i = 1; i <= 100; i++) {
 			tempHtags.push(`#hashtag${i}`);

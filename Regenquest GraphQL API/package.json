@@ -2,9 +2,18 @@
   "name": "sample-http",
   "version": "0.0.1",
   "scripts": {
-    "dev": "functions-framework --target=handler"
+    "dev": "functions-framework --target=handler",
+    "lint": "run-script-os",
+    "lint:win32": "eslint & prettier . -c",
+    "lint:darwin": "eslint; prettier . -c",
+    "lint:linux": "eslint; prettier . -c",
+    "lint-fix": "run-script-os",
+    "lint-fix:win32": "eslint --fix & prettier . --write",
+    "lint-fix:darwin": "eslint --fix; prettier . --write",
+    "lint-fix:linux": "eslint --fix; prettier . --write"
   },
   "dependencies": {
+    "@google-cloud/secret-manager": "^5.6.0",
     "@google-cloud/storage": "^7.8.0",
     "apollo-server": "^2.26.2",
     "apollo-server-cloud-functions": "^3.13.0",
@@ -22,6 +31,12 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@google-cloud/functions-framework": "^3.3.0"
+    "@eslint/js": "^9.4.0",
+    "@google-cloud/functions-framework": "^3.3.0",
+    "eslint": "^9.4.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.4.0",
+    "prettier": "^3.3.2",
+    "run-script-os": "^1.1.6"
   }
 }

@@ -12,28 +12,30 @@ const { imageSchema } = require("./common");
 const regenquestInventorySchema = new Schema({
   userID: {
     type: mongoose.ObjectId,
-    ref: 'regenquestUser',
-    required: true
+    ref: "regenquestUser",
+    required: true,
   },
   taskLink: {
     type: mongoose.ObjectId,
-    ref: 'regenquestTask',
-    required: true
+    ref: "regenquestTask",
+    required: true,
   },
   itemName: {
     type: String,
-    required: true
+    required: true,
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   description: String,
   image: imageSchema,
-  history: [{
-    type: mongoose.ObjectId,
-    ref: 'regenquestUser'
-  }],
+  history: [
+    {
+      type: mongoose.ObjectId,
+      ref: "regenquestUser",
+    },
+  ],
 });
 
 module.exports = model("regenquestInventory", regenquestInventorySchema);

@@ -58,12 +58,12 @@ const Operations = () => {
 	const [startTime, setStartTime] = useState<Date | null>(null);
 	const [endTime, setEndTime] = useState<Date | null>(null);
 
-	const [startDateTime, setStartDateTime] = useState<Date>();
-	const [endDateTime, setEndDateTime] = useState<Date>();
+	const [_startDateTime, setStartDateTime] = useState<Date>();
+	const [_endDateTime, setEndDateTime] = useState<Date>();
 
-	const [recurringChoice, setRecurringChoice] = useState<string>();
-	const [programOwnership, setProgramOwnership] = useState<string>();
-	const [rentalSpace, setRentalSpace] = useState<string>();
+	const [_recurringChoice, setRecurringChoice] = useState<string>();
+	const [_programOwnership, setProgramOwnership] = useState<string>();
+	const [_rentalSpace, setRentalSpace] = useState<string>();
 	const [additionalInfo, setAdditionalInfo] = useState<string>();
 	const [responsibilities, setResponsibilities] = useState<string>();
 
@@ -94,33 +94,34 @@ const Operations = () => {
 
 	//Handles setting the addition Info to its state
 	const handleAdditionalInfoChange = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
 		setAdditionalInfo(event.target.value);
 	};
 
 	//Handles setting additional responsibilities
 	const handleResponsibilitiesChange = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
 		setResponsibilities(event.target.value);
 	};
 
-	const handleSetDateAndTime = () => {
-		let syear: number =
+	const _handleSetDateAndTime = () => {
+		const syear: number =
 			startDate?.getFullYear() ?? new Date().getFullYear();
-		let smonth: number = startDate?.getMonth() ?? new Date().getMonth();
-		let sday: number = startDate?.getDate() ?? new Date().getDate();
+		const smonth: number = startDate?.getMonth() ?? new Date().getMonth();
+		const sday: number = startDate?.getDate() ?? new Date().getDate();
 		console.log(startTime);
-		let shour: number | undefined = startTime?.getHours();
-		let sminutes: number | undefined = startTime?.getMinutes();
+		const shour: number | undefined = startTime?.getHours();
+		const sminutes: number | undefined = startTime?.getMinutes();
 		console.log(shour);
-		let eyear: number = endDate?.getFullYear() ?? new Date().getFullYear();
-		let emonth: number = endDate?.getMonth() ?? new Date().getMonth();
-		let eday: number = endDate?.getDate() ?? new Date().getDate();
+		const eyear: number =
+			endDate?.getFullYear() ?? new Date().getFullYear();
+		const emonth: number = endDate?.getMonth() ?? new Date().getMonth();
+		const eday: number = endDate?.getDate() ?? new Date().getDate();
 
-		let ehour: number | undefined = endTime?.getHours();
-		let eminutes: number | undefined = endTime?.getMinutes();
+		const ehour: number | undefined = endTime?.getHours();
+		const eminutes: number | undefined = endTime?.getMinutes();
 
 		const newStartDate = new Date(syear, smonth, sday, shour, sminutes);
 		const newEndDate = new Date(eyear, emonth, eday, ehour, eminutes);
@@ -134,7 +135,7 @@ const Operations = () => {
 	};
 
 	useEffect(() => {
-		let tempSkills: string[] = [
+		const tempSkills: string[] = [
 			"customer service",
 			"Microsoft Excel",
 			"organization",

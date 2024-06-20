@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TagList from "../../components/CheckboxList/PurposeList";
 import RelativeLocation from "../Orientation/Pages/RelativeLocation";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
@@ -32,38 +32,49 @@ function CreateCommunity() {
     const [user, setUser] = useState<User | undefined>(undefined);
     let navigate = useNavigate();
 
-    useEffect(() => {
-        const unsubscribe = subscribeToUserModelSubject((user: User) => {
-            setUser(user);
+	useEffect(() => {
+		const unsubscribe = subscribeToUserModelSubject((user: User) => {
+			setUser(user);
 
-            // Add current user as the first member of the community
-            setCommunity(prev => new Community({_id: undefined, ...prev, members: [{type: "obj", objValue: user!}], location: user.location ?? null}));
-        });
-        return () => {
-            unsubscribe.then(cleanup => cleanup && cleanup());
-        }
-    }, [setUser]);
+			// Add current user as the first member of the community
+			setCommunity(
+				(prev) =>
+					new Community({
+						_id: undefined,
+						...prev,
+						members: [{ type: "obj", objValue: user! }],
+						location: user.location ?? null,
+					}),
+			);
+		});
+		return () => {
+			unsubscribe.then((cleanup) => cleanup && cleanup());
+		};
+	}, [setUser]);
 
-    const handleInputChange = (name: string, value: any) => {
-        setCommunity(prev => new Community({
-            _id: undefined,
-            ...prev,
-            [name]: value
-        }));
-    };
+	const handleInputChange = (name: string, value: any) => {
+		setCommunity(
+			(prev) =>
+				new Community({
+					_id: undefined,
+					...prev,
+					[name]: value,
+				}),
+		);
+	};
 
-    async function onSubmit(e: any) {
-        e.preventDefault();
-        try {
-            const repo = Repository.getInstance('Community', Community);
-            await firstValueFrom(repo.fetch(community));
-            // TODO: Display success message to the user
-            navigate('/');
-        } catch(error) {
-            // TODO: Report errors to user
-            console.error(error);
-        }
-    }
+	async function onSubmit(e: any) {
+		e.preventDefault();
+		try {
+			const repo = Repository.getInstance("Community", Community);
+			await firstValueFrom(repo.fetch(community));
+			// TODO: Display success message to the user
+			navigate("/");
+		} catch (error) {
+			// TODO: Report errors to user
+			console.error(error);
+		}
+	}
 
     if(user) {
         return (

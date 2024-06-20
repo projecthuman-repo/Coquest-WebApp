@@ -11,21 +11,24 @@ const { model, Schema, default: mongoose } = require("mongoose");
 const regenquestPostSchema = new Schema({
   userID: {
     type: mongoose.ObjectId,
-    ref: 'regenquestUser',
-    required: true
+    ref: "regenquestUser",
+    required: true,
   },
   title: { type: String, required: true },
   description: String,
   likes: { type: Number, default: 0 },
   attachments: [String],
   createdAt: { type: Date, default: Date.now },
-  comments: [{
-    userID: {  
-      type: mongoose.ObjectId,
-      ref: 'regenquestUser',
-      required: true },
-    body: { type: String, required: true },
-  }],
+  comments: [
+    {
+      userID: {
+        type: mongoose.ObjectId,
+        ref: "regenquestUser",
+        required: true,
+      },
+      body: { type: String, required: true },
+    },
+  ],
 });
 
 module.exports = model("regenquestPost", regenquestPostSchema);

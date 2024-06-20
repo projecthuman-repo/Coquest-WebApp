@@ -54,7 +54,7 @@ const BlankContainer = styled("div")({
 	width: "100%",
 	display: "flex",
 });
-let posts = ["Post1", "Post2", "Post3", "Post4", "Post5", "Post6"];
+const _posts = ["Post1", "Post2", "Post3", "Post4", "Post5", "Post6"];
 
 //places all the elements inside the card
 const ExtendedSimpleCard = ({ label }: SimpleCardProps) => {

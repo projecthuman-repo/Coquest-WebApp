@@ -1,7 +1,6 @@
-import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-
+import React from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 const Maps: React.FC = () => {
 	return (
@@ -9,7 +8,7 @@ const Maps: React.FC = () => {
 			center={[43.6514990607, -79.3834667995]}
 			zoom={13}
 			scrollWheelZoom={false}
-			style={{ height: '100%', width: '99%' }} // Ensure the map container has a defined height
+			style={{ height: "100%", width: "99%" }} // Ensure the map container has a defined height
 		>
 			<TileLayer
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

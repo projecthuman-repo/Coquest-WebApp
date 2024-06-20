@@ -79,8 +79,8 @@ const HashtagSearch = (props: HashtagSearchProps) => {
 	const handleSelectedHashtagClick: HandleHashtagType = (hashtag) => {
 		setSelectedHashtags(
 			selectedHashtags.filter(
-				(selectedHashtag) => selectedHashtag !== hashtag
-			)
+				(selectedHashtag) => selectedHashtag !== hashtag,
+			),
 		);
 	};
 
@@ -89,7 +89,7 @@ const HashtagSearch = (props: HashtagSearchProps) => {
 			.filter(
 				(hashtag) =>
 					hashtag.toLowerCase().includes(searchValue) &&
-					!selectedHashtags.includes(hashtag)
+					!selectedHashtags.includes(hashtag),
 			)
 			.map((hashtag) => (
 				<HashtagButton
