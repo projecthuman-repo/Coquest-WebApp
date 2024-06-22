@@ -26,21 +26,21 @@ button {
 }
 
 .next-button-text {
-    font-size: 18px;
-    color: white;
-    font-weight: 550;
-    margin: 5px;
+  font-size: 18px;
+  color: white;
+  font-weight: 550;
+  margin: 5px;
 }
 
 .skip-button-text {
-    font-size: 18px;
-    color: black;
-    font-weight: 550;
-    margin: 5px;
+  font-size: 18px;
+  color: black;
+  font-weight: 550;
+  margin: 5px;
 }
 
 .back-button-text {
-    font-size: 18px;
-    color: black;
-    font-weight: 550;
+  font-size: 18px;
+  color: black;
+  font-weight: 550;
 }

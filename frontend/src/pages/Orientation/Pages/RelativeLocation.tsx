@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {InputMask} from '@react-input/mask';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { fromAddress, fromLatLng } from 'react-geocode';
+import { InputMask } from "@react-input/mask";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { fromAddress, fromLatLng } from "react-geocode";
 import setupGeocode from "../../../config/geocodeConfig";
 import "./RelativeLocation.css";
 
@@ -14,10 +14,9 @@ const mapContainerStyle = {
 };
 
 function RelativeLocation(props: any) {
-
-    useEffect(() => {
-        setupGeocode();
-    }, []);
+	useEffect(() => {
+		setupGeocode();
+	}, []);
 
 	const { isLoaded } = useJsApiLoader({
 		id: "google-map-script",
@@ -76,10 +75,11 @@ function RelativeLocation(props: any) {
 		}
 	};
 
-    async function handlePostalCodeChange(e: React.ChangeEvent<HTMLInputElement>) {
-        
-        let newPostal = e.target.value.toUpperCase();
-        setPostalCode(newPostal);
+	async function handlePostalCodeChange(
+		e: React.ChangeEvent<HTMLInputElement>,
+	) {
+		let newPostal = e.target.value.toUpperCase();
+		setPostalCode(newPostal);
 
 		// Note: Cannot use stateful postal code data after setting it
 		if (newPostal.length === POSTAL_CODE_LEN) {
@@ -100,56 +100,65 @@ function RelativeLocation(props: any) {
 		}
 	}
 
-    async function convertToPostal(loc: {lat: number, lng: number}) {
-        let postal = "";
-        try {
-            const {results} = await fromLatLng(loc.lat, loc.lng);
-            // Find commponent that has postal code information
-            const index = results[0].address_components.findIndex((component: any) => {
-                return component.types.includes('postal_code');
-            });
-        } catch (err: any) {
-            console.error("Geocoding error:", err.message);
-            setInputError(err);
-        }
-        return postal;
-    }
+	async function convertToPostal(loc: { lat: number; lng: number }) {
+		let postal = "";
+		try {
+			const { results } = await fromLatLng(loc.lat, loc.lng);
+			// Find commponent that has postal code information
+			const index = results[0].address_components.findIndex(
+				(component: any) => {
+					return component.types.includes("postal_code");
+				},
+			);
+		} catch (err: any) {
+			console.error("Geocoding error:", err.message);
+			setInputError(err);
+		}
+		return postal;
+	}
 
-    return (
-        <div className="location-page">
-            <h3 className="main-heading">Discover your community.</h3>
-            <p className="sub-heading">Enter your postal code to have your account better suit your needs.</p>
-                <div className="location-container">
-                    <InputMask
-                        mask="_!_ !_!"
-                        replacement={{ _: /[A-Za-z]/, '!': /\d/ }}
-                        value={postalCode}
-                        className="input"
-                        onChange={handlePostalCodeChange}
-                        alt="Postal Code"
-                        title="Postal Code Input"
-                        placeholder="Postal Code"
-                        type="text"
-                    />
-                    <img src="/icons/location.png" className="location-icon" />
-                </div>
-                <div className="map">
-                    {isLoaded && postalCode.length === POSTAL_CODE_LEN && !inputError && (              
-                            <GoogleMap
-                            mapContainerStyle={mapContainerStyle}
-                            center={center}
-                            zoom={MAP_ZOOM_LEVEL}
-                            >
-                                {/* Dynamic map content */}
-                            </GoogleMap>
-                    )}
-                </div>
-                {postalCode.length === POSTAL_CODE_LEN && inputError && (
-                    <p className="error">Please insert a valid postal code.</p>
-                )}
-                <button onClick={getBrowserLocation}>Get&nbsp;Current&nbsp;Location</button>
-        </div>
-    );
+	return (
+		<div className="location-page">
+			<h3 className="main-heading">Discover your community.</h3>
+			<p className="sub-heading">
+				Enter your postal code to have your account better suit your
+				needs.
+			</p>
+			<div className="location-container">
+				<InputMask
+					mask="_!_ !_!"
+					replacement={{ _: /[A-Za-z]/, "!": /\d/ }}
+					value={postalCode}
+					className="input"
+					onChange={handlePostalCodeChange}
+					alt="Postal Code"
+					title="Postal Code Input"
+					placeholder="Postal Code"
+					type="text"
+				/>
+				<img src="/icons/location.png" className="location-icon" />
+			</div>
+			<div className="map">
+				{isLoaded &&
+					postalCode.length === POSTAL_CODE_LEN &&
+					!inputError && (
+						<GoogleMap
+							mapContainerStyle={mapContainerStyle}
+							center={center}
+							zoom={MAP_ZOOM_LEVEL}
+						>
+							{/* Dynamic map content */}
+						</GoogleMap>
+					)}
+			</div>
+			{postalCode.length === POSTAL_CODE_LEN && inputError && (
+				<p className="error">Please insert a valid postal code.</p>
+			)}
+			<button onClick={getBrowserLocation}>
+				Get&nbsp;Current&nbsp;Location
+			</button>
+		</div>
+	);
 }
 
 export default RelativeLocation;
