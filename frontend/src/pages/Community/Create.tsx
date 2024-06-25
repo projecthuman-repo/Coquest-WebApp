@@ -84,7 +84,11 @@ function CreateCommunity() {
 						Let's create a new community! Enter the information
 						below to get started.
 					</h2>
-					<form id="community-form" className="form-container" onSubmit={onSubmit}>
+					<form
+						id="community-form"
+						className="form-container"
+						onSubmit={onSubmit}
+					>
 						<div className="form-background">
 							{/* Community Name*/}
 							<label className="sub-text" htmlFor="name">
