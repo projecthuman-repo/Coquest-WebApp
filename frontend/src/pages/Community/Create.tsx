@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import TagList from "../../components/CheckboxList/PurposeList";
-import RelativeLocation from "../Orientation/Pages/RelativeLocation";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
 import { User, generateProfileImg } from "../../models/usermodel";
 import { Community } from "../../models/communitymodel";
@@ -14,7 +13,7 @@ import "./Create.css";
 
 function CreateCommunity() {
 	// Used to disable the submit button when form information is invalid and display the error messages to the user.
-	const [formError, setFormError] = useState(null);
+	const [formError, _setFormError] = useState(null);
 
 	// TODO: Use a routine to create a new Community with default values
 	const [community, setCommunity] = useState<Community>(
@@ -29,7 +28,7 @@ function CreateCommunity() {
 		}),
 	);
 	const [user, setUser] = useState<User | undefined>(undefined);
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const unsubscribe = subscribeToUserModelSubject((user: User) => {
@@ -81,7 +80,7 @@ function CreateCommunity() {
 				<div className="create-community-page">
 					<h1 className="main-heading">Create Community</h1>
 					<h2 className="sub-heading">
-						Let's create a new community! Enter the information
+						Let&apos;s create a new community! Enter the information
 						below to get started.
 					</h2>
 					<form
