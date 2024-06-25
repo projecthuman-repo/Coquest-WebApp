@@ -3,14 +3,14 @@ import "./Buttons.css";
 
 function BackButton() {
 	return (
-		<button className="back-button">
+		<div className="back-button">
 			<img
 				src="/icons/back-button-chevron.png"
 				height="12"
 				alt="Back Button Chevron"
 			></img>
-			Back
-		</button>
+			<p className="back-button-text">Back</p>
+		</div>
 	);
 }
 
