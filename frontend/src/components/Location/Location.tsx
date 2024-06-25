@@ -111,6 +111,9 @@ function Location(props: any) {
 					return component.types.includes("postal_code");
 				},
 			);
+			if(index >= 0) {
+				postal = results[0].address_components[index].long_name;
+			}
 		} catch (err: any) {
 			console.error("Geocoding error:", err.message);
 			setInputError(err);
