@@ -28,7 +28,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^6.9.0",
     "path": "^0.12.7",
-    "uuid": "^9.0.0"
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.4.0",
