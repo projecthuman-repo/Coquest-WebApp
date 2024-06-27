@@ -1,30 +1,32 @@
 .bio-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .bio-input,
 .location-input {
-  width: 430px;
-  padding: 8px;
-  border: 1px solid black;
-  border-radius: 4px;
+    width: 430px;
+    padding: 8px;
+    border: 1px solid black;
+    border-radius: 4px;
 }
 
 /* Bio Input */
 .bio-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  margin: 25px 0px 0px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 25px 0px 0px 0px;
 }
 
 .bio-input {
-  height: 150px;
-  resize: none;
-  outline: none;
+    height: 150px;
+    resize: none;
+    outline: none;
 }
 
 .char-count {

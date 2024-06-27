@@ -7,17 +7,22 @@ button {
   cursor: pointer;
 }
 
-.back-button {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
+.back-button,
+.sign-in-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
-.next-button {
-  width: 163px;
-  height: 40px;
+.sign-in-button {
+    gap: 4px;
+}
+
+.primary-button {
+    width: 163px;
+    height: 40px;
 
   background-color: #26a5e7;
   border-radius: 20px;

@@ -11,8 +11,9 @@ import Repository from "../../repositories/repository";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
 // import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import BackButton from "../../components/Buttons/BackButton";
-import SkipButton from "../../components/Buttons/SkipButton";
-import NextButton from "../../components/Buttons/NextButton";
+import SignInButton from "../../components/Buttons/SignInButton";
+import SecondaryButton from "../../components/Buttons/SecondaryButton";
+import PrimaryButton from "../../components/Buttons/PrimaryButton";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import "./Orientation.css";
 
@@ -105,57 +106,60 @@ function Orientation() {
 		// From this point onward, we can assume index will always be a valid index.
 		const index = page - 1;
 
-		const SelectedPageView = RegistrationPages[index].view;
-		return (
-			<div className="orientation">
-				{/* Progress bar to show progress in onboarding completion */}
-				<ProgressBar numOfPages={6} currentPageNum={page} />
+        const SelectedPageView = RegistrationPages[index].view;
+        return (
+            <div className="orientation">
+                <div className="header">
+                    <img src="/logo.png" alt="Coquest Logo" height="50" />
+                    <SignInButton />
+                </div>
 
-				<div className="content">
-					<SelectedPageView user={user} updateData={updateData} />
-				</div>
+                {/* Progress bar to show progress in onboarding completion */}
+                <div className="progress-bar-container">
+                    <ProgressBar numOfPages={6} currentPageNum={page} />
+                </div>
 
-				<div className="orientation-btn-container">
-					<div>
-						{page > 1 && (
-							<IconButton
-								title="Previous page"
-								onClick={() => {
-									const newPage = page - 1;
-									changePage(newPage);
-								}}
-							>
-								<BackButton />
-							</IconButton>
-						)}
-					</div>
-
-					<div>
-						{page < NUMPAGES ? (
-							<IconButton
-								title="Next page"
-								onClick={() => {
-									const newPage = page + 1;
-									changePage(newPage);
-								}}
-							>
-								<div className="btn-group">
-									<SkipButton />
-									<NextButton name="Next" />
-								</div>
-							</IconButton>
-						) : (
-							<Button onClick={submit}>
-								<NextButton name="Finish" />
-							</Button>
-						)}
-					</div>
-				</div>
-			</div>
-		);
-	} else {
-		return null;
-	}
+                <div className="content">
+                    <SelectedPageView user={user} updateData={updateData} />
+                </div>
+                    
+                <div className="orientation-btn-container">
+                    <div className="orientation-btn">
+                        <div>
+                            { page > 1 &&
+                                <IconButton title="Previous page" onClick={() => {
+                                    const newPage = page - 1;
+                                    changePage(newPage);
+                                    }}>
+                                    <BackButton />
+                                </IconButton>
+                            }
+                        </div>
+                        
+                        <div>
+                            { page < NUMPAGES ?
+                                <IconButton title="Next page" onClick={() => {
+                                    const newPage = page + 1;
+                                    changePage(newPage);
+                                    }}>
+                                    <div className="btn-group">
+                                        <SecondaryButton name="Skip" />
+                                        <PrimaryButton name="Next" />
+                                    </div>
+                                </IconButton>
+                                :
+                                <Button  onClick={submit}>
+                                    <PrimaryButton name="Finish"/>
+                                </Button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    } else {
+        return null;
+    }
 }
 
 export default Orientation;
