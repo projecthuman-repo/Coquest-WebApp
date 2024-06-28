@@ -16,6 +16,7 @@
     font-family: Poppins;
     font-weight: 400;
     font-size: 16px;
+    overflow-wrap: break-word;
 }
 
 .quest-button-heading{
@@ -79,6 +80,10 @@
     border-radius: 20px;
 }
 
+.signup-button-design:hover {
+    background-color: #f0f0f0;
+}
+
 /* Quests and Quest Navigation Buttons */
 .quest-header-container {
     display: flex;
@@ -90,6 +95,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 15px 0px 15px 0px;
+    border-bottom: 1px solid black;
+}
+
+.quest-container img {
+    width: 10px;
+    height: 15px;
 }
 
 .quest-button-container {
@@ -122,6 +134,7 @@
 .background {
     display: flex;
     flex-direction: column;
+    max-width: 100%;
     background-color: #f0f0f0;
     padding: 25px 25px 25px 25px;
     border-radius: 10px;

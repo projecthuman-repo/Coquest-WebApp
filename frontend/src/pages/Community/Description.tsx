@@ -1,17 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Description.css";
 import Members from "../../components/Members/index"
+import Repository from "../../repositories/repository"; 
+import { Community } from "../../models/communitymodel"
+import Maps from "../../components/Maps/Maps";
 
 function CommunityDescription() {
 
     const [section, setSection] = useState("overview");
     const [questSection, setQuestSection] = useState("open");
+    const [communityData, setCommunityData] = useState<Community | null>(null);
+    const communityId = "666e0c9d083f13aec99b880c"; // Placeholder Community ID
+
+    useEffect(() => {
+        const repository = Repository.getInstance("Community", Community); 
+        const fetchCommunity = async () => {
+            try {
+                const communityData = {
+                    _id: communityId,
+                    name: "", 
+                    description: "", 
+                    location: null,
+                    members: [],
+                };
+                const community = new Community(communityData); 
+                const fetchedCommunity = await repository.fetch(community).toPromise();
+                if (fetchedCommunity) {
+                    setCommunityData(fetchedCommunity); // Update state with fetched community data
+                } else {
+                    console.error("Community data not found");
+                }
+                console.log(fetchedCommunity);
+            } catch (error) {
+                console.error("Error fetching community data:", error);
+            }
+        };
+        fetchCommunity();
+    }, [communityId]);
 
     return (
         <>
+        { communityData != null && (
         <div className="community-description-page">
             <div className="header-container">
-                <h1 className="d-main-heading">Guild/Community Name</h1>
+                <h1 className="d-main-heading">{communityData.name}</h1>
                 <button className="signup-button-design">Sign Up</button>
             </div>
             <div className="nav-button-container">
@@ -26,11 +58,11 @@ function CommunityDescription() {
             <div className="widget-container">
                 <div className="background">
                     <h2 className="d-sub-heading margin-bottom">Description</h2>
-                    <p className="d-sub-text margin-bottom">Placeholder Text.</p>
+                    <p className="d-sub-text margin-bottom">{communityData.description}</p>
                     <h2 className="d-sub-heading margin-bottom">Objective</h2>
-                    <p className="d-sub-text margin-bottom">Placeholder Text.</p>
+                    <p className="d-sub-text margin-bottom">N/A</p>
                     <h2 className="d-sub-heading margin-bottom">Initiative</h2>
-                    <p className="d-sub-text margin-bottom">Placeholder Text.</p>
+                    <p className="d-sub-text margin-bottom">N/A</p>
                 </div>
                 <div className="background">
                     <h2 className="d-sub-heading margin-bottom">Calendar</h2>
@@ -39,9 +71,8 @@ function CommunityDescription() {
             </div>
             <div className="widget-container">
                 <div className="background">
-                {/* Note: Currently placeholder information. Should be changed to reflect current guild/community. */}
                 <Members
-						users={["Example User"]}
+						users={communityData.members?.map(member => member.name) || []}
 						userRole={["Role"]}  
 						showAllLink="#"
 				/>
@@ -56,15 +87,29 @@ function CommunityDescription() {
                         <button className={`quest-button-heading quest-button-design ${questSection  === "ongoing" ? "selected" : ""}`} onClick={() => setQuestSection("ongoing")}>Ongoing</button>
                         <button className={`quest-button-heading quest-button-design ${questSection === "completed" ? "selected" : ""}`} onClick={() => setQuestSection("completed")}>Completed</button>
                     </div>
-                    <p className="d-sub-text quest-design">Example Quest</p>
-                    <p className="d-sub-text quest-design">Example Quest</p>
-                    <p className="d-sub-text quest-design">Example Quest</p>
+                    <div className="quest-container">
+                        <p className="d-sub-text">Example Quest</p>
+                        <img src = "/icons/next-button-chevron.png" alt="view-button" className="view-button" />
+                    </div>
+                    <div className="quest-container">
+                        <p className="d-sub-text">Example Quest</p>
+                        <img src = "/icons/next-button-chevron.png" alt="view-button" className="view-button" />
+                    </div>                    
+                    <div className="quest-container">
+                        <p className="d-sub-text">Example Quest</p>
+                        <img src = "/icons/next-button-chevron.png" alt="view-button" className="view-button" />
+                    </div>
+                    <div className="quest-container">
+                        <p className="d-sub-text">Example Quest</p>
+                        <img src = "/icons/next-button-chevron.png" alt="view-button" className="view-button" />
+                    </div>
                 </div>
             </div>
             <div className="widget-container">
                 <div className="location-background">
                     <h2 className="d-sub-heading margin-bottom">Location</h2>
-                    <p className="d-sub-text">Note: Figure out how to implement the Maps component here. </p>
+                    {/* Note: Need to figure out why this component doesn't render on this page, but does on the homepage. Then, modify it to accept long and lat coordinates. */}
+                    <Maps />
                 </div>
             </div>
             </>
@@ -88,6 +133,7 @@ function CommunityDescription() {
             </>
             )}
         </div>
+         )}
         </>
     );
 
