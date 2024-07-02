@@ -1,5 +1,6 @@
-const { model, Schema, default: mongoose } = require("mongoose");
+const { Schema, default: mongoose } = require("mongoose");
 const { locationSchema } = require("./common");
+const { regenDb } = require("../db/connection");
 
 //questID: unique id of the quest
 //name: name of the quest
@@ -45,4 +46,4 @@ const regenquestQuestSchema = new Schema({
   hashtags: [String],
 });
 
-module.exports = model("regenquestQuest", regenquestQuestSchema);
+module.exports = regenDb.model("regenquestQuest", regenquestQuestSchema);

@@ -1,5 +1,6 @@
-const { model, Schema, default: mongoose } = require("mongoose");
+const { Schema, default: mongoose } = require("mongoose");
 const { imageSchema } = require("./common");
+const { regenDb } = require("../db/connection");
 
 //itemIDL unique id of the item
 //userID: id of the current user that owns this item
@@ -38,4 +39,4 @@ const regenquestInventorySchema = new Schema({
   ],
 });
 
-module.exports = model("regenquestInventory", regenquestInventorySchema);
+module.exports = regenDb.model("regenquestInventory", regenquestInventorySchema);

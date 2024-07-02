@@ -1,4 +1,5 @@
-const { model, Schema, default: mongoose } = require("mongoose");
+const { Schema, default: mongoose } = require("mongoose");
+const { regenDb } = require("../db/connection");
 
 //taskID: unique id of the task
 //userID: Id of the user that this task currently belongs to
@@ -28,4 +29,4 @@ const regenquestTaskSchema = new Schema({
   history: [String],
 });
 
-module.exports = model("regenquestTask", regenquestTaskSchema);
+module.exports = regenDb.model("regenquestTask", regenquestTaskSchema);

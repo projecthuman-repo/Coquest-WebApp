@@ -1,4 +1,4 @@
-const { model, Schema, default: mongoose } = require("mongoose");
+const { Schema, default: mongoose } = require("mongoose");
 const {
   imageSchema,
   locationSchema,
@@ -6,6 +6,7 @@ const {
   badgeSchema,
   skillSchema,
 } = require("./common");
+const { regenDb } = require("../db/connection");
 const validators = require("./validators");
 
 //userID: a unique ID generated during registeration, used to connect user data to the user
@@ -78,4 +79,4 @@ const regenquestUserSchema = new Schema({
   recommendations: [recommendationSchema],
 });
 
-module.exports = model("regenquestUser", regenquestUserSchema);
+module.exports = regenDb.model("regenquestUser", regenquestUserSchema);
