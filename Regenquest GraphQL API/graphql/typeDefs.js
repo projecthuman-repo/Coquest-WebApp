@@ -464,7 +464,7 @@ module.exports = gql`
     findPostbyID(postID: String): regenquestPost @auth
     findInventoryItembyID(itemID: String): regenquestInventory @auth
     findEventbyID(eventID: String): regenquestEvent @auth
-    findCommunitybyID(id: String): regenquestCommunity @auth
+    findCommunitybyID(id: String): regenquestCommunity @auth @formatObj(dbName: "regenquest" modelName: "regenquestCommunity")
     findCrossUser(email: String): regenquestCrossUser @auth
 
     getChatsByUserID(userID: String): [regenquestChat] @auth
