@@ -1,11 +1,10 @@
-const mongoose = require("mongoose");
 const {
   Types: { ObjectId },
 } = require("mongoose");
 
 // Constructs an object parameter for the Mongoose `.populate()` routine, specifying which properties to expand.
 // TODO: Automatically redact redundant list entries
-function buildPopulateOptions(info, modelName, userRequestedFields) {
+function buildPopulateOptions(info, db, modelName, userRequestedFields) {
   // Helper function to recursively find population options
   const findPopulationFields = (
     selections,
@@ -16,7 +15,7 @@ function buildPopulateOptions(info, modelName, userRequestedFields) {
 
     selections.forEach((field) => {
       const fieldName = field.name.value;
-      const model = mongoose.model(modelName);
+      const model = db.model(modelName);
       const tree = model.schema.tree[fieldName];
       const requestedField = subUserRequestedFields.find(
         (elem) => elem === fieldName || elem[fieldName],
@@ -92,8 +91,8 @@ function deduceExpandableType(expandableObj, expandedTypeName) {
 }
 
 // Convert expandable properties to a shape that GraphQL expects based on the output type definition in `typeDefs.js`.
-// Expects an input object, `obj`, and the MongoDB schema of that object.
-function toOutputFormat(obj, schema) {
+// Expects an input object, `obj`, the database in use, and the MongoDB schema of that object.
+function toOutputFormat(obj, db, schema) {
   if (Array.isArray(obj)) {
     return obj.map((elem) => toOutputFormat(elem, schema));
   } else if (obj instanceof ObjectId) {
@@ -112,7 +111,7 @@ function toOutputFormat(obj, schema) {
         if (isExpandable && newSchemaName) {
           processedObj[key] = toOutputFormat(
             obj[key],
-            mongoose.model(newSchemaName).schema.tree,
+            db.model(newSchemaName).schema.tree,
           );
         } else {
           processedObj[key] = obj[key];
