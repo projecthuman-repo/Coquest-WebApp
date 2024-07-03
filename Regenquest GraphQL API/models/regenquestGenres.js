@@ -1,4 +1,5 @@
-const { model, Schema } = require("mongoose");
+const { Schema } = require("mongoose");
+const { regenDb } = require("../db/connection");
 
 //list of availible genres
 const regenquestGenresSchema = new Schema({
@@ -11,4 +12,4 @@ const regenquestGenresSchema = new Schema({
   ],
 });
 
-module.exports = model("regenquestGenres", regenquestGenresSchema);
+module.exports = regenDb.model("regenquestGenres", regenquestGenresSchema);

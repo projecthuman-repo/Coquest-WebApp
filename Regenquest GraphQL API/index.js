@@ -5,7 +5,7 @@ const { ApolloServer } = require("apollo-server-express");
 //   ApolloServerPluginLandingPageLocalDefault,
 // } = require('apollo-server-core');
 const cors = require("cors");
-const { connectToDatabases } = require("./db/connection");
+const { DBConnection } = require("./db/connection");
 const cookieParser = require("cookie-parser");
 
 const AuthDirective = require("./graphql/auth");
@@ -24,7 +24,7 @@ const corsOptions = {
 };
 
 async function startServer() {
-  await connectToDatabases();
+  await DBConnection.init(process.env.DATABASE_CONNECTION);
 
   const app = express();
   app.use(cors(corsOptions));

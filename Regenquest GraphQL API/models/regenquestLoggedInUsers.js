@@ -1,4 +1,5 @@
-const { model, Schema, default: mongoose } = require("mongoose");
+const { Schema, default: mongoose } = require("mongoose");
+const { regenDb } = require("../db/connection");
 
 //id of the logged in user
 const regenquestLoggedInUsersSchema = new Schema({
@@ -10,7 +11,7 @@ const regenquestLoggedInUsersSchema = new Schema({
   },
 });
 
-module.exports = model(
+module.exports = regenDb.model(
   "regenquestLoggedInUsers",
   regenquestLoggedInUsersSchema,
 );

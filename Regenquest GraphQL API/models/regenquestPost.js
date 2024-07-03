@@ -1,4 +1,5 @@
-const { model, Schema, default: mongoose } = require("mongoose");
+const { Schema, default: mongoose } = require("mongoose");
+const { regenDb } = require("../db/connection");
 
 //postID: unique id of the post
 //userID: ID of the user that made the post
@@ -31,4 +32,4 @@ const regenquestPostSchema = new Schema({
   ],
 });
 
-module.exports = model("regenquestPost", regenquestPostSchema);
+module.exports = regenDb.model("regenquestPost", regenquestPostSchema);
