@@ -30,4 +30,7 @@ const regenquestCommunitySchema = new Schema({
   images: [imageSchema],
 });
 
-module.exports = regenDb.model("regenquestCommunity", regenquestCommunitySchema);
+module.exports = regenDb.model(
+  "regenquestCommunity",
+  regenquestCommunitySchema,
+);

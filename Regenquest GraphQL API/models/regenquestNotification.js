@@ -26,4 +26,7 @@ const regenquestNotificationSchema = new Schema({
   isDeleted: { type: Boolean, default: false },
 });
 
-module.exports = regenDb.model("regenquestNotification", regenquestNotificationSchema);
+module.exports = regenDb.model(
+  "regenquestNotification",
+  regenquestNotificationSchema,
+);

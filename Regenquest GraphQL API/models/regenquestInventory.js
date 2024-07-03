@@ -39,4 +39,7 @@ const regenquestInventorySchema = new Schema({
   ],
 });
 
-module.exports = regenDb.model("regenquestInventory", regenquestInventorySchema);
+module.exports = regenDb.model(
+  "regenquestInventory",
+  regenquestInventorySchema,
+);

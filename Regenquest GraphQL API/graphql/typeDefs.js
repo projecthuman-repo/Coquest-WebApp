@@ -442,7 +442,7 @@ module.exports = gql`
 
   directive @auth on FIELD_DEFINITION
   directive @verifyToken on FIELD_DEFINITION
-  directive @formatObj(dbName: String modelName: String) on FIELD_DEFINITION
+  directive @formatObj(dbName: String, modelName: String) on FIELD_DEFINITION
 
   type Query {
     getUsers: [regenquestUser] @auth
@@ -458,13 +458,15 @@ module.exports = gql`
 
     findUserbyID(id: String, expand: String): regenquestUser
       @auth
-      @formatObj(dbName: "regenquest" modelName: "regenquestUser")
+      @formatObj(dbName: "regenquest", modelName: "regenquestUser")
     findTaskbyID(taskID: String): regenquestTask @auth
     findQuestbyID(questID: String): regenquestQuest @auth
     findPostbyID(postID: String): regenquestPost @auth
     findInventoryItembyID(itemID: String): regenquestInventory @auth
     findEventbyID(eventID: String): regenquestEvent @auth
-    findCommunitybyID(id: String): regenquestCommunity @auth @formatObj(dbName: "regenquest" modelName: "regenquestCommunity")
+    findCommunitybyID(id: String): regenquestCommunity
+      @auth
+      @formatObj(dbName: "regenquest", modelName: "regenquestCommunity")
     findCrossUser(email: String): regenquestCrossUser @auth
 
     getChatsByUserID(userID: String): [regenquestChat] @auth

@@ -15,7 +15,9 @@ class FormatObjDirective extends SchemaDirectiveVisitor {
       const expandParsed = getJson(expand);
 
       // Note: Connection.prototype.listDatabases() member function does not work here for some reason
-      const db = DBConnection.getConnection().otherDbs.find((db) => db.name === dbName);
+      const db = DBConnection.getConnection().otherDbs.find(
+        (db) => db.name === dbName,
+      );
 
       try {
         if (expandParsed) {

@@ -15,7 +15,7 @@ class DBConnection {
   }
 
   static getConnection(connectionUri = process.env.DATABASE_CONNECTION) {
-    if(!this.instance) {
+    if (!this.instance) {
       let connection = mongoose.createConnection(connectionUri, dbOptions);
       this.instance = new DBConnection(connection);
     }
@@ -30,5 +30,7 @@ class DBConnection {
 module.exports = {
   DBConnection,
   regenDb: DBConnection.getConnection().useDb(process.env.REGENQUEST_DB_NAME),
-  crossDb: DBConnection.getConnection().useDb(process.env.CROSSPLATFORM_DB_NAME),
-}
+  crossDb: DBConnection.getConnection().useDb(
+    process.env.CROSSPLATFORM_DB_NAME,
+  ),
+};
