@@ -1,0 +1,25 @@
+.quests-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 0px 25px 0px
+}
+
+.back-button-design {
+    display: flex; 
+    flex-direction: row;
+    padding: 25px 0px 0px 25px
+   
+}
+
+.back-button-design p {
+    margin: 0px 0px 0px 10px;
+}
+
+.back-button-design img {
+    width: 10px;
+    height: 15px;
+    margin: 5px 0px 0px 0px;
+}
+ 

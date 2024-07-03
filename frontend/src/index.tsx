@@ -41,6 +41,7 @@ import GlobalRedirect from "./components/AutoRedirector/GlobalRedirect";
 import { UserRegistrationProvider } from "./components/AutoRedirector/UserRegistration";
 import CreateCommunity from "./pages/Community/Create";
 import CommunityDescription from "./pages/Community/Description";
+import CommunityQuests from "./pages/Community/Quests";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
 			{
 				path: "description",
 				element: <CommunityDescription />,
+			},
+			{
+				path: "description/quests",
+				element: <CommunityQuests />,
 			}
 		]
 	},

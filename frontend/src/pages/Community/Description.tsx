@@ -92,7 +92,7 @@ function CommunityDescription() {
                 <div className="background">
                     <div className="quest-header-container">
                         <h2 className="d-sub-heading">Quests</h2>
-                        <a href="/" className="d-link">See All</a>
+                        <a href="/communities/description/quests" className="d-link">See All</a>
                     </div>
                     {/* Quest Navigation Buttons */}
                     <div className="quest-button-container">
