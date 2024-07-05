@@ -9,6 +9,7 @@ import CommunityTasks from "../../components/CommunityTasks";
 import Members from "../../components/Members";
 import ExtendedSimpleCard from "../../components/ExtendedSimpleCard/SimpleCard";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
+import { Name } from "../../models/usermodel";
 import { useUserRegistration } from "../../components/AutoRedirector/UserRegistration";
 import Loading from "../../components/Loading";
 
@@ -101,8 +102,11 @@ const MapsContainer = styled.div({
 });
 
 function Dashboard() {
-	const [userName, setUserName] = useState('');
-	let { authenticated } = useUserRegistration();
+	const [name, setName] = useState<Name>({
+		first: "",
+		last: "",
+	});
+	const { authenticated } = useUserRegistration();
 
 	useEffect(() => {
 		let unsubscribe: (() => void) | null | undefined = null;
@@ -128,8 +132,11 @@ function Dashboard() {
 		(authenticated ?
 			<Container>
 				<Header>
-					<WelcomeMessage name={userName || "User"} communityName="Community name" />
-					<SearchBar />
+				<WelcomeMessage
+					name={name.first || "User"}
+					communityName="Community name"
+				/>
+				<SearchBar />
 				</Header>
 				<DashColumns>
 					<DashColumn>
@@ -155,8 +162,8 @@ function Dashboard() {
 					</CommunityTaskContainer>
 					<MembersContainer>
 						<Members
-							users={members}  // Pass the list of members
-							userRole={["Role"]}  // Placeholder for user roles, you can expand this in the future
+							users={members} // Pass the list of members
+							userRole={["Role"]} // Placeholder for user roles, you can expand this in the future
 							showAllLink="#"
 						/>
 					</MembersContainer>
