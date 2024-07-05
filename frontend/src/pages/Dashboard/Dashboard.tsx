@@ -128,50 +128,48 @@ function Dashboard() {
 
 	const members = [name.first]; // List of members with the current user
 
-	return (
-		(authenticated ?
-			<Container>
-				<Header>
+	return authenticated ? (
+		<Container>
+			<Header>
 				<WelcomeMessage
 					name={name.first || "User"}
 					communityName="Community name"
 				/>
 				<SearchBar />
-				</Header>
-				<DashColumns>
-					<DashColumn>
-						<CardCont>
-							<SimpleCard label="Community overview" />
-							<SimpleCard label="My projects" />
-							<SimpleCard label="Open projects" />
-						</CardCont>
-						<ExtendedSimpleCard label="Posts" />
-					</DashColumn>
-					<DashColumn>
-						<MyTasksContainer label="My Tasks" seeAllLink="#" />
-					</DashColumn>
-					<DashColumn>
-						<MapsContainer>
-							<Maps />
-						</MapsContainer>
-					</DashColumn>
-				</DashColumns>
-				<Footer>
-					<CommunityTaskContainer>
-						<CommunityTasks label="Community Tasks" seeAllLink="#" />
-					</CommunityTaskContainer>
-					<MembersContainer>
-						<Members
-							users={members} // Pass the list of members
-							userRole={["Role"]} // Placeholder for user roles, you can expand this in the future
-							showAllLink="#"
-						/>
-					</MembersContainer>
-				</Footer>
-			</Container> 
-			: 
-			<Loading />
-		)
+			</Header>
+			<DashColumns>
+				<DashColumn>
+					<CardCont>
+						<SimpleCard label="Community overview" />
+						<SimpleCard label="My projects" />
+						<SimpleCard label="Open projects" />
+					</CardCont>
+					<ExtendedSimpleCard label="Posts" />
+				</DashColumn>
+				<DashColumn>
+					<MyTasksContainer label="My Tasks" seeAllLink="#" />
+				</DashColumn>
+				<DashColumn>
+					<MapsContainer>
+						<Maps />
+					</MapsContainer>
+				</DashColumn>
+			</DashColumns>
+			<Footer>
+				<CommunityTaskContainer>
+					<CommunityTasks label="Community Tasks" seeAllLink="#" />
+				</CommunityTaskContainer>
+				<MembersContainer>
+					<Members
+						users={members} // Pass the list of members
+						userRole={["Role"]} // Placeholder for user roles, you can expand this in the future
+						showAllLink="#"
+					/>
+				</MembersContainer>
+			</Footer>
+		</Container>
+	) : (
+		<Loading />
 	);
 }
 

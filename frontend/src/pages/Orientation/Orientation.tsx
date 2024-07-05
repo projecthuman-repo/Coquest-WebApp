@@ -106,60 +106,66 @@ function Orientation() {
 		// From this point onward, we can assume index will always be a valid index.
 		const index = page - 1;
 
-        const SelectedPageView = RegistrationPages[index].view;
-        return (
-            <div className="orientation">
-                <div className="header">
-                    <img src="/logo.png" alt="Coquest Logo" height="50" />
-                    <SignInButton />
-                </div>
+		const SelectedPageView = RegistrationPages[index].view;
+		return (
+			<div className="orientation">
+				<div className="header">
+					<img src="/logo.png" alt="Coquest Logo" height="50" />
+					<SignInButton />
+				</div>
 
-                {/* Progress bar to show progress in onboarding completion */}
-                <div className="progress-bar-container">
-                    <ProgressBar numOfPages={6} currentPageNum={page} />
-                </div>
+				{/* Progress bar to show progress in onboarding completion */}
+				<div className="progress-bar-container">
+					<ProgressBar numOfPages={6} currentPageNum={page} />
+				</div>
 
-                <div className="content">
-                    <SelectedPageView user={user} updateData={updateData} />
-                </div>
-                    
-                <div className="orientation-btn-container">
-                    <div className="orientation-btn">
-                        <div>
-                            { page > 1 &&
-                                <IconButton title="Previous page" onClick={() => {
-                                    const newPage = page - 1;
-                                    changePage(newPage);
-                                    }}>
-                                    <BackButton />
-                                </IconButton>
-                            }
-                        </div>
-                        
-                        <div>
-                            { page < NUMPAGES ?
-                                <IconButton title="Next page" onClick={() => {
-                                    const newPage = page + 1;
-                                    changePage(newPage);
-                                    }}>
-                                    <div className="btn-group">
-                                        <SecondaryButton name="Skip" />
-                                        <PrimaryButton name="Next" />
-                                    </div>
-                                </IconButton>
-                                :
-                                <Button  onClick={submit}>
-                                    <PrimaryButton name="Finish"/>
-                                </Button>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    } else {
-        return null;
-    }
+				<div className="content">
+					<SelectedPageView user={user} updateData={updateData} />
+				</div>
+
+				<div className="orientation-btn-container">
+					<div className="orientation-btn">
+						<div>
+							{page > 1 && (
+								<IconButton
+									title="Previous page"
+									onClick={() => {
+										const newPage = page - 1;
+										changePage(newPage);
+									}}
+								>
+									<BackButton />
+								</IconButton>
+							)}
+						</div>
+
+						<div>
+							{page < NUMPAGES ? (
+								<IconButton
+									title="Next page"
+									onClick={() => {
+										const newPage = page + 1;
+										changePage(newPage);
+									}}
+								>
+									<div className="btn-group">
+										<SecondaryButton name="Skip" />
+										<PrimaryButton name="Next" />
+									</div>
+								</IconButton>
+							) : (
+								<Button onClick={submit}>
+									<PrimaryButton name="Finish" />
+								</Button>
+							)}
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	} else {
+		return null;
+	}
 }
 
 export default Orientation;

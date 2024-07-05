@@ -146,13 +146,14 @@ function UploadImage(props: any) {
 				</div>
 			)}
 
-            {inputErrors && inputErrors.map(error => 
-                <div key={error.file.name} className="error">
-                    {getErrorMsg(error)}
-                </div>
-            )}
-        </CenterContainer>
-    );
+			{inputErrors &&
+				inputErrors.map((error) => (
+					<div key={error.file.name} className="error">
+						{getErrorMsg(error)}
+					</div>
+				))}
+		</CenterContainer>
+	);
 }
 
 export default UploadImage;
