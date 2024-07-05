@@ -11,7 +11,6 @@ import Repository from "../../repositories/repository";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
 // import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import BackButton from "../../components/Buttons/BackButton";
-import SignInButton from "../../components/Buttons/SignInButton";
 import SecondaryButton from "../../components/Buttons/SecondaryButton";
 import PrimaryButton from "../../components/Buttons/PrimaryButton";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
@@ -111,7 +110,6 @@ function Orientation() {
 			<div className="orientation">
 				<div className="header">
 					<img src="/logo.png" alt="Coquest Logo" height="50" />
-					<SignInButton />
 				</div>
 
 				{/* Progress bar to show progress in onboarding completion */}

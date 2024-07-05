@@ -38,7 +38,7 @@ function Communities() {
 		<div>
 			<h3 className="main-heading">Let&apos;s get you stitched in.</h3>
 			<p className="sub-heading">Check out these layers!</p>
-			<p className="sub-text">
+			<p className="description">
 				Layers are small communities with like-minded people. You can
 				participate in group activities and projects here.
 			</p>
