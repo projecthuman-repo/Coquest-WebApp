@@ -1,4 +1,5 @@
-const { model, Schema, default: mongoose } = require("mongoose");
+const { Schema, default: mongoose } = require("mongoose");
+const { regenDb } = require("../db/connection");
 
 //messageID: unique id of the message
 //chatID: id of the chat the message belongs to
@@ -33,4 +34,4 @@ const regenquestMessageSchema = new Schema({
   ],
 });
 
-module.exports = model("regenquestMessage", regenquestMessageSchema);
+module.exports = regenDb.model("regenquestMessage", regenquestMessageSchema);

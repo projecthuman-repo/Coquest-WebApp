@@ -18,7 +18,6 @@ var jwt = require("jsonwebtoken");
 const {
   coerceExpandable,
   deduceExpandableType,
-  toOutputFormat,
 } = require("../utils/expandable");
 const { getSecret } = require("../utils/gcloud");
 
@@ -209,12 +208,7 @@ module.exports = {
     //this method finds a community by its id
     async findCommunitybyID(_parent, { id }, _context, _info) {
       try {
-        const result = await Community.findOne({ _id: id });
-
-        let community = result.toObject();
-        community.members = toOutputFormat(community.members);
-
-        return community;
+        return await Community.findOne({ _id: id });
       } catch {
         throw new Error("Error finding community by id");
       }

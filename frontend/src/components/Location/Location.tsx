@@ -79,7 +79,7 @@ function Location(props: any) {
 	async function handlePostalCodeChange(
 		e: React.ChangeEvent<HTMLInputElement>,
 	) {
-		let newPostal = e.target.value.toUpperCase();
+		const newPostal = e.target.value.toUpperCase();
 		setPostalCode(newPostal);
 
 		// Note: Cannot use stateful postal code data after setting it

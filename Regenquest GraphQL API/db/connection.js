@@ -6,47 +6,31 @@ const dbOptions = {
   useNewUrlParser: true,
 };
 
-// Create a connection to the CrossPlatform database
-const crossPlatformDatabase = mongoose.createConnection(
-  process.env.DATABASE_CROSS_PLATFORM_CONNECTION,
-  dbOptions,
-);
+class DBConnection {
+  static instance = null;
 
-// Connect to the learningsystem database
-const connectToRegenquestDatabase = async () => {
-  try {
-    // await regenquestDatabase.asPromise();
-    await mongoose.connect(
-      process.env.DATABASE_REGENQUEST_CONNECTION,
-      dbOptions,
-    );
-
-    console.log("Connected to the regenquest database");
-  } catch (error) {
-    throw new Error(`Connecting to the regenquest database: ${error}`);
+  static async init(connectionUri = process.env.DATABASE_CONNECTION) {
+    await this.getConnection(connectionUri).asPromise();
+    console.log(`Connected to the cluster!`);
   }
-};
 
-const connectToCrossPlatformDatabase = async () => {
-  try {
-    await crossPlatformDatabase.asPromise();
-    console.log("Connected to the CrossPlatform database");
-  } catch (error) {
-    throw new Error(`Connecting to the CrossPlatform database: ${error}`);
+  static getConnection(connectionUri = process.env.DATABASE_CONNECTION) {
+    if (!this.instance) {
+      let connection = mongoose.createConnection(connectionUri, dbOptions);
+      this.instance = new DBConnection(connection);
+    }
+    return this.instance.connection;
   }
-};
 
-// Connect to all databases
-const connectToDatabases = async () => {
-  try {
-    await connectToRegenquestDatabase();
-    await connectToCrossPlatformDatabase();
-  } catch (error) {
-    throw new Error(error);
+  constructor(connection) {
+    this.connection = connection;
   }
-};
+}
 
 module.exports = {
-  connectToDatabases,
-  crossPlatformDatabase,
+  DBConnection,
+  regenDb: DBConnection.getConnection().useDb(process.env.REGENQUEST_DB_NAME),
+  crossDb: DBConnection.getConnection().useDb(
+    process.env.CROSSPLATFORM_DB_NAME,
+  ),
 };

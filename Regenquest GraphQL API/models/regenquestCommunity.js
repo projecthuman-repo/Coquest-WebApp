@@ -1,5 +1,6 @@
-const { model, Schema, default: mongoose } = require("mongoose");
+const { Schema, default: mongoose } = require("mongoose");
 const { imageSchema, locationSchema } = require("./common");
+const { regenDb } = require("../db/connection");
 const validators = require("./validators");
 
 //name: name of the community
@@ -29,4 +30,7 @@ const regenquestCommunitySchema = new Schema({
   images: [imageSchema],
 });
 
-module.exports = model("regenquestCommunity", regenquestCommunitySchema);
+module.exports = regenDb.model(
+  "regenquestCommunity",
+  regenquestCommunitySchema,
+);

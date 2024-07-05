@@ -15,9 +15,9 @@ import "./Create.css";
 function CreateCommunity() {
 	// Used to disable the submit button when form information is invalid and display the error messages to the user.
 	const [formError, _setFormError] = useState(null);
-
-    // Used to switch between the different sections of the form.
-    const [section, setSection] = useState(0);
+  
+  // Used to switch between the different sections of the form.
+  const [section, setSection] = useState(0);
 
 	// TODO: Use a routine to create a new Community with default values
 	const [community, setCommunity] = useState<Community>(

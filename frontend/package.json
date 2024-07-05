@@ -45,13 +45,13 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "run-script-os",
-    "lint:win32": "eslint & prettier . -c",
-    "lint:darwin": "eslint; prettier . -c",
-    "lint:linux": "eslint; prettier . -c",
+    "lint:win32": "eslint . & prettier . -c",
+    "lint:darwin": "eslint .; prettier . -c",
+    "lint:linux": "eslint .; prettier . -c",
     "lint-fix": "run-script-os",
-    "lint-fix:win32": "eslint --fix & prettier . --write",
-    "lint-fix:darwin": "eslint --fix; prettier . --write",
-    "lint-fix:linux": "eslint --fix; prettier . --write"
+    "lint-fix:win32": "eslint --fix .& prettier . --write",
+    "lint-fix:darwin": "eslint --fix .; prettier . --write",
+    "lint-fix:linux": "eslint --fix .; prettier . --write"
   },
   "eslintConfig": {
     "extends": [
