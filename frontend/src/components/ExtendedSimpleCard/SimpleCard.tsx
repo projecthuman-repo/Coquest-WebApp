@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import IconButton from "@mui/material/IconButton";
@@ -7,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 //uses props to take card label
 type SimpleCardProps = {
 	label: string;
+	link?: string;
 };
 
 const Label = styled(Typography)({
@@ -57,12 +59,14 @@ const BlankContainer = styled("div")({
 const _posts = ["Post1", "Post2", "Post3", "Post4", "Post5", "Post6"];
 
 //places all the elements inside the card
-const ExtendedSimpleCard = ({ label }: SimpleCardProps) => {
+const ExtendedSimpleCard = ({ label, link }: SimpleCardProps) => {
+	const navigate = useNavigate();
+
 	return (
 		<CardContainer>
 			<Header>
 				<Label>{label}</Label>
-				<IconButton>
+				<IconButton onClick={() => navigate(link || "")}>
 					<ChevronIcon />
 				</IconButton>
 			</Header>

@@ -1,0 +1,25 @@
+.comment {
+  margin: 24px 0;
+}
+
+.info-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.comment-author {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.comment-date {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+  text-align: right;
+}
+
+.comment-message {
+  font-size: 14px;
+  margin-top: 5px;
+}
