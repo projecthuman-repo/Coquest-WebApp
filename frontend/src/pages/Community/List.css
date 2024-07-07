@@ -1,0 +1,136 @@
+/* Main Text Styles */
+
+.cl-main-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 30px;
+  text-align: center;
+}
+
+.cl-sub-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 18px;
+  overflow-wrap: break-word;
+}
+
+.cl-sub-text {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Main Div */
+
+.community-listing-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0px 0px 0px;
+}
+
+/* Search Bar */
+
+.cl-search {
+  border-radius: 25px;
+  border: 1px solid black;
+  padding-left: 40px;
+  width: 400px;
+  height: 48px;
+}
+
+.cl-search-container {
+  position: relative;
+  margin: 20px 0px 20px 0px;
+}
+
+.cl-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+}
+
+/* Communities Container */
+
+.communities-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0px 10px 0px;
+}
+
+/* Single Community Container */
+
+.community-container {
+  display: flex;
+  flex: 1 1 22%;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  padding: 20px 20px 20px 20px;
+  border-radius: 10px;
+  width: 450px;
+  margin: 15px 10px 0px 10px;
+  box-shadow: 0 4px 8px lightgrey;
+}
+
+.heading-button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Image Design and Container */
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0px 20px 0px;
+}
+
+.image-design {
+  width: 425px;
+  height: 425px;
+}
+
+/* Button Design */
+
+.join-button-design {
+  width: 90px;
+  height: 35px;
+  margin: 0px 0px 0px 25px;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+.join-button-design:hover {
+  background-color: lightgray;
+  border: none;
+}
+
+/* Basic Margins */
+
+.margin-b {
+  margin-bottom: 10px;
+}
+
+.margin-t {
+  margin-top: 10px;
+}
+
+.margin-l {
+  margin-left: 10px;
+}
+
+.margin-r {
+  margin-right: 10px;
+}

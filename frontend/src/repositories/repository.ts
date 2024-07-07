@@ -19,101 +19,134 @@ class Factory<T> {
 }
 
 function getFetchQuery(typeName: RepoTypeName): string {
-	let ret: string;
-	switch (typeName) {
-		case "User":
-			ret = gql`
-				query Query($id: String, $expand: String) {
-					findUserbyID(id: $id, expand: $expand) {
-						userID
-						name {
+    let ret: string;
+    switch(typeName) {
+        case 'User':
+            ret = gql`
+                query Query($id: String $expand: String) {
+                    findUserbyID(id: $id expand: $expand) {
+                        userID
+                        name {
 							first
 							middle
 							last
 						}
-						username
-						email
-						location {
-							lat
-							lng
-						}
-						biography
-						registered {
-							type: __typename
-							... on bool {
-								boolValue
-							}
-							... on int {
-								numValue
-							}
-						}
-						communities {
-							type: __typename
-							... on string {
-								strValue
-							}
-							... on regenquestCommunityOutput {
-								objValue {
-									_id
-									name
-									description
-									tags
-									location {
-										lat
-										lng
-									}
-									images {
-										contentType
-										path
-									}
-									members {
-										type: __typename
-										... on string {
-											strValue
-										}
-										... on regenquestUserOutput {
-											objValue {
-												_id
-												username
-												images {
-													contentType
-													path
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-						_id
-						motives
-						topics
-						currentLevel
-						images {
-							contentType
-							path
-						}
-						skills {
-							skillName
-							skillLevel
-						}
-						badges {
-							badgeName
-							badgeDescription
-						}
-						recommendations {
-							name
-							comment
-						}
-					}
-				}
-			`;
-			break;
-		case "Community":
-			ret = gql``;
-			break;
-	}
-	return ret;
+                        username
+                        email
+                        location {
+                        lat
+                        lng
+                        }
+                        biography
+                        registered {
+                            type: __typename
+                            ... on bool {
+                                boolValue
+                            }
+                            ... on int {
+                                numValue
+                            }
+                        }
+                        communities {
+                            type: __typename
+                            ... on string {
+                                strValue
+                            }
+                            ... on regenquestCommunityOutput {
+                                objValue {
+                                    _id
+                                    name
+                                    description
+                                    tags
+                                    location {
+                                        lat
+                                        lng
+                                    }
+                                    images {
+                                        contentType
+                                        path
+                                    }
+                                    members {
+                                        type: __typename
+                                        ... on string {
+                                            strValue
+                                        }
+                                        ... on regenquestUserOutput {
+                                            objValue {
+                                                _id
+                                                username
+                                                images {
+                                                    contentType
+                                                    path
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        _id
+                        motives
+                        topics
+                        currentLevel
+                        images {
+                            contentType
+                            path
+                        }
+                        skills {
+                            skillName
+                            skillLevel
+                        }
+                        badges {
+                            badgeName
+                            badgeDescription
+                        }
+                        recommendations {
+                            name
+                            comment
+                        }
+                    }
+                }
+                `;
+            break;
+        case 'Community':
+            ret = gql`
+                query Query($id: String) {
+                    findCommunitybyID(id: $id) {
+                        _id
+                        name
+                        description
+                        tags
+                        location {
+                            lat
+                            lng
+                        }
+                        images {
+                            contentType
+                            path
+                        }
+                        members {
+                            type: __typename
+                            ... on string {
+                                strValue
+                            }
+                            ... on regenquestUserOutput {
+                                objValue {
+                                    _id
+                                    username
+                                    images {
+                                        contentType
+                                        path
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            `;
+        break;
+    }
+    return ret;
 }
 
 // TODO: make a registry of all possible Model types

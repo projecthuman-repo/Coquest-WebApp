@@ -42,6 +42,7 @@ import OrientationRedirector from "./pages/Orientation/OrientationRedirector";
 import GlobalRedirect from "./components/AutoRedirector/GlobalRedirect";
 import { UserRegistrationProvider } from "./components/AutoRedirector/UserRegistration";
 import CreateCommunity from "./pages/Community/Create";
+import CommunityList from "./pages/Community/List";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement,
@@ -84,9 +85,13 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "create",
-				element: <CreateCommunity />,
+				element: <CreateCommunity />
 			},
-		],
+			{
+				path: "list",
+				element: <CommunityList />
+			}
+		]
 	},
 	{
 		path: "/programs",
