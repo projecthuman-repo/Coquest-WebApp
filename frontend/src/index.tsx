@@ -50,7 +50,11 @@ const root = ReactDOM.createRoot(
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <Dashboard />,
+		element: (
+			<UserRegistrationProvider>
+				<Dashboard />
+			</UserRegistrationProvider>
+		),
 	},
 	{
 		path: "/registration",

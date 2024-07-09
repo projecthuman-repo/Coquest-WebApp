@@ -148,15 +148,7 @@ function UploadImage(props: any) {
 
 			{inputErrors &&
 				inputErrors.map((error) => (
-					<div
-						key={error.file.name}
-						style={{
-							backgroundColor: "rgba(255, 0, 0, 0.3)",
-							padding: "16px",
-							margin: "16px 0",
-							borderRadius: "5px",
-						}}
-					>
+					<div key={error.file.name} className="error">
 						{getErrorMsg(error)}
 					</div>
 				))}
