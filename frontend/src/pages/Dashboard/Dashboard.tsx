@@ -12,6 +12,7 @@ import { subscribeToUserModelSubject } from "../../observers/userobserver";
 import { Name } from "../../models/usermodel";
 import { useUserRegistration } from "../../components/AutoRedirector/UserRegistration";
 import Loading from "../../components/Loading";
+import { isCompleteRegistration } from "../../models/common";
 
 const Container = styled("div")({
 	display: "flex",
@@ -106,6 +107,7 @@ function Dashboard() {
 		first: "",
 		last: "",
 	});
+	const [isRegistered, setRegisteredStatus] = useState(false);
 	const { authenticated } = useUserRegistration();
 
 	useEffect(() => {
@@ -114,6 +116,7 @@ function Dashboard() {
 		const setupSubscription = async () => {
 			unsubscribe = await subscribeToUserModelSubject((user) => {
 				setName(user.name); // Update to use the 'name' field
+				setRegisteredStatus(isCompleteRegistration(user.registered));
 			});
 		};
 
@@ -128,7 +131,7 @@ function Dashboard() {
 
 	const members = [name.first]; // List of members with the current user
 
-	return authenticated ? (
+	return authenticated && isRegistered ? (
 		<Container>
 			<Header>
 				<WelcomeMessage
