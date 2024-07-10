@@ -133,7 +133,7 @@ function UploadImage(props: any) {
 					<img
 						src={images[0].path}
 						alt="generated img"
-						style={{ height: "175px" }}
+						style={{ height: "175px", borderRadius: "50%" }}
 					/>
 				</>
 			) : (
@@ -141,7 +141,7 @@ function UploadImage(props: any) {
 			)}
 
 			{displayImgBtns && (
-				<div className="upload-btn-wrapper">
+				<div className="outline-btn">
 					<UploadButton />
 				</div>
 			)}

@@ -79,7 +79,7 @@ function RelativeLocation(props: any) {
 		e: React.ChangeEvent<HTMLInputElement>,
 	) {
 		const newPostal = e.target.value.toUpperCase();
-		setPostalCode(newPostal);
+		setPostalCode(newPostal.replace(/\s/g, ""));
 
 		// Note: Cannot use stateful postal code data after setting it
 		if (newPostal.length === POSTAL_CODE_LEN) {
@@ -128,18 +128,24 @@ function RelativeLocation(props: any) {
 				needs.
 			</p>
 			<div className="location-container">
+				<img src="/icons/location.png" className="location-icon" />
 				<InputMask
-					mask="_!_ !_!"
+					mask="_!_!_!"
 					replacement={{ _: /[A-Za-z]/, "!": /\d/ }}
-					value={postalCode}
-					className="input"
+					value={
+						postalCode.length > 3
+							? postalCode.substring(0, 3) +
+								" " +
+								postalCode.substring(3)
+							: postalCode
+					}
+					className="location"
 					onChange={handlePostalCodeChange}
 					alt="Postal Code"
 					title="Postal Code Input"
 					placeholder="Postal Code"
 					type="text"
 				/>
-				<img src="/icons/location.png" className="location-icon" />
 			</div>
 			<div className="map">
 				{isLoaded &&
@@ -155,7 +161,7 @@ function RelativeLocation(props: any) {
 					)}
 			</div>
 			{postalCode.length === POSTAL_CODE_LEN && inputError && (
-				<p className="error">Please insert a valid postal code.</p>
+				<p className="error">Please enter a valid postal code.</p>
 			)}
 			<button onClick={getBrowserLocation}>
 				Get&nbsp;Current&nbsp;Location
