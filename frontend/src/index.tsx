@@ -85,13 +85,13 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "create",
-				element: <CreateCommunity />
+				element: <CreateCommunity />,
 			},
 			{
 				path: "list",
-				element: <CommunityList />
-			}
-		]
+				element: <CommunityList />,
+			},
+		],
 	},
 	{
 		path: "/programs",
