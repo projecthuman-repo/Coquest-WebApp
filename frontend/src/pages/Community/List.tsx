@@ -69,7 +69,7 @@ function CommunityListing() {
             <div key={index} className="community-container">
               <div className="image-container">
                 <button>
-                  {/* NOTE: Add a relevant placeholder image here when the community image is not found. */}
+                  {/* TODO: Add a relevant placeholder image here when the community image is not found. */}
                   <img
                     src={community?.images?.[0]?.path ?? '/map_image.png'}
                     alt={community?.name}
