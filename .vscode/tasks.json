@@ -1,0 +1,157 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start API",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev"],
+      "options": {
+        "cwd": "${workspaceFolder}\\Regenquest GraphQL API",
+        "env": {
+          "NODE_ENV": "${input:dev-env}"
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false,
+        "group": "web-server"
+      },
+      // TODO: Develop proper error capturing regexes
+      "problemMatcher": [
+        {
+          "owner": "node",
+          "fileLocation": ["relative", "${workspaceFolder}/Regenquest GraphQL API"],
+          "pattern": [
+            {
+              "regexp": "^\\s*(\\S.*):(\\d+):(\\d+) - error (.*)$",
+              "file": 1,
+              "line": 2,
+              "column": 3,
+              "message": 4
+            },
+            {
+              "regexp": "^\\s*at (.+) \\((.*):(\\d+):(\\d+)\\)$",
+              "file": 2,
+              "line": 3,
+              "column": 4,
+              "message": 1
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "^Serving function\\.\\.\\.$",
+            "endsPattern": "^Connected to the cluster\\!$"
+          }
+        }
+      ]
+    },
+    {
+      "label": "Start React",
+      "type": "shell",
+      "command": "npm run ${input:dev-env}",
+      "options": {
+        "cwd": "${workspaceFolder}/frontend",
+        "env": {
+          "NODE_ENV": "${input:dev-env}"
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false,
+        "group": "web-server"
+      },
+      // TODO: develop proper error capturing regexes
+      "problemMatcher": [
+        {
+          "owner": "typescript",
+          "source": "ts",
+          "applyTo": "allDocuments",
+          "fileLocation": ["relative", "${cwd}"],
+          "pattern": {
+            "regexp": "^\\s*(\\S.*)\\((\\d+),\\s*(\\d+)\\):\\s+(.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "message": 4
+          },
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "^Starting the development server\\...",
+            "endsPattern": "^webpack compiled successfully$"
+          }
+        },
+        {
+          "owner": "typescript",
+          "source": "ts",
+          "applyTo": "allDocuments",
+          "fileLocation": ["relative", "${cwd}"],
+          "pattern": {
+            "regexp": "^\\s*(\\S.*)\\((\\d+),\\s*(\\d+)\\):\\s+(.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "message": 4
+          },
+          "background": {
+            "beginsPattern": "Creating an optimized production build...",
+            "endsPattern": "Serving!|Accepting connections at http://localhost:\\d+"
+          },
+        }
+      ]
+    },
+    {
+      "label": "Start Application",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Start API", "Start React"
+      ]
+    },
+    {
+      "label": "Set Development Environment",
+      "type": "shell",
+      "command": "echo NODE_ENV=${input:dev-env} > .env",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "dev-env",
+      "type": "command",
+      "command": "extension.commandvariable.pickStringRemember",
+      "args": {
+        "description": "Select the Desired Debug Environment",
+        "default": "development",
+        "options": [
+          {
+            "label": "Development",
+            "value": "development"
+          },
+          {
+            "label": "Production",
+            "value": "production"
+          }
+        ],
+        "key": "dev-env"
+      }
+    }
+  ]
+}
