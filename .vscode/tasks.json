@@ -96,7 +96,7 @@
           "background": {
             "activeOnStart": true,
             "beginsPattern": "^Starting the development server\\...",
-            "endsPattern": "^webpack compiled successfully$"
+            "endsPattern": "^webpack compiled"
           }
         },
         {
