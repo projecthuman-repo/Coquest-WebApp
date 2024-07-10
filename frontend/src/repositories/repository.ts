@@ -110,7 +110,40 @@ function getFetchQuery(typeName: RepoTypeName): string {
 			`;
 			break;
 		case "Community":
-			ret = gql``;
+			ret = gql`
+				query Query($id: String) {
+					findCommunitybyID(id: $id) {
+						_id
+						name
+						description
+						tags
+						location {
+							lat
+							lng
+						}
+						images {
+							contentType
+							path
+						}
+						members {
+							type: __typename
+							... on string {
+								strValue
+							}
+							... on regenquestUserOutput {
+								objValue {
+									_id
+									username
+									images {
+										contentType
+										path
+									}
+								}
+							}
+						}
+					}
+				}
+			`;
 			break;
 	}
 	return ret;
