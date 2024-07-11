@@ -1,5 +1,6 @@
 .comment {
-  margin: 24px 0;
+  margin: 5px 0;
+  margin-right: 12px;
 }
 
 .info-line {
@@ -8,18 +9,18 @@
   justify-content: space-between;
 }
 
-.comment-author {
+.info-line .author {
   font-size: 12px;
   font-weight: 700;
 }
 
-.comment-date {
+.info-line .date {
   color: rgba(0, 0, 0, 0.5);
   font-size: 12px;
   text-align: right;
 }
 
-.comment-message {
+.message {
   font-size: 14px;
   margin-top: 5px;
 }

@@ -15,8 +15,6 @@ function PostFeed() {
 			</div>
 			<div className="post-feed-posts">
 				<Post />
-				<Post />
-				<Post />
 			</div>
 		</div>
 	);

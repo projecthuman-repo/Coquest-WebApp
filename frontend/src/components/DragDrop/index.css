@@ -37,12 +37,35 @@
   object-fit: contain;
 }
 
-.dropzone .uploaded-file {
-  border: 1px solid black;
+.added-files {
+  margin-top: 16px;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.dropzone .added-file {
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   padding: 8px 16px;
   width: fit-content !important;
-  opacity: 0.5;
+  position: relative;
+  flex: 1 0 auto;
+  text-align: center;
+}
+
+.dropzone .close-icon {
+  cursor: pointer;
+  position: absolute;
+  top: -8px;
+  right: -8px;
   background-color: grey;
-  color: black !important;
+  height: 20px;
+  width: fit-content;
+  object-fit: contain;
+  border-radius: 50%;
+  padding: 3px;
 }

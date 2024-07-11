@@ -5,10 +5,23 @@ import "./index.css";
 const DragDrop = () => {
 	function handleDrop(acceptedFiles: any) {
 		const addedFiles = document.querySelector(".added-files");
-		acceptedFiles.forEach((uploadedFile: any) => {
+		acceptedFiles.forEach((addedFile: any) => {
 			const file = document.createElement("div");
-			file.className = "uploaded-file";
-			file.innerText = uploadedFile.name;
+			file.className = "added-file";
+			file.innerText = addedFile.name;
+
+			const closeIcon = document.createElement("img");
+			closeIcon.src = "/icons/close.png";
+			closeIcon.className = "close-icon";
+			closeIcon.onclick = () => {
+				file.remove(); // remove element from DOM
+				// remove file from acceptedFiles array
+				acceptedFiles = acceptedFiles.filter(
+					(file: any) => file.name !== addedFile.name,
+				);
+			};
+			file.appendChild(closeIcon);
+
 			addedFiles?.appendChild(file);
 		});
 	}

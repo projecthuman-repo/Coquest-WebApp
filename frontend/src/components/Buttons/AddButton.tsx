@@ -7,7 +7,7 @@ function AddButton(props: { onClick?: () => void }) {
 	}
 	return (
 		<button className="add-button" onClick={onClick}>
-			<img src="/icons/plus.png" height="12" alt="Plus Sign"></img>
+			<img src="/icons/plus.png" alt="Plus Sign"></img>
 		</button>
 	);
 }
