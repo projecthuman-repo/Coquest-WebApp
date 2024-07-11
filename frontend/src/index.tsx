@@ -83,11 +83,11 @@ const router = createBrowserRouter([
 				element: <CreateCommunity />
 			},
 			{
-				path: "description",
+				path: ":id",
 				element: <CommunityDescription />,
 			},
 			{
-				path: "description/quests",
+				path: ":id/quests",
 				element: <CommunityQuests />,
 			}
 		]

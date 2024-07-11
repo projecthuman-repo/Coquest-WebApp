@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 import Repository from "../../../repositories/repository";
 import { Community } from "../../../models/communitymodel";
 import CommunityDescriptionOverview from "./Overview";
@@ -13,8 +14,7 @@ function CommunityDescription() {
 
   // Community Data Variables
   const [communityData, setCommunityData] = useState<Community | null>(null);
-  // TODO: Instead of using a hardcoded Community ID, it should be grabbed from the URL.
-  const communityId = "666e0c9d083f13aec99b880c";
+  const { id } = useParams();
 
   // Fetch for Community Data
   useEffect(() => {
@@ -22,7 +22,7 @@ function CommunityDescription() {
     const fetchCommunity = async () => {
       try {
         const communityData = {
-          _id: communityId,
+          _id: id,
           name: "",
           description: "",
           location: null,
@@ -41,11 +41,13 @@ function CommunityDescription() {
       }
     };
     fetchCommunity();
-  }, [communityId]);
+  }, [id]);
+
+  console.log(communityData)
 
   return (
     <>
-      {communityData != null && (
+      {communityData != null ? (
         <div className="community-description-page">
           <div className="header-container">
             <h1 className="d-main-heading">{communityData.name}</h1>
@@ -102,6 +104,11 @@ function CommunityDescription() {
           {section === "co-ops" && (
             <CommunityDescriptionCoops data={communityData} />
           )}
+        </div>
+      ) : (
+        <div className="community-description-page">
+          <h1 className="d-main-heading margin-bottom">Community Not Found.</h1>
+          <p className="d-sub-text">Check if the ID in the URL matches the community you are trying to find before trying again.</p>
         </div>
       )}
     </>
