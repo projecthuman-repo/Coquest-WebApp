@@ -1,47 +1,100 @@
 import React, { useState, useEffect } from "react";
 import Comment from "./Comment";
-import Input from "../../components/Input";
+import Input from "../Input";
+import ImageCarousel from "../ImageCarousel";
+import Loading from "../Loading";
+import { subscribeToUserModelSubject } from "../../observers/userobserver";
+import { User } from "../../models/usermodel";
 import "./Comment.css";
 import "./index.css";
 
-// export type PostProps = {
-// 	author: string;
-// 	likes: number;
-// 	comments: string[];
-// };
+export type PostProps = {
+	// userID: string;	// TODO: deternime username from userID
+	title: string;
+	description: string;
+	likes: number;
+	attachments: string[];
+	createdAt: string;
+	comments: { username: string; body: string }[];
+};
 
-// import { subscribeToUserModelSubject } from "../../observers/userobserver";
-// import { User } from "../../models/usermodel";
-// const { userId } = useParams<{ userId: string }>();
-// const [user, setUser] = useState<User | null>(null);
-// const isOwnProfile = !userId;
-
-// useEffect(() => {
-// 	let unsubscribe: (() => void) | null | undefined = null;
-
-// 	const setupSubscription = async () => {
-// 		unsubscribe = await subscribeToUserModelSubject((user) => {
-// 			if (isOwnProfile || user.id === userId) {
-// 				setUser(user);
-// 			}
-// 		});
-// 	};
-
-// 	setupSubscription();
-
-// 	return () => {
-// 		if (unsubscribe) {
-// 			unsubscribe();
-// 		}
-// 	};
-// }, [userId, isOwnProfile]);
-
-const Post = () => {
+const Post = ({
+	// userID,
+	title,
+	description,
+	likes,
+	attachments,
+	createdAt,
+	comments,
+}: PostProps) => {
+	const [likeCount, setLikeCount] = useState(likes);
 	const [liked, setLiked] = useState(false);
 	const [comment, setComment] = useState("");
+	const [user, setUser] = useState<User | null>(null);
+
+	const [postContainer, setPostContainer] = useState<HTMLElement | null>(
+		null,
+	);
+	const [commentsContainer, setCommentsContainer] =
+		useState<HTMLElement | null>(null);
+
+	// after component load, set max height of comment section
+	useEffect(() => {
+		// post-container determines the height of the whole post
+		// comments-container is the same height as post-container
+		// and new comments should not add new height to post (can be scrollable if needed)
+
+		// initial height setup
+		setPostContainer(
+			document.querySelector("div.post-container") as HTMLElement,
+		);
+		setCommentsContainer(
+			document.querySelector("div.comments-container") as HTMLElement,
+		);
+		if (postContainer && commentsContainer) {
+			commentsContainer.style.maxHeight =
+				postContainer?.clientHeight + "px";
+		}
+
+		// height change on window resize
+		window.addEventListener("resize", () => {
+			setPostContainer(
+				document.querySelector("div.post-container") as HTMLElement,
+			);
+			if (postContainer && commentsContainer) {
+				commentsContainer.style.maxHeight =
+					postContainer?.clientHeight + "px";
+			}
+		});
+
+		// get user of the account from whose name the comments will be posted
+		let unsubscribe: (() => void) | null | undefined = null;
+		const setupSubscription = async () => {
+			unsubscribe = await subscribeToUserModelSubject((user) => {
+				setUser(user);
+			});
+		};
+
+		setupSubscription();
+
+		return () => {
+			if (unsubscribe) {
+				unsubscribe();
+			}
+
+			window.removeEventListener("resize", () => {
+				setPostContainer(null);
+			});
+		};
+	}, [user, postContainer?.clientHeight]);
+
+	if (!user) {
+		return <Loading />;
+	}
 
 	const handleLike = () => {
 		setLiked(!liked);
+		setLikeCount(liked ? likeCount - 1 : likeCount + 1);
 
 		// TODO Update like status in backend
 	};
@@ -64,18 +117,8 @@ const Post = () => {
 		infoLine.className = "info-line";
 		const author = document.createElement("p");
 		author.className = "author";
-		// TODO get real author username
-		author.innerText = "author_username";
-		const date = document.createElement("p");
-		date.className = "date";
-		const today = new Date();
-		date.innerText = today.toLocaleDateString("en-US", {
-			year: "numeric",
-			month: "long",
-			day: "numeric",
-		});
+		author.innerText = user.username;
 		infoLine.appendChild(author);
-		infoLine.appendChild(date);
 		const message = document.createElement("div");
 		message.className = "message";
 		const messageText = document.createElement("p");
@@ -89,61 +132,79 @@ const Post = () => {
 		setComment("");
 	};
 
-	// after component load, set max height of comment section
-	useEffect(() => {
-		// post-container determines the height of the whole post
-		// comments-container is the same height as post-container
-		// and new comments should not add new height to post (can be scrollable if needed)
-		const postContainerHeight = document.querySelector(
-			".post-container",
-		) as HTMLElement;
-		const commentsContainer = document.querySelector(
-			".comments-container",
-		) as HTMLElement;
-		if (postContainerHeight && commentsContainer) {
-			commentsContainer.style.maxHeight =
-				postContainerHeight.clientHeight + "px";
-		}
-	}, []);
-
+	//TODO add user profile link and comment profile link
 	return (
 		<div className="post">
 			<div className="post-container">
 				<div className="post-image-container">
-					<img
-						src="/image_placeholder.png"
-						alt="Image placeholder"
-						className="post-image"
-					/>
-					<button className="like-btn" onClick={handleLike}>
-						{liked ? (
-							<img
-								src="/icons/heart-filled.png"
-								alt="Unlike"
-								className="like-icon"
-							/>
-						) : (
-							<img
-								src="/icons/heart.png"
-								alt="Like"
-								className="like-icon"
-							/>
-						)}
-					</button>
+					<div className="back-icon-container">
+						<img
+							src="/icons/arrow-back.png"
+							alt="Back"
+							className="back-icon"
+						/>
+					</div>
+					<ImageCarousel images={attachments} />
+					<div className="forward-icon-container">
+						<img
+							src="/icons/arrow-forward.png"
+							alt="Forward"
+							className="forward-icon"
+						/>
+					</div>
+					{/* LIKE BUTTON STYLE VARIANT */}
+					{/* <div className="like-btn-background"></div>
+					<div className="like-btn">
+						<button onClick={handleLike}>
+							{liked ? (
+								<img
+									src="/icons/heart-filled.png"
+									alt="Unlike"
+									className="like-icon"
+								/>
+							) : (
+								<img
+									src="/icons/heart.png"
+									alt="Like"
+									className="like-icon"
+								/>
+							)}
+						</button>
+						<small className="like-count">{likeCount}</small>
+					</div> */}
 				</div>
 				<div className="post-info">
-					<p className="title">Post Title</p>
-					<p className="message">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-						Aenean finibus lorem ac massa bibendum facilisis.
-						Curabitur quis scelerisque risus. Maecenas sit amet
-						ipsum rhoncus, mollis dui suscipit, suscipit quam. Fusce
-						nisl urna, malesuada non dapibus sed, hendrerit vel
-						lacus. Donec tincidunt vestibulum augue vitae consequat.{" "}
-					</p>
+					<div className="post-heading">
+						<p className="title">{title}</p>
+						<div className="like-btn">
+							<button onClick={handleLike}>
+								{liked ? (
+									<img
+										src="/icons/heart-filled.png"
+										alt="Unlike"
+										className="like-icon"
+									/>
+								) : (
+									<img
+										src="/icons/heart.png"
+										alt="Like"
+										className="like-icon"
+									/>
+								)}
+							</button>
+							<small className="like-count">{likeCount}</small>
+						</div>
+					</div>
+					<p className="message">{description}</p>
 					<div className="info-line">
 						<p className="author">by author_username</p>
-						<p className="date">July 3, 2024</p>
+						<p className="date">
+							{new Date(createdAt).toLocaleDateString("en-US", {
+								year: "numeric",
+								month: "long",
+								day: "numeric",
+							})}
+						</p>
 					</div>
 				</div>
 			</div>
@@ -151,26 +212,13 @@ const Post = () => {
 			<div className="comments-container">
 				<h3>Comments</h3>
 				<div className="comments">
-					<Comment
-						author="author_username"
-						date="July 4, 2024"
-						message="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-					/>
-					<Comment
-						author="author_username"
-						date="July 4, 2024"
-						message="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-					/>
-					<Comment
-						author="author_username"
-						date="July 4, 2024"
-						message="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-					/>
-					<Comment
-						author="author_username"
-						date="July 4, 2024"
-						message="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-					/>
+					{comments.map((comment, index) => (
+						<Comment
+							key={index}
+							author={comment.username}
+							message={comment.body}
+						/>
+					))}
 				</div>
 				<div className="add-comment">
 					<Input label="Your comment">
@@ -180,6 +228,7 @@ const Post = () => {
 							className="comment-message"
 							value={comment}
 							onChange={onEditComment}
+							maxLength={2000} // TODO: change this to Coquest comment character limit
 						></textarea>
 					</Input>
 					<button onClick={sendComment}>

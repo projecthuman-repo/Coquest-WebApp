@@ -10,23 +10,97 @@
   flex: 1;
 }
 
+.post-container {
+  height: fit-content;
+}
+
 .post-image-container {
   position: relative;
+
+  display: flex;
+  flex-direction: row;
 }
 
 .post-image {
   width: 100%;
-  max-height: 400px;
-  object-fit: contain;
+  height: 350px;
+  object-fit: cover;
   border-top-left-radius: 10px;
+}
+
+.back-icon-container,
+.forward-icon-container {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  height: 100%;
+  width: 50px;
+  transition: all 0.3s ease-in-out;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.back-icon-container:hover,
+.forward-icon-container:hover {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.back-icon-container {
+  left: 0;
+  border-top-left-radius: 10px;
+}
+
+.forward-icon-container {
+  right: 0;
+}
+
+.back-icon,
+.forward-icon {
+  height: 24px;
+  object-fit: contain;
+}
+
+/* LIKE BUTTON STYLE VARIANT (on top of the post image) */
+/* downsides:
+    if background color is used - hides part of the image
+    if background color is not used - depending on the post image, might be not visible at all */
+
+/* .post .like-btn-background {
+  position: absolute;
+  bottom: 0;
+  right: -1px;
+  height: 115px;
+  width: 100px;
+  background-color: white;
+  border: 1px solid white;
+  z-index: 0;
+  
+  clip-path: polygon(0 100%, 100% 0, 100% 100%);
 }
 
 .post .like-btn {
   position: absolute;
-  bottom: 24px;
-  right: 24px;
+  bottom: 18px;
+  right: 18px;
   padding: 0;
-}
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+} 
+
+.post .like-btn button {
+  margin: 0;
+  padding: 0;
+  max-height: 24px;
+} */
 
 .post .like-icon {
   height: 24px;
@@ -38,12 +112,26 @@
   padding: 16px 32px;
 }
 
+/* ANOTHER LIKE BUTTON STYLE VARIANT (next to the title) */
+.like-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 0;
+}
+
+.post-heading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .post .title {
   font-size: 20px;
   font-weight: 700;
 }
 
-.post .message {
+.post .message:not(.comment .message) {
   margin: 16px 0;
 }
 
