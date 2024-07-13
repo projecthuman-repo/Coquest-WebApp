@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { get, find } from "./apiInterface";
-import "./style.css";
+import "./index.css";
 
 const APIReferenceComponent = () => {
 	const [allUsers, setAllUsers] = useState([]);

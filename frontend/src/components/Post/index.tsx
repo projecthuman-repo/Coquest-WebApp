@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Comment from "./Comment";
 import Input from "../Input";
 import ImageCarousel from "../ImageCarousel";
 import Loading from "../Loading";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
 import { User } from "../../models/usermodel";
+// import {get, find} from "../../apiInterface";
+//import APIReferenceComponent from "../../APIReferenceComponent";
 import "./Comment.css";
 import "./index.css";
 
 export type PostProps = {
-	// userID: string;	// TODO: deternime username from userID
+	postID: string;
+	userID: string;
 	title: string;
 	description: string;
 	likes: number;
@@ -19,7 +23,8 @@ export type PostProps = {
 };
 
 const Post = ({
-	// userID,
+	postID,
+	userID,
 	title,
 	description,
 	likes,
@@ -27,18 +32,22 @@ const Post = ({
 	createdAt,
 	comments,
 }: PostProps) => {
-	const [likeCount, setLikeCount] = useState(likes);
-	const [liked, setLiked] = useState(false);
-	const [comment, setComment] = useState("");
 	const [user, setUser] = useState<User | null>(null);
 
+	const [liked, setLiked] = useState(false);
+	const [likeCount, setLikeCount] = useState(likes);
+
+	const [collapsedComments, setCollapsedComments] = useState(true);
+	const [postComments, setPostComments] = useState(comments);
+	const [comment, setComment] = useState("");
+
+	// for responsive purposes (height matching)
 	const [postContainer, setPostContainer] = useState<HTMLElement | null>(
 		null,
 	);
 	const [commentsContainer, setCommentsContainer] =
 		useState<HTMLElement | null>(null);
 
-	// after component load, set max height of comment section
 	useEffect(() => {
 		// post-container determines the height of the whole post
 		// comments-container is the same height as post-container
@@ -46,24 +55,44 @@ const Post = ({
 
 		// initial height setup
 		setPostContainer(
-			document.querySelector("div.post-container") as HTMLElement,
+			document.querySelector(
+				`.post[data-post-id="${postID}"] .post-container`,
+			) as HTMLElement,
 		);
+
 		setCommentsContainer(
-			document.querySelector("div.comments-container") as HTMLElement,
+			document.querySelector(
+				`.post[data-post-id="${postID}"] .comments-container`,
+			) as HTMLElement,
 		);
-		if (postContainer && commentsContainer) {
+		if (postContainer && commentsContainer && window.innerWidth > 945) {
 			commentsContainer.style.maxHeight =
 				postContainer?.clientHeight + "px";
 		}
 
-		// height change on window resize
+		// comment section should be hidden on small screens
+		if (window.innerWidth <= 945) {
+			setCollapsedComments(true);
+		} else {
+			setCollapsedComments(false);
+		}
+
+		// height change and comment section visibility on window resize
 		window.addEventListener("resize", () => {
 			setPostContainer(
-				document.querySelector("div.post-container") as HTMLElement,
+				document.querySelector(
+					`.post[data-post-id="${postID}"] .post-container`,
+				) as HTMLElement,
 			);
-			if (postContainer && commentsContainer) {
+			if (postContainer && commentsContainer && window.innerWidth > 945) {
 				commentsContainer.style.maxHeight =
 					postContainer?.clientHeight + "px";
+			}
+
+			if (window.innerWidth <= 945) {
+				setCollapsedComments(true);
+			} else {
+				setCollapsedComments(false);
 			}
 		});
 
@@ -82,9 +111,7 @@ const Post = ({
 				unsubscribe();
 			}
 
-			window.removeEventListener("resize", () => {
-				setPostContainer(null);
-			});
+			window.removeEventListener("resize", () => {});
 		};
 	}, [user, postContainer?.clientHeight]);
 
@@ -99,79 +126,41 @@ const Post = ({
 		// TODO Update like status in backend
 	};
 
+	const toggleComments = () => {
+		setCollapsedComments(!collapsedComments);
+
+		const viewOrHide = document.querySelector(".view-hide") as HTMLElement;
+		if (viewOrHide) {
+			viewOrHide.innerText = collapsedComments ? "Hide" : "View";
+		}
+	};
+
 	const onEditComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setComment(e.target.value);
 	};
 
 	const sendComment = () => {
-		// comment shoun't be empty or only whitespace
+		// comment shoudn't be empty or only whitespace
 		if (comment === "" || !comment.trim()) {
 			return;
 		}
 
-		//create comment - structure follows Comment element
-		const comments = document.querySelector(".comments");
-		const newComment = document.createElement("div");
-		newComment.className = "comment";
-		const infoLine = document.createElement("div");
-		infoLine.className = "info-line";
-		const author = document.createElement("p");
-		author.className = "author";
-		author.innerText = user.username;
-		infoLine.appendChild(author);
-		const message = document.createElement("div");
-		message.className = "message";
-		const messageText = document.createElement("p");
-		messageText.innerText = comment;
-		message.appendChild(messageText);
-		newComment.appendChild(infoLine);
-		newComment.appendChild(message);
-		comments?.insertBefore(newComment, comments.firstChild); // new comment displayed on the top
-
-		// TODO Send comment to backend
+		setPostComments([
+			{ username: user.username, body: comment },
+			...postComments,
+		]);
 		setComment("");
+
+		// TODO Update post comments in backend
 	};
 
-	//TODO add user profile link and comment profile link
 	return (
-		<div className="post">
+		<div className="post" data-post-id={postID}>
 			<div className="post-container">
 				<div className="post-image-container">
-					<div className="back-icon-container">
-						<img
-							src="/icons/arrow-back.png"
-							alt="Back"
-							className="back-icon"
-						/>
+					<div className="post-image">
+						<ImageCarousel images={attachments} />
 					</div>
-					<ImageCarousel images={attachments} />
-					<div className="forward-icon-container">
-						<img
-							src="/icons/arrow-forward.png"
-							alt="Forward"
-							className="forward-icon"
-						/>
-					</div>
-					{/* LIKE BUTTON STYLE VARIANT */}
-					{/* <div className="like-btn-background"></div>
-					<div className="like-btn">
-						<button onClick={handleLike}>
-							{liked ? (
-								<img
-									src="/icons/heart-filled.png"
-									alt="Unlike"
-									className="like-icon"
-								/>
-							) : (
-								<img
-									src="/icons/heart.png"
-									alt="Like"
-									className="like-icon"
-								/>
-							)}
-						</button>
-						<small className="like-count">{likeCount}</small>
-					</div> */}
 				</div>
 				<div className="post-info">
 					<div className="post-heading">
@@ -197,7 +186,10 @@ const Post = ({
 					</div>
 					<p className="message">{description}</p>
 					<div className="info-line">
-						<p className="author">by author_username</p>
+						{/* TODO: determine username from userID */}
+						<Link to={`/profile/${userID}`}>
+							<p className="author">by author_username</p>
+						</Link>
 						<p className="date">
 							{new Date(createdAt).toLocaleDateString("en-US", {
 								year: "numeric",
@@ -209,10 +201,27 @@ const Post = ({
 				</div>
 			</div>
 
-			<div className="comments-container">
+			<div
+				className={`comments-toggle ${collapsedComments ? "collapsed" : ""}`}
+				onClick={toggleComments}
+			>
+				<img
+					src="/icons/comment.png"
+					className="icon comment-icon"
+					alt="Comment Icon"
+				/>
+				<p>
+					<span className="view-hide">View</span>{" "}
+					{postComments.length} comments
+				</p>
+			</div>
+
+			<div
+				className={`comments-container ${collapsedComments ? "collapsed" : ""}`}
+			>
 				<h3>Comments</h3>
 				<div className="comments">
-					{comments.map((comment, index) => (
+					{postComments.map((comment, index) => (
 						<Comment
 							key={index}
 							author={comment.username}
@@ -221,7 +230,7 @@ const Post = ({
 					))}
 				</div>
 				<div className="add-comment">
-					<Input label="Your comment">
+					<Input label="Comment">
 						<textarea
 							rows={2}
 							placeholder=""

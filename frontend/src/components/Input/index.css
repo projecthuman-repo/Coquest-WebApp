@@ -61,3 +61,19 @@
   top: -8px;
   z-index: 1;
 }
+
+@media screen and (max-width: 480px) {
+  .input-container input,
+  .input-container textarea {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .input-container .char-count {
+    font-size: 10px;
+  }
+
+  .input-label {
+    font-size: 12px;
+  }
+}

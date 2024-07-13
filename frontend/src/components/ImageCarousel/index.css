@@ -1,0 +1,91 @@
+.image-carousel {
+  display: flex;
+  flex-direction: column;
+}
+
+.image-container {
+  position: relative;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+img.hidden {
+  display: hidden;
+}
+
+img.visible {
+  animation: appear 0.7s ease-in-out;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.back-icon-container,
+.forward-icon-container {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  height: 100%;
+  width: 50px;
+  transition: all 0.3s ease-in-out;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.back-icon-container:hover,
+.forward-icon-container:hover {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.back-icon-container {
+  left: 0;
+  border-top-left-radius: 10px;
+}
+
+.forward-icon-container {
+  right: 0;
+}
+
+.back-icon,
+.forward-icon {
+  height: 24px;
+  object-fit: contain;
+}
+
+.indicator-container {
+  width: 100%;
+  padding: 4px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.indicator {
+  height: 6.5px;
+  width: 6.5px;
+  max-width: 6.5px;
+  border: 1px solid grey;
+  background-color: transparent;
+  border-radius: 50%;
+}
+
+.indicator.active {
+  background-color: black;
+  border: none;
+}
