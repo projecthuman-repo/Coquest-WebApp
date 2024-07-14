@@ -42,6 +42,7 @@ import OrientationRedirector from "./pages/Orientation/OrientationRedirector";
 import GlobalRedirect from "./components/AutoRedirector/GlobalRedirect";
 import { UserRegistrationProvider } from "./components/AutoRedirector/UserRegistration";
 import CreateCommunity from "./pages/Community/Create";
+import { PostFeedContextProvider } from "./pages/Post/PostFeedContext";
 import PostFeed from "./pages/Post/PostFeed";
 import CreatePost from "./pages/Post/Create";
 
@@ -96,11 +97,19 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "",
-				element: <PostFeed />,
+				element: (
+					<PostFeedContextProvider>
+						<PostFeed />
+					</PostFeedContextProvider>
+				),
 			},
 			{
 				path: "create",
-				element: <CreatePost />,
+				element: (
+					<PostFeedContextProvider>
+						<CreatePost />
+					</PostFeedContextProvider>
+				),
 			},
 		],
 	},

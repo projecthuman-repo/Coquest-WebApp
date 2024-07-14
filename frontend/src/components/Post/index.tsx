@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import Comment from "./Comment";
 import Input from "../Input";
 import ImageCarousel from "../ImageCarousel";
-import Loading from "../Loading";
-import { subscribeToUserModelSubject } from "../../observers/userobserver";
 import { User } from "../../models/usermodel";
 // import {get, find} from "../../apiInterface";
 //import APIReferenceComponent from "../../APIReferenceComponent";
@@ -12,7 +10,7 @@ import "./Comment.css";
 import "./index.css";
 
 export type PostProps = {
-	postID: string;
+	postIndex: number;
 	userID: string;
 	title: string;
 	description: string;
@@ -20,10 +18,11 @@ export type PostProps = {
 	attachments: string[];
 	createdAt: string;
 	comments: { username: string; body: string }[];
+	newCommentAuthor: User;
 };
 
 const Post = ({
-	postID,
+	postIndex,
 	userID,
 	title,
 	description,
@@ -31,15 +30,16 @@ const Post = ({
 	attachments,
 	createdAt,
 	comments,
+	newCommentAuthor,
 }: PostProps) => {
-	const [user, setUser] = useState<User | null>(null);
-
 	const [liked, setLiked] = useState(false);
 	const [likeCount, setLikeCount] = useState(likes);
 
-	const [collapsedComments, setCollapsedComments] = useState(true);
+	const [collapsed, setCollapsed] = useState(true);
 	const [postComments, setPostComments] = useState(comments);
 	const [comment, setComment] = useState("");
+
+	const MAX_COMMENT_CHAR_COUNT = 2000; // TODO: change this to Coquest comment character limit
 
 	// for responsive purposes (height matching)
 	const [postContainer, setPostContainer] = useState<HTMLElement | null>(
@@ -49,6 +49,7 @@ const Post = ({
 		useState<HTMLElement | null>(null);
 
 	useEffect(() => {
+		console.log(collapsed);
 		// post-container determines the height of the whole post
 		// comments-container is the same height as post-container
 		// and new comments should not add new height to post (can be scrollable if needed)
@@ -56,68 +57,61 @@ const Post = ({
 		// initial height setup
 		setPostContainer(
 			document.querySelector(
-				`.post[data-post-id="${postID}"] .post-container`,
+				`.post[data-post-id="${postIndex}"] .post-container`,
 			) as HTMLElement,
 		);
 
 		setCommentsContainer(
 			document.querySelector(
-				`.post[data-post-id="${postID}"] .comments-container`,
+				`.post[data-post-id="${postIndex}"] .comments-container`,
 			) as HTMLElement,
 		);
+
 		if (postContainer && commentsContainer && window.innerWidth > 945) {
-			commentsContainer.style.maxHeight =
-				postContainer?.clientHeight + "px";
+			if (
+				postContainer.clientHeight < 200 &&
+				commentsContainer.clientHeight > 200
+			)
+				commentsContainer.style.maxHeight =
+					commentsContainer.clientHeight + "px";
+			else
+				commentsContainer.style.maxHeight =
+					postContainer.clientHeight + "px";
 		}
 
 		// comment section should be hidden on small screens
-		if (window.innerWidth <= 945) {
-			setCollapsedComments(true);
-		} else {
-			setCollapsedComments(false);
+		if (window.innerWidth <= 945 && collapsed === false) {
+			setCollapsed(true);
 		}
 
 		// height change and comment section visibility on window resize
 		window.addEventListener("resize", () => {
 			setPostContainer(
 				document.querySelector(
-					`.post[data-post-id="${postID}"] .post-container`,
+					`.post[data-post-id="${postIndex}"] .post-container`,
 				) as HTMLElement,
 			);
 			if (postContainer && commentsContainer && window.innerWidth > 945) {
-				commentsContainer.style.maxHeight =
-					postContainer?.clientHeight + "px";
+				if (
+					postContainer.clientHeight < 200 &&
+					commentsContainer.clientHeight > 200
+				)
+					commentsContainer.style.maxHeight =
+						commentsContainer.clientHeight + "px";
+				else
+					commentsContainer.style.maxHeight =
+						postContainer.clientHeight + "px";
 			}
 
-			if (window.innerWidth <= 945) {
-				setCollapsedComments(true);
-			} else {
-				setCollapsedComments(false);
+			if (window.innerWidth <= 945 && collapsed === false) {
+				setCollapsed(true);
 			}
 		});
 
-		// get user of the account from whose name the comments will be posted
-		let unsubscribe: (() => void) | null | undefined = null;
-		const setupSubscription = async () => {
-			unsubscribe = await subscribeToUserModelSubject((user) => {
-				setUser(user);
-			});
-		};
-
-		setupSubscription();
-
 		return () => {
-			if (unsubscribe) {
-				unsubscribe();
-			}
-
 			window.removeEventListener("resize", () => {});
 		};
-	}, [user, postContainer?.clientHeight]);
-
-	if (!user) {
-		return <Loading />;
-	}
+	}, [postContainer, commentsContainer]);
 
 	const handleLike = () => {
 		setLiked(!liked);
@@ -127,11 +121,11 @@ const Post = ({
 	};
 
 	const toggleComments = () => {
-		setCollapsedComments(!collapsedComments);
+		setCollapsed(!collapsed);
 
 		const viewOrHide = document.querySelector(".view-hide") as HTMLElement;
 		if (viewOrHide) {
-			viewOrHide.innerText = collapsedComments ? "Hide" : "View";
+			viewOrHide.innerText = collapsed ? "Hide" : "View";
 		}
 	};
 
@@ -146,7 +140,7 @@ const Post = ({
 		}
 
 		setPostComments([
-			{ username: user.username, body: comment },
+			{ username: newCommentAuthor.username, body: comment },
 			...postComments,
 		]);
 		setComment("");
@@ -155,7 +149,7 @@ const Post = ({
 	};
 
 	return (
-		<div className="post" data-post-id={postID}>
+		<div className="post" data-post-id={postIndex}>
 			<div className="post-container">
 				<div className="post-image-container">
 					<div className="post-image">
@@ -202,7 +196,7 @@ const Post = ({
 			</div>
 
 			<div
-				className={`comments-toggle ${collapsedComments ? "collapsed" : ""}`}
+				className={`comments-toggle ${collapsed ? "collapsed" : ""}`}
 				onClick={toggleComments}
 			>
 				<img
@@ -217,17 +211,21 @@ const Post = ({
 			</div>
 
 			<div
-				className={`comments-container ${collapsedComments ? "collapsed" : ""}`}
+				className={`comments-container ${collapsed ? "collapsed" : ""}`}
 			>
 				<h3>Comments</h3>
 				<div className="comments">
-					{postComments.map((comment, index) => (
-						<Comment
-							key={index}
-							author={comment.username}
-							message={comment.body}
-						/>
-					))}
+					{postComments.length > 0 ? (
+						postComments.map((comment, index) => (
+							<Comment
+								key={index}
+								author={comment.username}
+								message={comment.body}
+							/>
+						))
+					) : (
+						<p className="no-comments">No comments</p>
+					)}
 				</div>
 				<div className="add-comment">
 					<Input label="Comment">
@@ -237,7 +235,7 @@ const Post = ({
 							className="comment-message"
 							value={comment}
 							onChange={onEditComment}
-							maxLength={2000} // TODO: change this to Coquest comment character limit
+							maxLength={MAX_COMMENT_CHAR_COUNT}
 						></textarea>
 					</Input>
 					<button onClick={sendComment}>

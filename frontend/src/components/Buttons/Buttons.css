@@ -28,6 +28,12 @@ button {
   border-radius: 20px;
 
   color: white;
+  cursor: pointer;
+}
+
+.primary-button.muted {
+  background-color: rgba(38, 165, 231, 0.5);
+  cursor: auto;
 }
 
 .next-button-text {
