@@ -1,0 +1,34 @@
+---
+name: Deploy Regenquest Web Service
+on:
+  push:
+    paths:
+      - 'Regenquest GraphQL API'
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: 'latest'
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Deploy to Google Cloud Functions
+        run: |
+          gcloud functions deploy regenquest-api \
+            --runtime=nodejs20 \
+            --trigger-http \
+            --allow-unauthenticated \
+            --entry-point=handler \
+            --region us-central1 \
+            --source 'Regenquest GraphQL API'
+
