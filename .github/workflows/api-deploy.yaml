@@ -42,4 +42,5 @@ jobs:
             --entry-point handler \
             --region us-central1 \
             --project base-map-workspace \
-            --source 'Regenquest GraphQL API'
+            --source 'Regenquest GraphQL API' \
+            --env-vars-file env.json
