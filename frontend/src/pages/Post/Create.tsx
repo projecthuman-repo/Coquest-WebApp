@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import PrimaryButton from "../../components/Buttons/PrimaryButton";
 import SecondaryButton from "../../components/Buttons/SecondaryButton";
 import Input from "../../components/Input";
-import DragDrop from "../../components/DragDrop";
+import DragDropWrapper from "../../components/DragDrop/DragDropWrapper";
 import { PostFeedContext } from "./PostFeedContext";
+import { Image } from "../../models/common";
 import "./Create.css";
 
 function CreatePost() {
@@ -13,6 +14,7 @@ function CreatePost() {
 
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
+	const [attachments, setAttachments] = useState<Image[]>([]);
 	const [readyToPost, setReadyToPost] = useState(false);
 
 	const MAX_DESCRIPTION_CHAR_COUNT = 2000; // TODO: Change this to Coquest post description character limit
@@ -36,8 +38,6 @@ function CreatePost() {
 		const newDescription = e.target.value;
 		setDescription(newDescription);
 	}
-
-	// TODO handle attachments
 
 	function handleCreatePost() {
 		if (readyToPost) {
@@ -86,7 +86,11 @@ function CreatePost() {
 					</small>
 				</Input>
 
-				<DragDrop />
+				<DragDropWrapper
+					images={attachments}
+					updateData={setAttachments}
+					multiUpload={true}
+				/>
 
 				<div className="create-post-btns-container">
 					<div className="create-post-btns">

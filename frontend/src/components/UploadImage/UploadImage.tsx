@@ -21,14 +21,14 @@ const CenterContainer = styled.div`
 `;
 
 // Error type with similiar shape to the error type Uploady expects in its error-handling callback functions
-interface FileInvalidEventDetail {
+export interface FileInvalidEventDetail {
 	file: FileLike; // The File object that was attempted to be uploaded
 	issues: {
 		[key: string]: boolean; // A map of issues encountered with the file, e.g., type, size
 	};
 }
 
-function getErrorMsg(err: FileInvalidEventDetail) {
+export function getErrorMsg(err: FileInvalidEventDetail) {
 	let msg = "";
 	if (err) {
 		msg += `Could not upload ${err.file.name}: `;
@@ -47,8 +47,9 @@ function getErrorMsg(err: FileInvalidEventDetail) {
 
 // Image Pre-processing
 // add setImages to the props
-const itemPreview = withRequestPreSendUpdate(
+export const itemPreview = withRequestPreSendUpdate(
 	({ id, url, updateRequest, requestData }: any) => {
+		console.log(id, url, updateRequest, requestData);
 		return (
 			<div>
 				<CropperComponent
