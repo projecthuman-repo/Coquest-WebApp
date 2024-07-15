@@ -32,6 +32,7 @@ jobs:
         run: |
           cd 'Regenquest GraphQL API'
           awk -F= '{ print "\"" $1 "\": \"" $2 "\"," }' <(echo ${{ secrets.ENV_VARS }}) | sed '$ s/,$//' | sed '1s/^/{\n/' | sed '$s/$/\n}/' > env.json
+          echo ${{ secrets.GCP_SA_KEY }} > ./base-map-workspace-93c116fe8662.json
           gcloud functions deploy regenquest-api \
             --runtime nodejs20 \
             --trigger-http \
@@ -39,5 +40,4 @@ jobs:
             --entry-point handler \
             --region us-central1 \
             --project base-map-workspace \
-            --source 'Regenquest GraphQL API' \
             --env-vars-file env.json
