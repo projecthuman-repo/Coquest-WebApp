@@ -28,13 +28,10 @@ jobs:
           cd 'Regenquest GraphQL API'
           npm install
 
-      - name: Convert .env to JSON
+      - name: Deploy to Google Cloud Functions
         run: |
           cd 'Regenquest GraphQL API'
           awk -F= '{ print "\"" $1 "\": \"" $2 "\"," }' <(echo ${{ secrets.ENV_VARS }}) | sed '$ s/,$//' | sed '1s/^/{\n/' | sed '$s/$/\n}/' > env.json
-
-      - name: Deploy to Google Cloud Functions
-        run: |
           gcloud functions deploy regenquest-api \
             --runtime nodejs20 \
             --trigger-http \
