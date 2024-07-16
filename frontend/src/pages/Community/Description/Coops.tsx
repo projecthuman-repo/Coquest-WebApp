@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Description.css";
+import "./Coops.css";
 
 function CommunityDescriptionCoops({ data }: { data: any }) {
   // Navigation Button Variable
@@ -46,12 +47,12 @@ function CommunityDescriptionCoops({ data }: { data: any }) {
           Completed Co-ops
         </button>
       </div>
-      <div className="project-container margin-top">
-        <div className="project-background">
-          <p className="project-heading">Co-op Name</p>
-          <p className="project-sub-heading">Co-op Sub-Heading</p>
-          <p className="project-sub-heading">Location: N/A</p>
-          <p className="project-text">Placeholder Description.</p>
+      <div className="coop-container margin-top">
+        <div className="coop-background">
+          <p className="coop-heading">Co-op Name</p>
+          <p className="coop-sub-heading">Co-op Sub-Heading</p>
+          <p className="coop-sub-heading">Location: N/A</p>
+          <p className="coop-text">Placeholder Description.</p>
           <button>
             <img src="/icons/expand-button-chevron.png" alt="expand-button" />
           </button>

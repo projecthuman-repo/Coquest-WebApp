@@ -1,0 +1,80 @@
+/* Project Container and Background */
+
+.program-container {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0px 0px 0px;
+  }
+  
+  .program-background {
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0;
+    padding: 25px 25px 25px 25px;
+    border-radius: 10px;
+    width: 750px;
+    margin: 15px 20px 0px 0px;
+  }
+  
+  .program-background img {
+    width: 15px;
+    height: 10px;
+  }
+  
+  /* Search Bar */
+  
+  .search {
+    border-radius: 25px;
+    border: 1px solid black;
+    padding-left: 40px;
+    width: 328px;
+    height: 48px;
+  }
+  
+  .search-container {
+    position: relative;
+    margin: 25px 0px 5px 0px;
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 25px;
+    height: 25px;
+  }
+  
+  /* Text Styles */
+  
+  .program-heading {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 18px;
+    overflow-wrap: break-word;
+  }
+  
+  .program-sub-heading {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 14px;
+    overflow-wrap: break-word;
+  }
+  
+  .program-text {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 16px;
+    overflow-wrap: break-word;
+    margin-top: 15px;
+  }
+  
+  /* Buttons */
+  
+  .open-button {
+    justify-content: center;
+    align-items: center;
+    width: 15px;
+    height: 10px;
+  }
+  

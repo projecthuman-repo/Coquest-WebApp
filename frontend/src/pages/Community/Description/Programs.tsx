@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Description.css";
+import "./Programs.css"
 
 function CommunityDescriptionPrograms({ data }: { data: any }) {
   // Navigation Button Variable
@@ -46,12 +47,12 @@ function CommunityDescriptionPrograms({ data }: { data: any }) {
           Completed Programs
         </button>
       </div>
-      <div className="project-container margin-top">
-        <div className="project-background">
-          <p className="project-heading">Program Name</p>
-          <p className="project-sub-heading">Program Sub-Heading</p>
-          <p className="project-sub-heading">Location: N/A</p>
-          <p className="project-text">Placeholder Description.</p>
+      <div className="program-container margin-top">
+        <div className="program-background">
+          <p className="program-heading">Program Name</p>
+          <p className="program-sub-heading">Program Sub-Heading</p>
+          <p className="program-sub-heading">Location: N/A</p>
+          <p className="program-text">Placeholder Description.</p>
           <button>
             <img src="/icons/expand-button-chevron.png" alt="expand-button" />
           </button>

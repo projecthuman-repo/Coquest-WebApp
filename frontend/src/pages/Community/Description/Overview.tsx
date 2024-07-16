@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import Members from "../../../components/Members/index";
 import Maps from "../../../components/Maps/Maps";
+import Quests from "../../../components/Quests/Quests";
+import Calendar from "../../../components/SharedCalendar/SharedCalendar";
 import "./Description.css";
+import "./Overview.css"
 
 function CommunityDescriptionOverview({ data }: { data: any }) {
-  // Navigation Button Variable
-  const [questSection, setQuestSection] = useState("open");
 
   return (
     <>
@@ -29,7 +30,7 @@ function CommunityDescriptionOverview({ data }: { data: any }) {
         {/* Calendar */}
         <div className="background">
           <h2 className="d-sub-heading margin-bottom">Calendar</h2>
-          {/* TODO: Add the shared calendar component from Coquest Widgets here when it is implemented. */}
+          <Calendar />
         </div>
       </div>
       <div className="widget-container">
@@ -44,7 +45,6 @@ function CommunityDescriptionOverview({ data }: { data: any }) {
           />
         </div>
         {/* Quests */}
-        {/* TODO: Move this code into it's own component for reuseability and to save space (similar to the Members Component above). */}
         <div className="background">
           <div className="quest-header-container">
             <h2 className="d-sub-heading">Quests</h2>
@@ -52,57 +52,7 @@ function CommunityDescriptionOverview({ data }: { data: any }) {
               See All
             </a>
           </div>
-          {/* Quest Navigation Buttons */}
-          <div className="quest-button-container">
-            <button
-              className={`quest-button-heading quest-button-design ${
-                questSection === "open" ? "selected" : ""
-              }`}
-              onClick={() => setQuestSection("open")}
-            >
-              Open
-            </button>
-            <button
-              className={`quest-button-heading quest-button-design ${
-                questSection === "ongoing" ? "selected" : ""
-              }`}
-              onClick={() => setQuestSection("ongoing")}
-            >
-              Ongoing
-            </button>
-            <button
-              className={`quest-button-heading quest-button-design ${
-                questSection === "completed" ? "selected" : ""
-              }`}
-              onClick={() => setQuestSection("completed")}
-            >
-              Completed
-            </button>
-          </div>
-          <div className="quest-container">
-            <p className="d-sub-text">Example Quest</p>
-            <button>
-              <img src="/icons/next-button-chevron.png" alt="view-button" />
-            </button>
-          </div>
-          <div className="quest-container">
-            <p className="d-sub-text">Example Quest</p>
-            <button>
-              <img src="/icons/next-button-chevron.png" alt="view-button" />
-            </button>
-          </div>
-          <div className="quest-container">
-            <p className="d-sub-text">Example Quest</p>
-            <button>
-              <img src="/icons/next-button-chevron.png" alt="view-button" />
-            </button>
-          </div>
-          <div className="quest-container">
-            <p className="d-sub-text">Example Quest</p>
-            <button>
-              <img src="/icons/next-button-chevron.png" alt="view-button" />
-            </button>
-          </div>
+            <Quests />
         </div>
       </div>
       <div className="widget-container">

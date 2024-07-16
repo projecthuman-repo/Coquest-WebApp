@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Description.css";
+import "./Projects.css"
 
 function CommunityDescriptionProjects({ data }: { data: any }) {
   // Navigation Button Variable

@@ -1,259 +1,89 @@
 /* Main Text Styles */
 
-.d-main-heading{
-    font-family: Poppins;
-    font-weight: 600;
-    font-size: 30px;
-    text-align: center;
+.d-main-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 30px;
+  text-align: center;
 }
 
-.d-sub-heading{
-    font-family: Poppins;
-    font-weight: 600;
-    font-size: 20px;
+.d-sub-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 20px;
 }
 
 .d-sub-text {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 16px;
-    overflow-wrap: break-word;
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 16px;
+  overflow-wrap: break-word;
 }
 
 /* Main Div */
 
 .community-description-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0px 0px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0px 0px 0px;
 }
 
-/* Overview Section */
+/* Header and Navigation Buttons */
 
-    /* Header and Navigation Buttons */
+.header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0px 10px 0px;
+}
 
-    .header-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        margin: 20px 0px 10px 0px;
-    }
+.signup-button-design {
+  width: 120px;
+  height: 40px;
+  margin: 0px 0px 0px 25px;
+  border: 1px solid black;
+  border-radius: 20px;
+}
 
-    .signup-button-design {
-        width: 120px;
-        height: 40px;
-        margin: 0px 0px 0px 25px;
-        border: 1px solid black;
-        border-radius: 20px;
-    }
-    
-    .signup-button-design:hover {
-        background-color: #f0f0f0;
-    }
+.signup-button-design:hover {
+  background-color: #f0f0f0;
+}
 
-    .nav-button-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        margin: 15px 0px 0px 0px;
-    }
-    
-    .button-design {
-        width: 200px;
-        height: 40px;
-        border-bottom: 3px solid lightgrey;
-    }
+.nav-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0px 0px 0px;
+}
 
-    .selected {
-        border-bottom: 3px solid black !important;
-    }
+.button-design {
+  width: 200px;
+  height: 40px;
+  border-bottom: 3px solid lightgrey;
+}
 
-    /* Widget Container and Background */
+.selected {
+  border-bottom: 3px solid black !important;
+}
 
-    .widget-container {
-        display: flex;
-        flex-direction: row;
-        margin: 15px 0px 0px 0px;
-    }
+/* Basic Margins */
 
-    .background {
-        display: flex;
-        flex-direction: column;
-        background-color: #f0f0f0;
-        padding: 25px 25px 25px 25px;
-        border-radius: 10px;
-        width: 550px;
-        margin: 15px 20px 0px 0px;
-    }
+.margin-bottom {
+  margin-bottom: 10px;
+}
 
-    /* Quests */
+.margin-top {
+  margin-top: 10px;
+}
 
-    .quest-header-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+.margin-left {
+  margin-left: 10px;
+}
 
-    .quest-button-heading{
-        font-family: Poppins;
-        font-weight: 600;
-        font-size: 16px;
-    }
-    
-    .quest-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 0px 15px 0px;
-        border-bottom: 1px solid black;
-    }
-    
-    .quest-container img {
-        width: 10px;
-        height: 15px;
-    }
-    
-    .quest-button-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        margin: 15px 0px 10px 0px;
-    }
-    
-    .quest-button-design {
-        width: 200px;
-        height: 40px;
-        border-bottom: 3px solid lightgrey;
-    }
-    
-    .quest-design {
-        border-bottom: 1px solid black;
-        padding: 0px 0px 20px 0px;
-        margin: 10px 0px 20px 0px;
-    }
-
-    /* Location */
-
-    .location-background {
-        display: flex;
-        flex-direction: column;
-        background-color: #f0f0f0;
-        padding: 25px 25px 25px 25px;
-        border-radius: 10px;
-        width: 1120px;
-        height: 550px;
-        margin: 15px 20px 25px 0px;
-    }
-
-    .map-design {
-        width: 1080px;
-        height: 400px; 
-        margin: 10px 20px 0px 0px;
-    }
-
-/* Projects Section */
-
-    /* Project Container and Background */
-
-    .project-container {
-        display: flex;
-        flex-direction: column;
-        margin: 15px 0px 0px 0px;
-    }
-    
-    .project-background {
-        display: flex;
-        flex-direction: column;
-        background-color: #f0f0f0;
-        padding: 25px 25px 25px 25px;
-        border-radius: 10px;
-        width: 750px;
-        margin: 15px 20px 0px 0px;
-    }
-    
-    .project-background img {
-        width: 15px;
-        height: 10px;
-    }
-
-    /* Search Bar */
-
-    .search {
-        border-radius: 25px;
-        border: 1px solid black;
-        padding-left: 40px;
-        width: 328px;
-        height: 48px;
-    }
-    
-    .search-container {
-        position: relative;
-        margin: 25px 0px 5px 0px;
-    }
-    
-    .search-icon {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 25px;
-        height: 25px;
-    }
-
-    /* Text Styles */
-
-    .project-heading {
-        font-family: Poppins;
-        font-weight: 600;
-        font-size: 18px;
-        overflow-wrap: break-word;
-    }
-
-    .project-sub-heading {
-        font-family: Poppins;
-        font-weight: 400;
-        font-size: 14px;
-        overflow-wrap: break-word;
-    }
-
-    .project-text {
-        font-family: Poppins;
-        font-weight: 400;
-        font-size: 16px;
-        overflow-wrap: break-word;
-        margin-top: 15px;
-    }
-
-    /* Buttons */
-
-    .open-button {
-        justify-content: center;
-        align-items: center;
-        width: 15px;
-        height: 10px;
-    }
-
-/* Misc */
-
-    /* Basic Margins */
-
-    .margin-bottom {
-        margin-bottom: 10px;
-    }
-    
-    .margin-top {
-        margin-top: 10px;
-    }
-
-    .margin-left {
-        margin-left: 10px;
-    }
-    
-    .margin-right {
-        margin-right: 10px;
-    }
+.margin-right {
+  margin-right: 10px;
+}

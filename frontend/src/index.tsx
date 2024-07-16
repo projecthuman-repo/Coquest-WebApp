@@ -41,7 +41,7 @@ import GlobalRedirect from "./components/AutoRedirector/GlobalRedirect";
 import { UserRegistrationProvider } from "./components/AutoRedirector/UserRegistration";
 import CreateCommunity from "./pages/Community/Create";
 import CommunityDescription from "./pages/Community/Description/Description";
-import CommunityQuests from "./pages/Community/Quests";
+import CommunityQuests from "./pages/Quests/Quests";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement
