@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Description.css";
 import "./Coops.css";
 
-function CommunityDescriptionCoops({ data }: { data: any }) {
+function CommunityDescriptionCoops() {
 	// Navigation Button Variable
 	const [coopSection, setCoopSection] = useState("open-coops");
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Description.css";
 import "./Programs.css";
 
-function CommunityDescriptionPrograms({ data }: { data: any }) {
+function CommunityDescriptionPrograms() {
 	// Navigation Button Variable
 	const [programSection, setProgramSection] = useState("open-programs");
 

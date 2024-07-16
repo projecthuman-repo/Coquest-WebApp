@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Description.css";
 import "./Projects.css";
 
-function CommunityDescriptionProjects({ data }: { data: any }) {
+function CommunityDescriptionProjects() {
 	// Navigation Button Variable
 	const [projectSection, setProjectSection] = useState("open-projects");
 

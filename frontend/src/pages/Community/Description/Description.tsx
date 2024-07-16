@@ -98,15 +98,15 @@ function CommunityDescription() {
 					)}
 					{/* Programs Section */}
 					{section === "programs" && (
-						<CommunityDescriptionPrograms data={communityData} />
+						<CommunityDescriptionPrograms />
 					)}
 					{/* Projects Section */}
 					{section === "projects" && (
-						<CommuntiyDescriptionProjects data={communityData} />
+						<CommuntiyDescriptionProjects />
 					)}
 					{/* Co-ops Section */}
 					{section === "co-ops" && (
-						<CommunityDescriptionCoops data={communityData} />
+						<CommunityDescriptionCoops />
 					)}
 				</div>
 			) : (
