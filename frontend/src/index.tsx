@@ -86,7 +86,7 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "create",
-				element: <CreateCommunity />
+				element: <CreateCommunity />,
 			},
 			{
 				path: ":id",
@@ -95,8 +95,8 @@ const router = createBrowserRouter([
 			{
 				path: ":id/quests",
 				element: <CommunityQuests />,
-			}
-		]
+			},
+		],
 	},
 	{
 		path: "/programs",

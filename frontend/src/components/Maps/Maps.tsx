@@ -1,14 +1,18 @@
-import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
+import React from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 interface MapsProps {
 	lat?: number;
 	long?: number;
 	mapZoom?: number;
-  }
+}
 
-  const Maps: React.FC<MapsProps> = ({ lat = 43.6514990607, long = -79.3834667995, mapZoom = 13 }) => {
+const Maps: React.FC<MapsProps> = ({
+	lat = 43.6514990607,
+	long = -79.3834667995,
+	mapZoom = 13,
+}) => {
 	return (
 		<MapContainer
 			center={[lat, long]}
