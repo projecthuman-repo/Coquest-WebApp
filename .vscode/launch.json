@@ -1,0 +1,121 @@
+{
+  "version": "0.2.0",
+  "compounds": [
+    // TODO: extend to enable devs to choose using the deployed API to back the local React app instance
+    {
+      "name": "Start App with Chrome (No Debug Launch)",
+      "stopAll": true,
+      "preLaunchTask": "Start Application",
+      "configurations": ["View Running App with Chrome (Attach)"],
+      "presentation": {
+        "hidden": false,
+        "group": "testing",
+        "order": 1,
+      }
+    },
+    {
+      "name": "Start App with MS Edge (No Debug Launch)",
+      "stopAll": true,
+      "preLaunchTask": "Start Application",
+      "configurations": ["View Running App with MS Edge (Attach)"],
+      "presentation": {
+        "hidden": false,
+        "group": "testing",
+        "order": 2
+      }
+    },
+    {
+      "name": "Start App for Debugging",
+      "preLaunchTask": "Set Development Environment",
+      "configurations": ["Debug API", "Debug React App"],
+      "presentation": {
+        "hidden": false,
+        "group": "web-server",
+        "order": 1
+      }
+    }
+
+  ],
+  "configurations": [
+    {
+      "type": "node",
+      "name": "Debug API",
+      "request": "launch",
+      "nodeVersionHint": 20,
+      "restart": {
+        "delay": 5000,
+        "maxAttempts": 3
+      },
+      "skipFiles": ["<node_internals>/**"],
+      "cwd": "${workspaceFolder}\\Regenquest GraphQL API",
+      "outFiles": ["${workspaceFolder}/Regenquest GraphQL API/**/*.js"],
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ],
+      "runtimeExecutable": "npm",
+      "args": ["run", "dev"],
+      "envFile": "${workspaceFolder}/.env",
+      "presentation": {
+        "hidden": false,
+        "group": "web-server",
+        "order": 2
+      }
+    },
+    {
+      "type": "node",
+      "name": "Debug React App",
+      "request": "launch",
+      "nodeVersionHint": 20,
+      "restart": {
+        "delay": 5000,
+        "maxAttempts": 3
+      },
+      "skipFiles": ["<node_internals>/**"],
+      "cwd": "${workspaceFolder}\\frontend",
+      "outFiles": ["${workspaceFolder}/frontend/**/*.js", "!**/node_modules/**"],
+      "runtimeExecutable": "npm",
+      "args": ["run", "${input:dev-env}"],
+      "envFile": "${workspaceFolder}/.env",
+      "presentation": {
+        "hidden": false,
+        "group": "web-server",
+        "order": 3
+      }
+    },
+    {
+      "name": "View Running App with Chrome (Attach)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}",
+      "presentation": {
+        "hidden": false,
+        "group": "debugging",
+        "order": 1
+      }
+    },
+    {
+      "name": "View Running App with MS Edge (Attach)",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}",
+      "presentation": {
+        "hidden": false,
+        "group": "debugging",
+        "order": 2
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "dev-env",
+      "type": "command",
+      "command": "extension.commandvariable.remember",
+      "args": {
+        "key": "dev-env"
+      }
+    }
+  ]
+}

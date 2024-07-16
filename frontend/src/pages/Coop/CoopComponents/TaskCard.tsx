@@ -56,7 +56,9 @@ const TaskCard = ({
 				title={<Name>{name}</Name>}
 				subheader={
 					<>
-						<Body>{community} <br /> {location}</Body>
+						<Body>
+							{community} <br /> {location}
+						</Body>
 						<Body>{description}</Body>
 					</>
 				}

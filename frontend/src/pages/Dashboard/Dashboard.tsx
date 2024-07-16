@@ -9,6 +9,10 @@ import CommunityTasks from "../../components/CommunityTasks";
 import Members from "../../components/Members";
 import ExtendedSimpleCard from "../../components/ExtendedSimpleCard/SimpleCard";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
+import { Name } from "../../models/usermodel";
+import { useUserRegistration } from "../../components/AutoRedirector/UserRegistration";
+import Loading from "../../components/Loading";
+import { isCompleteRegistration } from "../../models/common";
 
 const Container = styled("div")({
 	display: "flex",
@@ -84,29 +88,35 @@ const MembersContainer = styled("div")({
 
 // Styled component to ensure the map container has consistent height and width
 const MapsContainer = styled.div({
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    height: "95.7%",
-    borderRadius: "10px",
-    overflow: "hidden",
-    // Ensure the map takes the full height of its container
-    '& .leaflet-container': {
-        flex: 1,
-        height: '100%',
-        width: '100%',
-    },
+	flex: 1,
+	display: "flex",
+	flexDirection: "column",
+	height: "95.7%",
+	borderRadius: "10px",
+	overflow: "hidden",
+	// Ensure the map takes the full height of its container
+	"& .leaflet-container": {
+		flex: 1,
+		height: "100%",
+		width: "100%",
+	},
 });
 
 function Dashboard() {
-	const [userName, setUserName] = useState('');
+	const [name, setName] = useState<Name>({
+		first: "",
+		last: "",
+	});
+	const [isRegistered, setRegisteredStatus] = useState(false);
+	const { authenticated } = useUserRegistration();
 
 	useEffect(() => {
 		let unsubscribe: (() => void) | null | undefined = null;
 
 		const setupSubscription = async () => {
-			unsubscribe = await subscribeToUserModelSubject(user => {
-				setUserName(user.name);  // Update to use the 'name' field
+			unsubscribe = await subscribeToUserModelSubject((user) => {
+				setName(user.name); // Update to use the 'name' field
+				setRegisteredStatus(isCompleteRegistration(user.registered));
 			});
 		};
 
@@ -119,12 +129,15 @@ function Dashboard() {
 		};
 	}, []);
 
-	const members = [userName]; // List of members with the current user
+	const members = [name.first]; // List of members with the current user
 
-	return (
+	return authenticated && isRegistered ? (
 		<Container>
 			<Header>
-				<WelcomeMessage name={userName || "User"} communityName="Community name" />
+				<WelcomeMessage
+					name={name.first || "User"}
+					communityName="Community name"
+				/>
 				<SearchBar />
 			</Header>
 			<DashColumns>
@@ -151,13 +164,15 @@ function Dashboard() {
 				</CommunityTaskContainer>
 				<MembersContainer>
 					<Members
-						users={members}  // Pass the list of members
-						userRole={["Role"]}  // Placeholder for user roles, you can expand this in the future
+						users={members} // Pass the list of members
+						userRole={["Role"]} // Placeholder for user roles, you can expand this in the future
 						showAllLink="#"
 					/>
 				</MembersContainer>
 			</Footer>
 		</Container>
+	) : (
+		<Loading />
 	);
 }
 

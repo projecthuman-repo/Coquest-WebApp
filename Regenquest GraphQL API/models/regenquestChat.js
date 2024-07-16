@@ -1,4 +1,5 @@
-const { model, Schema, default: mongoose } = require("mongoose");
+const { Schema, default: mongoose } = require("mongoose");
+const { regenDb } = require("../db/connection");
 
 //chatID: unique id of the chat
 //members: user ids of all the members
@@ -6,16 +7,18 @@ const { model, Schema, default: mongoose } = require("mongoose");
 //description: description of the chat
 //createdAt: time the chat was created
 const regenquestChatSchema = new Schema({
-  members: [{
-    type: mongoose.ObjectId,
-    ref: 'regenquestUser'
-  }],
+  members: [
+    {
+      type: mongoose.ObjectId,
+      ref: "regenquestUser",
+    },
+  ],
   name: String,
   description: String,
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
 });
 
-module.exports = model("regenquestChat", regenquestChatSchema);
+module.exports = regenDb.model("regenquestChat", regenquestChatSchema);

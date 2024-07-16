@@ -11,138 +11,159 @@ import Repository from "../../repositories/repository";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
 // import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import BackButton from "../../components/Buttons/BackButton";
-import SkipButton from "../../components/Buttons/SkipButton";
-import NextButton from "../../components/Buttons/NextButton";
+import SecondaryButton from "../../components/Buttons/SecondaryButton";
+import PrimaryButton from "../../components/Buttons/PrimaryButton";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
-import './Orientation.css';
+import "./Orientation.css";
 
 function Orientation() {
-    const [user, setUser] = useState<User>();
-    const [hasError, setHasError] = useState(false);
-    const { id } = useParams();
-    // page is one-indexed
-    const [page, setPage] = useState(1);
-    // ensure runtime fetches user info before rendering the dependant child components
-    const [done, setDone] = useState(false);
-    let navigate = useNavigate();
+	const [user, setUser] = useState<User>();
+	const [hasError, setHasError] = useState(false);
+	const { id } = useParams();
+	// page is one-indexed
+	const [page, setPage] = useState(1);
+	// ensure runtime fetches user info before rendering the dependant child components
+	const [done, setDone] = useState(false);
+	const navigate = useNavigate();
 
-    useEffect(() => {
-        const unsubscribe = subscribeToUserModelSubject((user: User) => {
-            if(!done) {
-                // Note: This statement won't cause the subsequent if(done) to be true
-                setDone(true);
-            }
-            setUser(user);
-            
-            // Only update when the user actually makes changes after the content fully renders.
-            if(done) {
-                const repo = Repository.getInstance('User', User);
-                repo.update(user);
-            }
-        });
-        return () => {
-            unsubscribe.then(cleanup => cleanup && cleanup());
-        }
-    }, [done]);
+	useEffect(() => {
+		const unsubscribe = subscribeToUserModelSubject((user: User) => {
+			if (!done) {
+				// Note: This statement won't cause the subsequent if(done) to be true
+				setDone(true);
+			}
+			setUser(user);
 
-    // Alter variadic portion of the URL to the parameter, newSlug.
-    const changeSlug = useCallback((newSlug: string) => {
-        navigate(`/registration/${newSlug}`);
-    }, [navigate]);
+			// Only update when the user actually makes changes after the content fully renders.
+			if (done) {
+				const repo = Repository.getInstance("User", User);
+				repo.update(user);
+			}
+		});
+		return () => {
+			unsubscribe.then((cleanup) => cleanup && cleanup());
+		};
+	}, [done]);
 
-    // Change the current page number to the parameter, page.
-    // The function will adjust the value to the nearest page boundary if the value provided is out of bounds.
-    const changePage = useCallback((page: number) => {
-        const newPage = sanitizePage(page);
-        // Save page progress as the user progresses through the orientation process
-        update({registered: newPage})
-        changeSlug(newPage.toString());
-        setPage(newPage);
-    }, [changeSlug]);
+	// Alter variadic portion of the URL to the parameter, newSlug.
+	const changeSlug = useCallback(
+		(newSlug: string) => {
+			navigate(`/registration/${newSlug}`);
+		},
+		[navigate],
+	);
 
-    function updateData(data: any) {
-        RegistrationPages[page - 1].dataSetter(data);
-    }
+	// Change the current page number to the parameter, page.
+	// The function will adjust the value to the nearest page boundary if the value provided is out of bounds.
+	const changePage = useCallback(
+		(page: number) => {
+			const newPage = sanitizePage(page);
+			// Save page progress as the user progresses through the orientation process
+			update({ registered: newPage });
+			changeSlug(newPage.toString());
+			setPage(newPage);
+		},
+		[changeSlug],
+	);
 
-    useEffect(() => {
-        const handlePageId = () => {
-            let initialPage = 0;
-            if (id) {
-                const parsedId = +id;
-                if (!isNaN(parsedId)) {
-                    initialPage = parsedId;
-                    changePage(initialPage);
-                } else {
-                    setHasError(true);
-                }
-            }
-        }
+	function updateData(data: any) {
+		RegistrationPages[page - 1].dataSetter(data);
+	}
 
-        handlePageId();
-    }, [id, navigate, changePage]);
+	useEffect(() => {
+		const handlePageId = () => {
+			let initialPage = 0;
+			if (id) {
+				const parsedId = +id;
+				if (!isNaN(parsedId)) {
+					initialPage = parsedId;
+					changePage(initialPage);
+				} else {
+					setHasError(true);
+				}
+			}
+		};
 
-    function submit() {
-        update({registered: true});
-    }
+		handlePageId();
+	}, [id, navigate, changePage]);
 
-    if(hasError) {
-        return (
-            <Container>
-                <h1>Oops, this page doesn&#39;t exist!</h1>
-                <p>Did you mean to <Link to="/registration">register</Link>?</p>
-            </Container>
-        );
-    } else if(done){
-        // Convert to zero-indexing to access correct indices in component array.
-        // From this point onward, we can assume index will always be a valid index.
-        const index = page - 1;
+	function submit() {
+		update({ registered: true });
+	}
 
-        const SelectedPageView = RegistrationPages[index].view;
-        return (
-            <div className="orientation">
+	if (hasError) {
+		return (
+			<Container>
+				<h1>Oops, this page doesn&#39;t exist!</h1>
+				<p>
+					Did you mean to <Link to="/registration">register</Link>?
+				</p>
+			</Container>
+		);
+	} else if (done) {
+		// Convert to zero-indexing to access correct indices in component array.
+		// From this point onward, we can assume index will always be a valid index.
+		const index = page - 1;
 
-                {/* Progress bar to show progress in onboarding completion */}
-                <ProgressBar numOfPages={6} currentPageNum={page} />
-                                
-                <div className="content">
-                    <SelectedPageView user={user} updateData={updateData} />
-                </div>
-                
-                <div className="orientation-btn-container">
-                    <div>
-                        { page > 1 &&
-                            <IconButton title="Previous page" onClick={() => {
-                                const newPage = page - 1;
-                                changePage(newPage);
-                                }}>
-                                <BackButton />
-                            </IconButton>
-                        }
-                    </div>
-                    
-                    <div>
-                        { page < NUMPAGES ?
-                            <IconButton title="Next page" onClick={() => {
-                                const newPage = page + 1;
-                                changePage(newPage);
-                                }}>
-                                <div className="btn-group">
-                                    <SkipButton />
-                                    <NextButton name="Next" />
-                                </div>
-                            </IconButton>
-                            :
-                            <Button  onClick={submit}>
-                                <NextButton name="Finish"/>
-                            </Button>
-                        }
-                    </div>
-                </div>
-            </div>
-        );
-    } else {
-        return null;
-    }
+		const SelectedPageView = RegistrationPages[index].view;
+		return (
+			<div className="orientation">
+				<div className="header">
+					<img src="/logo.png" alt="Coquest Logo" height="50" />
+				</div>
+
+				{/* Progress bar to show progress in onboarding completion */}
+				<div className="progress-bar-container">
+					<ProgressBar numOfPages={6} currentPageNum={page} />
+				</div>
+
+				<div className="content">
+					<SelectedPageView user={user} updateData={updateData} />
+				</div>
+
+				<div className="orientation-btn-container">
+					<div className="orientation-btn">
+						<div>
+							{page > 1 && (
+								<IconButton
+									title="Previous page"
+									onClick={() => {
+										const newPage = page - 1;
+										changePage(newPage);
+									}}
+								>
+									<BackButton />
+								</IconButton>
+							)}
+						</div>
+
+						<div>
+							{page < NUMPAGES ? (
+								<IconButton
+									title="Next page"
+									onClick={() => {
+										const newPage = page + 1;
+										changePage(newPage);
+									}}
+								>
+									<div className="btn-group">
+										<SecondaryButton name="Skip" />
+										<PrimaryButton name="Next" />
+									</div>
+								</IconButton>
+							) : (
+								<Button onClick={submit}>
+									<PrimaryButton name="Finish" />
+								</Button>
+							)}
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	} else {
+		return null;
+	}
 }
 
 export default Orientation;

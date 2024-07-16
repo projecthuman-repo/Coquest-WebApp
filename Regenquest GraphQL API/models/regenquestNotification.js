@@ -1,5 +1,6 @@
-const { model, Schema, default: mongoose } = require("mongoose");
+const { Schema, default: mongoose } = require("mongoose");
 const { imageSchema } = require("./common");
+const { regenDb } = require("../db/connection");
 
 //userID: id of the user that this notification belongs to
 //notificationID: unique id of the notification
@@ -13,8 +14,8 @@ const { imageSchema } = require("./common");
 const regenquestNotificationSchema = new Schema({
   userID: {
     type: mongoose.ObjectId,
-    ref: 'regenquestUser',
-    required: true
+    ref: "regenquestUser",
+    required: true,
   },
   title: { type: String, required: true },
   content: { type: String, required: true },
@@ -25,4 +26,7 @@ const regenquestNotificationSchema = new Schema({
   isDeleted: { type: Boolean, default: false },
 });
 
-module.exports = model("regenquestNotification", regenquestNotificationSchema);
+module.exports = regenDb.model(
+  "regenquestNotification",
+  regenquestNotificationSchema,
+);

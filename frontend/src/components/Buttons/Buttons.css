@@ -1,26 +1,51 @@
 button {
-    font-size: 18px;
-    color: black;
-    font-weight: 550;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
+  font-size: 18px;
+  color: black;
+  font-weight: 550;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 
-.back-button {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
+.back-button,
+.sign-in-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 
-.next-button {
-    width: 163px;
-    height: 40px;
+.sign-in-button {
+  gap: 4px;
+}
 
-    background-color: #26A5E7;
-    border-radius: 20px;
+.primary-button {
+  width: 163px;
+  height: 40px;
 
-    color: white;
+  background-color: #26a5e7;
+  border-radius: 20px;
+
+  color: white;
+}
+
+.next-button-text {
+  font-size: 18px;
+  color: white;
+  font-weight: 550;
+  margin: 5px;
+}
+
+.skip-button-text {
+  font-size: 18px;
+  color: black;
+  font-weight: 550;
+  margin: 5px;
+}
+
+.back-button-text {
+  font-size: 18px;
+  color: black;
+  font-weight: 550;
 }

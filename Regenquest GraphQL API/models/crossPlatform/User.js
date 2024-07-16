@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { crossPlatformDatabase } = require('../../db/connection');
+const mongoose = require("mongoose");
+const { crossDb } = require("../../db/connection");
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -22,6 +22,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const CrossPlatformUser = crossPlatformDatabase.model('User', userSchema);
+const CrossPlatformUser = crossDb.model("User", userSchema);
 
 module.exports = CrossPlatformUser;

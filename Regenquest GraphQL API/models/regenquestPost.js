@@ -1,4 +1,5 @@
-const { model, Schema, default: mongoose } = require("mongoose");
+const { Schema, default: mongoose } = require("mongoose");
+const { regenDb } = require("../db/connection");
 
 //postID: unique id of the post
 //userID: ID of the user that made the post
@@ -11,21 +12,24 @@ const { model, Schema, default: mongoose } = require("mongoose");
 const regenquestPostSchema = new Schema({
   userID: {
     type: mongoose.ObjectId,
-    ref: 'regenquestUser',
-    required: true
+    ref: "regenquestUser",
+    required: true,
   },
   title: { type: String, required: true },
   description: String,
   likes: { type: Number, default: 0 },
   attachments: [String],
   createdAt: { type: Date, default: Date.now },
-  comments: [{
-    userID: {  
-      type: mongoose.ObjectId,
-      ref: 'regenquestUser',
-      required: true },
-    body: { type: String, required: true },
-  }],
+  comments: [
+    {
+      userID: {
+        type: mongoose.ObjectId,
+        ref: "regenquestUser",
+        required: true,
+      },
+      body: { type: String, required: true },
+    },
+  ],
 });
 
-module.exports = model("regenquestPost", regenquestPostSchema);
+module.exports = regenDb.model("regenquestPost", regenquestPostSchema);

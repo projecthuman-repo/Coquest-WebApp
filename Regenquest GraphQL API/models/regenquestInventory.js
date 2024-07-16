@@ -1,5 +1,6 @@
-const { model, Schema, default: mongoose } = require("mongoose");
+const { Schema, default: mongoose } = require("mongoose");
 const { imageSchema } = require("./common");
+const { regenDb } = require("../db/connection");
 
 //itemIDL unique id of the item
 //userID: id of the current user that owns this item
@@ -12,28 +13,33 @@ const { imageSchema } = require("./common");
 const regenquestInventorySchema = new Schema({
   userID: {
     type: mongoose.ObjectId,
-    ref: 'regenquestUser',
-    required: true
+    ref: "regenquestUser",
+    required: true,
   },
   taskLink: {
     type: mongoose.ObjectId,
-    ref: 'regenquestTask',
-    required: true
+    ref: "regenquestTask",
+    required: true,
   },
   itemName: {
     type: String,
-    required: true
+    required: true,
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   description: String,
   image: imageSchema,
-  history: [{
-    type: mongoose.ObjectId,
-    ref: 'regenquestUser'
-  }],
+  history: [
+    {
+      type: mongoose.ObjectId,
+      ref: "regenquestUser",
+    },
+  ],
 });
 
-module.exports = model("regenquestInventory", regenquestInventorySchema);
+module.exports = regenDb.model(
+  "regenquestInventory",
+  regenquestInventorySchema,
+);

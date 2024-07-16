@@ -1,5 +1,6 @@
-const { model, Schema } = require("mongoose");
+const { Schema } = require("mongoose");
 const { locationSchema } = require("./common");
+const { regenDb } = require("../db/connection");
 
 //eventID: unique id of the event
 //name: name of the event
@@ -12,19 +13,21 @@ const { locationSchema } = require("./common");
 const regenquestEventSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   theme: String,
   location: locationSchema,
   time: {
     type: Date,
-    required: true
+    required: true,
   },
   description: String,
   layer: String,
-  hashtags: [{
-    type: String
-  }],
+  hashtags: [
+    {
+      type: String,
+    },
+  ],
 });
 
-module.exports = model("regenquestEvent", regenquestEventSchema);
+module.exports = regenDb.model("regenquestEvent", regenquestEventSchema);

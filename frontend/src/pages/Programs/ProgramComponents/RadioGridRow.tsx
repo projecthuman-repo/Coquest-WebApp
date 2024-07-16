@@ -1,15 +1,9 @@
-import { useState } from "react";
-import {
-	Checkbox,
-	FormControlLabel,
-	Button,
-	Typography,
-	TextField,
-} from "@mui/material";
+import React, { useState } from "react";
+import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { Grid } from "@mui/material";
 
-const Wrapper = styled("div")({
+const _Wrapper = styled("div")({
 	width: "100%",
 	display: "flex",
 });

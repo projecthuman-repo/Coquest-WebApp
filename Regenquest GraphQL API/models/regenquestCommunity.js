@@ -1,5 +1,6 @@
-const { model, Schema, default: mongoose } = require("mongoose");
+const { Schema, default: mongoose } = require("mongoose");
 const { imageSchema, locationSchema } = require("./common");
+const { regenDb } = require("../db/connection");
 const validators = require("./validators");
 
 //name: name of the community
@@ -8,20 +9,28 @@ const validators = require("./validators");
 //theme: theme of the community
 //image: image for the community
 const regenquestCommunitySchema = new Schema({
-  name: {type: String, required: true},
-  description: {type: String, required: true},
+  name: { type: String, required: true },
+  description: { type: String, required: true },
   members: {
-    type: [{
-      type: mongoose.ObjectId,
-      ref: 'regenquestUser',
-      validate: validators.idValidators(() => require("./regenquestUser"), 'member')
-    }],
-    validate: validators.arrValidators('members'),
+    type: [
+      {
+        type: mongoose.ObjectId,
+        ref: "regenquestUser",
+        validate: validators.idValidators(
+          () => require("./regenquestUser"),
+          "member",
+        ),
+      },
+    ],
+    validate: validators.arrValidators("members"),
     metadata: { expandable: true },
   },
   tags: [String],
-  location: {type: locationSchema, required: true},
+  location: { type: locationSchema, required: true },
   images: [imageSchema],
 });
 
-module.exports = model("regenquestCommunity", regenquestCommunitySchema);
+module.exports = regenDb.model(
+  "regenquestCommunity",
+  regenquestCommunitySchema,
+);

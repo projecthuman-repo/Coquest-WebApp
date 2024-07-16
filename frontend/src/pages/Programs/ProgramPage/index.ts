@@ -1,1 +1,1 @@
-export {default as ProgramPage} from "./ProgramPage";
+export { default as ProgramPage } from "./ProgramPage";

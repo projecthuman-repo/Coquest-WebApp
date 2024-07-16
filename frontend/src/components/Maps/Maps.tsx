@@ -14,7 +14,7 @@ interface MapsProps {
 			center={[lat, long]}
 			zoom={mapZoom}
 			scrollWheelZoom={false}
-			style={{ height: '100%', width: '99%' }} // Ensure the map container has a defined height
+			style={{ height: "100%", width: "99%" }} // Ensure the map container has a defined height
 		>
 			<TileLayer
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

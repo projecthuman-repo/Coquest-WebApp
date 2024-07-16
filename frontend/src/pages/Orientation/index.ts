@@ -1,1 +1,1 @@
-export {default as Orientation} from "./Orientation";
+export { default as Orientation } from "./Orientation";

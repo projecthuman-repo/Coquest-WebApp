@@ -1,5 +1,6 @@
-const { model, Schema, default:mongoose } = require("mongoose");
+const { Schema, default: mongoose } = require("mongoose");
 const { locationSchema } = require("./common");
+const { regenDb } = require("../db/connection");
 
 //questID: unique id of the quest
 //name: name of the quest
@@ -22,23 +23,27 @@ const regenquestQuestSchema = new Schema({
   description: String,
   objective: String,
   initiative: String,
-  type: { type: String, enum: ['project', 'program', 'coop'], required: true }, // Enum to define the types of quests
+  type: { type: String, enum: ["project", "program", "coop"], required: true }, // Enum to define the types of quests
   duration: String,
   location: locationSchema,
   startDate: { type: Date },
   endDate: { type: Date },
   requirements: [String],
-  members: [{ 
-    type: mongoose.ObjectId, 
-    ref: 'regenquestUser'
-  }],
+  members: [
+    {
+      type: mongoose.ObjectId,
+      ref: "regenquestUser",
+    },
+  ],
   history: [String],
   budget: Number,
-  tasks: [{
-    type: mongoose.ObjectId, 
-    ref: 'regenquestTask'
-  }],
+  tasks: [
+    {
+      type: mongoose.ObjectId,
+      ref: "regenquestTask",
+    },
+  ],
   hashtags: [String],
 });
 
-module.exports = model("regenquestQuest", regenquestQuestSchema);
+module.exports = regenDb.model("regenquestQuest", regenquestQuestSchema);

@@ -5,32 +5,53 @@
 }
 
 .orientation {
+  height: 100vh;
   box-sizing: border-box;
-  margin: auto;
-  width: 430px;
-  min-height: 100vh;
-  padding: 80px 0;
+  padding: 0;
+  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+}
+
+.header {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
+}
+
+.progress-bar-container {
+  width: 60%;
+  padding: 40px 0;
 }
 
 .content {
   flex: 1;
   padding: 20px;
-  padding-top: 40px;
+  padding-top: 0;
+  width: 430px;
 }
 
 /* Orientation Buttons */
 .orientation-btn-container {
+  justify-self: flex-end;
+  width: 60%;
+}
+
+.orientation-btn {
+  padding: 40px;
+  padding-top: 20px;
+
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 430px;
-  padding: 20px 0;
 }
 
 .btn-group {
@@ -39,22 +60,40 @@
   gap: 16px;
 }
 
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .progress-bar-container {
+    width: 100%;
+    padding: 40px 20px;
+  }
+
+  .orientation-btn-container {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .content {
+    width: 100%;
+  }
+}
+
 /* General Text Styles */
-.main-heading{
+.main-heading {
   font-family: Poppins;
   font-weight: 600;
   font-size: 26px;
   text-align: center;
   margin-bottom: 25px;
 }
-.sub-heading{
+.sub-heading {
   font-family: Poppins;
   font-weight: 400;
   font-size: 18px;
   text-align: center;
   margin-bottom: 25px;
 }
-.sub-text{
+.sub-text {
   font-family: Poppins;
   font-weight: 400;
   font-size: 14px;

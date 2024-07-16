@@ -26,27 +26,39 @@ module.exports = gql`
   }
 
   """
-  Discriminator types for unionized types 
+  Discriminator types for unionized types
   """
   enum registeredRepType {
     BOOLEAN
     NUMBER
   }
-  
+
   enum expandedRepType {
     EXPANDED_OBJ
     ID_STRING
   }
 
-  """"""
+  """
+  """
+  type Name {
+    first: String!
+    middle: String
+    last: String!
+  }
+
+  input NameInput {
+    first: String!
+    middle: String
+    last: String!
+  }
 
   type JWT {
-    name: String,
-    username: String,
-    email: String,
-    iat: String,
-    exp: String,
-    sub: String,
+    name: Name
+    username: String
+    email: String
+    iat: String
+    exp: String
+    sub: String
   }
 
   type skill {
@@ -98,7 +110,7 @@ module.exports = gql`
     username: String
     body: String
   }
-  
+
   type image {
     contentType: String
     path: String
@@ -160,7 +172,7 @@ module.exports = gql`
   type regenquestUser {
     _id: String!
     userID: String
-    name: String
+    name: Name
     username: String
     email: String
     registered: registered
@@ -179,7 +191,7 @@ module.exports = gql`
   input regenquestUserInput {
     id: String
     userID: String
-    name: String
+    name: NameInput
     username: String
     email: String
     registered: registeredInput
@@ -226,7 +238,7 @@ module.exports = gql`
   }
 
   """
-  TODO: Modify data definition at a later time 
+  TODO: Modify data definition at a later time
   """
   type regenquestQuest {
     _id: String
@@ -430,7 +442,7 @@ module.exports = gql`
 
   directive @auth on FIELD_DEFINITION
   directive @verifyToken on FIELD_DEFINITION
-  directive @formatObj(modelName: String) on FIELD_DEFINITION
+  directive @formatObj(dbName: String, modelName: String) on FIELD_DEFINITION
 
   type Query {
     getUsers: [regenquestUser] @auth
@@ -444,13 +456,17 @@ module.exports = gql`
     getTopics: [regenquestTopic] @auth
     getMotives: [regenquestMotive] @auth
 
-    findUserbyID(id: String, expand: String): regenquestUser @auth @formatObj(modelName: "regenquestUser")
+    findUserbyID(id: String, expand: String): regenquestUser
+      @auth
+      @formatObj(dbName: "regenquest", modelName: "regenquestUser")
     findTaskbyID(taskID: String): regenquestTask @auth
     findQuestbyID(questID: String): regenquestQuest @auth
     findPostbyID(postID: String): regenquestPost @auth
     findInventoryItembyID(itemID: String): regenquestInventory @auth
     findEventbyID(eventID: String): regenquestEvent @auth
-    findCommunitybyID(id: String): regenquestCommunity @auth
+    findCommunitybyID(id: String): regenquestCommunity
+      @auth
+      @formatObj(dbName: "regenquest", modelName: "regenquestCommunity")
     findCrossUser(email: String): regenquestCrossUser @auth
 
     getChatsByUserID(userID: String): [regenquestChat] @auth
@@ -467,19 +483,20 @@ module.exports = gql`
     generatePresignedURL: String! @auth
   }
 
-  
   """
   TODO: Declare and implement delete routines for all necessary models
   """
   type Mutation {
     createRegenquestUser(userInput: regenquestUserInput): mutationResponse @auth
     createRegenquestTask(userInput: regenquestTaskInput): mutationResponse @auth
-    createRegenquestQuest(userInput: regenquestQuestInput): mutationResponse @auth
+    createRegenquestQuest(userInput: regenquestQuestInput): mutationResponse
+      @auth
     createRegenquestPost(userInput: regenquestPostInput): mutationResponse @auth
     createRegenquestInventory(
       userInput: regenquestInventoryInput
     ): mutationResponse @auth
-    createRegenquestEvent(userInput: regenquestEventInput): mutationResponse @auth
+    createRegenquestEvent(userInput: regenquestEventInput): mutationResponse
+      @auth
     createRegenquestCommunity(
       communityInput: regenquestCommunityInput
     ): mutationResponse @auth
@@ -488,22 +505,26 @@ module.exports = gql`
     ): mutationResponse @auth
 
     createRegenquestChat(userInput: regenquestChatInput): mutationResponse @auth
-    sendRegenquestMessage(userInput: regenquestMessageInput): mutationResponse @auth
+    sendRegenquestMessage(userInput: regenquestMessageInput): mutationResponse
+      @auth
     addMemberToChat(userInput: addMemberToChatInput): mutationResponse @auth
     markMessageAsRead(userInput: markMessageAsReadInput): mutationResponse @auth
 
     updateRegenquestUser(userInput: regenquestUserInput): mutationResponse @auth
     updateRegenquestTask(userInput: regenquestTaskInput): mutationResponse @auth
-    updateRegenquestQuest(userInput: regenquestQuestInput): mutationResponse  @auth
+    updateRegenquestQuest(userInput: regenquestQuestInput): mutationResponse
+      @auth
     updateRegenquestPost(userInput: regenquestPostInput): mutationResponse @auth
     updateRegenquestInventory(
       userInput: regenquestInventoryInput
     ): mutationResponse @auth
-    updateRegenquestEvent(userInput: regenquestEventInput): mutationResponse @auth
+    updateRegenquestEvent(userInput: regenquestEventInput): mutationResponse
+      @auth
     updateRegenquestCommunity(
       userInput: regenquestCommunityInput
     ): mutationResponse @auth
-    updateRegenquestGenres(userInput: regenquestGenresInput): mutationResponse @auth
+    updateRegenquestGenres(userInput: regenquestGenresInput): mutationResponse
+      @auth
     updateRegenquestNotification(
       userInput: regenquestNotificationInput
     ): mutationResponse @auth

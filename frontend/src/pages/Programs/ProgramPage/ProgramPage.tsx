@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Typography, Tab, Tabs, Button } from "@mui/material";
 import { styled } from "@mui/system";
 import { Program } from "../ProgramComponents/TypeDefinitions/Program";
@@ -37,14 +37,14 @@ const Header = styled("div")(({ theme }) => ({
 	},
 }));
 
-const CustomTabs = styled(Tabs)({
+const _CustomTabs = styled(Tabs)({
 	width: "100%",
 	color: "black !important",
 });
-const CustomTab = styled(Tab)({
+const _CustomTab = styled(Tab)({
 	width: "33.33%",
 });
-const tabStyle = {
+const _tabStyle = {
 	default_tab: {
 		color: "#000000",
 		opacity: 0.3,
@@ -54,13 +54,13 @@ const tabStyle = {
 	},
 };
 
-function TabPanel(props: any) {
+function _TabPanel(props: any) {
 	const { children, value, index } = props;
 
 	return <div hidden={value !== index}>{value === index && children}</div>;
 }
 
-const ProgramPage = (props: ProgramPageProps) => {
+const ProgramPage = (_props: ProgramPageProps) => {
 	return (
 		<Container>
 			<Header>

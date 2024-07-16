@@ -9,7 +9,7 @@ import EventIcon from "@mui/icons-material/Event";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 registerLocale("en", en);
 
-const Wrapper = styled.div`
+const _Wrapper = styled.div`
 	display: flex;
 	gap: 1rem;
 `;
@@ -38,9 +38,7 @@ const FieldWrapper = styled("div")({
 	alignItems: "center",
 });
 
-const DateComponent: React.FC<StyledTextFieldProps> = ({
-	onDateRangeChange,
-}) => {
+const DateComponent: React.FC<StyledTextFieldProps> = () => {
 	const [date, setDate] = useState<Date | null>(null);
 	const handleDateChange = (date: Date | null) => {
 		setDate(date);

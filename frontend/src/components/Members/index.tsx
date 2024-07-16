@@ -1,16 +1,14 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { colors, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import Chip from "@mui/material/Chip";
-import { borderRadius } from "@mui/system";
 
 //creating props for user, link and role
 export type MemberProps = {

@@ -16,7 +16,7 @@ function ProgressStepper(props: { pgnum: number }) {
 	return (
 		<Box sx={{ width: "100%" }}>
 			<Stepper activeStep={activeStep}>
-				{steps.map((label, index) => {
+				{steps.map((label, _index) => {
 					const stepProps: { completed?: boolean } = {};
 					return (
 						<Step key={label} {...stepProps}>

@@ -1,8 +1,10 @@
-import { BrowserRouter, createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+	BrowserRouter,
+	createBrowserRouter,
+	RouterProvider,
+} from "react-router-dom";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Toolbar from "./components/Toolbar";
-import LeftSideBar from "./components/LeftSideBar";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./styles/theme";
 import { Message } from "./pages/Message";
@@ -12,7 +14,7 @@ import ItemGrid from "./pages/Inventory/ItemGrid";
 import { Dashboard } from "./pages/Dashboard";
 import WalletPage from "./pages/Wallet/WalletPage";
 import { Outlet } from "react-router-dom";
-import UserProfile from "./pages/Profile/UserProfile";  // Import UserProfile page
+import UserProfile from "./pages/Profile/UserProfile"; // Import UserProfile page
 
 // Program flow Imports
 import {
@@ -44,13 +46,17 @@ import CommunityDescription from "./pages/Community/Description/Description";
 import CommunityQuests from "./pages/Quests/Quests";
 
 const root = ReactDOM.createRoot(
-	document.getElementById("root") as HTMLElement
+	document.getElementById("root") as HTMLElement,
 );
 
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <Dashboard />,
+		element: (
+			<UserRegistrationProvider>
+				<Dashboard />
+			</UserRegistrationProvider>
+		),
 	},
 	{
 		path: "/registration",
@@ -64,7 +70,7 @@ const router = createBrowserRouter([
 				path: ":id",
 				element: <Orientation />,
 			},
-		]
+		],
 	},
 	{
 		path: "/home",
@@ -208,5 +214,5 @@ root.render(
 				<RouterProvider router={router} />
 			</ThemeProvider>
 		</React.StrictMode>
-	</Container>
+	</Container>,
 );

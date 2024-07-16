@@ -8,8 +8,9 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MessageIcon from "@mui/icons-material/Message";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import styled from "@emotion/styled";
-import { subscribeToUserModelSubject } from '../../observers/userobserver';
-import DropdownMenu from '../DropDownMenu/DropDownMenuComponent'; // Import the new dropdown menu component
+import { subscribeToUserModelSubject } from "../../observers/userobserver";
+import DropdownMenu from "../DropDownMenu/DropDownMenuComponent"; // Import the new dropdown menu component
+import { Name } from "../../models/usermodel";
 
 const Container = styled.div({
 	width: "100%",
@@ -29,16 +30,22 @@ const ProfileContainer = styled.div({
 
 const ProfileIcon = styled(AccountCircleIcon)({
 	color: "#666666",
-	padding: '6px',
-	cursor: 'pointer',
-	fontSize: '36px',  // Increase the font size
-	'&:hover': {
-		backgroundColor: 'rgba(0, 0, 0, 0.049)',
-		borderRadius: '50%',
+	padding: "6px",
+	cursor: "pointer",
+	fontSize: "36px", // Increase the font size
+	"&:hover": {
+		backgroundColor: "rgba(0, 0, 0, 0.049)",
+		borderRadius: "50%",
 	},
 });
 
-const ProfileButton = ({ name, onClick }: { name: string, onClick: () => void }) => (
+const ProfileButton = ({
+	name,
+	onClick,
+}: {
+	name: string;
+	onClick: () => void;
+}) => (
 	<ProfileContainer onClick={onClick}>
 		<ProfileIcon />
 		<Typography>{name}</Typography>
@@ -46,16 +53,19 @@ const ProfileButton = ({ name, onClick }: { name: string, onClick: () => void })
 );
 
 const Toolbar = () => {
-	const [userName, setUserName] = useState("User"); // Default name to "User" until fetched
 	const [menuOpen, setMenuOpen] = useState(false);
+	const [name, setName] = useState<Name>({
+		first: "",
+		last: "",
+	}); // Default name to "User" until fetched
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		let unsubscribe: (() => void) | null | undefined = null;
 
 		const setupSubscription = async () => {
-			unsubscribe = await subscribeToUserModelSubject(user => {
-				setUserName(user.name);  // Update to use the 'name' field
+			unsubscribe = await subscribeToUserModelSubject((user) => {
+				setName(user.name); // Update to use the 'name' field
 			});
 		};
 
@@ -63,7 +73,7 @@ const Toolbar = () => {
 
 		return () => {
 			if (unsubscribe) {
-				unsubscribe();  // Ensure proper cleanup on component unmount
+				unsubscribe(); // Ensure proper cleanup on component unmount
 			}
 		};
 	}, []);
@@ -95,9 +105,12 @@ const Toolbar = () => {
 					<IconButton onClick={handleMessageClick}>
 						<MessageIcon />
 					</IconButton>
-
-					<ProfileButton name={userName} onClick={handleProfileClick} />
-					{menuOpen && <DropdownMenu />} {/* Conditionally render the dropdown menu */}
+					<ProfileButton
+						name={name.first}
+						onClick={handleProfileClick}
+					/>
+					{menuOpen && <DropdownMenu />}{" "}
+					{/* Conditionally render the dropdown menu */}
 				</MaterialToolbar>
 			</AppBar>
 		</Container>
