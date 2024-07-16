@@ -43,7 +43,10 @@ function SharedCalendar() {
       description: newDescription,
     };
 
-    try {
+	setEvents((events) => [...events, newEvent]);
+	setCurrentEvent(newEvent);
+
+    /* try {
       // TODO: Replace placeholder information (URL, Email, etc.) with the correct backend information when setup.
       const response = await fetch("http://localhost:3001/events", {
         method: "POST",
@@ -70,7 +73,7 @@ function SharedCalendar() {
       });
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
-    }
+    } */
   }
 
   async function modifyEvent() {
@@ -85,7 +88,14 @@ function SharedCalendar() {
           : currentEvent?.description || "",
     };
 
-    try {
+	const updatedEvents = events.filter(
+		(event) => event.id !== currentEvent?.id
+	  );
+	  setEvents((events) => [...updatedEvents, modifiedEvent]);
+	  setCurrentEvent(modifiedEvent);
+	  setCurrentView("event");
+
+   /* try {
       // TODO: Replace placeholder information (URL, Email, etc.) with the correct backend information when setup.
       const response = await fetch("http://localhost:3001/events", {
         method: "PUT",
@@ -110,7 +120,7 @@ function SharedCalendar() {
       });
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
-    }
+    } */
   }
 
   async function deleteEvent() {
@@ -120,7 +130,7 @@ function SharedCalendar() {
     setEvents(updatedEvents);
     setCurrentView("calendar");
 
-    try {
+    /* try {
       // TODO: Replace placeholder information (URL, Email, etc.) with the correct backend information when setup.
       const response = await fetch("http://localhost:3001/events", {
         method: "DELETE",
@@ -144,7 +154,7 @@ function SharedCalendar() {
       });
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
-    }
+    } */
   }
 
   async function displayEventInfo(clickInfo: any) {
