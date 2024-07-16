@@ -43,9 +43,34 @@ function SharedCalendar() {
       description: newDescription,
     };
 
-    setEvents((events) => [...events, newEvent]);
-    setCurrentEvent(newEvent);
-
+    try {
+      // TODO: Replace placeholder information (URL, Email, etc.) with the correct backend information when setup.
+      const response = await fetch("http://localhost:3001/events", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: newEvent.id,
+          email: "temp-email@gmail.com",
+          calendar_name: "Test Calendar",
+          event_name: newEvent.title,
+          start_date_time: newEvent.start,
+          end_date_time: newEvent.end,
+          description: newEvent.description,
+        }),
+      });
+      response.json().then((body) => {
+        if (body.error) {
+          console.log("Error:", body.error);
+        } else {
+          setEvents((events) => [...events, newEvent]);
+          setCurrentEvent(newEvent);
+        }
+      });
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
   }
 
   async function modifyEvent() {
@@ -60,13 +85,32 @@ function SharedCalendar() {
           : currentEvent?.description || "",
     };
 
-    const updatedEvents = events.filter(
-      (event) => event.id !== currentEvent?.id
-    );
-    setEvents((events) => [...updatedEvents, modifiedEvent]);
-    setCurrentEvent(modifiedEvent);
-    setCurrentView("event");
-
+    try {
+      // TODO: Replace placeholder information (URL, Email, etc.) with the correct backend information when setup.
+      const response = await fetch("http://localhost:3001/events", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          event_id: currentEvent?.id,
+        }),
+      });
+      response.json().then((body) => {
+        if (body.error) {
+          console.log("Error:", body.error);
+        } else {
+          const updatedEvents = events.filter(
+            (event) => event.id !== currentEvent?.id
+          );
+          setEvents((events) => [...updatedEvents, modifiedEvent]);
+          setCurrentEvent(modifiedEvent);
+          setCurrentView("event");
+        }
+      });
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
   }
 
   async function deleteEvent() {
@@ -75,6 +119,32 @@ function SharedCalendar() {
     );
     setEvents(updatedEvents);
     setCurrentView("calendar");
+
+    try {
+      // TODO: Replace placeholder information (URL, Email, etc.) with the correct backend information when setup.
+      const response = await fetch("http://localhost:3001/events", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          event_id: currentEvent?.id,
+        }),
+      });
+      response.json().then((body) => {
+        if (body.error) {
+          console.log("Error:", body.error);
+        } else {
+          const updatedEvents = events.filter(
+            (event) => event.id !== currentEvent?.id
+          );
+          setEvents(updatedEvents);
+          setCurrentView("calendar");
+        }
+      });
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
   }
 
   async function displayEventInfo(clickInfo: any) {
