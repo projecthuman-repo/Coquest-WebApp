@@ -92,7 +92,7 @@ function SharedCalendar() {
 		const updatedEvents = events.filter(
 			(event) => event.id !== currentEvent?.id,
 		);
-		setEvents((events) => [...updatedEvents, modifiedEvent]);
+		setEvents(() => [...updatedEvents, modifiedEvent]);
 		setCurrentEvent(modifiedEvent);
 		setCurrentView("event");
 
