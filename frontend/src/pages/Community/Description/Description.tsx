@@ -97,17 +97,11 @@ function CommunityDescription() {
 						<CommunityDescriptionOverview data={communityData} />
 					)}
 					{/* Programs Section */}
-					{section === "programs" && (
-						<CommunityDescriptionPrograms />
-					)}
+					{section === "programs" && <CommunityDescriptionPrograms />}
 					{/* Projects Section */}
-					{section === "projects" && (
-						<CommuntiyDescriptionProjects />
-					)}
+					{section === "projects" && <CommuntiyDescriptionProjects />}
 					{/* Co-ops Section */}
-					{section === "co-ops" && (
-						<CommunityDescriptionCoops />
-					)}
+					{section === "co-ops" && <CommunityDescriptionCoops />}
 				</div>
 			) : (
 				<div className="community-description-page">
