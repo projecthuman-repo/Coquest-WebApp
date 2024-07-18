@@ -1,0 +1,44 @@
+.quest-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quest-button-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.quest-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0px 15px 0px;
+  border-bottom: 1px solid black;
+}
+
+.quest-container img {
+  width: 10px;
+  height: 15px;
+}
+
+.quest-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0px 5px 0px;
+}
+
+.quest-button-design {
+  width: 200px;
+  height: 40px;
+  border-bottom: 3px solid lightgrey;
+}
+
+.quest-design {
+  border-bottom: 1px solid black;
+  padding: 0px 0px 20px 0px;
+  margin: 10px 0px 20px 0px;
+}

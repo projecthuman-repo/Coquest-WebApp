@@ -1,0 +1,89 @@
+/* Main Text Styles */
+
+.d-main-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 30px;
+  text-align: center;
+}
+
+.d-sub-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.d-sub-text {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 16px;
+  overflow-wrap: break-word;
+}
+
+/* Main Div */
+
+.community-description-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0px 0px 0px;
+}
+
+/* Header and Navigation Buttons */
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0px 10px 0px;
+}
+
+.signup-button-design {
+  width: 120px;
+  height: 40px;
+  margin: 0px 0px 0px 25px;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+.signup-button-design:hover {
+  background-color: #f0f0f0;
+}
+
+.nav-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0px 0px 0px;
+}
+
+.button-design {
+  width: 200px;
+  height: 40px;
+  border-bottom: 3px solid lightgrey;
+}
+
+.selected {
+  border-bottom: 3px solid black !important;
+}
+
+/* Basic Margins */
+
+.margin-bottom {
+  margin-bottom: 10px;
+}
+
+.margin-top {
+  margin-top: 10px;
+}
+
+.margin-left {
+  margin-left: 10px;
+}
+
+.margin-right {
+  margin-right: 10px;
+}

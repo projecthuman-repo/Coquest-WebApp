@@ -26,11 +26,7 @@ function getFetchQuery(typeName: RepoTypeName): string {
 				query Query($id: String, $expand: String) {
 					findUserbyID(id: $id, expand: $expand) {
 						userID
-						name {
-							first
-							middle
-							last
-						}
+						name
 						username
 						email
 						location {

@@ -74,7 +74,7 @@ const Members = ({ users, showAllLink, userRole }: MemberProps) => {
 					Members
 					<ShowAllLink>
 						<Link href={showAllLink} color="#000000">
-							show all
+							Show All
 						</Link>
 					</ShowAllLink>
 				</Header>

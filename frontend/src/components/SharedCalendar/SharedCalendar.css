@@ -1,0 +1,116 @@
+/* Main Text Styles */
+
+.calendar-main-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.calendar-sub-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.calendar-sub-text {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 16px;
+  overflow-wrap: break-word;
+}
+
+/* Display Event Page Variables */
+
+.calendar-main {
+  display: flex;
+  flex-direction: column;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #d9d9d9;
+}
+
+.calendar-event-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Buttons */
+
+.calendar-button-group {
+  display: flex;
+  justify-content: center;
+}
+
+.calendar-button-modify {
+  width: 100px;
+  height: 40px;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+}
+
+.calendar-button-exit {
+  width: 120px;
+  height: 40px;
+  margin: 0px 0px 0px 25px;
+}
+
+/* Create and Modify Event Page Variables */
+
+.calendar-cm-event-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.calendar-create-event-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar-form-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 0px 20px 0px;
+}
+
+.cal-input-design {
+  height: 35px;
+  border: 1px black;
+  padding-left: 10px;
+  border-radius: 4px;
+}
+
+.cal-textarea-design {
+  height: 75px;
+  padding-left: 10px;
+  padding-top: 10px;
+  border-radius: 4px;
+  border: none;
+  resize: none;
+}
+
+/* Buttons */
+
+.calendar-button-submit {
+  width: 120px;
+  height: 40px;
+  margin: 0px 0px 0px 25px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+.calendar-button-cancel {
+  width: 120px;
+  height: 40px;
+  margin: 0px 0px 0px 25px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 20px;
+}
