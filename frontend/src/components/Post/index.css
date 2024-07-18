@@ -29,7 +29,6 @@
 .post-image img:not(.icon) {
   width: 100%;
   height: 350px;
-  /* TODO: height of images should be same during carousel image change */
   object-fit: cover;
   border-top-left-radius: 10px;
 }

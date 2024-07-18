@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-// import Carousel from 'react-bootstrap/Carousel';
+import { Image } from "../../models/common";
 import "./index.css";
 
 export type CarouselProps = {
-	images: string[];
+	images: Image[];
 };
 
 function ImageCarousel({ images }: CarouselProps) {
@@ -38,7 +38,7 @@ function ImageCarousel({ images }: CarouselProps) {
 				{images.map((image, index) => (
 					<img
 						key={index}
-						src={image}
+						src={image.path}
 						alt="Post Image"
 						className={`carousel-image ${
 							index !== activeIndex ? "hidden" : "visible"

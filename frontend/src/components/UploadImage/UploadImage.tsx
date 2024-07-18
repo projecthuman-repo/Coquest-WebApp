@@ -47,9 +47,8 @@ export function getErrorMsg(err: FileInvalidEventDetail) {
 
 // Image Pre-processing
 // add setImages to the props
-export const itemPreview = withRequestPreSendUpdate(
+const itemPreview = withRequestPreSendUpdate(
 	({ id, url, updateRequest, requestData }: any) => {
-		console.log(id, url, updateRequest, requestData);
 		return (
 			<div>
 				<CropperComponent

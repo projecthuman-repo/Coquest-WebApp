@@ -13,9 +13,9 @@ const data = [
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean finibus lorem ac massa bibendum facilisis. Curabitur quis scelerisque risus. Maecenas sit amet ipsum rhoncus, mollis dui suscipit, suscipit quam. Fusce nisl urna, malesuada non dapibus sed, hendrerit vel lacus. Donec tincidunt vestibulum augue vitae consequat.",
 		likes: 123,
 		attachments: [
-			"/image_placeholder.jpg",
-			"/image_placeholder2.jpg",
-			"/image_placeholder1.png",
+			{ contentType: "image/jpeg", path: "/image_placeholder.jpg" },
+			{ contentType: "image/jpeg", path: "/image_placeholder2.jpg" },
+			{ contentType: "image/png", path: "/image_placeholder1.png" },
 		],
 		createdAt: "2024-05-05",
 		comments: [
@@ -48,7 +48,9 @@ const data = [
 		description:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean finibus lorem ac massa bibendum facilisis. Curabitur quis scelerisque risus.",
 		likes: 567,
-		attachments: ["/image_placeholder.jpg"],
+		attachments: [
+			{ contentType: "image/jpeg", path: "/image_placeholder.jpg" },
+		],
 		createdAt: "2024-07-05",
 		comments: [
 			{
@@ -63,9 +65,8 @@ const data = [
 	},
 ];
 
-// Define the type for the context data
 type PostFeedContextType = {
-	posts: any[]; // Adjust the type as per your post structure
+	posts: any[]; // Adjust the type as per your post structure (TODO update to Coquest Post structure)
 	setPosts: (posts: any[]) => void;
 	user: User;
 };

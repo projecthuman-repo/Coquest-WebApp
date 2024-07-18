@@ -5,6 +5,7 @@ import SecondaryButton from "../../components/Buttons/SecondaryButton";
 import Input from "../../components/Input";
 import DragDropWrapper from "../../components/DragDrop/DragDropWrapper";
 import { PostFeedContext } from "./PostFeedContext";
+import { DragDropContextProvider } from "../../components/DragDrop/DragDropContext";
 import { Image } from "../../models/common";
 import "./Create.css";
 
@@ -14,6 +15,7 @@ function CreatePost() {
 
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
+	// should be array of Image objects, typeof should be array
 	const [attachments, setAttachments] = useState<Image[]>([]);
 	const [readyToPost, setReadyToPost] = useState(false);
 
@@ -22,12 +24,16 @@ function CreatePost() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (title.length > 0 && description.length > 0) {
+		if (
+			title.length > 0 &&
+			description.length > 0 &&
+			attachments.length > 0
+		) {
 			setReadyToPost(true);
 		} else {
 			setReadyToPost(false);
 		}
-	}, [title, description]);
+	}, [title, description, attachments]);
 
 	function onEditTitle(e: React.ChangeEvent<HTMLInputElement>) {
 		const newTitle = e.target.value;
@@ -46,7 +52,7 @@ function CreatePost() {
 				title,
 				description,
 				likes: 0,
-				attachments: [],
+				attachments: attachments,
 				createdAt: new Date().toISOString(),
 				comments: [],
 			};
@@ -86,11 +92,16 @@ function CreatePost() {
 					</small>
 				</Input>
 
-				<DragDropWrapper
-					images={attachments}
-					updateData={setAttachments}
-					multiUpload={true}
-				/>
+				<DragDropContextProvider
+					attachments={attachments}
+					setAttachments={setAttachments}
+				>
+					<DragDropWrapper
+						images={attachments}
+						updateData={setAttachments}
+						multiUpload={true}
+					/>
+				</DragDropContextProvider>
 
 				<div className="create-post-btns-container">
 					<div className="create-post-btns">

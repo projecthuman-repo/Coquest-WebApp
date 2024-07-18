@@ -4,6 +4,7 @@ import Comment from "./Comment";
 import Input from "../Input";
 import ImageCarousel from "../ImageCarousel";
 import { User } from "../../models/usermodel";
+import { Image } from "../../models/common";
 // import {get, find} from "../../apiInterface";
 //import APIReferenceComponent from "../../APIReferenceComponent";
 import "./Comment.css";
@@ -15,7 +16,7 @@ export type PostProps = {
 	title: string;
 	description: string;
 	likes: number;
-	attachments: string[];
+	attachments: Image[];
 	createdAt: string;
 	comments: { username: string; body: string }[];
 	newCommentAuthor: User;
@@ -49,7 +50,6 @@ const Post = ({
 		useState<HTMLElement | null>(null);
 
 	useEffect(() => {
-		console.log(collapsed);
 		// post-container determines the height of the whole post
 		// comments-container is the same height as post-container
 		// and new comments should not add new height to post (can be scrollable if needed)
