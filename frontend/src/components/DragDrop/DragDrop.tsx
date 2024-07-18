@@ -23,7 +23,6 @@ import "./DragDrop.css";
 
 const itemPreview = withRequestPreSendUpdate(
 	({ id, url, updateRequest, requestData }: any) => {
-		console.log("itemPreview", id, url, updateRequest, requestData);
 		return (
 			<div>
 				<CropperComponent
@@ -55,7 +54,6 @@ const DragDrop = (props: any) => {
 
 	// Throw error if uploaded file is not of image type and bar Uploady from uploading the offending file
 	useBatchAddListener((batch) => {
-		console.log(batch.items);
 		const index = batch.items.findIndex(
 			(item) => !item.file.type.startsWith("image/"),
 		);
@@ -83,10 +81,6 @@ const DragDrop = (props: any) => {
 	});
 
 	useBatchFinishListener((batch) => {
-		console.log("batch items", batch.items);
-		console.log("imageRemotePath", imageRemotePath);
-		console.log("imageType", imageType);
-
 		if (
 			imageRemotePath &&
 			imageType &&
@@ -100,7 +94,6 @@ const DragDrop = (props: any) => {
 					path: `${process.env.REACT_APP_STORAGE_URL!}/${imageRemotePath[index]}`,
 				});
 			});
-			console.log("imgs", imgs);
 			props.updateData(attachments.concat(imgs));
 			setImageType([]);
 			setImageRemotePath([]);
@@ -179,12 +172,7 @@ const DragDrop = (props: any) => {
 				</div>
 			)}
 
-			<UploadPreview
-				PreviewComponent={itemPreview}
-				onPreviewsChanged={(previews) => {
-					console.log("previews", previews);
-				}}
-			/>
+			<UploadPreview PreviewComponent={itemPreview} />
 
 			{inputErrors &&
 				inputErrors.map((error) => (

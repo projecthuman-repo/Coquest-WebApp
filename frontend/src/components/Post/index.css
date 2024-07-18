@@ -43,7 +43,6 @@
   padding: 16px 32px;
 }
 
-/* ANOTHER LIKE BUTTON STYLE VARIANT (next to the title) */
 .like-btn {
   display: flex;
   flex-direction: row;

@@ -56,7 +56,6 @@ function CreatePost() {
 				createdAt: new Date().toISOString(),
 				comments: [],
 			};
-			console.log(newPost);
 
 			setPosts([newPost, ...posts]);
 
