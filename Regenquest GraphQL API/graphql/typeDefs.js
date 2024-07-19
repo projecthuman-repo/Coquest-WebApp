@@ -528,5 +528,6 @@ module.exports = gql`
     ): mutationResponse @auth
 
     setCookieWithToken(token: String!): mutationResponse @verifyToken
+    deleteCookieToken: mutationResponse
   }
 `;

@@ -1439,5 +1439,10 @@ module.exports = {
 
       return { code: 0, response: "successful" };
     },
+
+    async deleteCookieToken(_parent, _args, context, _info) {
+      context.res.clearCookie(process.env.AUTH_COOKIE_NAME);
+      return { code: 0, response: "successful" };
+    },
   },
 };

@@ -209,6 +209,14 @@ const router = createBrowserRouter([
 		path: "/profile",
 		element: <UserProfile />,
 	},
+	{
+		path: "/logout",
+		element: (
+			<UserRegistrationProvider>
+				<GlobalRedirect logout={true} />
+			</UserRegistrationProvider>
+		),
+	},
 ]);
 
 const Container = styled("div")({
@@ -223,7 +231,7 @@ root.render(
 					<UserRegistrationProvider>
 						<GlobalRedirect />
 						{/* Prevent the user from accessing links to top-level views while registering */}
-						<RemoveNavComponents pathPrefix="/registration" />
+						<RemoveNavComponents />
 					</UserRegistrationProvider>
 				</BrowserRouter>
 				<RouterProvider router={router} />

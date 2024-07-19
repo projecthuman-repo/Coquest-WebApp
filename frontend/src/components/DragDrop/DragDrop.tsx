@@ -103,7 +103,7 @@ const DragDrop = (props: any) => {
 
 	useEffect(() => {
 		if (!imageType) setImageType([]);
-	}, [imageType, readyForUpload]);
+	}, [imageType, readyForUpload, setImageType]);
 
 	return (
 		<>
@@ -122,6 +122,7 @@ const DragDrop = (props: any) => {
 									<img
 										src="/icons/upload.png"
 										className="upload-icon"
+										alt="Upload icon"
 									></img>
 									<p>
 										<input
@@ -158,6 +159,7 @@ const DragDrop = (props: any) => {
 									<img
 										src="/icons/close.png"
 										className="close-icon"
+										alt="Close icon"
 										onClick={() => {
 											const newAttachments =
 												attachments.filter(

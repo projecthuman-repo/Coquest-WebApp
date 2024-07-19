@@ -6,6 +6,7 @@ import WalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import TicketsIcon from "@mui/icons-material/ConfirmationNumber";
 import SettingsIcon from "@mui/icons-material/Settings";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { subscribeToUserModelSubject } from "../../observers/userobserver"; // Ensure this path is correct
 import { Name } from "../../models/usermodel";
 
@@ -145,6 +146,12 @@ const DropdownMenu = () => {
 					<SettingsIcon />
 				</MenuItemIcon>
 				Settings
+			</MenuItem>
+			<MenuItem onClick={() => handleNavigation("/logout")}>
+				<MenuItemIcon>
+					<LogoutIcon style={{ color: "red" }} />
+				</MenuItemIcon>
+				<span style={{ color: "red" }}>Logout</span>
 			</MenuItem>
 		</DropdownContainer>
 	);
