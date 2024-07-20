@@ -16,15 +16,15 @@ function Interests(props: any) {
 			<h3 className="main-heading">Let’s get you stitched in.</h3>
 			<p className="sub-heading">What are your interests?</p>
 			<div className="search-container">
+				<img
+					src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png"
+					className="search-icon"
+				/>
 				<input
 					type="search"
 					className="search"
 					name="search"
 					placeholder="Search"
-				/>
-				<img
-					src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png"
-					className="search-icon"
 				/>
 			</div>
 			<p className="sub-text">Select 3 or more.</p>

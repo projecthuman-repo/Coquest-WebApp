@@ -14,7 +14,20 @@ const setAuthCookieMutation = gql`
 	}
 `;
 
-function GlobalRedirect() {
+const deleteAuthCookieMutation = gql`
+	mutation DeleteCookieToken {
+		deleteCookieToken {
+			response
+			code
+		}
+	}
+`;
+
+interface GlobalRedirectProps {
+	logout?: boolean;
+}
+
+function GlobalRedirect({ logout }: GlobalRedirectProps) {
 	const { registered, done, authenticated, setAuthenticated } =
 		useUserRegistration();
 
@@ -52,7 +65,11 @@ function GlobalRedirect() {
 	// }, [done, authenticated, registered, token, loc, navigate]);
 
 	useEffect(() => {
-		if (done) {
+		if (logout && logout === true) {
+			graphQLClient.request(deleteAuthCookieMutation).then(() => {
+				setAuthenticated(false);
+			});
+		} else if (done) {
 			if (!authenticated) {
 				if (token) {
 					console.log("setting cookie with token", token);
@@ -77,7 +94,16 @@ function GlobalRedirect() {
 				navigate(0);
 			}
 		}
-	}, [done, authenticated, registered, token, loc]);
+	}, [
+		done,
+		authenticated,
+		registered,
+		token,
+		loc,
+		navigate,
+		setAuthenticated,
+		logout,
+	]);
 
 	return null;
 }

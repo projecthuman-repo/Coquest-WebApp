@@ -44,6 +44,9 @@ import { UserRegistrationProvider } from "./components/AutoRedirector/UserRegist
 import CreateCommunity from "./pages/Community/Create";
 import CommunityDescription from "./pages/Community/Description/Description";
 import CommunityQuests from "./pages/Quests/Quests";
+import { PostFeedContextProvider } from "./pages/Post/PostFeedContext";
+import PostFeed from "./pages/Post/PostFeed";
+import CreatePost from "./pages/Post/Create";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement,
@@ -95,6 +98,28 @@ const router = createBrowserRouter([
 			{
 				path: ":id/quests",
 				element: <CommunityQuests />,
+			},
+		],
+	},
+	{
+		path: "/posts",
+		element: <Outlet />,
+		children: [
+			{
+				path: "",
+				element: (
+					<PostFeedContextProvider>
+						<PostFeed />
+					</PostFeedContextProvider>
+				),
+			},
+			{
+				path: "create",
+				element: (
+					<PostFeedContextProvider>
+						<CreatePost />
+					</PostFeedContextProvider>
+				),
 			},
 		],
 	},
@@ -194,6 +219,14 @@ const router = createBrowserRouter([
 		path: "/profile",
 		element: <UserProfile />,
 	},
+	{
+		path: "/logout",
+		element: (
+			<UserRegistrationProvider>
+				<GlobalRedirect logout={true} />
+			</UserRegistrationProvider>
+		),
+	},
 ]);
 
 const Container = styled("div")({
@@ -208,7 +241,7 @@ root.render(
 					<UserRegistrationProvider>
 						<GlobalRedirect />
 						{/* Prevent the user from accessing links to top-level views while registering */}
-						<RemoveNavComponents pathPrefix="/registration" />
+						<RemoveNavComponents />
 					</UserRegistrationProvider>
 				</BrowserRouter>
 				<RouterProvider router={router} />

@@ -147,7 +147,7 @@ function Dashboard() {
 						<SimpleCard label="My projects" />
 						<SimpleCard label="Open projects" />
 					</CardCont>
-					<ExtendedSimpleCard label="Posts" />
+					<ExtendedSimpleCard label="Posts" link="/posts" />
 				</DashColumn>
 				<DashColumn>
 					<MyTasksContainer label="My Tasks" seeAllLink="#" />
