@@ -1,0 +1,29 @@
+.comment {
+  margin: 15px 0;
+  margin-right: 12px;
+}
+
+.info-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.info-line .author {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.info-line .date {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+  text-align: right;
+}
+
+.message {
+  font-size: 14px;
+  margin-top: 5px;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+}

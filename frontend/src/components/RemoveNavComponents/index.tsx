@@ -1,31 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import Toolbar from "../Toolbar";
 import LeftSideBar from "../LeftSideBar";
 import { useUserRegistration } from "../AutoRedirector/UserRegistration";
 import { isCompleteRegistration } from "../../models/common";
 
-type RemoveNavComponentsProps = {
-	// The location to refrain displaying navigation components
-	pathPrefix: string;
-};
-
-function RemoveNavComponents(props: RemoveNavComponentsProps) {
+function RemoveNavComponents() {
 	const { registered } = useUserRegistration();
-	const loc = useLocation();
 	const [canDisplayNav, setCanDisplayNav] = useState(false);
 
 	useEffect(() => {
 		// TODO: decouple predicate from implementation
-		if (
-			isCompleteRegistration(registered) &&
-			!loc.pathname.startsWith(props.pathPrefix)
-		) {
+		if (isCompleteRegistration(registered)) {
 			setCanDisplayNav(true);
 		} else {
 			setCanDisplayNav(false);
 		}
-	}, [loc, registered]);
+	}, [registered]);
 
 	if (canDisplayNav) {
 		return (

@@ -1,8 +1,7 @@
-import { Button, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import React, { useCallback } from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { IconButton } from "@mui/material";
 import { useNavigate } from "react-router";
 import { sanitizePage, RegistrationPages, update, NUMPAGES } from "./utils";
 import { Link } from "react-router-dom";
@@ -125,36 +124,29 @@ function Orientation() {
 					<div className="orientation-btn">
 						<div>
 							{page > 1 && (
-								<IconButton
-									title="Previous page"
+								<BackButton
 									onClick={() => {
 										const newPage = page - 1;
 										changePage(newPage);
 									}}
-								>
-									<BackButton />
-								</IconButton>
+								/>
 							)}
 						</div>
 
 						<div>
 							{page < NUMPAGES ? (
-								<IconButton
-									title="Next page"
+								<div
+									className="btn-group"
 									onClick={() => {
 										const newPage = page + 1;
 										changePage(newPage);
 									}}
 								>
-									<div className="btn-group">
-										<SecondaryButton name="Skip" />
-										<PrimaryButton name="Next" />
-									</div>
-								</IconButton>
+									<SecondaryButton name="Skip" />
+									<PrimaryButton name="Next" />
+								</div>
 							) : (
-								<Button onClick={submit}>
-									<PrimaryButton name="Finish" />
-								</Button>
+								<PrimaryButton name="Finish" onClick={submit} />
 							)}
 						</div>
 					</div>

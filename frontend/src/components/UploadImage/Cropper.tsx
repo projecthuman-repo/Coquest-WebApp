@@ -7,8 +7,8 @@ import { Button } from "@mui/material";
 import { gql } from "graphql-request";
 import graphQLClient from "../../apiInterface/client";
 
-const CROP_WIDTH = 175;
-const CROP_HEIGHT = 175;
+export const CROP_WIDTH = 175;
+export const CROP_HEIGHT = 175;
 
 const CropContainer = styled.div`
 	margin: auto;
@@ -114,7 +114,7 @@ function CropperComponent({ id, src, updateRequest, requestData }: any) {
 
 	return (
 		<CropContainer>
-			{!uploadedState && (
+			{!uploadedState && updateRequest && requestData && (
 				<>
 					<Cropper
 						style={{
@@ -137,7 +137,6 @@ function CropperComponent({ id, src, updateRequest, requestData }: any) {
 				</>
 			)}
 
-			{/* Fill full-size preview container with the default fill colour, black */}
 			{imageUrl && uploadedState && (
 				<div
 					style={{
