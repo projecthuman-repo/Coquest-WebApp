@@ -28,6 +28,12 @@ button {
   border-radius: 20px;
 
   color: white;
+  cursor: pointer;
+}
+
+.primary-button.muted {
+  background-color: rgba(38, 165, 231, 0.5);
+  cursor: auto;
 }
 
 .next-button-text {
@@ -48,4 +54,22 @@ button {
   font-size: 18px;
   color: black;
   font-weight: 550;
+}
+
+.add-button {
+  width: 46px;
+  height: 46px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-button > * {
+  height: 24px;
+  width: fit-content;
+  object-fit: contain;
 }

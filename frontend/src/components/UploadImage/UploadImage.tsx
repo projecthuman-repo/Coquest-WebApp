@@ -21,14 +21,14 @@ const CenterContainer = styled.div`
 `;
 
 // Error type with similiar shape to the error type Uploady expects in its error-handling callback functions
-interface FileInvalidEventDetail {
+export interface FileInvalidEventDetail {
 	file: FileLike; // The File object that was attempted to be uploaded
 	issues: {
 		[key: string]: boolean; // A map of issues encountered with the file, e.g., type, size
 	};
 }
 
-function getErrorMsg(err: FileInvalidEventDetail) {
+export function getErrorMsg(err: FileInvalidEventDetail) {
 	let msg = "";
 	if (err) {
 		msg += `Could not upload ${err.file.name}: `;
@@ -133,7 +133,7 @@ function UploadImage(props: any) {
 					<img
 						src={images[0].path}
 						alt="generated img"
-						style={{ height: "175px" }}
+						style={{ height: "175px", borderRadius: "50%" }}
 					/>
 				</>
 			) : (
@@ -141,7 +141,7 @@ function UploadImage(props: any) {
 			)}
 
 			{displayImgBtns && (
-				<div className="upload-btn-wrapper">
+				<div className="outline-btn">
 					<UploadButton />
 				</div>
 			)}

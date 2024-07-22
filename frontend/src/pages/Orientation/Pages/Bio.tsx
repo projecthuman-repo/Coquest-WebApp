@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Input from "../../../components/Input";
 import "../Orientation.css";
 import "./Bio.css";
 
@@ -22,16 +23,17 @@ function Bio(props: any) {
 				</h3>
 				<p className="sub-heading">Let&apos;s get to know you.</p>
 				<div className="bio-wrapper">
-					<textarea
-						className="bio-input"
-						placeholder="Add your bio"
-						value={biography}
-						onChange={onEditBio}
-						maxLength={MAX_CHAR_COUNT}
-					></textarea>
-					<small className="char-count">
-						{biography.length}&nbsp;/&nbsp;{MAX_CHAR_COUNT}
-					</small>
+					<Input label="Add your bio">
+						<textarea
+							placeholder=""
+							value={biography}
+							onChange={onEditBio}
+							maxLength={MAX_CHAR_COUNT}
+						></textarea>
+						<small className="char-count">
+							{biography.length}&nbsp;/&nbsp;{MAX_CHAR_COUNT}
+						</small>
+					</Input>
 				</div>
 			</div>
 		);

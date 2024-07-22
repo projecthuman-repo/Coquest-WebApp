@@ -26,6 +26,7 @@ const ProfileContainer = styled.div({
 	gap: "10px",
 	paddingLeft: "25px",
 	position: "relative", // Add relative positioning for dropdown positioning
+	cursor: "pointer",
 });
 
 const ProfileIcon = styled(AccountCircleIcon)({
