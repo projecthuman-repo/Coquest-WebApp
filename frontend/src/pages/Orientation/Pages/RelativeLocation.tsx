@@ -128,7 +128,7 @@ function RelativeLocation(props: any) {
 				needs.
 			</p>
 			<div className="location-container">
-				<img src="/icons/location.png" className="location-icon" />
+				<img src="/icons/location.png" alt="Location Icon" className="location-icon" />
 				<InputMask
 					mask="_!_!_!"
 					replacement={{ _: /[A-Za-z]/, "!": /\d/ }}

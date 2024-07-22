@@ -19,6 +19,7 @@ function Interests(props: any) {
 				<img
 					src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png"
 					className="search-icon"
+					alt="Search Icon"
 				/>
 				<input
 					type="search"
