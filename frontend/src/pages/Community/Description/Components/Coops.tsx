@@ -40,7 +40,9 @@ function CommunityDescriptionCoops() {
 				</button>
 				<button
 					className={`quest-button-heading quest-button-design ${
-						coopSection === "completed-coops" ? "com-d-selected" : ""
+						coopSection === "completed-coops"
+							? "com-d-selected"
+							: ""
 					}`}
 					onClick={() => setCoopSection("completed-coops")}
 				>

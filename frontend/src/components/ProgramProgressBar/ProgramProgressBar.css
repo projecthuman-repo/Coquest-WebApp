@@ -5,33 +5,33 @@
   font-weight: 600;
   font-size: 22px;
 }
-  .ppb-heading {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 22px;
-    overflow-wrap: break-word;
-  }
+.ppb-heading {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 22px;
+  overflow-wrap: break-word;
+}
 
-  .ppb-link {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 15px;
-    margin-top: 15px;
-  }
+.ppb-link {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 15px;
+  margin-top: 15px;
+}
 
 /* Containers */
 
-  .ppb-heading-container {
-    display: flex;
-    justify-content: space-between;
+.ppb-heading-container {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* Progress Bar */
 
 .ppb-progress-bar {
-    width: 100%;
-    height: 20px;
-    background-color: #2b0f0f;
-    border-radius: 10px;
-    margin-top: 15px;
+  width: 100%;
+  height: 20px;
+  background-color: #2b0f0f;
+  border-radius: 10px;
+  margin-top: 15px;
 }

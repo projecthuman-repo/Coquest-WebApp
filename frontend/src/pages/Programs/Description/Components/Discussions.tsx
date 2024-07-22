@@ -1,10 +1,9 @@
 import React from "react";
 
 function ProgramsDiscussions() {
-
 	return (
 		<>
-        <p>Discussions</p>
+			<p>Discussions</p>
 		</>
 	);
 }

@@ -7,10 +7,12 @@ function Quests() {
 
 	return (
 		<>
-		<div className="ppb-heading-container">
-            <h2 className="quest-heading">Quests</h2>
-            <a href="/" className="quest-link">See All</a>
-        </div>
+			<div className="ppb-heading-container">
+				<h2 className="quest-heading">Quests</h2>
+				<a href="/" className="quest-link">
+					See All
+				</a>
+			</div>
 			<div className="quest-button-container">
 				<button
 					className={`quest-button-heading quest-button-design ${

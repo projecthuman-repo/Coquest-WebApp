@@ -52,10 +52,10 @@ function CommunityDescription() {
 			{communityData != null ? (
 				<div className="community-description-page">
 					<div className="com-d-header-container">
-						<h1 className="com-d-main-heading">{communityData.name}</h1>
-						<button className="com-d-signup-design">
-							Sign Up
-						</button>
+						<h1 className="com-d-main-heading">
+							{communityData.name}
+						</h1>
+						<button className="com-d-signup-design">Sign Up</button>
 					</div>
 					{/* Main Navigation Buttons */}
 					<div className="com-d-nav-button-container">

@@ -32,7 +32,9 @@ function CommunityDescriptionPrograms() {
 				</button>
 				<button
 					className={`quest-button-heading quest-button-design ${
-						programSection === "open-programs" ? "com-d-selected" : ""
+						programSection === "open-programs"
+							? "com-d-selected"
+							: ""
 					}`}
 					onClick={() => setProgramSection("open-programs")}
 				>

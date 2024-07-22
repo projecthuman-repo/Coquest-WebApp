@@ -240,7 +240,7 @@ const router = createBrowserRouter([
 			{
 				path: "description",
 				element: <ProjectDescription />,
-			}
+			},
 		],
 	},
 ]);
