@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Repository from "../../../repositories/repository";
 import { Community } from "../../../models/communitymodel";
-import CommunityDescriptionOverview from "./Overview";
-import CommunityDescriptionPrograms from "./Programs";
-import CommuntiyDescriptionProjects from "./Projects";
-import CommunityDescriptionCoops from "./Coops";
+import CommunityDescriptionOverview from "./Components/Overview";
+import CommunityDescriptionPrograms from "./Components/Programs";
+import CommuntiyDescriptionProjects from "./Components/Projects";
+import CommunityDescriptionCoops from "./Components/Coops";
 import "./Description.css";
 
 function CommunityDescription() {
@@ -51,41 +51,41 @@ function CommunityDescription() {
 		<>
 			{communityData != null ? (
 				<div className="community-description-page">
-					<div className="header-container">
-						<h1 className="d-main-heading">{communityData.name}</h1>
-						<button className="signup-button-design">
+					<div className="com-d-header-container">
+						<h1 className="com-d-main-heading">{communityData.name}</h1>
+						<button className="com-d-signup-design">
 							Sign Up
 						</button>
 					</div>
 					{/* Main Navigation Buttons */}
-					<div className="nav-button-container">
+					<div className="com-d-nav-button-container">
 						<button
-							className={`button-design ${
-								section === "overview" ? "selected" : ""
+							className={`com-d-button-design ${
+								section === "overview" ? "com-d-selected" : ""
 							}`}
 							onClick={() => setSection("overview")}
 						>
 							Overview
 						</button>
 						<button
-							className={`button-design ${
-								section === "programs" ? "selected" : ""
+							className={`com-d-button-design ${
+								section === "programs" ? "com-d-selected" : ""
 							}`}
 							onClick={() => setSection("programs")}
 						>
 							Programs
 						</button>
 						<button
-							className={`button-design ${
-								section === "projects" ? "selected" : ""
+							className={`com-d-button-design ${
+								section === "projects" ? "com-d-selected" : ""
 							}`}
 							onClick={() => setSection("projects")}
 						>
 							Projects
 						</button>
 						<button
-							className={`button-design ${
-								section === "co-ops" ? "selected" : ""
+							className={`com-d-button-design ${
+								section === "co-ops" ? "com-d-selected" : ""
 							}`}
 							onClick={() => setSection("co-ops")}
 						>
@@ -105,10 +105,10 @@ function CommunityDescription() {
 				</div>
 			) : (
 				<div className="community-description-page">
-					<h1 className="d-main-heading margin-bottom">
+					<h1 className="com-d-main-heading margin-bottom">
 						Community Not Found.
 					</h1>
-					<p className="d-sub-text">
+					<p className="com-d-sub-text">
 						Check if the ID in the URL matches the community you are
 						trying to find before trying again.
 					</p>

@@ -1,0 +1,79 @@
+/* Project Container and Background */
+
+.com-prj-container {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0px 0px 0px;
+  }
+  
+  .com-prj-background {
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0;
+    padding: 25px 25px 25px 25px;
+    border-radius: 10px;
+    width: 750px;
+    margin: 15px 20px 0px 0px;
+  }
+  
+  .com-prj-background img {
+    width: 15px;
+    height: 10px;
+  }
+  
+  /* Search Bar */
+  
+  .com-prj-search {
+    border-radius: 25px;
+    border: 1px solid black;
+    padding-left: 40px;
+    width: 328px;
+    height: 48px;
+  }
+  
+  .com-prj-search-container {
+    position: relative;
+    margin: 25px 0px 5px 0px;
+  }
+  
+  .com-prj-search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 25px;
+    height: 25px;
+  }
+  
+  /* Text Styles */
+  
+  .com-prj-heading {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 18px;
+    overflow-wrap: break-word;
+  }
+  
+  .com-prj-sub-heading {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 14px;
+    overflow-wrap: break-word;
+  }
+  
+  .com-prj-text {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 16px;
+    overflow-wrap: break-word;
+    margin-top: 15px;
+  }
+  
+  /* Buttons */
+  
+  .com-prj-open-button {
+    justify-content: center;
+    align-items: center;
+    width: 15px;
+    height: 10px;
+  }

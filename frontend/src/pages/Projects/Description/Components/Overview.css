@@ -1,0 +1,51 @@
+/* Text Styles */
+
+.prj-o-sub-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 22px;
+}
+
+.prj-o-sub-text {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 16px;
+  overflow-wrap: break-word;
+}
+
+.prj-o-link {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+/* Widget Container and Background */
+
+.prj-o-widget-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px;
+  }
+
+.prj-o-heading-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+  .prj-o-left, .prj-o-right {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .prj-o-background {
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0;
+    padding: 25px 25px 25px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px lightgrey;
+    width: 550px;
+    margin: 15px 20px 25px 0px;
+  }
