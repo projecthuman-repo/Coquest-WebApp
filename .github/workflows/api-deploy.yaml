@@ -4,8 +4,6 @@ on:
   push:
     paths:
       - 'Regenquest GraphQL API/**'
-    branches:
-      - main
 
 jobs:
   deploy:
