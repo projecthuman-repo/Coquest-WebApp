@@ -1,0 +1,45 @@
+/* Text Styles */
+
+.budget-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 22px;
+}
+
+.budget-sub-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 20px;
+  overflow-wrap: break-word;
+}
+
+.budget-text {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 16px;
+  overflow-wrap: break-word;
+}
+
+.budget-link {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+/* Containers */
+
+.budget-group-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.budget-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.budget-item-container {
+  text-align: center;
+  flex: 1;
+}

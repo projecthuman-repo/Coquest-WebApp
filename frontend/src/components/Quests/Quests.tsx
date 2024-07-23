@@ -7,10 +7,16 @@ function Quests() {
 
 	return (
 		<>
+			<div className="ppb-heading-container">
+				<h2 className="quest-heading">Quests</h2>
+				<a href="/" className="quest-link">
+					See All
+				</a>
+			</div>
 			<div className="quest-button-container">
 				<button
 					className={`quest-button-heading quest-button-design ${
-						questSection === "open" ? "selected" : ""
+						questSection === "open" ? "quest-selected" : ""
 					}`}
 					onClick={() => setQuestSection("open")}
 				>
@@ -18,7 +24,7 @@ function Quests() {
 				</button>
 				<button
 					className={`quest-button-heading quest-button-design ${
-						questSection === "ongoing" ? "selected" : ""
+						questSection === "ongoing" ? "quest-selected" : ""
 					}`}
 					onClick={() => setQuestSection("ongoing")}
 				>
@@ -26,7 +32,7 @@ function Quests() {
 				</button>
 				<button
 					className={`quest-button-heading quest-button-design ${
-						questSection === "completed" ? "selected" : ""
+						questSection === "completed" ? "quest-selected" : ""
 					}`}
 					onClick={() => setQuestSection("completed")}
 				>
@@ -34,7 +40,7 @@ function Quests() {
 				</button>
 			</div>
 			<div className="quest-container">
-				<p className="d-sub-text">Example Quest</p>
+				<p>Example Quest</p>
 				<button>
 					<img
 						src="/icons/next-button-chevron.png"
@@ -43,7 +49,7 @@ function Quests() {
 				</button>
 			</div>
 			<div className="quest-container">
-				<p className="d-sub-text">Example Quest</p>
+				<p>Example Quest</p>
 				<button>
 					<img
 						src="/icons/next-button-chevron.png"
@@ -52,7 +58,7 @@ function Quests() {
 				</button>
 			</div>
 			<div className="quest-container">
-				<p className="d-sub-text">Example Quest</p>
+				<p>Example Quest</p>
 				<button>
 					<img
 						src="/icons/next-button-chevron.png"
@@ -61,7 +67,7 @@ function Quests() {
 				</button>
 			</div>
 			<div className="quest-container">
-				<p className="d-sub-text">Example Quest</p>
+				<p>Example Quest</p>
 				<button>
 					<img
 						src="/icons/next-button-chevron.png"

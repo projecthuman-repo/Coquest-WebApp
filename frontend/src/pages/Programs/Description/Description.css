@@ -1,19 +1,19 @@
-/* Main Text Styles */
+/* Main Page Text Styles */
 
-.com-d-main-heading {
+.prg-d-main-heading {
   font-family: Poppins;
   font-weight: 600;
   font-size: 30px;
   text-align: center;
 }
 
-.com-d-sub-heading {
+.prg-d-sub-heading {
   font-family: Poppins;
   font-weight: 600;
   font-size: 20px;
 }
 
-.com-d-sub-text {
+.prg-d-sub-text {
   font-family: Poppins;
   font-weight: 400;
   font-size: 16px;
@@ -22,7 +22,7 @@
 
 /* Main Div */
 
-.community-description-page {
+.prg-d-page {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -32,7 +32,7 @@
 
 /* Header and Navigation Buttons */
 
-.com-d-header-container {
+.prg-d-header-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -40,7 +40,7 @@
   margin: 20px 0px 10px 0px;
 }
 
-.com-d-signup-design {
+.prg-d-signup-button-design {
   width: 120px;
   height: 40px;
   margin: 0px 0px 0px 25px;
@@ -48,11 +48,11 @@
   border-radius: 20px;
 }
 
-.com-d-signup-design:hover {
+.prg-d-signup-button-design:hover {
   background-color: #f0f0f0;
 }
 
-.com-d-nav-button-container {
+.prg-d-nav-button-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -60,13 +60,13 @@
   margin: 15px 0px 0px 0px;
 }
 
-.com-d-button-design {
+.prg-d-button-design {
   width: 200px;
   height: 40px;
   border-bottom: 3px solid lightgrey;
 }
 
-.com-d-selected {
+.prg-d-selected {
   border-bottom: 3px solid black !important;
 }
 
