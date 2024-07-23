@@ -14,7 +14,7 @@ import ItemGrid from "./pages/Inventory/ItemGrid";
 import { Dashboard } from "./pages/Dashboard";
 import WalletPage from "./pages/Wallet/WalletPage";
 import { Outlet } from "react-router-dom";
-import UserProfile from "./pages/Profile/UserProfile";  // Import UserProfile page
+import UserProfile from "./pages/Profile/UserProfile"; // Import UserProfile page
 import ProjectDescription from "./pages/Projects/Description/Description";
 
 // Program flow Imports
