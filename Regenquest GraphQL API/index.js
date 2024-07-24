@@ -18,6 +18,8 @@ const typeDefs = require("./graphql/typeDefs");
 // Provide resolver functions for your schema fields
 const resolvers = require("./graphql/resolvers");
 
+console.log(`CROSS ORIGIN: ${process.env.CROSS_ORIGIN}`);
+
 const corsOptions = {
   credentials: true,
   origin: [process.env.CROSS_ORIGIN],
