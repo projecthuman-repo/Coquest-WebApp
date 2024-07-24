@@ -43,4 +43,4 @@ jobs:
         cd './frontend/'
         awk -F= '{ print "\"" $1 "\": \"" $2 "\"," }' <(echo ${{ secrets.ENV_VARS_FRONTEND }}) | sed '$ s/,$//' | sed '1s/^/{\n/' | sed '$s/$/\n}/' > .env
         ENV_VARS=$(cat .env | awk -F= '{print $1"="$2}' | tr '\n' ',' | sed 's/,$//')
-        gcloud app deploy --update-env-vars $ENV_VARS
+        gcloud app deploy --set-env-vars $ENV_VARS
