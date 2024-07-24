@@ -12,3 +12,10 @@ automatic_scaling:
   target_cpu_utilization: 0.65
   target_throughput_utilization: 0.75
   min_instances: 1
+
+env_variables:
+  REACT_APP_GOOGLE_MAPS_API_KEY: "AIzaSyChQZr5AKEKtboy4fw0nfI-L3wO9jiYAOw"
+  REACT_APP_API: "https://us-central1-base-map-workspace.cloudfunctions.net/regenquest-api"
+  REACT_APP_AUTH_URI: "http://localhost:3002"
+  REACT_APP_STORAGE_URL: "https://storage.googleapis.com"
+  REACT_APP_JWT_COOKIE: "phc"
