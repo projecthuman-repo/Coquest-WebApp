@@ -28,8 +28,7 @@ jobs:
     - name: Build React application
       run: |
         cd './frontend/'
-        echo ${{ secrets.ENV_VARS_FRONTEND }} > .env
-        npm run build
+        ${{ secrets.ENV_VARS_FRONTEND }} npm run build
 
     - name: Authenticate with Google Cloud
       uses: 'google-github-actions/auth@v2'
