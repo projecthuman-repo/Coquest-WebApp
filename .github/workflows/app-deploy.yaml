@@ -41,5 +41,4 @@ jobs:
     - name: Deploy to Google App Engine
       run: |
         cd './frontend/'
-        gcloud app services update default --update-env-vars ${{ secrets.ENV_VARS_FRONTEND }})
         gcloud app deploy
