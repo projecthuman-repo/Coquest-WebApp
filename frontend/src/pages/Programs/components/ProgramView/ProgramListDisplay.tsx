@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
 import ProgramPane from "./ProgramPane";
-import { Program } from "../../ProgramComponents/TypeDefinitions/Program";
+import { Program } from "../../../../models/programModel";
 
 const Container = styled("div")({
 	display: "flex",
@@ -13,15 +13,15 @@ const Container = styled("div")({
 	overflowY: "scroll",
 	height: 600,
 	"&::-webkit-scrollbar": {
-		width: "0.5em",
+		width: "5px",
 	},
 	"&::-webkit-scrollbar-thumb": {
-		backgroundColor: "rgba(0,0,0,.5)",
-		borderRadius: "10px",
+		backgroundColor: "rgba(0,0,0,.38)",
+		borderRadius: "4px",
 	},
 	"&::-webkit-scrollbar-track": {
-		backgroundColor: "rgba(0,0,0,.2)",
-		borderRadius: "10px",
+		backgroundColor: "rgba(0,0,0,.15)",
+		borderRadius: "4px",
 	},
 });
 

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Grid, IconButton, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import AddContainer from "./AddContainer";
+import AddContainer from "../components/AddContainer";
 interface Row {
 	itemName: string;
 	quantity: number;

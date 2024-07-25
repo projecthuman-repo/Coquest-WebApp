@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material";
 import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { RadioGroupField } from "../../ProgramComponents/RadioGroupField";
-import AddContainer from "../../ProgramComponents/AddContainer";
-import BasicDateRangePicker from "../../ProgramComponents/DateRange";
-import BasicTimeRangePicker from "../../ProgramComponents/TimeRange";
-import LocationSearch from "../../ProgramComponents/LocationSearch";
-import SkillsCertsSearch from "../../ProgramComponents/SkillsCertsSearch";
+import { RadioGroupField } from "../../components/RadioGroupField";
+import AddContainer from "../../components/AddContainer";
+import BasicDateRangePicker from "../../components/DateRange";
+import BasicTimeRangePicker from "../../components/TimeRange";
+import LocationSearch from "../../components/LocationSearch";
+import SkillsCertsSearch from "../../components/SkillsCertsSearch";
 
 const ContentView = styled("div")({
 	minWidth: 300,

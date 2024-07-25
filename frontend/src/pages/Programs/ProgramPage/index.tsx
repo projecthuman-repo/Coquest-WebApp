@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Tab, Tabs, Button } from "@mui/material";
 import { styled } from "@mui/system";
-import { Program } from "../ProgramComponents/TypeDefinitions/Program";
+import { Program } from "../../../models/programModel";
 
 interface ProgramPageProps {
 	program: Program;

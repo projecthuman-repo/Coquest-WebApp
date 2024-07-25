@@ -5,7 +5,7 @@ import LinearProgress, {
 	linearProgressClasses,
 } from "@mui/material/LinearProgress";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Program } from "../../ProgramComponents/TypeDefinitions/Program";
+import { Program } from "../../../../models/programModel";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 	height: 10,
@@ -28,8 +28,8 @@ interface ProgramProps {
 	// onToggleExpand: () => void;
 }
 const Container = styled("div")(({ theme }) => ({
+	width: "100%",
 	padding: 30,
-	margin: "0 auto",
 	[theme.breakpoints.down("sm")]: {
 		width: "80%",
 	},

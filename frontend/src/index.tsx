@@ -34,8 +34,8 @@ import {
 	CoopOperations,
 	CoopPromotion,
 } from "./pages/Coop/CreateCoop";
-import { EditProfile } from "./pages/Programs/EditProfile";
-import { ProgramView } from "./pages/Programs/ProgramView";
+import EditProfile from "./pages/Programs/EditProfile";
+import ProgramView from "./pages/Programs/ProgramView";
 import styled from "@emotion/styled";
 import { Orientation } from "./pages/Orientation";
 import RemoveNavComponents from "./components/RemoveNavComponents";
@@ -127,11 +127,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/programs",
-		element: (
-			<>
-				<Outlet />
-			</>
-		),
+		element: <ProgramView />,
 		children: [
 			{
 				path: "create",
@@ -168,10 +164,6 @@ const router = createBrowserRouter([
 						element: <EditProfile />,
 					},
 				],
-			},
-			{
-				path: "view",
-				element: <ProgramView />,
 			},
 			{
 				path: "description",

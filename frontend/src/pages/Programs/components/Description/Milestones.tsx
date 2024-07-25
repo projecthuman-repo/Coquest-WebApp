@@ -1,6 +1,6 @@
 import React from "react";
 import "./Milestones.css";
-import "../Description.css";
+import "../../Description/Description.css";
 import ProgramProgressBar from "../../../../components/ProgramProgressBar/ProgramProgressBar";
 
 function ProgramsMilestones() {

@@ -1,6 +1,6 @@
 import React from "react";
 import "./Volunteering.css";
-import "../Description.css";
+import "../../Description/Description.css";
 
 function ProgramsVolunteering() {
 	return (

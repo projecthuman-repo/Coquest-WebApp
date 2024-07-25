@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import ProgramOverview from "./Components/Overview";
-import ProgramMilestones from "./Components/Milestones";
-import ProgramBids from "./Components/Bids";
-import ProgramOffer from "./Components/Offer";
-import ProgramDiscussions from "./Components/Discussions";
-import ProgramVolunteering from "./Components/Volunteering";
+import ProgramOverview from "../components/Description/Overview";
+import ProgramMilestones from "../components/Description/Milestones";
+import ProgramBids from "../components/Description/Bids";
+import ProgramOffer from "../components/Description/Offer";
+import ProgramDiscussions from "../components/Description/Discussions";
+import ProgramVolunteering from "../components/Description/Volunteering";
 import "./Description.css";
 
 function ProgramsDescription() {

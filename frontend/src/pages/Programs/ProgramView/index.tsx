@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Typography, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
 import SearchBar from "../../../components/SearchBar";
-import ProgramListDisplay from "./ProgramViewComponents/ProgramListDisplay";
+import ProgramListDisplay from "../components/ProgramView/ProgramListDisplay";
 import { populatedPrograms } from "../../../testing/TestProgramsData";
-import { Program } from "../ProgramComponents/TypeDefinitions/Program";
+import { Program } from "../../../models/programModel";
 
 const Container = styled("div")({
 	display: "flex",
@@ -17,8 +17,8 @@ const Container = styled("div")({
 });
 const TitleField = styled(Typography)({
 	marginTop: 5,
-	fontWeight: 600,
-	fontSize: "3vw",
+	fontWeight: 650,
+	fontSize: 48,
 	textAlign: "center",
 });
 const Spacer = styled("div")({
@@ -39,14 +39,19 @@ const Header = styled("div")(({ theme }) => ({
 const CustomTabs = styled(Tabs)({
 	width: "100%",
 	color: "black !important",
+	display: "flex",
+	justifyContent: "space-between",
 });
 const CustomTab = styled(Tab)({
-	width: "33.33%",
+	flex: "1",
+	maxWidth: "33.333%",
+	fontSize: "16px",
 });
 const tabStyle = {
 	default_tab: {
 		color: "#000000",
 		opacity: 0.3,
+		borderBottom: "2px solid rgba(0, 0, 0, 0.5)",
 	},
 	active_tab: {
 		color: "#000000",
@@ -78,7 +83,7 @@ const ProgramView = () => {
 		<Container>
 			<Header>
 				<TitleField>Programs</TitleField>
-				<SearchBar />
+				<SearchBar placeholder="Search nearby" />
 			</Header>
 			<Spacer />
 			<CustomTabs
@@ -94,6 +99,7 @@ const ProgramView = () => {
 							: tabStyle.default_tab
 					}
 					value="one"
+					sx={{textTransform :"none"}}
 					label="Created by me"
 					wrapped
 				/>
@@ -104,6 +110,7 @@ const ProgramView = () => {
 							: tabStyle.default_tab
 					}
 					value="two"
+					sx={{textTransform :"none"}}
 					label="Participating in"
 				/>
 				<CustomTab
@@ -113,6 +120,7 @@ const ProgramView = () => {
 							: tabStyle.default_tab
 					}
 					value="three"
+					sx={{textTransform :"none"}}
 					label="Completed"
 				/>
 			</CustomTabs>

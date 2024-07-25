@@ -6,7 +6,7 @@ import ProgramProgressBar from "../../../../components/ProgramProgressBar/Progra
 import Budget from "../../../../components/Budget/Budget";
 import Funding from "../../../../components/Funding/Funding";
 import "./Overview.css";
-import "../Description.css";
+import "../../Description/Description.css";
 
 function ProgramsOverview() {
 	return (

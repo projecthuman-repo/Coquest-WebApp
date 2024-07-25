@@ -2,9 +2,9 @@ import TextField from "@mui/material/TextField";
 
 import { Checkbox, styled, Typography } from "@mui/material";
 import React, { useState } from "react";
-import BudgetingGrid from "../../ProgramComponents/BudgetingGrid";
-import { RadioGroupField } from "../../ProgramComponents/RadioGroupField";
-import DateComponent from "../../ProgramComponents/DateComponent";
+import BudgetingGrid from "../../components/BudgetingGrid";
+import { RadioGroupField } from "../../components/RadioGroupField";
+import DateComponent from "../../components/DateComponent";
 
 const ContentView = styled("div")({
 	minWidth: 300,
