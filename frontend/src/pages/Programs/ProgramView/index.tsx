@@ -99,7 +99,7 @@ const ProgramView = () => {
 							: tabStyle.default_tab
 					}
 					value="one"
-					sx={{textTransform :"none"}}
+					sx={{ textTransform: "none" }}
 					label="Created by me"
 					wrapped
 				/>
@@ -110,7 +110,7 @@ const ProgramView = () => {
 							: tabStyle.default_tab
 					}
 					value="two"
-					sx={{textTransform :"none"}}
+					sx={{ textTransform: "none" }}
 					label="Participating in"
 				/>
 				<CustomTab
@@ -120,7 +120,7 @@ const ProgramView = () => {
 							: tabStyle.default_tab
 					}
 					value="three"
-					sx={{textTransform :"none"}}
+					sx={{ textTransform: "none" }}
 					label="Completed"
 				/>
 			</CustomTabs>
