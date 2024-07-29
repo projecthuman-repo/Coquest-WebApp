@@ -73,3 +73,23 @@ button {
   width: fit-content;
   object-fit: contain;
 }
+
+.black-border {
+  border: 1px solid black;
+}
+
+.outline-btn-filled {
+  color: white;
+  background-color: #4f4f4f;
+  border: none;
+}
+
+.delete-button > * {
+  color: #ba4b4b !important;
+}
+
+.delete-button img {
+  min-height: 20px;
+  object-fit: contain;
+  width: fit-content;
+}

@@ -1,0 +1,120 @@
+/* Milestones (expanded and collapsed) */
+
+.prg-m-background {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 25px;
+  margin: 0;
+}
+
+.milestone-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.milestone-header > * {
+  max-width: 50%;
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.prg-m-mpb-container {
+  width: 100%;
+  max-width: 500px;
+}
+
+.prg-m-background img {
+  width: 15px;
+  height: 10px;
+}
+
+.milestone-delete-edit-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Edit Milestone Modal */
+.edit-milestone-modal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.edit-milestone-modal {
+  padding: 25px;
+  background-color: #fff;
+  width: 520px;
+  height: fit-content;
+  border-radius: 10px;
+}
+
+.edit-milestone-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin-bottom: 30px;
+}
+
+.edit-milestone-header p {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.edit-milestone-header button {
+  text-align: right;
+  height: fit-content;
+}
+
+.edit-milestone-header img {
+  height: 20px;
+  width: fit-content;
+}
+
+.edit-milestone-form {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.milestone-type-options {
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.milestone-type-options input[type="radio"] {
+  background-color: black;
+}
+
+.milestone-type-options label {
+  margin: 10px;
+}
+
+.availability textarea {
+  resize: none;
+}
+
+.edit-milestone {
+  width: 100%;
+  text-align: right;
+  padding-top: 25px;
+}

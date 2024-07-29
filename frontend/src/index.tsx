@@ -35,7 +35,7 @@ import {
 	CoopPromotion,
 } from "./pages/Coop/CreateCoop";
 import EditProfile from "./pages/Programs/EditProfile";
-import ProgramView from "./pages/Programs/ProgramView";
+import ViewAllPrograms from "./pages/Programs";
 import styled from "@emotion/styled";
 import { Orientation } from "./pages/Orientation";
 import RemoveNavComponents from "./components/RemoveNavComponents";
@@ -48,7 +48,8 @@ import CommunityQuests from "./pages/Quests/Quests";
 import { PostFeedContextProvider } from "./pages/Post/PostFeedContext";
 import PostFeed from "./pages/Post/PostFeed";
 import CreatePost from "./pages/Post/Create";
-import ProgramsDescription from "./pages/Programs/Description/Description";
+import ProgramPage from "./pages/Programs/ProgramPage";
+import { ProgramsContextProvider } from "./pages/Programs/ProgramsContext";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement,
@@ -127,8 +128,24 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/programs",
-		element: <ProgramView />,
+		element: <Outlet />,
 		children: [
+			{
+				path: "",
+				element: (
+					<ProgramsContextProvider>
+						<ViewAllPrograms />
+					</ProgramsContextProvider>
+				),
+			},
+			{
+				path: ":id",
+				element: (
+					<ProgramsContextProvider>
+						<ProgramPage />
+					</ProgramsContextProvider>
+				),
+			},
 			{
 				path: "create",
 				element: <CreateProgram />,
@@ -164,10 +181,6 @@ const router = createBrowserRouter([
 						element: <EditProfile />,
 					},
 				],
-			},
-			{
-				path: "description",
-				element: <ProgramsDescription />,
 			},
 		],
 	},

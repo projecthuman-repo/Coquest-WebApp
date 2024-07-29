@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import { styled } from "@mui/system";
 import { Grid, IconButton, Typography } from "@mui/material";
 import LinearProgress, {
@@ -48,6 +49,8 @@ const GridCol = styled(Grid)({
 const ProgramPane = (props: ProgramProps) => {
 	const { program } = props;
 
+	const navigate = useNavigate();
+
 	return (
 		<Container>
 			<Grid container spacing={2}>
@@ -85,14 +88,13 @@ const ProgramPane = (props: ProgramProps) => {
 					</Typography>
 					<Typography>
 						<strong>Spots open: </strong>
-						{program.openSpots !== null
-							? program.openSpots
-							: 0}{" "}
-						seats left
+						{program.spots !== null ? program.spots : 0} seats left
 					</Typography>
 				</GridCol>
 				<GridCol item xs={1}>
-					<IconButton>
+					<IconButton
+						onClick={() => navigate(`/programs/${program.id}`)}
+					>
 						<ArrowForwardIosIcon />
 					</IconButton>
 				</GridCol>

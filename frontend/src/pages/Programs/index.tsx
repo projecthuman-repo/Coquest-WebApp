@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Typography, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
-import SearchBar from "../../../components/SearchBar";
-import ProgramListDisplay from "../components/ProgramView/ProgramListDisplay";
-import { populatedPrograms } from "../../../testing/TestProgramsData";
-import { Program } from "../../../models/programModel";
+import SearchBar from "../../components/SearchBar";
+import ProgramListDisplay from "./components/ViewAllPrograms/ProgramListDisplay";
+//import { populatedPrograms } from "../../testing/TestProgramsData";
+import { ProgramsContext } from "./ProgramsContext";
 
 const Container = styled("div")({
 	display: "flex",
@@ -15,12 +15,20 @@ const Container = styled("div")({
 	justifyContent: "center",
 	flexDirection: "column",
 });
-const TitleField = styled(Typography)({
+
+const TitleField = styled(Typography)(({ theme }) => ({
 	marginTop: 5,
 	fontWeight: 650,
 	fontSize: 48,
 	textAlign: "center",
-});
+	[theme.breakpoints.down("md")]: {
+		fontSize: 32,
+	},
+	[theme.breakpoints.down("sm")]: {
+		fontSize: 26,
+	},
+}));
+
 const Spacer = styled("div")({
 	width: "100%",
 	height: 26,
@@ -64,20 +72,13 @@ function TabPanel(props: any) {
 	return <div hidden={value !== index}>{value === index && children}</div>;
 }
 
-const ProgramView = () => {
+const ViewAllPrograms = () => {
+	const { programs } = useContext(ProgramsContext);
 	const [value, setValue] = React.useState("one");
-	const [programsList, setProgramsList] = useState<Program[]>([]);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
 	};
-
-	useEffect(() => {
-		return () => {
-			// setProgramsList(templatePrograms); //Template data
-			setProgramsList(populatedPrograms); //Actual test data
-		};
-	}, []);
 
 	return (
 		<Container>
@@ -125,7 +126,7 @@ const ProgramView = () => {
 				/>
 			</CustomTabs>
 			<TabPanel value={value} index="one">
-				<ProgramListDisplay programList={programsList} />
+				<ProgramListDisplay programList={programs} />
 			</TabPanel>
 			<TabPanel value={value} index="two">
 				<div className="">Second page</div>
@@ -137,4 +138,4 @@ const ProgramView = () => {
 	);
 };
 
-export default ProgramView;
+export default ViewAllPrograms;
