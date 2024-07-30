@@ -2,11 +2,13 @@ runtime: nodejs20
 
 handlers:
   - url: /
+    static_dir: build
+
+  - url: /.*
     static_files: build/index.html
     upload: build/index.html
-
-  - url: /
-    static_dir: build
+    http_headers:
+      Content-Type: text/html; charset=utf-8
 
 automatic_scaling:
   target_cpu_utilization: 0.65
