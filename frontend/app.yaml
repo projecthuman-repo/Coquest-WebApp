@@ -14,7 +14,7 @@ automatic_scaling:
   min_instances: 1
 
 env_variables:
-  GOOGLE_APPLICATION_CREDENTIALS: "./base-map-workspace-93c116fe8662.json"
+  GOOGLE_APPLICATION_CREDENTIALS: "/workspace/base-map-workspace-93c116fe8662.json"
   REACT_APP_AUTH_URI: "http://localhost:3002"
   REACT_APP_STORAGE_URL: "https://storage.googleapis.com"
   REACT_APP_JWT_COOKIE: "phc"
