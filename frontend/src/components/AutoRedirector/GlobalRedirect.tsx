@@ -77,6 +77,9 @@ function GlobalRedirect({ logout }: GlobalRedirectProps) {
 						.request(setAuthCookieMutation, { token: token })
 						.then(() => {
 							setAuthenticated(true);
+						})
+						.catch(err => {
+							console.error(err);
 						});
 				} else {
 					// TODO: dynamically fetch appId from DB
