@@ -1434,6 +1434,8 @@ module.exports = {
         path: "/",
       });
 
+      console.log('set cookie!');
+
       return { code: 0, response: "successful" };
     },
 
