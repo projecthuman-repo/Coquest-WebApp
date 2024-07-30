@@ -76,6 +76,7 @@ function GlobalRedirect({ logout }: GlobalRedirectProps) {
 					graphQLClient
 						.request(setAuthCookieMutation, { token: token })
 						.then(() => {
+							console.log('sdfsdfd');
 							setAuthenticated(true);
 						})
 						.catch(err => {

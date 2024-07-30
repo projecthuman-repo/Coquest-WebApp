@@ -14,8 +14,6 @@ automatic_scaling:
   min_instances: 1
 
 env_variables:
-  REACT_APP_GOOGLE_MAPS_API_KEY: "" //public file, do not add access keys here
-  REACT_APP_API: "" //same as above
   REACT_APP_AUTH_URI: "http://localhost:3002"
   REACT_APP_STORAGE_URL: "https://storage.googleapis.com"
   REACT_APP_JWT_COOKIE: "phc"
