@@ -3,13 +3,13 @@ const { SecretManagerServiceClient } = require("@google-cloud/secret-manager");
 const client = new SecretManagerServiceClient({
   keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
 });
-//const cred = require(process.cwd() + path.sep + process.env.GOOGLE_APPLICATION_CREDENTIALS);
+const cred = require(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
 async function getSecret(secretName) {
   const name = `projects/base-map-workspace/secrets/${secretName}/versions/latest`;
   console.log('accessing some secret version of', name);
   console.log('credentials path:', process.env.GOOGLE_APPLICATION_CREDENTIALS);
-  //console.log('credentials:', cred);
+  console.log('credentials:', cred);
 
   const [version] = await client.accessSecretVersion({ name });
 
