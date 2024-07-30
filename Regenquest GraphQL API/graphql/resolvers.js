@@ -1428,11 +1428,13 @@ module.exports = {
       console.log("Context:", context);
       console.log("Token:", token);
 
-      context.res.cookie(process.env.AUTH_COOKIE_NAME, token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        path: "/",
-      });
+      // context.res.cookie(process.env.AUTH_COOKIE_NAME, token, {
+      //   httpOnly: true,
+      //   secure: process.env.NODE_ENV === "production",
+      //   path: "/",
+      // });
+
+      context.res.setHeader('Set-Cookie', `${process.env.AUTH_COOKIE_NAME}=${token}; HttpOnly; Secure; Path=/; SameSite=None`);
 
       console.log('set cookie!');
 
