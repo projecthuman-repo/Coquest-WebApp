@@ -2,6 +2,8 @@ name: Deploy Regenquest Web Service
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'Regenquest GraphQL API/**'
 

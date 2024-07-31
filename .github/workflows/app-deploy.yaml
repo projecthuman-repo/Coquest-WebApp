@@ -2,6 +2,8 @@ name: Deploy React App to Google Cloud
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'frontend/**'
 
