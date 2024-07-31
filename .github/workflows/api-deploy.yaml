@@ -1,0 +1,43 @@
+name: Deploy Regenquest Web Service
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Regenquest GraphQL API/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: backend
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        working-directory: 'Regenquest GraphQL API'
+        run: npm ci
+
+      - name: Authenticate with Google Cloud
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+
+      - name: Deploy to Google Cloud Functions
+        working-directory: 'Regenquest GraphQL API'
+        run: |
+          echo '${{ secrets.GCP_SA_KEY }}' > ./base-map-workspace-93c116fe8662.json
+          gcloud functions deploy regenquest-api \
+            --runtime nodejs20 \
+            --trigger-http \
+            --allow-unauthenticated \
+            --entry-point handler \
+            --region us-central1 \
+            --project base-map-workspace \
+            --set-env-vars NODE_ENV='${{ secrets.NODE_ENV }}',DATABASE_CONNECTION='${{ secrets.DATABASE_CONNECTION }}',REGENQUEST_DB_NAME='${{ secrets.REGENQUEST_DB_NAME }}',CROSSPLATFORM_DB_NAME='${{ secrets.CROSSPLATFORM_DB_NAME }}',IMAGE_BUCKET_NAME='${{ secrets.IMAGE_BUCKET_NAME }}',DIR_PATH='${{ secrets.DIR_PATH }}',GOOGLE_APPLICATION_CREDENTIALS='${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}',AUTH_COOKIE_NAME='${{ secrets.AUTH_COOKIE_NAME }}',ACCESS_JWT_NAME='${{ secrets.ACCESS_JWT_NAME }}',CROSS_ORIGIN='${{ secrets.CROSS_ORIGIN }}',REACT_APP_AUTH_API_URI='${{ secrets.REACT_APP_AUTH_API_URI }}'
