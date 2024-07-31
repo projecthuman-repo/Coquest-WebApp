@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 async function verifyToken(token, secret, context) {
   // TODO: Actually verify the token in production
-  if(process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === "production") {
     return;
   }
 

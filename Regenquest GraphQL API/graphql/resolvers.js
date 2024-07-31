@@ -1425,7 +1425,10 @@ module.exports = {
     },
 
     async setCookieWithToken(_parent, { token }, context, _info) {
-      context.res.setHeader('Set-Cookie', `${process.env.AUTH_COOKIE_NAME}=${token}; HttpOnly; Secure; Path=/; SameSite=None`);
+      context.res.setHeader(
+        "Set-Cookie",
+        `${process.env.AUTH_COOKIE_NAME}=${token}; HttpOnly; Secure; Path=/; SameSite=None`,
+      );
 
       return { code: 0, response: "successful" };
     },
