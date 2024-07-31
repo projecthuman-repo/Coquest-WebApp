@@ -1,0 +1,50 @@
+name: Deploy React App to Google Cloud
+
+on:
+  push:
+    paths:
+      - 'frontend/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: frontend
+    env:
+      CI: false
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      working-directory: ./frontend/
+      run: npm ci
+
+    - name: Build React application
+      working-directory: ./frontend/
+      env:
+        REACT_APP_GOOGLE_MAPS_API_KEY: ${{ secrets.REACT_APP_GOOGLE_MAPS_API_KEY }}
+        REACT_APP_API: ${{ secrets.REACT_APP_API }}
+        REACT_APP_AUTH_URI: ${{ secrets.REACT_APP_AUTH_URI }}
+        REACT_APP_STORAGE_URL: ${{ secrets.REACT_APP_STORAGE_URL }}
+        REACT_APP_JWT_COOKIE: ${{ secrets.REACT_APP_JWT_COOKIE }}
+      run: npm run build
+
+    - name: Authenticate with Google Cloud
+      uses: 'google-github-actions/auth@v2'
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Set up Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+
+    - name: Deploy to Google App Engine
+      working-directory: ./frontend/
+      run: |
+        echo "${{ secrets.GCP_SA_KEY }}" > ./base-map-workspace-93c116fe8662.json
+        gcloud app deploy
