@@ -1,5 +1,5 @@
 export interface Program {
-	id: number;
+	readonly id: string | undefined;
 	name: string;
 	progress: number | null;
 	description: string;
@@ -15,7 +15,7 @@ export interface Program {
 }
 
 export interface Milestone {
-	id: number;
+	readonly id: string | undefined;
 	type: string;
 	title: string;
 	progress: number;
@@ -26,7 +26,7 @@ export interface Milestone {
 }
 
 export interface VolunteerPosition {
-	id: number;
+	readonly id: string | undefined;
 	title: string;
 	responsibilities: string;
 	skills: string[];

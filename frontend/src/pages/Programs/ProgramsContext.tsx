@@ -8,7 +8,7 @@ import { Program } from "../../models/programModel";
 // TODO fetch post data from backend
 const data = [
 	{
-		id: 1,
+		id: "1",
 		name: "Program 1",
 		progress: 50,
 		description:
@@ -24,7 +24,7 @@ const data = [
 		cost: 15,
 		milestones: [
 			{
-				id: 1,
+				id: "1",
 				type: "Milestone",
 				title: "Milestone 1",
 				progress: 100,
@@ -35,7 +35,7 @@ const data = [
 				dateCompleted: "2023-08-22",
 			},
 			{
-				id: 2,
+				id: "2",
 				type: "Milestone",
 				title: "Milestone 2",
 				progress: 100,
@@ -46,7 +46,7 @@ const data = [
 				dateCompleted: "2021-08-15",
 			},
 			{
-				id: 3,
+				id: "3",
 				type: "Milestone",
 				title: "Milestone 3",
 				progress: 20,
@@ -57,7 +57,7 @@ const data = [
 				dateCompleted: "2024-08-15",
 			},
 			{
-				id: 4,
+				id: "4",
 				type: "Milestone",
 				title: "Milestone 4",
 				progress: 0,
@@ -70,28 +70,28 @@ const data = [
 		],
 		volunteerPositions: [
 			{
-				id: 1,
+				id: "1",
 				title: "Program Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 			{
-				id: 2,
+				id: "2",
 				title: "Program Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 			{
-				id: 3,
+				id: "3",
 				title: "Program Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 			{
-				id: 4,
+				id: "4",
 				title: "Program Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
@@ -100,7 +100,7 @@ const data = [
 		],
 	},
 	{
-		id: 2,
+		id: "2",
 		name: "Program 2",
 		progress: 15,
 		description:
@@ -116,7 +116,7 @@ const data = [
 		cost: 20,
 		milestones: [
 			{
-				id: 1,
+				id: "1",
 				type: "Milestone",
 				title: "Milestone 1",
 				progress: 17,
@@ -127,7 +127,7 @@ const data = [
 				dateCompleted: "2023-08-22",
 			},
 			{
-				id: 2,
+				id: "2",
 				type: "Milestone",
 				title: "Milestone 2",
 				progress: 7,
@@ -140,21 +140,21 @@ const data = [
 		],
 		volunteerPositions: [
 			{
-				id: 1,
+				id: "1",
 				title: "Program Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 			{
-				id: 2,
+				id: "2",
 				title: "Program Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 			{
-				id: 3,
+				id: "3",
 				title: "Program Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
@@ -163,7 +163,7 @@ const data = [
 		],
 	},
 	{
-		id: 3,
+		id: "3",
 		name: "Program 3",
 		progress: 88,
 		description:
@@ -179,7 +179,7 @@ const data = [
 		cost: 75,
 		milestones: [
 			{
-				id: 1,
+				id: "1",
 				type: "Milestone",
 				title: "Milestone 1",
 				progress: 100,
@@ -190,7 +190,7 @@ const data = [
 				dateCompleted: "2023-08-22",
 			},
 			{
-				id: 2,
+				id: "2",
 				type: "Milestone",
 				title: "Milestone 2",
 				progress: 100,
@@ -201,7 +201,7 @@ const data = [
 				dateCompleted: "2021-08-15",
 			},
 			{
-				id: 3,
+				id: "3",
 				type: "Milestone",
 				title: "Milestone 3",
 				progress: 20,
@@ -214,7 +214,7 @@ const data = [
 		],
 		volunteerPositions: [
 			{
-				id: 1,
+				id: "1",
 				title: "Program Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",

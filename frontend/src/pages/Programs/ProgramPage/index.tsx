@@ -98,7 +98,7 @@ const ProgramPage = () => {
 	const { id } = useParams() as { id: string };
 	const { programs, setPrograms } = useContext(ProgramsContext);
 	const [program, setProgram] = React.useState<Program | null>(
-		programs.filter((program) => program.id === parseInt(id))[0],
+		programs.filter((program) => program.id === id)[0],
 	);
 
 	// program sign up
@@ -137,7 +137,15 @@ const ProgramPage = () => {
 	};
 
 	useEffect(() => {
-		setPrograms(programs.map((p) => (p.id === program?.id ? program : p))); // updates programs if program was modified
+		setPrograms(
+			programs.map((p) => {
+				if (p.id) {
+					return p.id === program?.id ? program : p;
+				} else {
+					return p;
+				}
+			}),
+		); // updates programs if program was modified
 	}, [program]);
 
 	return (

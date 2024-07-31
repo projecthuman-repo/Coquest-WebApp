@@ -28,7 +28,7 @@ function ProgramMilestones() {
 	function handleMilestoneAdd() {
 		if (program) {
 			const newMilestone = {
-				id: program?.milestones.length + 1,
+				id: `${program?.milestones.length + 1}`,
 				type: milestoneType,
 				title: milestoneTitle,
 				progress: 0,
