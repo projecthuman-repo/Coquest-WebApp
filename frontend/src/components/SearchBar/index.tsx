@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
 
-export default function SearchBar() {
+export default function SearchBar({ placeholder }: { placeholder?: string }) {
 	const [input, setInput] = React.useState("");
 
 	return (
@@ -27,7 +27,7 @@ export default function SearchBar() {
 				}}
 				// Styling for search bar
 				className="inputRounded"
-				placeholder="Search"
+				placeholder={placeholder ? placeholder : "Search"}
 				variant="outlined"
 				value={input}
 				// Uses on change to set input to target value

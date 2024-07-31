@@ -1,0 +1,29 @@
+.mpb-heading-bold {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.mpb-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.mpb-heading-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mpb-progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+}
+
+.mpb-progress-bar-fill {
+  background-color: #34a853;
+  border-radius: 10px;
+  height: 100%;
+}
