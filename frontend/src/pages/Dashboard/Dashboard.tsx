@@ -46,7 +46,7 @@ function Dashboard() {
 				setName(user.name); // Update to use the 'name' field
 				setRegisteredStatus(isCompleteRegistration(user.registered));
 				setUser(user);
-				console.log(user.communities);
+				console.log(user);
 			});
 		};
 		setupSubscription();
