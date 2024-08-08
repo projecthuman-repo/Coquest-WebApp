@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { styled } from "@mui/system";
 import { Outlet } from "react-router-dom";
 import { useLocation, Link } from "react-router-dom";
-import ProgressStepper from "../ProgramComponents/ProgressStepper";
+import ProgressStepper from "../components/ProgressStepper";
 
 const Container = styled("div")({
 	display: "flex",

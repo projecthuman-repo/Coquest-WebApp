@@ -94,7 +94,7 @@ function deduceExpandableType(expandableObj, expandedTypeName) {
 // Expects an input object, `obj`, the database in use, and the MongoDB schema of that object.
 function toOutputFormat(obj, db, schema) {
   if (Array.isArray(obj)) {
-    return obj.map((elem) => toOutputFormat(elem, schema));
+    return obj.map((elem) => toOutputFormat(elem, db, schema));
   } else if (obj instanceof ObjectId) {
     return { strValue: obj.toString() };
   } else if (typeof obj === "object" && obj !== null) {
@@ -111,6 +111,7 @@ function toOutputFormat(obj, db, schema) {
         if (isExpandable && newSchemaName) {
           processedObj[key] = toOutputFormat(
             obj[key],
+            db,
             db.model(newSchemaName).schema.tree,
           );
         } else {

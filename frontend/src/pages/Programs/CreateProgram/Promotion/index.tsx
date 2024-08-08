@@ -1,7 +1,7 @@
 import { Button, Grid, TextField, Typography, styled } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import FileUploadComponent from "../../ProgramComponents/FileUploadComponent";
-import InvitePeopleComponent from "../../ProgramComponents/InvitePeopleComponent";
+import FileUploadComponent from "../../components/FileUploadComponent";
+import InvitePeopleComponent from "../../components/InvitePeopleComponent";
 
 const ContentView = styled("div")({
 	minWidth: 300,

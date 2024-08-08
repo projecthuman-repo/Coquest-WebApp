@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Typography, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
-import SearchBar from "../../../components/SearchBar";
-import ProgramListDisplay from "./ProgramViewComponents/ProgramListDisplay";
-import { populatedPrograms } from "../../../testing/TestProgramsData";
-import { Program } from "../ProgramComponents/TypeDefinitions/Program";
+import SearchBar from "../../components/SearchBar";
+import ProgramListDisplay from "./components/ViewAllPrograms/ProgramListDisplay";
+//import { populatedPrograms } from "../../testing/TestProgramsData";
+import { ProgramsContext } from "./ProgramsContext";
 
 const Container = styled("div")({
 	display: "flex",
@@ -15,12 +15,20 @@ const Container = styled("div")({
 	justifyContent: "center",
 	flexDirection: "column",
 });
-const TitleField = styled(Typography)({
+
+const TitleField = styled(Typography)(({ theme }) => ({
 	marginTop: 5,
-	fontWeight: 600,
-	fontSize: "3vw",
+	fontWeight: 650,
+	fontSize: 48,
 	textAlign: "center",
-});
+	[theme.breakpoints.down("md")]: {
+		fontSize: 32,
+	},
+	[theme.breakpoints.down("sm")]: {
+		fontSize: 26,
+	},
+}));
+
 const Spacer = styled("div")({
 	width: "100%",
 	height: 26,
@@ -39,14 +47,19 @@ const Header = styled("div")(({ theme }) => ({
 const CustomTabs = styled(Tabs)({
 	width: "100%",
 	color: "black !important",
+	display: "flex",
+	justifyContent: "space-between",
 });
 const CustomTab = styled(Tab)({
-	width: "33.33%",
+	flex: "1",
+	maxWidth: "33.333%",
+	fontSize: "16px",
 });
 const tabStyle = {
 	default_tab: {
 		color: "#000000",
 		opacity: 0.3,
+		borderBottom: "2px solid rgba(0, 0, 0, 0.5)",
 	},
 	active_tab: {
 		color: "#000000",
@@ -59,26 +72,19 @@ function TabPanel(props: any) {
 	return <div hidden={value !== index}>{value === index && children}</div>;
 }
 
-const ProgramView = () => {
+const ViewAllPrograms = () => {
+	const { programs } = useContext(ProgramsContext);
 	const [value, setValue] = React.useState("one");
-	const [programsList, setProgramsList] = useState<Program[]>([]);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
 	};
 
-	useEffect(() => {
-		return () => {
-			// setProgramsList(templatePrograms); //Template data
-			setProgramsList(populatedPrograms); //Actual test data
-		};
-	}, []);
-
 	return (
 		<Container>
 			<Header>
 				<TitleField>Programs</TitleField>
-				<SearchBar />
+				<SearchBar placeholder="Search nearby" />
 			</Header>
 			<Spacer />
 			<CustomTabs
@@ -94,6 +100,7 @@ const ProgramView = () => {
 							: tabStyle.default_tab
 					}
 					value="one"
+					sx={{ textTransform: "none" }}
 					label="Created by me"
 					wrapped
 				/>
@@ -104,6 +111,7 @@ const ProgramView = () => {
 							: tabStyle.default_tab
 					}
 					value="two"
+					sx={{ textTransform: "none" }}
 					label="Participating in"
 				/>
 				<CustomTab
@@ -113,11 +121,12 @@ const ProgramView = () => {
 							: tabStyle.default_tab
 					}
 					value="three"
+					sx={{ textTransform: "none" }}
 					label="Completed"
 				/>
 			</CustomTabs>
 			<TabPanel value={value} index="one">
-				<ProgramListDisplay programList={programsList} />
+				<ProgramListDisplay programList={programs} />
 			</TabPanel>
 			<TabPanel value={value} index="two">
 				<div className="">Second page</div>
@@ -129,4 +138,4 @@ const ProgramView = () => {
 	);
 };
 
-export default ProgramView;
+export default ViewAllPrograms;

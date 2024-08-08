@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { FormControl, MenuItem, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import TextField from "@mui/material/TextField";
-import { RadioGroupField } from "../../ProgramComponents/RadioGroupField";
-import HashtagSearch from "../../ProgramComponents/HashtagSearch";
-import AddContainer from "../../ProgramComponents/AddContainer";
+import { RadioGroupField } from "../../components/RadioGroupField";
+import HashtagSearch from "../../components/HashtagSearch";
+import AddContainer from "../../components/AddContainer";
 
 type StyledTextFieldProps = {
 	label: string;
