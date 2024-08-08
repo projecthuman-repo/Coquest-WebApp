@@ -17,7 +17,7 @@ const Maps: React.FC<MapsProps> = ({
 }) => {
 	return (
 		<MapContainer
-		key={mapKey}
+			key={mapKey}
 			center={[lat, long]}
 			zoom={mapZoom}
 			scrollWheelZoom={false}

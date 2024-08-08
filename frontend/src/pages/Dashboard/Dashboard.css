@@ -75,15 +75,15 @@
 
 /* Dropdown */
 
-.db-dropdown-container {
-  margin: 20px 0px 5px 0px;
+.db-dropdown {
+  font-size: 24px;
+  width: auto;
+  margin: 15px 0px 0px 0px;
+  border: none;
 }
 
-.db-dropdown {
-  padding: 5px;
-  font-size: 16px;
-  border-radius: 4px;
-  border: 1px solid #000000;
+.db-dropdown:focus {
+  outline: none;
 }
 
 /* Widgets */
