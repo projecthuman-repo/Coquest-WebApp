@@ -1,127 +1,51 @@
 import React, { useEffect, useState } from "react";
-import WelcomeMessage from "../../components/WelcomeMessage";
-import SearchBar from "../../components/SearchBar";
-import SimpleCard from "../../components/SimpleCard/SimpleCard";
-import styled from "@emotion/styled";
-import MyTasksContainer from "../../components/MyTasksContainer";
-import Maps from "../../components/Maps/Maps";
-import CommunityTasks from "../../components/CommunityTasks";
-import Members from "../../components/Members";
-import ExtendedSimpleCard from "../../components/ExtendedSimpleCard/SimpleCard";
+import { useNavigate } from "react-router-dom";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
-import { Name } from "../../models/usermodel";
+import { Name, User } from "../../models/usermodel";
 import { useUserRegistration } from "../../components/AutoRedirector/UserRegistration";
 import Loading from "../../components/Loading";
 import { isCompleteRegistration } from "../../models/common";
-
-const Container = styled("div")({
-	display: "flex",
-	flexDirection: "column",
-	alignItems: "center",
-	marginBottom: 100,
-	justifyContent: "center",
-});
-
-const Header = styled("div")({
-	width: "90%",
-	padding: 20,
-	display: "flex",
-	justifyContent: "space-between",
-	alignItems: "center",
-});
-
-const CardCont = styled.div({
-	display: "flex",
-	flexDirection: "column",
-	gap: 10,
-	marginBottom: 10,
-	width: "100%",
-});
-
-const DashColumns = styled("div")({
-	display: "flex",
-	width: "93%",
-	height: 650,
-	overflow: "hidden",
-	"@media (max-width: 600px)": {
-		display: "flex",
-		flexDirection: "column",
-		alignItems: "center",
-		height: "100%",
-		justifyContent: "center",
-	},
-});
-
-const DashColumn = styled.div({
-	width: "100%",
-	padding: 10,
-	height: "100%",
-});
-
-const Footer = styled("div")({
-	width: "93%",
-	display: "flex",
-	marginTop: 20,
-	"@media (max-width: 600px)": {
-		flexDirection: "column",
-		alignItems: "center",
-		height: "100%",
-		width: "100%",
-		justifyContent: "center",
-	},
-});
-
-const CommunityTaskContainer = styled("div")({
-	width: "66%",
-	"@media (max-width: 600px)": {
-		width: "100%",
-	},
-});
-
-const MembersContainer = styled("div")({
-	width: "33%",
-	"@media (max-width: 600px)": {
-		padding: 10,
-		width: "95%",
-	},
-});
-
-// Styled component to ensure the map container has consistent height and width
-const MapsContainer = styled.div({
-	flex: 1,
-	display: "flex",
-	flexDirection: "column",
-	height: "95.7%",
-	borderRadius: "10px",
-	overflow: "hidden",
-	// Ensure the map takes the full height of its container
-	"& .leaflet-container": {
-		flex: 1,
-		height: "100%",
-		width: "100%",
-	},
-});
+import "./Dashboard.css";
+import Maps from "../../components/Maps/Maps";
+import Members from "../../components/Members";
 
 function Dashboard() {
+	// Authentication/Registration State Variables
+	// [isRegistered] - Boolean value that determines if the user has completed the registration process.
+	// [setRegisteredStatus] - Function that sets the value of isRegistered.
+	// [authenticated] - Boolean value that determines if the user is authenticated.
+	const [isRegistered, setRegisteredStatus] = useState(false);
+	const { authenticated } = useUserRegistration();
+
+	// User State Variables (Stores the information about the user)
+	// [name] - Object that stores the user's name.
+	// [setName] - Function that sets the value of the name object.
+	// [user] - Object that stores the user's information.
 	const [name, setName] = useState<Name>({
 		first: "",
 		last: "",
 	});
-	const [isRegistered, setRegisteredStatus] = useState(false);
-	const { authenticated } = useUserRegistration();
+	const [user, setUser] = useState<User | undefined>();
 
+	// Current Communtiy State Variables (Stores the information about the current community the user has selected)
+	// [currentCommunity] - Object that stores the information about the current community.
+	// [setCurrentCommunity] - Function that sets the value of the currentCommunity object.
+	const [currentCommunity, setCurrentCommunity] = useState<any>();
+
+	// UseEffect for fetching User Data
+	// Sets the user state variables to the user data fetched from the UserModel.
 	useEffect(() => {
 		let unsubscribe: (() => void) | null | undefined = null;
 
 		const setupSubscription = async () => {
 			unsubscribe = await subscribeToUserModelSubject((user) => {
-				setName(user.name); // Update to use the 'name' field
+				setName(user.name);
 				setRegisteredStatus(isCompleteRegistration(user.registered));
+				setUser(user);
+				setCurrentCommunity(user?.communities?.[0]);
 			});
 		};
-
 		setupSubscription();
-
 		return () => {
 			if (unsubscribe) {
 				unsubscribe();
@@ -129,48 +53,212 @@ function Dashboard() {
 		};
 	}, []);
 
-	const members = [name.first]; // List of members with the current user
+	const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		const communities = user?.communities;
+
+		communities?.forEach((community) => {
+			if (community.objValue.id === event.target.value) {
+				setCurrentCommunity(community);
+			}
+		});
+	};
+
+	useEffect(() => {
+		console.log(currentCommunity);
+		// Add any additional logic that should run when currentCommunity changes
+	}, [currentCommunity]);
+
+	const navigate = useNavigate();
 
 	return authenticated && isRegistered ? (
-		<Container>
-			<Header>
-				<WelcomeMessage
-					name={name.first || "User"}
-					communityName="Community name"
-				/>
-				<SearchBar />
-			</Header>
-			<DashColumns>
-				<DashColumn>
-					<CardCont>
-						<SimpleCard label="Community overview" />
-						<SimpleCard label="My projects" />
-						<SimpleCard label="Open projects" />
-					</CardCont>
-					<ExtendedSimpleCard label="Posts" link="/posts" />
-				</DashColumn>
-				<DashColumn>
-					<MyTasksContainer label="My Tasks" seeAllLink="#" />
-				</DashColumn>
-				<DashColumn>
-					<MapsContainer>
-						<Maps />
-					</MapsContainer>
-				</DashColumn>
-			</DashColumns>
-			<Footer>
-				<CommunityTaskContainer>
-					<CommunityTasks label="Community Tasks" seeAllLink="#" />
-				</CommunityTaskContainer>
-				<MembersContainer>
-					<Members
-						users={members} // Pass the list of members
-						userRole={["Role"]} // Placeholder for user roles, you can expand this in the future
-						showAllLink="#"
-					/>
-				</MembersContainer>
-			</Footer>
-		</Container>
+		<>
+			<div className="dashboard-container">
+				{currentCommunity ? (
+					<>
+						<div className="db-heading-container">
+							<div>
+								<p className="db-sub-heading">
+									Welcome, {name.first}!
+								</p>
+								<h2 className="db-main-heading">Overview</h2>
+								<div>
+									<select
+										id="dropdown"
+										className="db-dropdown"
+										onChange={handleChange}
+									>
+										{user?.communities?.map((community) => (
+											<option
+												key={community.objValue.id}
+												value={community.objValue.id}
+											>
+												{community.objValue.name}
+											</option>
+										))}
+									</select>
+								</div>
+							</div>
+							<div className="search-container">
+								<input
+									type="search"
+									className="search"
+									name="search"
+									placeholder="Search Nearby"
+								/>
+								<img
+									src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png"
+									alt="search-icon"
+									className="search-icon"
+								/>
+							</div>
+						</div>
+						<div className="db-widgets-container">
+							<div>
+								{/* Community Overview */}
+								<div className="db-widget-small">
+									<div className="db-flex-container">
+										<h2 className="db-widget-heading-small">
+											Community Overview
+										</h2>
+										<button
+											onClick={() =>
+												navigate(
+													`/communities/${currentCommunity?.objValue.id}`,
+												)
+											}
+										>
+											<img
+												src="icons/next-button-chevron.png"
+												alt="search-icon"
+											/>
+										</button>
+									</div>
+								</div>
+								{/* My Projects */}
+								<div className="db-widget-small">
+									<div className="db-flex-container">
+										<h2 className="db-widget-heading-small">
+											My Projects
+										</h2>
+										<button
+											onClick={() =>
+												navigate(
+													`/communities/${currentCommunity?.objValue.id}`,
+												)
+											}
+										>
+											<img
+												src="icons/next-button-chevron.png"
+												alt="Next-Button"
+											/>
+										</button>
+									</div>
+								</div>
+								{/* Open Projects */}
+								<div className="db-widget-small">
+									<div className="db-flex-container">
+										<h2 className="db-widget-heading-small">
+											Open Projects
+										</h2>
+										<button
+											onClick={() =>
+												navigate(
+													`/communities/${currentCommunity?.objValue.id}`,
+												)
+											}
+										>
+											<img
+												src="icons/next-button-chevron.png"
+												alt="search-icon"
+											/>
+										</button>
+									</div>
+								</div>
+								{/* Posts */}
+								<div className="db-widget">
+									<div className="db-flex-container">
+										<h2 className="db-widget-heading">
+											Posts
+										</h2>
+										<button
+											onClick={() =>
+												navigate(
+													`/communities/${currentCommunity?.objValue.id}`,
+												)
+											}
+										>
+											<img
+												src="icons/next-button-chevron.png"
+												alt="search-icon"
+											/>
+										</button>
+									</div>
+									<div className="db-posts-container">
+										<div className="db-posts-placeholder"></div>
+										<div className="db-posts-placeholder"></div>
+										<div className="db-posts-placeholder"></div>
+										<div className="db-posts-placeholder"></div>
+										<div className="db-posts-placeholder"></div>
+										<div className="db-posts-placeholder"></div>
+										<div className="db-posts-placeholder"></div>
+										<div className="db-posts-placeholder"></div>
+										<div className="db-posts-placeholder"></div>
+									</div>
+								</div>
+							</div>
+							{/* My Tasks */}
+							<div className="db-widget">
+								<div className="db-flex-container">
+									<h2 className="db-widget-heading">
+										My Tasks
+									</h2>
+									<a href="/" className="db-widget-link">
+										See All
+									</a>
+								</div>
+								<div className="db-tasks-container">
+									<p>You have no tasks yet.</p>
+									<button className="db-tasks-find-button">
+										Find Available Tasks
+									</button>
+								</div>
+							</div>
+							{/* Location/Map */}
+							<div className="db-widget-map">
+								<Maps
+									lat={
+										currentCommunity?.objValue.location.lat
+									}
+									long={
+										currentCommunity?.objValue.location.lng
+									}
+									mapZoom={14}
+									mapKey={currentCommunity?.objValue.id}
+								/>
+							</div>
+						</div>
+						<div className="db-widgets-container">
+							{/* Community Tasks */}
+							<div className="db-widget-community-tasks">
+								<h2 className="db-widget-heading">
+									Community Tasks
+								</h2>
+							</div>
+							{/* Members */}
+							<div className="db-widget">
+								<Members
+									users={[name.first, name.first, name.first]}
+									userRole={["Role", "Role", "Role"]}
+									showAllLink="#"
+								/>
+							</div>
+						</div>
+					</>
+				) : (
+					<p>No Communities Found!</p>
+				)}
+			</div>
+		</>
 	) : (
 		<Loading />
 	);

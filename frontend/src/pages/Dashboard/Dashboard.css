@@ -1,0 +1,210 @@
+/* Text Styles */
+
+.db-main-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 36px;
+}
+
+.db-sub-heading {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.db-widget-heading-small {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 16px;
+  overflow-wrap: break-word;
+}
+
+.db-widget-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 20px;
+  overflow-wrap: break-word;
+}
+
+.db-widget-link {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 15px;
+  overflow-wrap: break-word;
+}
+
+/* Main Container */
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+}
+
+/* Heading */
+
+.db-heading-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 100px;
+  margin-bottom: 20px;
+}
+
+.search {
+  border-radius: 25px;
+  border: 1px solid black;
+  padding-left: 40px;
+  width: 350px;
+  height: 48px;
+}
+
+.search-container {
+  position: relative;
+  padding-right: 110px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+}
+
+/* Dropdown */
+
+.db-dropdown {
+  font-size: 24px;
+  width: auto;
+  margin: 15px 0px 0px 0px;
+  border: none;
+}
+
+.db-dropdown:focus {
+  outline: none;
+}
+
+/* Widgets */
+
+.db-widgets-container {
+  display: flex;
+  justify-content: center;
+  margin: 0px 0px 0px 0px;
+}
+
+.db-flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.db-flex-container button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.db-flex-container button:hover {
+  border-radius: 24px;
+  background-color: #cccccc;
+}
+
+.db-flex-container img {
+  width: 10px;
+  height: 15px;
+}
+
+.db-widget {
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px lightgrey;
+  width: 550px;
+  margin: 15px 20px 15px 0px;
+}
+
+.db-widget-small {
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px lightgrey;
+  width: 550px;
+  margin: 15px 20px 15px 0px;
+}
+
+/* Map Widget */
+
+.db-widget-map {
+  display: flex;
+  width: 550px;
+  box-shadow: 0 4px 8px lightgrey;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 15px 20px 15px 0px;
+}
+
+.db-widget-map .leaflet-container {
+  flex: 1;
+}
+
+/* Community Tasks Widget */
+
+.db-widget-community-tasks {
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  padding: 25px 25px 25px 25px;
+  border-radius: 10px;
+  width: 1120px;
+  box-shadow: 0 4px 8px lightgrey;
+  margin: 10px 20px 15px 0px;
+}
+
+/* Posts Widget */
+
+.db-posts-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.db-posts-placeholder {
+  width: 150px;
+  height: 100px;
+  border-radius: 12px;
+  background-color: lightgrey;
+}
+
+/* My Tasks Widget */
+
+.db-tasks-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.db-tasks-find-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 25px;
+  background-color: white;
+  box-shadow: 0 4px 8px lightgrey;
+  width: 250px;
+  margin: 20px 0px 20px 0px;
+  padding: 10px;
+}
