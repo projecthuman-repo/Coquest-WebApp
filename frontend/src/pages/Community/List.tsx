@@ -26,6 +26,8 @@ function CommunityListing() {
 						_id: id,
 						name: "",
 						description: "",
+						objective: "",
+						initiative: "",
 						location: null,
 						members: [],
 					};

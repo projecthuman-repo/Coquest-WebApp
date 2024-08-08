@@ -25,6 +25,8 @@ function CommunityDescription() {
 					_id: id,
 					name: "",
 					description: "",
+					objective: "",
+					initiative: "",
 					location: null,
 					members: [],
 				};

@@ -665,7 +665,7 @@ module.exports = {
     async createRegenquestCommunity(
       _parent,
       {
-        communityInput: { name, description, members, tags, location, images },
+        communityInput: { name, description, objective, initiative, members, tags, location, images },
       },
       _context,
       _info,
@@ -674,6 +674,8 @@ module.exports = {
       const newCommunity = new Community({
         name: name,
         description: description,
+        objective: objective,
+        initiative: initiative,
         // Map given members list to a list of IDs, if not already
         members: coerceExpandable(members, "id"),
         tags: tags ? tags : null,
@@ -1290,7 +1292,7 @@ module.exports = {
     //this method updates all the properties of a community
     async updateRegenquestCommunity(
       _parent,
-      { userInput: { id, name, description, members, tags, location, images } },
+      { userInput: { id, name, description, objective, initiative, members, tags, location, images } },
       _context,
       _info,
     ) {
@@ -1310,6 +1312,8 @@ module.exports = {
         id: id,
         name: name,
         description: description,
+        objective: objective,
+        initiative: initiative,
         members: coerceExpandable(members, "id"),
         tags: tags,
         location: location,

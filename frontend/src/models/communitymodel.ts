@@ -11,6 +11,8 @@ export interface CommunityRequired {
 	readonly _id: string | undefined;
 	name: string;
 	description: string;
+	objective: string;
+	initiative: string;
 	location: Location | null;
 }
 
@@ -25,6 +27,8 @@ export class Community implements Model {
 	readonly id: string | undefined;
 	name: string;
 	description: string;
+	objective: string;
+	initiative: string;
 	location: Location | null;
 	// Expandable
 	members: ExpandableUser[] | null | undefined;
@@ -53,12 +57,16 @@ export class Community implements Model {
 			_id: undefined,
 			name: "",
 			description: "",
+			objective: "",
+			initiative: "",
 			location: { lng: 0, lat: 0 },
 		},
 	) {
 		this.id = params._id;
 		this.name = params.name;
 		this.description = params.description;
+		this.objective = params.objective;
+		this.initiative = params.initiative;
 		this.location = params.location;
 		this.members = params.members
 			? (initExpandable(
