@@ -8,8 +8,6 @@ import { isCompleteRegistration } from "../../models/common";
 import "./Dashboard.css";
 import Maps from "../../components/Maps/Maps";
 import Members from "../../components/Members";
-import Repository from "../../repositories/repository";
-import { Community } from "../../models/communitymodel";
 
 function Dashboard() {
 	// Authentication/Registration State Variables
@@ -32,9 +30,7 @@ function Dashboard() {
 	// Current Communtiy State Variables (Stores the information about the current community the user has selected)
 	// [currentCommunity] - Object that stores the information about the current community.
 	// [setCurrentCommunity] - Function that sets the value of the currentCommunity object.
-	const [currentCommunity, setCurrentCommunity] = useState<Community | null>(
-		null,
-	);
+	const [currentCommunity, setCurrentCommunity] = useState<any>();
 
 	// UseEffect for fetching User Data
 	// Sets the user state variables to the user data fetched from the UserModel.
@@ -43,10 +39,10 @@ function Dashboard() {
 
 		const setupSubscription = async () => {
 			unsubscribe = await subscribeToUserModelSubject((user) => {
-				setName(user.name); // Update to use the 'name' field
+				setName(user.name);
 				setRegisteredStatus(isCompleteRegistration(user.registered));
 				setUser(user);
-				console.log(user);
+				setCurrentCommunity(user?.communities?.[0]);
 			});
 		};
 		setupSubscription();
@@ -57,65 +53,56 @@ function Dashboard() {
 		};
 	}, []);
 
-	// Function for fetching Community Data
-	// Fetches the community data for the selected community in the dropdown menu.
-	const fetchNewCommunity = async (communityId: any) => {
-		const repository = Repository.getInstance("Community", Community);
-		try {
-			const communityData = {
-				_id: communityId,
-				name: "",
-				description: "",
-				location: null,
-				members: [],
-			};
-			const community = new Community(communityData);
-			const fetchedCommunity = await repository
-				.fetch(community)
-				.toPromise();
-			if (
-				fetchedCommunity &&
-				fetchedCommunity.id !== currentCommunity?.id
-			) {
-				setCurrentCommunity(fetchedCommunity);
+	const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		console.log(user);
+
+		const communities = user?.communities;
+
+		communities?.forEach((community) => {
+
+			if (community.objValue.id === event.target.value) {
+				console.log(community)
+				setCurrentCommunity(community);
 			}
-		} catch (error) {
-			console.error("Error fetching community data:", error);
-		}
+
+		});
+
 	};
 
-	const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		fetchNewCommunity(event.target.value);
-	};
+	useEffect(() => {
+		console.log(currentCommunity);
+		// Add any additional logic that should run when currentCommunity changes
+	  }, [currentCommunity]);
 
 	const navigate = useNavigate();
 
 	return authenticated && isRegistered ? (
 		<>
 			<div className="dashboard-container">
+			{currentCommunity ? (
+				<>
 				<div className="db-heading-container">
 					<div>
 						<p className="db-sub-heading">Welcome, {name.first}!</p>
 						<h2 className="db-main-heading">Overview</h2>
-						{currentCommunity == null ? (
 							<div className="db-dropdown-container">
+								<label></label>
 								<select
 									id="dropdown"
 									className="db-dropdown"
-									value={user?.communities?.[0]?.name}
 									onChange={handleChange}
 								>
 									{user?.communities?.map((community) => (
 										<option
-											key={community.id}
-											value={community.id}
+											key={community.objValue.id}
+											value={community.objValue.id}
 										>
-											{community.name}
+											{community.objValue.name}
 										</option>
 									))}
 								</select>
 							</div>
-						) : null}
+
 					</div>
 					<div className="search-container">
 						<input
@@ -142,7 +129,7 @@ function Dashboard() {
 								<button
 									onClick={() =>
 										navigate(
-											`/communities/${currentCommunity?.id}`,
+											`/communities/${currentCommunity?.objValue.id}`,
 										)
 									}
 								>
@@ -162,7 +149,7 @@ function Dashboard() {
 								<button
 									onClick={() =>
 										navigate(
-											`/communities/${currentCommunity?.id}`,
+											`/communities/${currentCommunity?.objValue.id}`,
 										)
 									}
 								>
@@ -182,7 +169,7 @@ function Dashboard() {
 								<button
 									onClick={() =>
 										navigate(
-											`/communities/${currentCommunity?.id}`,
+											`/communities/${currentCommunity?.objValue.id}`,
 										)
 									}
 								>
@@ -200,7 +187,7 @@ function Dashboard() {
 								<button
 									onClick={() =>
 										navigate(
-											`/communities/${currentCommunity?.id}`,
+											`/communities/${currentCommunity?.objValue.id}`,
 										)
 									}
 								>
@@ -240,7 +227,7 @@ function Dashboard() {
 					</div>
 					{/* Location/Map */}
 					<div className="db-widget-map">
-						<Maps />
+						<Maps lat={currentCommunity?.objValue.location.lat} long={currentCommunity?.objValue.location.lng} mapZoom={14} mapKey={currentCommunity?.objValue.id}/>
 					</div>
 				</div>
 				<div className="db-widgets-container">
@@ -257,6 +244,10 @@ function Dashboard() {
 						/>
 					</div>
 				</div>
+				</>
+				) : (
+				<p>No Communities Found!</p>
+				)}
 			</div>
 		</>
 	) : (
