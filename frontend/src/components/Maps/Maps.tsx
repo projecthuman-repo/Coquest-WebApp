@@ -6,15 +6,18 @@ interface MapsProps {
 	lat?: number;
 	long?: number;
 	mapZoom?: number;
+	mapKey?: number;
 }
 
 const Maps: React.FC<MapsProps> = ({
 	lat = 43.6514990607,
 	long = -79.3834667995,
 	mapZoom = 13,
+	mapKey = 1,
 }) => {
 	return (
 		<MapContainer
+			key={mapKey}
 			center={[lat, long]}
 			zoom={mapZoom}
 			scrollWheelZoom={false}
