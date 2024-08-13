@@ -665,7 +665,16 @@ module.exports = {
     async createRegenquestCommunity(
       _parent,
       {
-        communityInput: { name, description, objective, initiative, members, tags, location, images },
+        communityInput: {
+          name,
+          description,
+          objective,
+          initiative,
+          members,
+          tags,
+          location,
+          images,
+        },
       },
       _context,
       _info,
@@ -1292,7 +1301,19 @@ module.exports = {
     //this method updates all the properties of a community
     async updateRegenquestCommunity(
       _parent,
-      { userInput: { id, name, description, objective, initiative, members, tags, location, images } },
+      {
+        userInput: {
+          id,
+          name,
+          description,
+          objective,
+          initiative,
+          members,
+          tags,
+          location,
+          images,
+        },
+      },
       _context,
       _info,
     ) {
