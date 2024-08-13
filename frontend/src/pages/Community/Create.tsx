@@ -25,6 +25,8 @@ function CreateCommunity() {
 			_id: undefined,
 			name: "",
 			description: "",
+			objective: "",
+			initiative: "",
 			images: [generateProfileImg()],
 			location: null,
 			members: null,
@@ -149,10 +151,10 @@ function CreateCommunity() {
 										Community Objective
 									</label>
 									<textarea
-										id="description"
+										id="objective"
 										className="styled-textarea"
-										name="description"
-										value={community.description!}
+										name="objective"
+										value={community.objective!}
 										onChange={(e) =>
 											handleInputChange(
 												e.target.name,
@@ -173,7 +175,7 @@ function CreateCommunity() {
 										id="initiative"
 										className="styled-textarea"
 										name="initiative"
-										value={community.description!}
+										value={community.initiative!}
 										onChange={(e) =>
 											handleInputChange(
 												e.target.name,

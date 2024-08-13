@@ -16,6 +16,8 @@ const communityData: Community[] = [
 		_id: "1",
 		name: "Green Thumbs",
 		description: "Community for gardening enthusiasts.",
+		objective: "Bringing the gardening enthusiats together",
+		initiative: "",
 		location: { lat: 34.0522, lng: -118.2437 },
 		members: [],
 		tags: ["gardening", "sustainability"],

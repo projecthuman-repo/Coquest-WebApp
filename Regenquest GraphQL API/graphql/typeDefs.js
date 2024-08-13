@@ -345,6 +345,8 @@ module.exports = gql`
     _id: String!
     name: String
     description: String
+    objective: String
+    initiative: String
     members: [expandableUser]
     tags: [String]
     location: location
@@ -361,6 +363,8 @@ module.exports = gql`
     id: String
     name: String
     description: String
+    objective: String
+    initiative: String
     members: [userInput]
     tags: [String]
     location: locationInput
