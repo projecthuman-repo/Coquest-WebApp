@@ -57,6 +57,8 @@ function getFetchQuery(typeName: RepoTypeName): string {
 									_id
 									name
 									description
+									objective
+									initiative
 									tags
 									location {
 										lat
@@ -116,6 +118,8 @@ function getFetchQuery(typeName: RepoTypeName): string {
 						_id
 						name
 						description
+						objective
+						initiative
 						tags
 						location {
 							lat
