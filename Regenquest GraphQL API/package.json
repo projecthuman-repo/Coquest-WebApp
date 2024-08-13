@@ -17,7 +17,7 @@
     "@google-cloud/storage": "^7.8.0",
     "apollo-server": "^3.13.0",
     "apollo-server-cloud-functions": "^3.13.0",
-    "apollo-server-express": "^2.26.2",
+    "apollo-server-express": "^3.13.0",
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
