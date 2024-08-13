@@ -151,9 +151,9 @@ function CreateCommunity() {
 										Community Objective
 									</label>
 									<textarea
-										id="description" // should be objective, check html
+										id="objective"
 										className="styled-textarea"
-										name="description"
+										name="objective"
 										value={community.objective!}
 										onChange={(e) =>
 											handleInputChange(
