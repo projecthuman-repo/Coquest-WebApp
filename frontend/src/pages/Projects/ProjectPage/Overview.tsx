@@ -7,21 +7,21 @@ import Budget from "../../../components/Budget/Budget";
 import Funding from "../../../components/Funding/Funding";
 import Input from "../../../components/Input";
 import PrimaryButton from "../../../components/Buttons/PrimaryButton";
-import { ProgramContext } from "./ProgramContext";
+import { ProjectContext } from "./ProjectContext";
 import "./Overview.css";
 import "./index.css";
 
-function ProgramOverview() {
-	const { program, setProgram } = useContext(ProgramContext);
+function ProjectOverview() {
+	const { project, setProject } = useContext(ProjectContext);
 
-	// edit program description, objective and initiative
+	// edit project description, objective and initiative
 	const [editingDescStarted, setEditingDescStarted] = useState(false);
 	const [editedDescription, setEditedDescription] = useState(
-		program?.description,
+		project?.description,
 	);
-	const [editedObjective, setEditedObjective] = useState(program?.objective);
+	const [editedObjective, setEditedObjective] = useState(project?.objective);
 	const [editedInitiative, setEditedInitiative] = useState(
-		program?.initiative,
+		project?.initiative,
 	);
 
 	const handleEditDescModal = () => {
@@ -35,30 +35,30 @@ function ProgramOverview() {
 
 	const editDesc = () => {
 		if (
-			program &&
+			project &&
 			editedDescription &&
 			editedObjective &&
 			editedInitiative
 		) {
-			setProgram({
-				...program,
+			setProject({
+				...project,
 				description: editedDescription,
 				objective: editedObjective,
 				initiative: editedInitiative,
 			});
 		}
 
-		//TODO edit program description in backend
+		//TODO edit project description in backend
 		handleEditDescModal();
 	};
 
 	useEffect(() => {
 		if (!editingDescStarted) {
-			setEditedDescription(program?.description);
-			setEditedObjective(program?.objective);
-			setEditedInitiative(program?.initiative);
+			setEditedDescription(project?.description);
+			setEditedObjective(project?.objective);
+			setEditedInitiative(project?.initiative);
 		}
-	}, [editingDescStarted, program]);
+	}, [editingDescStarted, project]);
 
 	return (
 		<>
@@ -76,7 +76,7 @@ function ProgramOverview() {
 						</div>
 
 						<div className="editing-form">
-							<Input label="Program description">
+							<Input label="Project description">
 								<textarea
 									rows={3}
 									placeholder=""
@@ -87,7 +87,7 @@ function ProgramOverview() {
 								></textarea>
 							</Input>
 
-							<Input label="Program objective">
+							<Input label="Project objective">
 								<textarea
 									rows={3}
 									placeholder=""
@@ -98,7 +98,7 @@ function ProgramOverview() {
 								></textarea>
 							</Input>
 
-							<Input label="Program initiative">
+							<Input label="Project initiative">
 								<textarea
 									rows={3}
 									placeholder=""
@@ -123,7 +123,7 @@ function ProgramOverview() {
 					<div className="prg-o-background">
 						<div className="prg-o-heading-container">
 							<h2 className="prg-o-sub-heading">
-								Program Description
+								Project Description
 							</h2>
 							<button
 								className="prg-o-link"
@@ -133,19 +133,19 @@ function ProgramOverview() {
 							</button>
 						</div>
 						<p className="prg-o-sub-text margin-top margin-bottom">
-							{program?.description}
+							{project?.description}
 						</p>
 						<h2 className="prg-o-sub-heading margin-bottom">
 							Project Objective
 						</h2>
 						<p className="prg-o-sub-text margin-bottom">
-							{program?.objective}
+							{project?.objective}
 						</p>
 						<h2 className="prg-o-sub-heading margin-bottom">
 							Initiative
 						</h2>
 						<p className="prg-o-sub-text margin-bottom">
-							{program?.initiative}
+							{project?.initiative}
 						</p>
 					</div>
 					{/* Members */}
@@ -167,7 +167,7 @@ function ProgramOverview() {
 					<div className="prg-o-background">
 						<ProgramProgressBar
 							seeHistory={true}
-							progress={program?.progress || 0}
+							progress={project?.progress || 0}
 						/>
 					</div>
 					{/* Budget */}
@@ -178,29 +178,29 @@ function ProgramOverview() {
 
 				<div>
 					<div className="prg-o-right">
-						{/* Program Information */}
+						{/* Project Information */}
 						<div className="prg-o-background">
 							<h2 className="prg-o-sub-heading margin-bottom">
-								Program Information
+								Project Information
 							</h2>
 							<p className="prg-o-sub-text">
 								<b>Time: </b>
-								{program?.time}
+								{project?.time}
 							</p>
 							<p className="prg-o-sub-text">
 								<b>Date: </b>
-								{program?.date}
+								{project?.date}
 							</p>
 							<p className="prg-o-sub-text">
 								<b>Location: </b>
-								{program?.location}
+								{project?.location}
 							</p>
 							<p className="prg-o-sub-text">
 								<b>Spots Open: </b>
-								{program?.spots} seats left
+								{project?.spots} seats left
 							</p>
 							<p className="prg-o-sub-text">
-								<b>Cost: </b>${program?.cost}
+								<b>Cost: </b>${project?.cost}
 							</p>
 						</div>
 						{/* Calendar */}
@@ -225,4 +225,4 @@ function ProgramOverview() {
 	);
 }
 
-export default ProgramOverview;
+export default ProjectOverview;

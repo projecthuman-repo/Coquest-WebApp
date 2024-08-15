@@ -6,7 +6,7 @@ import { Program } from "../../models/programModel";
 // import Loading from "../../components/Loading";
 
 // TODO fetch post data from backend
-const data = [
+const data: Program[] = [
 	{
 		id: 1,
 		name: "Program 1",
@@ -98,6 +98,202 @@ const data = [
 				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 		],
+		openRoles: [
+			{
+				id: 1,
+				title: "Software Developer",
+				program: "Interesting Program",
+				location: "Toronto, ON",
+				description:
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem. Cras eu tempus neque. Suspendisse vitae lacus condimentum, malesuada est et, ultrices ligula. Praesent sit amet massa tincidunt, egestas metus vel, pharetra mauris.",
+				qualifications:
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem. Cras eu tempus neque. Suspendisse vitae lacus condimentum, malesuada est et, ultrices ligula. Praesent sit amet massa tincidunt, egestas metus vel, pharetra mauris.",
+				datePosted: "2024-08-05",
+				salary: 1000,
+				applicants: [
+					{
+						id: 1,
+						dateApplied: "2024-08-05",
+						name: "John Doe",
+						companyName: "Company",
+						address: "123 Street, Toronto, ON",
+						phone: "123-456-7890",
+						email: "john.doe@email.com",
+						education: [
+							{
+								title: "Bachelor of Computer Science",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2020-09-01",
+								endDate: "2024-06-01",
+								completionStatus: true,
+							},
+						],
+						experience: [
+							{
+								title: "Software Developer",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2024-06-01",
+								endDate: "2024-08-01",
+							},
+						],
+						certifications: [
+							{
+								title: "Certificate of Completion",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								issueDate: "2024-08-01",
+							},
+						],
+						availability: [
+							{
+								day: "Monday",
+								from: "09:00",
+								to: "17:00",
+							},
+						],
+						previousProjects: [
+							{
+								title: "Project 1",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2024-06-01",
+								endDate: "2024-08-01",
+							},
+						],
+						badges: [
+							{
+								title: "Badge 1",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+							},
+						],
+						references: [
+							{
+								name: "Jane Doe",
+								companyName: "Company",
+								phone: "123-456-7890",
+								email: "jane.doe@email.com",
+							},
+						],
+					},
+					{
+						id: 2,
+						dateApplied: "2024-08-05",
+						name: "Jane Doe",
+						companyName: "Company",
+						address: "123 Street, Toronto, ON",
+						phone: "123-456-7890",
+						email: "jane.doe@email.com",
+						education: [
+							{
+								title: "Bachelor of Computer Science",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2020-09-01",
+								endDate: "2024-06-01",
+								completionStatus: true,
+							},
+							{
+								title: "Master of Computer Science",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2024-09-01",
+								endDate: null,
+								completionStatus: false,
+							},
+						],
+						experience: [
+							{
+								title: "Software Developer",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2024-06-01",
+								endDate: null,
+							},
+							{
+								title: "Intern Developer",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2024-03-01",
+								endDate: "2024-06-01",
+							},
+						],
+						certifications: [
+							{
+								title: "Certificate of Completion",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								issueDate: "2024-08-01",
+							},
+						],
+						availability: [
+							{
+								day: "Monday",
+								from: "09:00",
+								to: "17:00",
+							},
+							{
+								day: "Tuesday",
+								from: "09:00",
+								to: "17:00",
+							},
+							{
+								day: "Wednesday",
+								from: "09:00",
+								to: "17:00",
+							},
+							{
+								day: "Thursday",
+								from: "09:00",
+								to: "17:00",
+							},
+							{
+								day: "Friday",
+								from: "09:00",
+								to: "17:00",
+							},
+						],
+						previousProjects: [
+							{
+								title: "Project 1",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2024-06-01",
+								endDate: "2024-08-01",
+							},
+						],
+						badges: [
+							{
+								title: "Badge 1",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+							},
+							{
+								title: "Badge 2",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+							},
+						],
+						references: [
+							{
+								name: "Jane Doe",
+								companyName: "Company",
+								phone: "123-456-7890",
+								email: "jane.doe@email.com",
+							},
+							{
+								name: "Jane Smith",
+								companyName: "Company",
+								phone: "123-456-7890",
+								email: "jane.smith@email.com",
+							},
+						],
+					},
+				],
+			},
+		],
 	},
 	{
 		id: 2,
@@ -161,6 +357,170 @@ const data = [
 				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 		],
+		openRoles: [
+			{
+				id: 1,
+				title: "Software Developer",
+				program: "An Interesting Program", // When sorted by program, this one should come first
+				location: "Toronto, ON",
+				description:
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem. Cras eu tempus neque. Suspendisse vitae lacus condimentum, malesuada est et, ultrices ligula. Praesent sit amet massa tincidunt, egestas metus vel, pharetra mauris.",
+				qualifications:
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem. Cras eu tempus neque. Suspendisse vitae lacus condimentum, malesuada est et, ultrices ligula. Praesent sit amet massa tincidunt, egestas metus vel, pharetra mauris.",
+				datePosted: "2024-08-08", // when sorted by date, this one should come first (latest)
+				salary: null,
+				applicants: [
+					{
+						id: 1,
+						dateApplied: "2024-08-05",
+						name: "John Doe",
+						companyName: "Company",
+						address: "123 Street, Toronto, ON",
+						phone: "123-456-7890",
+						email: "john.doe@email.com",
+						education: [
+							{
+								title: "Bachelor of Computer Science",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2020-09-01",
+								endDate: "2024-06-01",
+								completionStatus: true,
+							},
+						],
+						experience: [
+							{
+								title: "Software Developer",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2024-06-01",
+								endDate: "2024-08-01",
+							},
+						],
+						certifications: [
+							{
+								title: "Certificate of Completion",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								issueDate: "2024-08-01",
+							},
+						],
+						availability: [
+							{
+								day: "Monday",
+								from: "09:00",
+								to: "17:00",
+							},
+						],
+						previousProjects: [
+							{
+								title: "Project 1",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2024-06-01",
+								endDate: "2024-08-01",
+							},
+						],
+						badges: [
+							{
+								title: "Badge 1",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+							},
+						],
+						references: [
+							{
+								name: "Jane Doe",
+								companyName: "Company",
+								phone: "123-456-7890",
+								email: "jane.doe@email.com",
+							},
+						],
+					},
+				],
+			},
+			{
+				id: 2,
+				title: "A HR Manager", // When sorted by title, this one should come first
+				program: "Interesting Program",
+				location: "Toronto, ON",
+				description:
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem. Cras eu tempus neque. Suspendisse vitae lacus condimentum, malesuada est et, ultrices ligula. Praesent sit amet massa tincidunt, egestas metus vel, pharetra mauris.",
+				qualifications:
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem. Cras eu tempus neque. Suspendisse vitae lacus condimentum, malesuada est et, ultrices ligula. Praesent sit amet massa tincidunt, egestas metus vel, pharetra mauris.",
+				datePosted: "2024-08-05",
+				salary: null,
+				applicants: [
+					{
+						id: 1,
+						dateApplied: "2024-08-05",
+						name: "John Doe",
+						companyName: "Company",
+						address: "123 Street, Toronto, ON",
+						phone: "123-456-7890",
+						email: "john.doe@email.com",
+						education: [
+							{
+								title: "Bachelor of Computer Science",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2020-09-01",
+								endDate: "2024-06-01",
+								completionStatus: true,
+							},
+						],
+						experience: [
+							{
+								title: "Software Developer",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2024-06-01",
+								endDate: "2024-08-01",
+							},
+						],
+						certifications: [
+							{
+								title: "Certificate of Completion",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								issueDate: "2024-08-01",
+							},
+						],
+						availability: [
+							{
+								day: "Monday",
+								from: "09:00",
+								to: "17:00",
+							},
+						],
+						previousProjects: [
+							{
+								title: "Project 1",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2024-06-01",
+								endDate: "2024-08-01",
+							},
+						],
+						badges: [
+							{
+								title: "Badge 1",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+							},
+						],
+						references: [
+							{
+								name: "Jane Doe",
+								companyName: "Company",
+								phone: "123-456-7890",
+								email: "jane.doe@email.com",
+							},
+						],
+					},
+				],
+			},
+		],
 	},
 	{
 		id: 3,
@@ -221,6 +581,7 @@ const data = [
 				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 		],
+		openRoles: null,
 	},
 ];
 

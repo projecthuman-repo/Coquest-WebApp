@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import VolunteerPositionCard from "../components/VolunteerPositionCard/VolunteerPositionCard";
-import { ProgramContext } from "./ProgramContext";
+import VolunteerPositionCard from "../../Programs/components/VolunteerPositionCard/VolunteerPositionCard";
+import { ProjectContext } from "./ProjectContext";
 import "./Volunteering.css";
 import "./index.css";
 
-function ProgramVolunteering() {
-	const { program } = useContext(ProgramContext);
+function ProjectVolunteering() {
+	const { project } = useContext(ProjectContext);
 
 	return (
 		<>
@@ -14,7 +14,7 @@ function ProgramVolunteering() {
 					<h2 className="prg-v-heading">Volunteering</h2>
 				</div>
 
-				{program?.volunteerPositions.map((volunteerPosition, index) => (
+				{project?.volunteerPositions.map((volunteerPosition, index) => (
 					<VolunteerPositionCard
 						key={index}
 						id={volunteerPosition.id}
@@ -28,4 +28,4 @@ function ProgramVolunteering() {
 	);
 }
 
-export default ProgramVolunteering;
+export default ProjectVolunteering;

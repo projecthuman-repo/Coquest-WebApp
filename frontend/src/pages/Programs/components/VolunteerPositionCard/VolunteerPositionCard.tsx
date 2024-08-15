@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import OutlineButton from "../../../components/Buttons/OutlineButton";
-import Input from "../../../components/Input";
-import { VolunteerPosition } from "../../../models/programModel";
+import OutlineButton from "../../../../components/Buttons/OutlineButton";
+import Input from "../../../../components/Input";
+import { VolunteerPosition } from "../../../../models/programModel";
 import "./VolunteerPositionCard.css";
 
 function VolunteerPositionCard({

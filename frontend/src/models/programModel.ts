@@ -1,3 +1,5 @@
+import { ProgramRole } from "./roleModel";
+
 export interface Program {
 	id: number;
 	name: string;
@@ -12,6 +14,7 @@ export interface Program {
 	cost: number | null;
 	milestones: Milestone[];
 	volunteerPositions: VolunteerPosition[];
+	openRoles: ProgramRole[] | null;
 }
 
 export interface Milestone {

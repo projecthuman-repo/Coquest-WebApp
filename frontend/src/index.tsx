@@ -15,7 +15,6 @@ import { Dashboard } from "./pages/Dashboard";
 import WalletPage from "./pages/Wallet/WalletPage";
 import { Outlet } from "react-router-dom";
 import UserProfile from "./pages/Profile/UserProfile"; // Import UserProfile page
-import ProjectDescription from "./pages/Projects/Description/Description";
 
 // Program flow Imports
 import {
@@ -50,6 +49,16 @@ import PostFeed from "./pages/Post/PostFeed";
 import CreatePost from "./pages/Post/Create";
 import ProgramPage from "./pages/Programs/ProgramPage";
 import { ProgramsContextProvider } from "./pages/Programs/ProgramsContext";
+import { ProgramContextProvider } from "./pages/Programs/ProgramPage/ProgramContext";
+import ProgramMembers from "./pages/Programs/ProgramPage/Members";
+import ProgramApplications from "./pages/Programs/ProgramPage/Members/Applications";
+import RoleApply from "./pages/Programs/components/RoleApplicationForm/RoleApply";
+import { ProjectsContextProvider } from "./pages/Projects/ProjectsContext";
+import { ProjectContextProvider } from "./pages/Projects/ProjectPage/ProjectContext";
+import ProjectMembers from "./pages/Projects/ProjectPage/Members";
+import ProjectApplications from "./pages/Projects/ProjectPage/Members/Applications";
+import ViewAllProjects from "./pages/Projects";
+import ProjectPage from "./pages/Projects/ProjectPage";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement,
@@ -140,11 +149,54 @@ const router = createBrowserRouter([
 			},
 			{
 				path: ":id",
-				element: (
-					<ProgramsContextProvider>
-						<ProgramPage />
-					</ProgramsContextProvider>
-				),
+				element: <Outlet />,
+				children: [
+					{
+						path: "",
+						element: (
+							<ProgramsContextProvider>
+								<ProgramPage />
+							</ProgramsContextProvider>
+						),
+					},
+					{
+						path: "members",
+						element: <Outlet />,
+						children: [
+							{
+								path: "",
+								element: (
+									<ProgramsContextProvider>
+										<ProgramContextProvider>
+											<ProgramMembers />
+										</ProgramContextProvider>
+									</ProgramsContextProvider>
+								),
+							},
+							{
+								path: ":id/apply",
+								element: (
+									<ProgramsContextProvider>
+										<ProgramContextProvider>
+											<RoleApply type="program" />
+										</ProgramContextProvider>
+									</ProgramsContextProvider>
+								),
+							},
+							{
+								// TODO: make this route only available for program admins (view who applied for role)
+								path: ":id/applications",
+								element: (
+									<ProgramsContextProvider>
+										<ProgramContextProvider>
+											<ProgramApplications />
+										</ProgramContextProvider>
+									</ProgramsContextProvider>
+								),
+							},
+						],
+					},
+				],
 			},
 			{
 				path: "create",
@@ -243,8 +295,63 @@ const router = createBrowserRouter([
 		element: <Outlet />,
 		children: [
 			{
-				path: "description",
-				element: <ProjectDescription />,
+				path: "",
+				element: (
+					<ProjectsContextProvider>
+						<ViewAllProjects />
+					</ProjectsContextProvider>
+				),
+			},			
+			{
+				path: ":id",
+				element: <Outlet />,
+				children: [
+					{
+						path: "",
+						element: (
+							<ProjectsContextProvider>
+								<ProjectPage />
+							</ProjectsContextProvider>
+						),
+					},
+					{
+						path: "members",
+						element: <Outlet />,
+						children: [
+							{
+								path: "",
+								element: (
+									<ProjectsContextProvider>
+										<ProjectContextProvider>
+											<ProjectMembers />
+										</ProjectContextProvider>
+									</ProjectsContextProvider>
+								),
+							},
+							{
+								path: ":id/apply",
+								element: (
+									<ProjectsContextProvider>
+										<ProjectContextProvider>
+											<RoleApply type="project" />
+										</ProjectContextProvider>
+									</ProjectsContextProvider>
+								),
+							},
+							{
+								// TODO: make this route only available for program admins (view who applied for role)
+								path: ":id/applications",
+								element: (
+									<ProjectsContextProvider>
+										<ProjectContextProvider>
+											<ProjectApplications />
+										</ProjectContextProvider>
+									</ProjectsContextProvider>
+								),
+							},
+						],
+					},
+				],
 			},
 		],
 	},
