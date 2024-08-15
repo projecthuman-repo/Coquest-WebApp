@@ -31,7 +31,9 @@ export const ProgramContextProvider = ({
 				const programId = parseInt(segments[index + 1], 10);
 				if (!isNaN(programId)) {
 					const program = programs.find(
-						(program) => program.id?.localeCompare(programId.toString()) === 0
+						(program) =>
+							program.id?.localeCompare(programId.toString()) ===
+							0,
 					);
 					if (program) {
 						setProgram(program);

@@ -71,7 +71,8 @@ const Applications = () => {
 				const roleId = parseInt(segments[index + 1], 10);
 				if (!isNaN(roleId) && program && program.openRoles) {
 					const role = program.openRoles.find(
-						(role) => role.id?.localeCompare(roleId.toString()) === 0
+						(role) =>
+							role.id?.localeCompare(roleId.toString()) === 0,
 					);
 					if (role) {
 						setRole(role);
