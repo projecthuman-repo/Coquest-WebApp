@@ -34,31 +34,40 @@ import {
 	CoopPromotion,
 } from "./pages/Coop/CreateCoop";
 import EditProfile from "./pages/Programs/EditProfile";
-import ViewAllPrograms from "./pages/Programs";
 import styled from "@emotion/styled";
 import { Orientation } from "./pages/Orientation";
 import RemoveNavComponents from "./components/RemoveNavComponents";
 import OrientationRedirector from "./pages/Orientation/OrientationRedirector";
 import GlobalRedirect from "./components/AutoRedirector/GlobalRedirect";
 import { UserRegistrationProvider } from "./components/AutoRedirector/UserRegistration";
+
+// communities
 import CreateCommunity from "./pages/Community/Create";
 import CommunityDescription from "./pages/Community/Description/Description";
 import CommunityQuests from "./pages/Quests/Quests";
+
+// posts
 import { PostFeedContextProvider } from "./pages/Post/PostFeedContext";
 import PostFeed from "./pages/Post/PostFeed";
 import CreatePost from "./pages/Post/Create";
-import ProgramPage from "./pages/Programs/ProgramPage";
+
+// programs
 import { ProgramsContextProvider } from "./pages/Programs/ProgramsContext";
 import { ProgramContextProvider } from "./pages/Programs/ProgramPage/ProgramContext";
+import ViewAllPrograms from "./pages/Programs";
+import ProgramPage from "./pages/Programs/ProgramPage";
 import ProgramMembers from "./pages/Programs/ProgramPage/Members";
 import ProgramApplications from "./pages/Programs/ProgramPage/Members/Applications";
-import RoleApply from "./pages/Programs/components/RoleApplicationForm/RoleApply";
+
+// projects
 import { ProjectsContextProvider } from "./pages/Projects/ProjectsContext";
 import { ProjectContextProvider } from "./pages/Projects/ProjectPage/ProjectContext";
-import ProjectMembers from "./pages/Projects/ProjectPage/Members";
-import ProjectApplications from "./pages/Projects/ProjectPage/Members/Applications";
 import ViewAllProjects from "./pages/Projects";
 import ProjectPage from "./pages/Projects/ProjectPage";
+import ProjectMembers from "./pages/Projects/ProjectPage/Members";
+import ProjectApplications from "./pages/Projects/ProjectPage/Members/Applications";
+
+import RoleApply from "./pages/Programs/components/RoleApplicationForm/RoleApply";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement,
