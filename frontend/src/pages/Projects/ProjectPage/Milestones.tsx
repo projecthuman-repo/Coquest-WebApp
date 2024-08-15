@@ -159,14 +159,8 @@ function ProjectMilestones() {
 				{project?.milestones.map((milestone: any, index: number) => (
 					<MilestoneCard
 						key={index}
-						id={milestone?.id}
-						type={milestone?.type}
-						title={milestone?.title}
-						progress={milestone?.progress}
-						description={milestone?.description}
-						completedBy={milestone?.completedBy}
-						dateStarted={milestone?.dateStarted}
-						dateCompleted={milestone?.dateCompleted}
+						milestone={milestone}
+						type="project"
 					/>
 				))}
 			</div>

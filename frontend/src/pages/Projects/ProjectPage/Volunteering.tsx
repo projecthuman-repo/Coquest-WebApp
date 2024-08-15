@@ -14,15 +14,21 @@ function ProjectVolunteering() {
 					<h2 className="prg-v-heading">Volunteering</h2>
 				</div>
 
-				{project?.volunteerPositions.map((volunteerPosition, index) => (
-					<VolunteerPositionCard
-						key={index}
-						id={volunteerPosition.id}
-						title={volunteerPosition.title}
-						responsibilities={volunteerPosition.responsibilities}
-						skills={volunteerPosition.skills}
-					/>
-				))}
+				<div className="volunteering-positions">
+					{project?.volunteerPositions.map(
+						(volunteerPosition, index) => (
+							<VolunteerPositionCard
+								key={index}
+								id={volunteerPosition.id}
+								title={volunteerPosition.title}
+								responsibilities={
+									volunteerPosition.responsibilities
+								}
+								skills={volunteerPosition.skills}
+							/>
+						),
+					)}
+				</div>
 			</div>
 		</>
 	);

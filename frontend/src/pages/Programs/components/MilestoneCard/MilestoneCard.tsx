@@ -6,30 +6,29 @@ import Input from "../../../../components/Input";
 import PrimaryButton from "../../../../components/Buttons/PrimaryButton";
 import { Milestone } from "../../../../models/programModel";
 import { ProgramContext } from "../../ProgramPage/ProgramContext";
+import { ProjectContext } from "../../../Projects/ProjectPage/ProjectContext";
 import "./MilestoneCard.css";
 
-function MilestoneCard({
-	id,
-	type,
-	title,
-	progress,
-	description,
-	completedBy,
-	dateStarted,
-	dateCompleted,
-}: Milestone) {
+interface MilestoneCardProps {
+	milestone: Milestone;
+	type: string; // "program" or "project" for which milestone is
+}
+
+function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 	const { program, setProgram } = useContext(ProgramContext);
+	const { project, setProject } = useContext(ProjectContext);
 
 	const [expanded, setExpanded] = useState(false);
-	const [displayDesc, setDisplayDesc] = useState(description);
+	const [displayDesc, setDisplayDesc] = useState(milestone.description);
 
 	//edit milestone states
 	const [scrollY, setScrollY] = useState(0);
 	const [editingStarted, setEditingStarted] = useState(false);
 	const [milestoneType, setMilestoneType] = useState(type);
-	const [milestoneTitle, setMilestoneTitle] = useState(title);
-	const [milestoneDescription, setMilestoneDescription] =
-		useState(description);
+	const [milestoneTitle, setMilestoneTitle] = useState(milestone.title);
+	const [milestoneDescription, setMilestoneDescription] = useState(
+		milestone.description,
+	);
 
 	function handleEditModal() {
 		setEditingStarted(!editingStarted);
@@ -45,47 +44,77 @@ function MilestoneCard({
 	}
 
 	function handleMilestoneEdit() {
-		if (program)
+		if (type === "program" && program) {
 			setProgram({
 				...program,
-				milestones: program.milestones.map((milestone) => {
-					if (milestone.id === id) {
+				milestones: program.milestones.map((m) => {
+					if (m.id === milestone.id) {
 						return {
-							...milestone,
+							...m,
 							type: milestoneType,
 							title: milestoneTitle,
 							description: milestoneDescription,
 						};
 					}
-					return milestone;
+					return m;
 				}),
 			});
+		} else if (type === "project" && project) {
+			setProject({
+				...project,
+				milestones: project.milestones.map((m) => {
+					if (m.id === milestone.id) {
+						return {
+							...m,
+							type: milestoneType,
+							title: milestoneTitle,
+							description: milestoneDescription,
+						};
+					}
+					return m;
+				}),
+			});
+		}
 
 		//TODO edit milestone in backend
 		handleEditModal();
 	}
 
 	function handleDelete() {
-		if (program)
+		if (type === "program" && program) {
 			setProgram({
 				...program,
 				milestones: program.milestones.filter(
-					(milestone) => milestone.id !== id,
+					(m) => m.id !== milestone.id,
 				),
 			});
+		} else if (type === "project" && project) {
+			setProject({
+				...project,
+				milestones: project.milestones.filter(
+					(m) => m.id !== milestone.id,
+				),
+			});
+		}
 
 		//TODO delete milestone in backend
 	}
 
 	useEffect(() => {
-		setMilestoneType(type);
-		setMilestoneTitle(title);
-		setMilestoneDescription(description);
+		setMilestoneType(milestone.type);
+		setMilestoneTitle(milestone.title);
+		setMilestoneDescription(milestone.description);
 
-		if (description.length > 350 && !expanded) {
-			setDisplayDesc(description.slice(0, 350) + "...");
-		} else setDisplayDesc(description);
-	}, [description, expanded, editingStarted, title, type]);
+		if (milestone.description.length > 350 && !expanded) {
+			setDisplayDesc(milestone.description.slice(0, 350) + "...");
+		} else setDisplayDesc(milestone.description);
+	}, [
+		milestone.description,
+		expanded,
+		editingStarted,
+		milestone.title,
+		milestone.type,
+	]);
 
 	return (
 		<>
@@ -93,7 +122,7 @@ function MilestoneCard({
 				<div className="edit-milestone-modal-container">
 					<div className="edit-milestone-modal">
 						<div className="edit-milestone-header">
-							<p>Edit {title}</p>
+							<p>Edit {milestone.title}</p>
 							<button onClick={handleEditModal}>
 								<img
 									src="/icons/close-grey.png"
@@ -177,47 +206,50 @@ function MilestoneCard({
 			<div className="prg-m-container">
 				<div className="prg-m-background">
 					<div className="milestone-header">
-						<p className="prg-m-heading">{title}</p>
+						<p className="prg-m-heading">{milestone.title}</p>
 						<div className="prg-m-mpb-container">
-							<MilestoneProgressBar progress={progress} />
+							<MilestoneProgressBar
+								progress={milestone.progress}
+							/>
 						</div>
 					</div>
 					<p className="prg-m-text">{displayDesc}</p>
 					{expanded && (
 						<p className="prg-m-text">
 							<b>Completed By: </b>{" "}
-							{completedBy === "" ? "N/A" : completedBy}
+							{milestone.completedBy === ""
+								? "N/A"
+								: milestone.completedBy}
 						</p>
 					)}
 					{expanded && (
 						<p className="prg-m-sub-text">
 							<b>Date Started: </b>
-							{new Date(dateStarted) instanceof Date &&
-							!isNaN(new Date(dateStarted).getTime())
-								? new Date(dateStarted).toLocaleDateString(
-										"en-US",
-										{
-											year: "numeric",
-											month: "long",
-											day: "numeric",
-										},
-									)
+							{new Date(milestone.dateStarted) instanceof Date &&
+							!isNaN(new Date(milestone.dateStarted).getTime())
+								? new Date(
+										milestone.dateStarted,
+									).toLocaleDateString("en-US", {
+										year: "numeric",
+										month: "long",
+										day: "numeric",
+									})
 								: "N/A"}
 						</p>
 					)}
 					{expanded && (
 						<p className="prg-m-sub-text">
 							<b>Date Completed: </b>
-							{new Date(dateCompleted) instanceof Date &&
-							!isNaN(new Date(dateCompleted).getTime())
-								? new Date(dateCompleted).toLocaleDateString(
-										"en-US",
-										{
-											year: "numeric",
-											month: "long",
-											day: "numeric",
-										},
-									)
+							{new Date(milestone.dateCompleted) instanceof
+								Date &&
+							!isNaN(new Date(milestone.dateCompleted).getTime())
+								? new Date(
+										milestone.dateCompleted,
+									).toLocaleDateString("en-US", {
+										year: "numeric",
+										month: "long",
+										day: "numeric",
+									})
 								: "N/A"}
 						</p>
 					)}
