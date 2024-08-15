@@ -1,14 +1,14 @@
 import React, { useState, useContext } from "react";
 import ProgramProgressBar from "../../../components/ProgramProgressBar/ProgramProgressBar";
-import MilestoneCard from "../components/MilestoneCard/MilestoneCard";
+import MilestoneCard from "../../Programs/components/MilestoneCard/MilestoneCard";
 import Input from "../../../components/Input";
 import PrimaryButton from "../../../components/Buttons/PrimaryButton";
-import { ProgramContext } from "./ProgramContext";
+import { ProjectContext } from "./ProjectContext";
 import "./Milestones.css";
 import "./index.css";
 
-function ProgramMilestones() {
-	const { program, setProgram } = useContext(ProgramContext);
+function ProjectMilestones() {
+	const { project, setProject } = useContext(ProjectContext);
 
 	//milestone addition
 	const [addingStarted, setAddingStarted] = useState(false);
@@ -26,9 +26,9 @@ function ProgramMilestones() {
 	}
 
 	function handleMilestoneAdd() {
-		if (program) {
+		if (project) {
 			const newMilestone = {
-				id: `${program?.milestones.length + 1}`,
+				id: project?.milestones.length + 1,
 				type: milestoneType,
 				title: milestoneTitle,
 				progress: 0,
@@ -38,12 +38,12 @@ function ProgramMilestones() {
 				dateCompleted: "",
 			};
 
-			setProgram({
-				...program,
-				milestones: [...program.milestones, newMilestone],
+			setProject({
+				...project,
+				milestones: [...project.milestones, newMilestone],
 			});
 		}
-		//TODO: update program milestones in backend
+		//TODO: update project milestones in backend
 
 		handleAddModal();
 		setMilestoneType("Milestone");
@@ -141,7 +141,7 @@ function ProgramMilestones() {
 			<div className="prg-m-pb-container">
 				<ProgramProgressBar
 					seeHistory={false}
-					progress={program?.progress || 0}
+					progress={project?.progress || 0}
 				/>
 			</div>
 
@@ -155,8 +155,8 @@ function ProgramMilestones() {
 				</button>
 			</div>
 
-			<div className="program-milestones">
-				{program?.milestones.map((milestone: any, index: number) => (
+			<div className="project-milestones">
+				{project?.milestones.map((milestone: any, index: number) => (
 					<MilestoneCard
 						key={index}
 						id={milestone?.id}
@@ -174,4 +174,4 @@ function ProgramMilestones() {
 	);
 }
 
-export default ProgramMilestones;
+export default ProjectMilestones;

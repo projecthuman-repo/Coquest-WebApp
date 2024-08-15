@@ -1,0 +1,177 @@
+.role-apply-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 25px;
+  margin: 0 20px;
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+.role-apply-title {
+  font-family: Poppins;
+  font-weight: 650;
+  font-size: 24px;
+  overflow-wrap: break-word;
+  color: black;
+}
+
+.role-apply-header:not(.role-apply-title) {
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+}
+
+.role-apply-general-info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.collapsed-box-shadow {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 25px;
+}
+
+.role-apply-form {
+  display: flex;
+  flex-direction: column;
+  margin: 24px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 25px;
+  gap: 24px;
+}
+
+.section-title {
+  font-family: Poppins;
+  font-weight: 650;
+  font-size: 16px;
+  overflow-wrap: break-word;
+}
+
+.role-apply-dates {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.role-apply-dates > * {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.role-apply-completion {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.role-apply-add-more button {
+  margin: 16px 0;
+  max-width: 200px;
+}
+
+input {
+  outline: none;
+}
+
+input[type="date"],
+input[type="time"] {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.section-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.section-header button {
+  font-size: 14px;
+  font-weight: 450;
+}
+
+.section-header button:hover {
+  text-decoration: underline;
+}
+
+.role-apply-form textarea {
+  resize: none;
+}
+
+.role-apply-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.role-apply-icon {
+  height: 20px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.role-apply-form-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.role-apply-form-footer-single-icon {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.availability-day {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 36px;
+  flex-wrap: wrap;
+}
+
+.availability-day > p {
+  width: 100px;
+}
+
+.availability-day > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 48px;
+}
+
+.availability-day > div input {
+  max-width: 300px;
+  min-width: 100px;
+}
+
+@media screen and (max-width: 720px) {
+  .availability-day {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .availability-day > div {
+    width: 100%;
+  }
+
+  .availability-day > div > p {
+    width: 60px;
+  }
+}

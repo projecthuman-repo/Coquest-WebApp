@@ -1,6 +1,6 @@
 import React from "react";
 
-function ProjectsOffer() {
+function ProjectOffer() {
 	return (
 		<>
 			<p>Offer</p>
@@ -8,4 +8,4 @@ function ProjectsOffer() {
 	);
 }
 
-export default ProjectsOffer;
+export default ProjectOffer;

@@ -1,12 +1,12 @@
 /* Widget Container and Background */
 
-.prj-v-container {
+.prg-v-container {
   display: flex;
   justify-content: column;
   align-items: center;
 }
 
-.prj-v-heading-container {
+.prg-v-heading-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,13 +16,13 @@
 
 /* Project Container and Background */
 
-.prj-v-container {
+.prg-v-container {
   display: flex;
   flex-direction: column;
   margin: 15px 0px 0px 0px;
 }
 
-.prj-v-background {
+.prg-v-background {
   display: flex;
   flex-direction: column;
   background-color: #f0f0f0;
@@ -32,28 +32,28 @@
   margin: 15px 20px 0px 0px;
 }
 
-.prj-v-background img {
+.prg-v-background img {
   width: 15px;
   height: 10px;
 }
 
 /* Text Styles */
 
-.prj-v-heading {
+.prg-v-heading {
   font-family: Poppins;
   font-weight: 600;
   font-size: 24px;
   overflow-wrap: break-word;
 }
 
-.prj-v-sub-heading {
+.prg-v-sub-heading {
   font-family: Poppins;
   font-weight: 400;
   font-size: 14px;
   overflow-wrap: break-word;
 }
 
-.prj-v-text {
+.prg-v-text {
   font-family: Poppins;
   font-weight: 400;
   font-size: 16px;
@@ -63,14 +63,14 @@
 
 /* Buttons */
 
-.prj-v-open-button {
+.prg-v-open-button {
   justify-content: center;
   align-items: center;
   width: 15px;
   height: 10px;
 }
 
-.prj-v-button-design {
+.prg-v-button-design {
   width: 200px;
   height: 40px;
   margin: 0px 0px 0px 25px;

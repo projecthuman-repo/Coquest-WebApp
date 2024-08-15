@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import MilestoneProgressBar from "../../../components/ProgramProgressBar/MilestoneProgressBar";
-import DeleteButton from "../../../components/Buttons/DeleteButton";
-import OutlineButton from "../../../components/Buttons/OutlineButton";
-import Input from "../../../components/Input";
-import PrimaryButton from "../../../components/Buttons/PrimaryButton";
-import { Milestone } from "../../../models/programModel";
-import { ProgramContext } from "../ProgramPage/ProgramContext";
+import MilestoneProgressBar from "../../../../components/ProgramProgressBar/MilestoneProgressBar";
+import DeleteButton from "../../../../components/Buttons/DeleteButton";
+import OutlineButton from "../../../../components/Buttons/OutlineButton";
+import Input from "../../../../components/Input";
+import PrimaryButton from "../../../../components/Buttons/PrimaryButton";
+import { Milestone } from "../../../../models/programModel";
+import { ProgramContext } from "../../ProgramPage/ProgramContext";
 import "./MilestoneCard.css";
 
 function MilestoneCard({
@@ -85,7 +85,7 @@ function MilestoneCard({
 		if (description.length > 350 && !expanded) {
 			setDisplayDesc(description.slice(0, 350) + "...");
 		} else setDisplayDesc(description);
-	}, [description, expanded, editingStarted]);
+	}, [description, expanded, editingStarted, title, type]);
 
 	return (
 		<>

@@ -1,0 +1,144 @@
+.applicant-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 25px;
+  margin: 0 20px;
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+.applicant-container img {
+  width: 15px;
+  height: 10px;
+}
+
+.applicant-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.applicant-header > * {
+  max-width: 50%;
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.applicant-container p {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 16px;
+  overflow-wrap: break-word;
+}
+
+.applicant-container p.text-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 20px;
+  overflow-wrap: break-word;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.applicant-company-address > p,
+.application-date > p,
+.applicant-contact > p {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.applicant-info > *:not(.applicant-availability) {
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.applicant-availability {
+  padding: 15px;
+}
+
+.section-header > p:first-child,
+.applicant-availability > p:first-child {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.section-header button {
+  font-size: 14px;
+  font-weight: 450;
+}
+
+.section-header button:hover {
+  text-decoration: underline;
+}
+
+p.section-title {
+  font-weight: 550;
+  margin-top: 10px;
+}
+
+.experience-list,
+.projects-list,
+.education-list,
+.certifications-list,
+.badges-list,
+.references-list {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.references-list {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+p.muted-info {
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+}
+
+.application-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.application-btns > * {
+  width: 33%;
+  flex: 1;
+}
+.application-btns > button {
+  font-size: 14px;
+  max-width: 200px;
+  margin: 5px 0;
+  padding: 5px 10px;
+}
+
+@media screen and (max-width: 860px) {
+  .application-btns > * {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .application-btns > * {
+    width: 100%;
+  }
+}

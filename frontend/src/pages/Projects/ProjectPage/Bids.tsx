@@ -1,6 +1,6 @@
 import React from "react";
 
-function ProjectsBids() {
+function ProgramBids() {
 	return (
 		<>
 			<p>Bids</p>
@@ -8,4 +8,4 @@ function ProjectsBids() {
 	);
 }
 
-export default ProjectsBids;
+export default ProgramBids;

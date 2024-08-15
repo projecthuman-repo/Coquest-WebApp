@@ -1,0 +1,20 @@
+.filter-chip {
+  padding: 8px 16px;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.15);
+  color: black;
+  transition: background-color 0.2s;
+  font-size: 13.5px;
+  font-weight: 500;
+  max-width: 300px;
+  text-align: center;
+}
+
+.filter-chip input[type="radio"] {
+  display: none;
+}
+
+.filter-chip:hover,
+.filter-chip.active {
+  background-color: rgba(0, 0, 0, 0.3);
+}

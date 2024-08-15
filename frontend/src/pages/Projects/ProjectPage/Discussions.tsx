@@ -1,6 +1,6 @@
 import React from "react";
 
-function ProjectsDiscussions() {
+function ProjectDiscussions() {
 	return (
 		<>
 			<p>Discussions</p>
@@ -8,4 +8,4 @@ function ProjectsDiscussions() {
 	);
 }
 
-export default ProjectsDiscussions;
+export default ProjectDiscussions;

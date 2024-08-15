@@ -4,19 +4,19 @@ import { Typography, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
 import OutlineButton from "../../../components/Buttons/OutlineButton";
 
-import SignUpModal from "../components/SignUpModal/SignUpModal";
-import ConfirmationModal from "../components/SignUpModal/ConfirmationModal";
+import SignUpModal from "../../Programs/components/SignUpModal/SignUpModal";
+import ConfirmationModal from "../../Programs/components/SignUpModal/ConfirmationModal";
 
-import ProgramOverview from "./Overview";
-import ProgramMilestones from "./Milestones";
-import ProgramVolunteering from "./Volunteering";
-import ProgramBids from "./Bids";
-import ProgramOffer from "./Offer";
-import ProgramDiscussions from "./Discussions";
+import ProjectOverview from "./Overview";
+import ProjectMilestones from "./Milestones";
+import ProjectVolunteering from "./Volunteering";
+import ProjectBids from "./Bids";
+import ProjectOffer from "./Offer";
+import ProjectDiscussions from "./Discussions";
 
-import { Program } from "../../../models/programModel";
-import { ProgramsContext } from "../ProgramsContext";
-import { ProgramContext } from "./ProgramContext";
+import { Project } from "../../../models/projectModel";
+import { ProjectsContext } from "../ProjectsContext";
+import { ProjectContext } from "./ProjectContext";
 
 import "./index.css";
 
@@ -90,18 +90,18 @@ function TabPanel(props: any) {
 	);
 }
 
-const ProgramPage = () => {
-	const [value, setValue] = React.useState("one"); // which tab on program page user is on
+const ProjectPage = () => {
+	const [value, setValue] = React.useState("one"); // which tab on project page user is on
 
 	const { id } = useParams() as { id: string };
-	const { programs, setPrograms } = useContext(ProgramsContext);
-	const [program, setProgram] = React.useState<Program | null>(
-		programs.filter((program) => program.id === id)[0],
+	const { projects, setProjects } = useContext(ProjectsContext);
+	const [project, setProject] = React.useState<Project | null>(
+		projects.filter((project) => project.id === parseInt(id))[0],
 	);
 
-	// program sign up
-	const [programSignUp, setProgramSignUp] = React.useState(false);
-	const [programSignUpStarted, setProgramSignUpStarted] =
+	// project sign up
+	const [projectSignUp, setProjectSignUp] = React.useState(false);
+	const [projectSignUpStarted, setProjectSignUpStarted] =
 		React.useState(false);
 	const [confirmationNumber, setConfirmationNumber] = React.useState(0);
 
@@ -110,9 +110,9 @@ const ProgramPage = () => {
 	};
 
 	const handleSignUpModal = () => {
-		setProgramSignUpStarted(!programSignUpStarted);
+		setProjectSignUpStarted(!projectSignUpStarted);
 
-		if (!programSignUpStarted) {
+		if (!projectSignUpStarted) {
 			document.body.style.overflow = "hidden";
 			window.scrollTo(0, 0);
 		} else document.body.style.overflow = "auto";
@@ -120,58 +120,58 @@ const ProgramPage = () => {
 
 	const handleSignUp = () => {
 		setConfirmationNumber(Math.floor(Math.random() * 1000000)); // TODO: fetch confirmation number from backend
-		//TODO: send email to user with additional details about the program
-		setProgramSignUp(true);
-		//TODO send post request to backend to sign up for program
+		//TODO: send email to user with additional details about the project
+		setProjectSignUp(true);
+		//TODO send post request to backend to sign up for project
 	};
 
 	useEffect(() => {
-		setPrograms(
-			programs.map((p) => {
+		setProjects(
+			projects.map((p) => {
 				if (p.id) {
-					return p.id === program?.id ? program : p;
+					return p.id === project?.id ? project : p;
 				} else {
 					return p;
 				}
 			}),
-		); // updates programs if program was modified
-	}, [program, programs, setPrograms]);
+		); // updates projects if project was modified
+	}, [project, projects, setProjects]);
 
 	return (
 		<>
-			{program ? (
+			{project ? (
 				<Container>
-					{/* Step 1 of Program SignUp process */}
-					{programSignUpStarted && !programSignUp && (
+					{/* Step 1 of Project SignUp process */}
+					{projectSignUpStarted && !projectSignUp && (
 						<SignUpModal
-							name={program.name}
-							cost={program.cost}
+							name={project.name}
+							cost={project.cost}
 							handleSignUpModal={handleSignUpModal}
 							handleSignUp={handleSignUp}
 						/>
 					)}
 
-					{/* Step 2 of Program SignUp process */}
-					{programSignUpStarted && programSignUp && (
+					{/* Step 2 of Project SignUp process */}
+					{projectSignUpStarted && projectSignUp && (
 						<ConfirmationModal
-							name={program.name}
-							time={program.time}
-							date={program.date}
-							location={program.location}
-							cost={program.cost}
+							name={project.name}
+							time={project.time}
+							date={project.date}
+							location={project.location}
+							cost={project.cost}
 							confirmationNumber={confirmationNumber}
 							handleSignUpModal={handleSignUpModal}
 						/>
 					)}
 
 					<Header>
-						<TitleField>{program.name}</TitleField>
+						<TitleField>{project.name}</TitleField>
 						<OutlineButton
-							name={programSignUp ? "Signed up" : "Sign up"}
+							name={projectSignUp ? "Signed up" : "Sign up"}
 							onClick={
-								programSignUp ? undefined : handleSignUpModal
+								projectSignUp ? undefined : handleSignUpModal
 							}
-							filled={programSignUp}
+							filled={projectSignUp}
 						/>
 					</Header>
 					<Spacer />
@@ -246,45 +246,45 @@ const ProgramPage = () => {
 						/>
 					</CustomTabs>
 					<TabPanel value={value} index="one">
-						<ProgramContext.Provider
-							value={{ program, setProgram }}
+						<ProjectContext.Provider
+							value={{ project, setProject }}
 						>
-							<ProgramOverview />
-						</ProgramContext.Provider>
+							<ProjectOverview />
+						</ProjectContext.Provider>
 					</TabPanel>
 					<TabPanel value={value} index="two">
-						<ProgramContext.Provider
-							value={{ program, setProgram }}
+						<ProjectContext.Provider
+							value={{ project, setProject }}
 						>
-							<ProgramMilestones />
-						</ProgramContext.Provider>
+							<ProjectMilestones />
+						</ProjectContext.Provider>
 					</TabPanel>
 					<TabPanel value={value} index="three">
-						<ProgramContext.Provider
-							value={{ program, setProgram }}
+						<ProjectContext.Provider
+							value={{ project, setProject }}
 						>
-							<ProgramVolunteering />
-						</ProgramContext.Provider>
+							<ProjectVolunteering />
+						</ProjectContext.Provider>
 					</TabPanel>
 					<TabPanel value={value} index="four">
-						<ProgramBids />
+						<ProjectBids />
 					</TabPanel>
 					<TabPanel value={value} index="five">
-						<ProgramOffer />
+						<ProjectOffer />
 					</TabPanel>
 					<TabPanel value={value} index="six">
-						<ProgramDiscussions />
+						<ProjectDiscussions />
 					</TabPanel>
 
 					<Spacer />
 				</Container>
 			) : (
 				<Container>
-					<TitleField>Program Not Found</TitleField>
+					<TitleField>Project Not Found</TitleField>
 				</Container>
 			)}
 		</>
 	);
 };
 
-export default ProgramPage;
+export default ProjectPage;

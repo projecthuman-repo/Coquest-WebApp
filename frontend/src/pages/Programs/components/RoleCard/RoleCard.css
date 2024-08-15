@@ -1,0 +1,101 @@
+.role-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 25px;
+  margin: 0 20px;
+  margin-bottom: 25px;
+}
+
+.role-container img {
+  width: 15px;
+  height: 10px;
+}
+
+.role-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.role-header > * {
+  max-width: 50%;
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.role-container p {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 16px;
+  overflow-wrap: break-word;
+}
+
+.role-container p.text-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 20px;
+  overflow-wrap: break-word;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.role-pro-loc > p,
+.role-date > p {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.role-salary > p {
+  color: #00a62f;
+  font-weight: 650;
+}
+
+.role-description,
+.role-qualifications {
+  margin: 10px 0;
+}
+
+.role-description > .text-bold,
+.role-qualifications > .text-bold {
+  font-weight: 650;
+  margin: 0;
+  padding: 0;
+}
+
+.role-apply {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.role-apply > * {
+  width: 33%;
+  flex: 1;
+}
+
+.role-container small {
+  text-align: right;
+}
+
+.role-apply > button {
+  max-width: 150px;
+  margin: 5px 0;
+}
+
+@media screen and (max-width: 860px) {
+  .role-apply > * {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .role-apply > * {
+    width: 100%;
+  }
+}
