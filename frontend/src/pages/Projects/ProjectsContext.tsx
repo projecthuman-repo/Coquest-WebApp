@@ -4,7 +4,7 @@ import { Project } from "../../models/projectModel";
 // TODO fetch post data from backend
 const data: Project[] = [
 	{
-		id: 1,
+		id: "1",
 		name: "Project 1",
 		progress: 50,
 		description:
@@ -20,7 +20,7 @@ const data: Project[] = [
 		cost: 15,
 		milestones: [
 			{
-				id: 1,
+				id: "1",
 				type: "Milestone",
 				title: "Milestone 1",
 				progress: 100,
@@ -31,7 +31,7 @@ const data: Project[] = [
 				dateCompleted: "2023-08-22",
 			},
 			{
-				id: 2,
+				id: "2",
 				type: "Milestone",
 				title: "Milestone 2",
 				progress: 100,
@@ -42,7 +42,7 @@ const data: Project[] = [
 				dateCompleted: "2021-08-15",
 			},
 			{
-				id: 3,
+				id: "3",
 				type: "Milestone",
 				title: "Milestone 3",
 				progress: 20,
@@ -53,7 +53,7 @@ const data: Project[] = [
 				dateCompleted: "2024-08-15",
 			},
 			{
-				id: 4,
+				id: "4",
 				type: "Milestone",
 				title: "Milestone 4",
 				progress: 0,
@@ -66,28 +66,28 @@ const data: Project[] = [
 		],
 		volunteerPositions: [
 			{
-				id: 1,
+				id: "1",
 				title: "Project Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 			{
-				id: 2,
+				id: "2",
 				title: "Project Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 			{
-				id: 3,
+				id: "3",
 				title: "Project Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 			{
-				id: 4,
+				id: "4",
 				title: "Project Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
@@ -96,7 +96,7 @@ const data: Project[] = [
 		],
 		openRoles: [
 			{
-				id: 1,
+				id: "1",
 				title: "Software Developer",
 				project: "Interesting Project",
 				location: "Toronto, ON",
@@ -108,7 +108,7 @@ const data: Project[] = [
 				salary: 1000,
 				applicants: [
 					{
-						id: 1,
+						id: "1",
 						dateApplied: "2024-08-05",
 						name: "John Doe",
 						companyName: "Company",
@@ -175,7 +175,7 @@ const data: Project[] = [
 						],
 					},
 					{
-						id: 2,
+						id: "2",
 						dateApplied: "2024-08-05",
 						name: "Jane Doe",
 						companyName: "Company",
@@ -292,7 +292,7 @@ const data: Project[] = [
 		],
 	},
 	{
-		id: 2,
+		id: "2",
 		name: "Project 2",
 		progress: 15,
 		description:
@@ -308,7 +308,7 @@ const data: Project[] = [
 		cost: 20,
 		milestones: [
 			{
-				id: 1,
+				id: "1",
 				type: "Milestone",
 				title: "Milestone 1",
 				progress: 17,
@@ -319,7 +319,7 @@ const data: Project[] = [
 				dateCompleted: "2023-08-22",
 			},
 			{
-				id: 2,
+				id: "2",
 				type: "Milestone",
 				title: "Milestone 2",
 				progress: 7,
@@ -332,21 +332,21 @@ const data: Project[] = [
 		],
 		volunteerPositions: [
 			{
-				id: 1,
+				id: "1",
 				title: "Project Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 			{
-				id: 2,
+				id: "2",
 				title: "Project Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 			{
-				id: 3,
+				id: "3",
 				title: "Project Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
@@ -355,7 +355,7 @@ const data: Project[] = [
 		],
 		openRoles: [
 			{
-				id: 1,
+				id: "1",
 				title: "Software Developer",
 				project: "An Interesting Project", // When sorted by project, this one should come first
 				location: "Toronto, ON",
@@ -367,7 +367,7 @@ const data: Project[] = [
 				salary: null,
 				applicants: [
 					{
-						id: 1,
+						id: "1",
 						dateApplied: "2024-08-05",
 						name: "John Doe",
 						companyName: "Company",
@@ -436,7 +436,7 @@ const data: Project[] = [
 				],
 			},
 			{
-				id: 2,
+				id: "2",
 				title: "A HR Manager", // When sorted by title, this one should come first
 				project: "Interesting Project",
 				location: "Toronto, ON",
@@ -448,7 +448,7 @@ const data: Project[] = [
 				salary: null,
 				applicants: [
 					{
-						id: 1,
+						id: "1",
 						dateApplied: "2024-08-05",
 						name: "John Doe",
 						companyName: "Company",
@@ -519,7 +519,7 @@ const data: Project[] = [
 		],
 	},
 	{
-		id: 3,
+		id: "3",
 		name: "Project 3",
 		progress: 88,
 		description:
@@ -535,7 +535,7 @@ const data: Project[] = [
 		cost: 75,
 		milestones: [
 			{
-				id: 1,
+				id: "1",
 				type: "Milestone",
 				title: "Milestone 1",
 				progress: 100,
@@ -546,7 +546,7 @@ const data: Project[] = [
 				dateCompleted: "2023-08-22",
 			},
 			{
-				id: 2,
+				id: "2",
 				type: "Milestone",
 				title: "Milestone 2",
 				progress: 100,
@@ -557,7 +557,7 @@ const data: Project[] = [
 				dateCompleted: "2021-08-15",
 			},
 			{
-				id: 3,
+				id: "3",
 				type: "Milestone",
 				title: "Milestone 3",
 				progress: 20,
@@ -570,7 +570,7 @@ const data: Project[] = [
 		],
 		volunteerPositions: [
 			{
-				id: 1,
+				id: "1",
 				title: "Project Title",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",

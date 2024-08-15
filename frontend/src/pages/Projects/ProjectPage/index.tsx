@@ -96,7 +96,7 @@ const ProjectPage = () => {
 	const { id } = useParams() as { id: string };
 	const { projects, setProjects } = useContext(ProjectsContext);
 	const [project, setProject] = React.useState<Project | null>(
-		projects.filter((project) => project.id === parseInt(id))[0],
+		projects.filter((project) => project.id === id)[0],
 	);
 
 	// project sign up

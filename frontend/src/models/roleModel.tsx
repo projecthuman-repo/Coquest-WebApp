@@ -1,5 +1,5 @@
 export interface BaseRole {
-	id: number;
+	readonly id: string | undefined;
 	title: string;
 	location: string;
 	description: string;
@@ -18,7 +18,7 @@ export interface ProjectRole extends BaseRole {
 }
 
 export interface RoleApplicant {
-	id: number;
+	readonly id: string | undefined;
 	dateApplied: string;
 	name: string;
 	companyName: string | null;

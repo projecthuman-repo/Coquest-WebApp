@@ -100,7 +100,7 @@ const data: Program[] = [
 		],
 		openRoles: [
 			{
-				id: 1,
+				id: "1",
 				title: "Software Developer",
 				program: "Interesting Program",
 				location: "Toronto, ON",
@@ -112,7 +112,7 @@ const data: Program[] = [
 				salary: 1000,
 				applicants: [
 					{
-						id: 1,
+						id: "1",
 						dateApplied: "2024-08-05",
 						name: "John Doe",
 						companyName: "Company",
@@ -179,7 +179,7 @@ const data: Program[] = [
 						],
 					},
 					{
-						id: 2,
+						id: "2",
 						dateApplied: "2024-08-05",
 						name: "Jane Doe",
 						companyName: "Company",
@@ -359,7 +359,7 @@ const data: Program[] = [
 		],
 		openRoles: [
 			{
-				id: 1,
+				id: "1",
 				title: "Software Developer",
 				program: "An Interesting Program", // When sorted by program, this one should come first
 				location: "Toronto, ON",
@@ -371,7 +371,7 @@ const data: Program[] = [
 				salary: null,
 				applicants: [
 					{
-						id: 1,
+						id: "1",
 						dateApplied: "2024-08-05",
 						name: "John Doe",
 						companyName: "Company",
@@ -440,7 +440,7 @@ const data: Program[] = [
 				],
 			},
 			{
-				id: 2,
+				id: "2",
 				title: "A HR Manager", // When sorted by title, this one should come first
 				program: "Interesting Program",
 				location: "Toronto, ON",
@@ -452,7 +452,7 @@ const data: Program[] = [
 				salary: null,
 				applicants: [
 					{
-						id: 1,
+						id: "1",
 						dateApplied: "2024-08-05",
 						name: "John Doe",
 						companyName: "Company",

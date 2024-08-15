@@ -2,7 +2,7 @@ import { Milestone, VolunteerPosition } from "./programModel";
 import { ProjectRole } from "./roleModel";
 
 export interface Project {
-	id: number;
+	readonly id: string | undefined;
 	name: string;
 	progress: number | null;
 	description: string;

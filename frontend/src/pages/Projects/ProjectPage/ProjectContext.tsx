@@ -31,7 +31,7 @@ export const ProjectContextProvider = ({
 				const projectId = parseInt(segments[index + 1], 10);
 				if (!isNaN(projectId)) {
 					const project = projects.find(
-						(project) => project.id === projectId,
+						(project) => project.id?.localeCompare(projectId.toString()) === 0
 					);
 					if (project) {
 						setProject(project);
