@@ -301,7 +301,7 @@ const router = createBrowserRouter([
 						<ViewAllProjects />
 					</ProjectsContextProvider>
 				),
-			},			
+			},
 			{
 				path: ":id",
 				element: <Outlet />,

@@ -4,17 +4,17 @@ import OutlineButton from "../../../../components/Buttons/OutlineButton";
 import { ProjectRole } from "../../../../models/roleModel";
 import "./RoleCard.css";
 
-function ProjectRoleCard({ 
-		id,
-		title,
-		project,
-		location,
-		description,
-		qualifications,
-		datePosted,
-		salary,
-		applicants,
-	}: ProjectRole) {
+function ProjectRoleCard({
+	id,
+	title,
+	project,
+	location,
+	description,
+	qualifications,
+	datePosted,
+	salary,
+	applicants,
+}: ProjectRole) {
 	const [expanded, setExpanded] = useState(false);
 	const [displayDesc, setDisplayDesc] = useState(description);
 

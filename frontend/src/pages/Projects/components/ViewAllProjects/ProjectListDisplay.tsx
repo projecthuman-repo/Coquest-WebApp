@@ -33,7 +33,7 @@ const Breaker = styled("hr")({
 	width: "90%",
 });
 
-function ProjectListDisplay (props: ProjectProps) {
+function ProjectListDisplay(props: ProjectProps) {
 	const validProjectList: Project[] =
 		props.projectList.filter(validateProject);
 
@@ -51,9 +51,9 @@ function ProjectListDisplay (props: ProjectProps) {
 			})}
 		</Container>
 	);
-};
+}
 
-function validateProject (project: Project) {
+function validateProject(project: Project) {
 	if (
 		project === null ||
 		project.name === null ||
@@ -64,5 +64,5 @@ function validateProject (project: Project) {
 		return false;
 	}
 	return true;
-};
+}
 export default ProjectListDisplay;

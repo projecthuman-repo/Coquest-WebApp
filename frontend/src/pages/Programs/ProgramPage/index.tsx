@@ -104,7 +104,6 @@ const ProgramPage = () => {
 	const [programSignUpStarted, setProgramSignUpStarted] =
 		React.useState(false);
 	const [confirmationNumber, setConfirmationNumber] = React.useState(0);
-	
 
 	const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);

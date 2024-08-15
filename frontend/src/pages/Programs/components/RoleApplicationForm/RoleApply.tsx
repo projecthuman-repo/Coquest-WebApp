@@ -40,7 +40,7 @@ const BackButtonContainer = styled("div")({
 });
 
 interface RoleApplyProps {
-	type: string;	// "program" or "project"
+	type: string; // "program" or "project"
 }
 
 type Role = ProgramRole | ProjectRole;
@@ -48,7 +48,7 @@ function isProgramRole(role: Role): role is ProgramRole {
 	return (role as ProgramRole).program !== undefined;
 }
 
-function RoleApply({type}: RoleApplyProps) {
+function RoleApply({ type }: RoleApplyProps) {
 	const { program, setProgram } = useContext(ProgramContext);
 	const { project, setProject } = useContext(ProjectContext);
 	const [role, setRole] = useState<Role | null>(null);
@@ -343,7 +343,6 @@ function RoleApply({type}: RoleApplyProps) {
 				references: cleanedReferences,
 			};
 
-
 			if (type === "program") {
 				if (program?.openRoles) {
 					setProgram({
@@ -353,7 +352,10 @@ function RoleApply({type}: RoleApplyProps) {
 								? {
 										...openRole,
 										applicants: openRole.applicants
-											? [...openRole.applicants, newApplicant]
+											? [
+													...openRole.applicants,
+													newApplicant,
+												]
 											: [newApplicant],
 									}
 								: openRole,
@@ -378,7 +380,10 @@ function RoleApply({type}: RoleApplyProps) {
 								? {
 										...openRole,
 										applicants: openRole.applicants
-											? [...openRole.applicants, newApplicant]
+											? [
+													...openRole.applicants,
+													newApplicant,
+												]
 											: [newApplicant],
 									}
 								: openRole,
@@ -393,7 +398,6 @@ function RoleApply({type}: RoleApplyProps) {
 
 				navigate("/projects/" + project?.id);
 			}
-			
 		}
 	}
 
@@ -418,7 +422,7 @@ function RoleApply({type}: RoleApplyProps) {
 			const path = window.location.pathname;
 			const segments = path.split("/");
 			const index = segments.indexOf("members");
-			
+
 			if (index !== -1 && segments[index + 1]) {
 				const roleId = parseInt(segments[index + 1], 10);
 				if (type === "program") {
@@ -444,7 +448,6 @@ function RoleApply({type}: RoleApplyProps) {
 				}
 			}
 		}
-		
 
 		// detect if all required fields are filled
 		let availabilitiesFilled = false;
@@ -469,7 +472,18 @@ function RoleApply({type}: RoleApplyProps) {
 		} else {
 			setReadyForSubmit(false);
 		}
-	}, [ program, project, role, name, companyName, address, phone, email, availabilities, type ]);
+	}, [
+		program,
+		project,
+		role,
+		name,
+		companyName,
+		address,
+		phone,
+		email,
+		availabilities,
+		type,
+	]);
 
 	return (
 		<Container>
@@ -482,11 +496,10 @@ function RoleApply({type}: RoleApplyProps) {
 						<div className="role-apply-header">
 							<p className="role-apply-title">{role.title}</p>
 							{isProgramRole(role) ? (
-									<p>{role.program}</p>
-								) : (
-									<p>{role.project}</p>
-								)
-							}
+								<p>{role.program}</p>
+							) : (
+								<p>{role.project}</p>
+							)}
 							<p>{role.location}</p>
 						</div>
 

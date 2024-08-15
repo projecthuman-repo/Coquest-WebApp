@@ -4,17 +4,17 @@ import OutlineButton from "../../../../components/Buttons/OutlineButton";
 import { ProgramRole } from "../../../../models/roleModel";
 import "./RoleCard.css";
 
-function ProgramRoleCard({ 
-		id,
-		title,
-		program,
-		location,
-		description,
-		qualifications,
-		datePosted,
-		salary,
-		applicants,
-	}: ProgramRole) {
+function ProgramRoleCard({
+	id,
+	title,
+	program,
+	location,
+	description,
+	qualifications,
+	datePosted,
+	salary,
+	applicants,
+}: ProgramRole) {
 	const [expanded, setExpanded] = useState(false);
 	const [displayDesc, setDisplayDesc] = useState(description);
 

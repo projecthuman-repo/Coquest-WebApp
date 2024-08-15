@@ -45,7 +45,6 @@ const GridCol = styled(Grid)({
 	justifyContent: "center",
 });
 const ProjectPane = ({ project }: ProjectProps) => {
-
 	const navigate = useNavigate();
 
 	return (
