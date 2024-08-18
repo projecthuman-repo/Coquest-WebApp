@@ -568,7 +568,9 @@ module.exports = {
     //this method creates and add a post to the db
     async createRegenquestPost(
       _parent,
-      { userInput: { userID, title, description, attachments, comments } },
+      {
+        userInput: { userID, title, description, attachments, comments, tags },
+      },
       _context,
       _info,
     ) {
@@ -581,6 +583,7 @@ module.exports = {
         attachments: attachments ? attachments : null,
         createdAt: new Date().toLocaleString(),
         comments: comments ? comments : null,
+        tags: tags ? tags : [],
       });
 
       //add the post to the db
@@ -1133,7 +1136,17 @@ module.exports = {
     //this method updates all the properties of a post
     async updateRegenquestPost(
       _parent,
-      { userInput: { id, userID, title, description, attachments, comments } },
+      {
+        userInput: {
+          id,
+          userID,
+          title,
+          description,
+          attachments,
+          comments,
+          tags,
+        },
+      },
       _context,
       _info,
     ) {
@@ -1166,6 +1179,9 @@ module.exports = {
       }
       if (comments) {
         updatePost.comments = comments;
+      }
+      if (tags) {
+        updatePost.tags = tags;
       }
 
       try {

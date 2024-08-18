@@ -287,6 +287,7 @@ module.exports = gql`
     attachments: [String]
     createdAt: String
     comments: [comment]
+    tags: [String]
   }
 
   input regenquestPostInput {
@@ -296,6 +297,7 @@ module.exports = gql`
     description: String
     attachments: [String]
     comments: [commentInput]
+    tags: [String]
   }
 
   type regenquestInventory {
