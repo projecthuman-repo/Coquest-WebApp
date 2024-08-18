@@ -535,5 +535,7 @@ module.exports = gql`
 
     setCookieWithToken(token: String!): mutationResponse @verifyToken
     deleteCookieToken: mutationResponse
+
+    deleteFile(fileName: String!): mutationResponse @auth
   }
 `;

@@ -1462,5 +1462,18 @@ module.exports = {
       context.res.clearCookie(process.env.AUTH_COOKIE_NAME);
       return { code: 0, response: "successful" };
     },
+
+    // this deletes image (file) from the bucket
+    async deleteFile(_, { fileName }) {
+      try {
+        const bucket = storage.bucket(process.env.IMAGE_BUCKET_NAME);
+        const file = bucket.file(`${process.env.DIR_PATH}/${fileName}`)
+        await file.delete();
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        console.error("Error deleting file:", err);
+        throw new Error(`Error deleting file: ${err}`);
+      }
+    },
   },
 };
