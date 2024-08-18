@@ -25,12 +25,12 @@ import graphQLClient from "../../apiInterface/client";
 import "./DragDrop.css";
 
 const deleteImage = gql`
-  mutation DeleteFile($fileName: String!) {
-    deleteFile(fileName: $fileName) {
-      response
-      code
-    }
-  }
+	mutation DeleteFile($fileName: String!) {
+		deleteFile(fileName: $fileName) {
+			response
+			code
+		}
+	}
 `;
 const itemPreview = withRequestPreSendUpdate(
 	({ id, url, updateRequest, requestData }: any) => {
@@ -68,7 +68,9 @@ const DragDrop = (props: any) => {
 		graphQLClient
 			.request(deleteImage, { fileName: fname })
 			.then(() => {
-				const newAttachments = attachments.filter((attachment: Image) => attachment.path !== path);
+				const newAttachments = attachments.filter(
+					(attachment: Image) => attachment.path !== path,
+				);
 				props.updateData(newAttachments);
 			})
 			.catch((error) => {
@@ -171,7 +173,7 @@ const DragDrop = (props: any) => {
 						{/* // TODO implement so that close icon deletes uploaded file from the server too */}
 						{attachments &&
 							attachments.length > 0 &&
-							attachments.map((attachment, index) => (
+							attachments.map((attachment) => (
 								<div
 									className="added-file"
 									key={attachment.path}
@@ -184,7 +186,9 @@ const DragDrop = (props: any) => {
 										src="/icons/close.png"
 										className="close-icon"
 										alt="Close icon"
-										onClick={() => {handleImgRemove(attachment.path)}}
+										onClick={() => {
+											handleImgRemove(attachment.path);
+										}}
 									></img>
 								</div>
 							))}
