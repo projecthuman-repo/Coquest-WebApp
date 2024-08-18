@@ -1467,7 +1467,7 @@ module.exports = {
     async deleteFile(_, { fileName }) {
       try {
         const bucket = storage.bucket(process.env.IMAGE_BUCKET_NAME);
-        const file = bucket.file(`${process.env.DIR_PATH}/${fileName}`)
+        const file = bucket.file(`${process.env.DIR_PATH}/${fileName}`);
         await file.delete();
         return { code: 0, response: "successful" };
       } catch (err) {
