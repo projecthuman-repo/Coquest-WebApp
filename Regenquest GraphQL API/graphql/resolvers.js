@@ -187,6 +187,17 @@ module.exports = {
       }
     },
 
+    //this method finds a post by its tags
+    async findPostbyTags(_parent, { tags }, _context, _info) {
+      try {
+        // using $all instead of $in to find posts that have all the tags
+        // because that is how it is implemented in spotstich
+        return await Post.find({ tags: { $all: tags } });
+      } catch {
+        throw new Error("Error finding post by tags");
+      }
+    },
+
     //this method finds an item by its id
     async findInventoryItembyID(_parent, { itemID }, _context, _info) {
       try {
