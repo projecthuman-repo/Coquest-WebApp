@@ -468,6 +468,7 @@ module.exports = gql`
     findTaskbyID(taskID: String): regenquestTask @auth
     findQuestbyID(questID: String): regenquestQuest @auth
     findPostbyID(postID: String): regenquestPost @auth
+    findPostbyTags(tags: [String]): [regenquestPost] @auth
     findInventoryItembyID(itemID: String): regenquestInventory @auth
     findEventbyID(eventID: String): regenquestEvent @auth
     findCommunitybyID(id: String): regenquestCommunity
