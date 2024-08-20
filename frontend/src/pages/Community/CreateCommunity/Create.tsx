@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import TagList from "../../components/CheckboxList/PurposeList";
-import { subscribeToUserModelSubject } from "../../observers/userobserver";
-import { User, generateProfileImg } from "../../models/usermodel";
-import { Community } from "../../models/communitymodel";
-import UploadWrapper from "../../components/UploadImage/UploadWrapper";
+import TagList from "../../../components/CheckboxList/PurposeList";
+import { subscribeToUserModelSubject } from "../../../observers/userobserver";
+import { User, generateProfileImg } from "../../../models/usermodel";
+import { Community } from "../../../models/communitymodel";
+import UploadWrapper from "../../../components/UploadImage/UploadWrapper";
 import { useNavigate } from "react-router";
-import Repository from "../../repositories/repository";
+import Repository from "../../../repositories/repository";
 import { firstValueFrom } from "rxjs";
-import { topicsQuery } from "../../apiInterface/gqlOperations";
-import Location from "../../components/Location/Location";
-import ProgressBar from "../../components/ProgressBar/ProgressBar";
+import { topicsQuery } from "../../../apiInterface/gqlOperations";
+import Location from "../../../components/Location/Location";
+import ProgressBar from "../../../components/ProgressBar/ProgressBar";
 import "./Create.css";
 
 function CreateCommunity() {
@@ -88,21 +88,21 @@ function CreateCommunity() {
 				{/* Community Name, Objective and Initiative Section*/}
 				<form
 					id="community-form"
-					className="form-container"
+					className="cc-form-container"
 					onSubmit={onSubmit}
 				>
 					{section === 0 && (
 						<div className="create-community-page">
-							<h1 className="main-heading">Create a Community</h1>
-							<h2 className="sub-heading">
+							<h1 className="cc-main-heading">Create a Community</h1>
+							<h2 className="cc-sub-heading">
 								Let&apos;s create a new community! Enter some
 								basic information below to get started.
 							</h2>
-							<div className="form-background">
+							<div className="cc-form-background">
 								{/* Community Name*/}
-								<div className="input-wrapper">
+								<div className="cc-input-wrapper">
 									<label
-										className="placeholder-label"
+										className="cc-placeholder-label"
 										htmlFor="name"
 									>
 										Community Name
@@ -110,7 +110,7 @@ function CreateCommunity() {
 									<input
 										id="name"
 										name="name"
-										className="styled-input"
+										className="cc-styled-input"
 										type="text"
 										value={community.name!}
 										onChange={(e) =>
@@ -122,16 +122,16 @@ function CreateCommunity() {
 									/>
 								</div>
 								{/* Community Description*/}
-								<div className="input-wrapper">
+								<div className="cc-input-wrapper">
 									<label
-										className="placeholder-label"
+										className="cc-placeholder-label"
 										htmlFor="description"
 									>
 										Community Description
 									</label>
 									<textarea
 										id="description"
-										className="styled-textarea"
+										className="cc-styled-textarea"
 										name="description"
 										value={community.description!}
 										onChange={(e) =>
@@ -143,16 +143,16 @@ function CreateCommunity() {
 									/>
 								</div>
 								{/* Community Objective*/}
-								<div className="input-wrapper">
+								<div className="cc-input-wrapper">
 									<label
-										className="placeholder-label"
+										className="cc-placeholder-label"
 										htmlFor="objective"
 									>
 										Community Objective
 									</label>
 									<textarea
 										id="objective"
-										className="styled-textarea"
+										className="cc-styled-textarea"
 										name="objective"
 										value={community.objective!}
 										onChange={(e) =>
@@ -164,16 +164,16 @@ function CreateCommunity() {
 									/>
 								</div>
 								{/* Community Initiative*/}
-								<div className="input-wrapper">
+								<div className="cc-input-wrapper">
 									<label
-										className="placeholder-label"
+										className="cc-placeholder-label"
 										htmlFor="initiative"
 									>
 										Community Initiative
 									</label>
 									<textarea
 										id="initiative"
-										className="styled-textarea"
+										className="cc-styled-textarea"
 										name="initiative"
 										value={community.initiative!}
 										onChange={(e) =>
@@ -190,13 +190,13 @@ function CreateCommunity() {
 					{/* Community Tags Section*/}
 					{section === 1 && (
 						<div className="create-community-page">
-							<h1 className="main-heading">Add Some Tags</h1>
-							<h2 className="sub-heading">
+							<h1 className="cc-main-heading">Add Some Tags</h1>
+							<h2 className="cc-sub-heading">
 								Add relevant tags to your community to help find
 								others with similar interests.
 							</h2>
-							<div className="form-background">
-								<label className="sub-text" htmlFor="tags">
+							<div className="cc-form-background">
+								<label className="cc-sub-text" htmlFor="tags">
 									Tags
 								</label>
 								<TagList
@@ -219,13 +219,13 @@ function CreateCommunity() {
 				{/* Community Location Section - (Outside of the form to prevent it from triggering the form's submit event on use) */}
 				{section === 2 && (
 					<div className="create-community-page">
-						<h1 className="main-heading">Pin Your Spot</h1>
-						<h2 className="sub-heading">
+						<h1 className="cc-main-heading">Pin Your Spot</h1>
+						<h2 className="cc-sub-heading">
 							Set a location for your community to attract users
 							closer to your area.
 						</h2>
-						<div className="form-background">
-							<label className="sub-text" htmlFor="location">
+						<div className="cc-form-background">
+							<label className="cc-sub-text" htmlFor="location">
 								Location
 							</label>
 							<Location
@@ -241,13 +241,13 @@ function CreateCommunity() {
 				{/* Community Image Section - (Outside of the form to prevent it from triggering the form's submit event on use) */}
 				{section === 3 && (
 					<div className="create-community-page">
-						<h1 className="main-heading">Almost Finished!</h1>
-						<h2 className="sub-heading">
+						<h1 className="cc-main-heading">Almost Finished!</h1>
+						<h2 className="cc-sub-heading">
 							Upload a profile picture for your community to
 							represent it visually.
 						</h2>
-						<div className="form-background">
-							<label className="sub-text" htmlFor="image">
+						<div className="cc-form-background">
+							<label className="cc-sub-text" htmlFor="image">
 								Image
 							</label>
 							<UploadWrapper
@@ -263,12 +263,12 @@ function CreateCommunity() {
 				)}
 				<div className="create-community-page">
 					{formError !== null && (
-						<p className="form-error">{formError}</p>
+						<p className="cc-form-error">{formError}</p>
 					)}
 				</div>
 				{/* Navigation Buttons */}
 				{section === 0 && (
-					<div className="button-container">
+					<div className="cc-button-container">
 						<button
 							className="cc-button-design"
 							onClick={() => setSection(section + 1)}
@@ -278,7 +278,7 @@ function CreateCommunity() {
 					</div>
 				)}
 				{section !== 0 && section !== 3 && (
-					<div className="button-container">
+					<div className="cc-button-container">
 						<button
 							className="cc-button-design"
 							onClick={() => setSection(section - 1)}
@@ -294,7 +294,7 @@ function CreateCommunity() {
 					</div>
 				)}
 				{section === 3 && (
-					<div className="button-container">
+					<div className="cc-button-container">
 						<button
 							className="cc-button-design"
 							onClick={() => setSection(section - 1)}

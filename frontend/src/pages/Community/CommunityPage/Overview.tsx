@@ -1,12 +1,12 @@
 import React from "react";
-import Members from "../../../../components/Members/index";
-import Maps from "../../../../components/Maps/Maps";
-import Quests from "../../../../components/Quests/Quests";
-import Calendar from "../../../../components/SharedCalendar/SharedCalendar";
-import "../Description.css";
+import Members from "../../../components/Members/index";
+import Maps from "../../../components/Maps/Maps";
+import Quests from "../../../components/Quests";
+import Calendar from "../../../components/SharedCalendar/SharedCalendar";
+import "./index.css";
 import "./Overview.css";
 
-function CommunityDescriptionOverview({ data }: { data: any }) {
+function CommunityPageOverview({ data }: { data: any }) {
 	return (
 		<>
 			<div className="com-o-flex-widget-container">
@@ -33,9 +33,6 @@ function CommunityDescriptionOverview({ data }: { data: any }) {
 					</div>
 					{/* Members */}
 					<div className="com-o-background">
-						<h2 className="com-o-sub-heading margin-bottom">
-							Members
-						</h2>
 						<Members
 							users={
 								data.members?.map(
@@ -57,7 +54,7 @@ function CommunityDescriptionOverview({ data }: { data: any }) {
 					</div>
 					{/* Quests */}
 					<div className="com-o-background">
-						<Quests />
+						<Quests showAllLink={`${window.location.pathname}/quests`} />
 					</div>
 				</div>
 			</div>
@@ -98,4 +95,4 @@ function CommunityDescriptionOverview({ data }: { data: any }) {
 	);
 }
 
-export default CommunityDescriptionOverview;
+export default CommunityPageOverview;

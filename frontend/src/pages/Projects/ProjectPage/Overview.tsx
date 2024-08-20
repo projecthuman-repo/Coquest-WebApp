@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import SharedCalendar from "../../../components/SharedCalendar/SharedCalendar";
-import Quests from "../../../components/Quests/Quests";
+import Quests from "../../../components/Quests";
 import Members from "../../../components/Members/index";
 import ProgramProgressBar from "../../../components/ProgramProgressBar/ProgramProgressBar";
 import Budget from "../../../components/Budget/Budget";
@@ -150,9 +150,6 @@ function ProjectOverview() {
 					</div>
 					{/* Members */}
 					<div className="prg-o-background">
-						<h2 className="prg-o-sub-heading margin-bottom">
-							Members
-						</h2>
 						<Members
 							users={["Test"]}
 							userRole={["Role"]}
@@ -212,7 +209,7 @@ function ProjectOverview() {
 						</div>
 						{/* Quests */}
 						<div className="prg-o-background">
-							<Quests />
+							<Quests showAllLink={`${window.location.pathname}/quests`} />
 						</div>
 						{/* Funding */}
 						<div className="prg-o-background">

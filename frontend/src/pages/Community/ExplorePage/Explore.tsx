@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "./List.css";
-import Repository from "../../repositories/repository";
-import { Community } from "../../models/communitymodel";
+import Repository from "../../../repositories/repository";
+import { Community } from "../../../models/communitymodel";
+import "./Explore.css";
 
-function CommunityListing() {
+function CommunityExplore() {
 	// Community Data Variables
 	const [communities, setCommunities] = useState<Community[]>([]);
 	const communityIds = [
@@ -49,25 +49,25 @@ function CommunityListing() {
 
 	return (
 		<>
-			<div className="community-listing-page">
-				<h1 className="cl-main-heading">Communities</h1>
-				<div className="cl-search-container">
+			<div className="community-explore-page">
+				<h1 className="ce-main-heading">Communities</h1>
+				<div className="ce-search-container">
 					<input
 						type="search"
-						className="cl-search"
+						className="ce-search"
 						name="search"
 						placeholder="Search Communities"
 					/>
 					<img
 						src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png"
 						alt="search-icon"
-						className="cl-search-icon"
+						className="ce-search-icon"
 					/>
 				</div>
-				<div className="communities-container">
+				<div className="ce-communities-container">
 					{communities.map((community, index) => (
-						<div key={index} className="community-container">
-							<div className="image-container">
+						<div key={index} className="ce-community-container">
+							<div className="ce-image-container">
 								<button>
 									{/* TODO: Add a relevant placeholder image here when the community image is not found. */}
 									<img
@@ -76,20 +76,20 @@ function CommunityListing() {
 											"/map_image.png"
 										}
 										alt={community?.name}
-										className="image-design"
+										className="ce-image-design"
 									/>
 								</button>
 							</div>
-							<div className="heading-button-container">
-								<h3 className="cl-sub-heading">
+							<div className="ce-heading-button-container">
+								<h3 className="ce-sub-heading">
 									{community?.name}
 								</h3>
-								<button className="join-button-design">
+								<button className="ce-join-button-design">
 									Join
 								</button>
 							</div>
-							<p className="cl-sub-text margin-b">Location</p>
-							<p className="cl-sub-text">
+							<p className="ce-sub-text margin-b">Location</p>
+							<p className="ce-sub-text">
 								{community?.description}
 							</p>
 						</div>
@@ -100,4 +100,4 @@ function CommunityListing() {
 	);
 }
 
-export default CommunityListing;
+export default CommunityExplore;

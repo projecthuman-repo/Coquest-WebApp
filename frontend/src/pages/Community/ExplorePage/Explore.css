@@ -1,20 +1,20 @@
-/* Main Text Styles */
+/* Text Styles */
 
-.cl-main-heading {
+.ce-main-heading {
   font-family: Poppins;
   font-weight: 600;
   font-size: 30px;
   text-align: center;
 }
 
-.cl-sub-heading {
+.ce-sub-heading {
   font-family: Poppins;
   font-weight: 600;
   font-size: 18px;
   overflow-wrap: break-word;
 }
 
-.cl-sub-text {
+.ce-sub-text {
   font-family: Poppins;
   font-weight: 400;
   font-size: 16px;
@@ -22,9 +22,9 @@
   text-overflow: ellipsis;
 }
 
-/* Main Div */
+/* Main Container */
 
-.community-listing-page {
+.community-explore-page {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,7 +34,7 @@
 
 /* Search Bar */
 
-.cl-search {
+.ce-search {
   border-radius: 25px;
   border: 1px solid black;
   padding-left: 40px;
@@ -42,12 +42,12 @@
   height: 48px;
 }
 
-.cl-search-container {
+.ce-search-container {
   position: relative;
   margin: 20px 0px 20px 0px;
 }
 
-.cl-search-icon {
+.ce-search-icon {
   position: absolute;
   left: 10px;
   top: 50%;
@@ -58,7 +58,7 @@
 
 /* Communities Container */
 
-.communities-container {
+.ce-communities-container {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -70,7 +70,7 @@
 
 /* Single Community Container */
 
-.community-container {
+.ce-community-container {
   display: flex;
   flex-grow: 0;
   flex-shrink: 1;
@@ -84,7 +84,7 @@
   box-shadow: 0 4px 8px lightgrey;
 }
 
-.heading-button-container {
+.ce-heading-button-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -92,21 +92,21 @@
 
 /* Image Design and Container */
 
-.image-container {
+.ce-image-container {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0px 0px 20px 0px;
 }
 
-.image-design {
+.ce-image-design {
   width: 225px;
   height: 225px;
 }
 
 /* Button Design */
 
-.join-button-design {
+.ce-join-button-design {
   width: 90px;
   height: 35px;
   margin: 0px 0px 0px 25px;

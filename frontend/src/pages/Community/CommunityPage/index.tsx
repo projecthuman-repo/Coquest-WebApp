@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Repository from "../../../repositories/repository";
 import { Community } from "../../../models/communitymodel";
-import CommunityDescriptionOverview from "./Components/Overview";
-import CommunityDescriptionPrograms from "./Components/Programs";
-import CommuntiyDescriptionProjects from "./Components/Projects";
-import CommunityDescriptionCoops from "./Components/Coops";
-import "./Description.css";
+import CommunityPageOverview from "./Overview";
+import CommunityPagePrograms from "./Programs";
+import CommunityPageProjects from "./Projects";
+import CommunityPageCoops from "./Coops";
+import "./index.css";
 
-function CommunityDescription() {
+function CommunityPage() {
 	// Navigation Button Variable
 	const [section, setSection] = useState("overview");
 
@@ -96,14 +96,14 @@ function CommunityDescription() {
 					</div>
 					{/* Overview Section */}
 					{section === "overview" && (
-						<CommunityDescriptionOverview data={communityData} />
+						<CommunityPageOverview data={communityData} />
 					)}
 					{/* Programs Section */}
-					{section === "programs" && <CommunityDescriptionPrograms />}
+					{section === "programs" && <CommunityPagePrograms />}
 					{/* Projects Section */}
-					{section === "projects" && <CommuntiyDescriptionProjects />}
+					{section === "projects" && <CommunityPageProjects />}
 					{/* Co-ops Section */}
-					{section === "co-ops" && <CommunityDescriptionCoops />}
+					{section === "co-ops" && <CommunityPageCoops />}
 				</div>
 			) : (
 				<div className="community-description-page">
@@ -120,4 +120,4 @@ function CommunityDescription() {
 	);
 }
 
-export default CommunityDescription;
+export default CommunityPage;

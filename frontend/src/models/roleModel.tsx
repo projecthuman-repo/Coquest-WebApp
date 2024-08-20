@@ -17,6 +17,10 @@ export interface ProjectRole extends BaseRole {
 	project: string;
 }
 
+export interface CoopRole extends BaseRole {
+	coop: string;
+}
+
 export interface RoleApplicant {
 	readonly id: string | undefined;
 	dateApplied: string;

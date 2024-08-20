@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../Description.css";
+import "./index.css";
 import "./Projects.css";
 
 function CommunityDescriptionProjects() {

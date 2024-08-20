@@ -41,30 +41,33 @@ import OrientationRedirector from "./pages/Orientation/OrientationRedirector";
 import GlobalRedirect from "./components/AutoRedirector/GlobalRedirect";
 import { UserRegistrationProvider } from "./components/AutoRedirector/UserRegistration";
 
-// communities
-import CreateCommunity from "./pages/Community/Create";
-import CommunityDescription from "./pages/Community/Description/Description";
-import CommunityQuests from "./pages/Quests/Quests";
+// Communities
+import CreateCommunity from "./pages/Community/CreateCommunity/Create";
+import CommunityPage from "./pages/Community/CommunityPage";
+import CommunityQuests from "./pages/Community/CommunityPage/Quests/Quests";
+import CommunityExplore from "./pages/Community/ExplorePage/Explore";
 
-// posts
+// Posts
 import { PostFeedContextProvider } from "./pages/Post/PostFeedContext";
 import PostFeed from "./pages/Post/PostFeed";
 import CreatePost from "./pages/Post/Create";
 
-// programs
+// Programs
 import { ProgramsContextProvider } from "./pages/Programs/ProgramsContext";
 import { ProgramContextProvider } from "./pages/Programs/ProgramPage/ProgramContext";
 import ViewAllPrograms from "./pages/Programs";
 import ProgramPage from "./pages/Programs/ProgramPage";
 import ProgramMembers from "./pages/Programs/ProgramPage/Members";
+import ProgramQuests from "./pages/Programs/ProgramPage/Quests/Quests";
 import ProgramApplications from "./pages/Programs/ProgramPage/Members/Applications";
 
-// projects
+// Projects
 import { ProjectsContextProvider } from "./pages/Projects/ProjectsContext";
 import { ProjectContextProvider } from "./pages/Projects/ProjectPage/ProjectContext";
 import ViewAllProjects from "./pages/Projects";
 import ProjectPage from "./pages/Projects/ProjectPage";
 import ProjectMembers from "./pages/Projects/ProjectPage/Members";
+import ProjectQuests from "./pages/Projects/ProjectPage/Quests/Quests";
 import ProjectApplications from "./pages/Projects/ProjectPage/Members/Applications";
 
 import RoleApply from "./pages/Programs/components/RoleApplicationForm/RoleApply";
@@ -114,11 +117,15 @@ const router = createBrowserRouter([
 			},
 			{
 				path: ":id",
-				element: <CommunityDescription />,
+				element: <CommunityPage />,
 			},
 			{
 				path: ":id/quests",
 				element: <CommunityQuests />,
+			},
+			{
+				path: "explore",
+				element: <CommunityExplore />,
 			},
 		],
 	},
@@ -165,6 +172,14 @@ const router = createBrowserRouter([
 						element: (
 							<ProgramsContextProvider>
 								<ProgramPage />
+							</ProgramsContextProvider>
+						),
+					},
+					{
+						path: "quests",
+						element: (
+							<ProgramsContextProvider>
+								<ProgramQuests />
 							</ProgramsContextProvider>
 						),
 					},
@@ -320,6 +335,14 @@ const router = createBrowserRouter([
 						element: (
 							<ProjectsContextProvider>
 								<ProjectPage />
+							</ProjectsContextProvider>
+						),
+					},
+					{
+						path: "quests",
+						element: (
+							<ProjectsContextProvider>
+								<ProjectQuests />
 							</ProjectsContextProvider>
 						),
 					},

@@ -1,5 +1,5 @@
-/* General Text Styles */
-.main-heading {
+/* Text Styles */
+.cc-main-heading {
   font-family: Poppins;
   font-weight: 600;
   font-size: 26px;
@@ -7,7 +7,7 @@
   margin: 25px 0px 10px 0px;
 }
 
-.sub-heading {
+.cc-sub-heading {
   font-family: Poppins;
   font-weight: 400;
   font-size: 18px;
@@ -15,7 +15,7 @@
   margin: 10px 0px 10px 0px;
 }
 
-.sub-text {
+.cc-sub-text {
   font-family: Poppins;
   font-weight: 600;
   font-size: 18px;
@@ -31,7 +31,7 @@
   align-items: center;
 }
 
-.form-container {
+.cc-form-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,7 +39,7 @@
   margin: 10px 0px 0px 0px;
 }
 
-.button-container {
+.cc-button-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -57,7 +57,7 @@
   margin: 15px 10px 0px 10px;
 }
 
-.form-background {
+.cc-form-background {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -66,14 +66,14 @@
 }
 
 /* Success and Error Messages */
-.form-error {
+.cc-form-error {
   background-color: rgba(255, 0, 0, 0.3);
   padding: 16px;
   border-radius: 5px;
   margin: 10px 0px 10px 0px;
 }
 
-.success {
+.cc-success {
   background-color: rgba(0, 255, 0, 0.3);
   padding: 16px;
   border-radius: 5px;
@@ -81,12 +81,12 @@
 }
 
 /* Text Input Styles */
-.input-wrapper {
+.cc-input-wrapper {
   position: relative;
   margin-bottom: 25px;
 }
 
-.placeholder-label {
+.cc-placeholder-label {
   position: absolute;
   top: -10px;
   left: 5px;
@@ -96,7 +96,7 @@
   font-size: 12px;
 }
 
-.styled-input {
+.cc-styled-input {
   width: 500px;
   height: 50px;
   padding: 15px;
@@ -105,7 +105,7 @@
   font-size: 16px;
 }
 
-.styled-textarea {
+.cc-styled-textarea {
   width: 650px;
   height: 150px;
   padding: 15px;

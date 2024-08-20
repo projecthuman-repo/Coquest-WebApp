@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import "./Quests.css";
+import "./index.css";
 
-function Quests() {
+// Creating Prop for showAllLink
+export type QuestProps = {
+	showAllLink: string;
+};
+
+function Quests({ showAllLink }: QuestProps) {
 	// Navigation Button Variable
 	const [questSection, setQuestSection] = useState("open");
 
@@ -9,7 +14,7 @@ function Quests() {
 		<>
 			<div className="ppb-heading-container">
 				<h2 className="quest-heading">Quests</h2>
-				<a href="/" className="quest-link">
+				<a href={showAllLink} className="quest-link">
 					See All
 				</a>
 			</div>
