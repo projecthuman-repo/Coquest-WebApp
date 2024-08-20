@@ -444,6 +444,59 @@ module.exports = gql`
     name: String
   }
 
+  """
+  Application, Program, Project and Coop Role Enumerations
+  """
+  enum ApplicationRole {
+    REG_USER
+    ADMIN
+  }
+  enum ProjectRole {
+    PROJECT_MANAGER
+    PROJECT_COORDINATOR
+    PROJECT_ANALYST
+    PROJECT_SPONSOR
+    PROJECT_TEAM_MEMBER
+    PROJECT_ADVISOR
+    PROJECT_DESIGNER
+    PROJECT_QA_TESTER
+  }
+  enum ProgramRole {
+    PROGRAM_MANAGER
+    PROGRAM_COORDINATOR
+    PROGRAM_ANALYST
+    PROGRAM_SPONSOR
+    PROGRAM_TEAM_MEMBER
+    PROGRAM_ADVISOR
+    PROGRAM_DESIGNER
+    PROGRAM_QA_TESTER
+  }
+  enum CoopRole {
+    COOP_MANAGER
+    COOP_COORDINATOR
+    COOP_ANALYST
+    COOP_SPONSOR
+    COOP_TEAM_MEMBER
+    COOP_ADVISOR
+    COOP_DESIGNER
+    COOP_QA_TESTER
+  }
+  type ProjectRoleDetail {
+    role: ProjectRole!
+    description: String
+    qualifications: [String]
+  }
+  type ProgramRoleDetail {
+    role: ProgramRole!
+    description: String
+    qualifications: [String]
+  }
+  type CoopRoleDetail {
+    role: CoopRole!
+    description: String
+    qualifications: [String]
+  }
+
   directive @auth on FIELD_DEFINITION
   directive @verifyToken on FIELD_DEFINITION
   directive @formatObj(dbName: String, modelName: String) on FIELD_DEFINITION

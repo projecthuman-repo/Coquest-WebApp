@@ -1,0 +1,146 @@
+/* Main Text Styles */
+
+.explore-main-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+.explore-sub-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.explore-sub-text {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+/* Widget Text Styles */
+
+.explore-widget-main-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 24px;
+  overflow-wrap: break-word;
+}
+
+.explore-widget-sub-heading {
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.explore-widget-sub-text {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 16px;
+  text-align: center;
+  width: 100%;
+}
+
+/* Main Containers */
+
+.explore-container {
+  display: flex;
+  flex-direction: column;
+  padding: 50px 100px 100px 100px;
+}
+
+.explore-heading-container {
+  display: flex;
+  flex-direction: row;
+  margin: 0px 0px 10px 0px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.explore-section-container {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0px 10px 0px;
+}
+
+/* Search Bar */
+
+.explore-search {
+  border-radius: 25px;
+  border: 1px solid black;
+  padding-left: 40px;
+  width: 350px;
+  height: 48px;
+}
+
+.explore-search-container {
+  position: relative;
+}
+
+.explore-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+}
+
+/* Widget */
+
+.explore-content-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 25px 0px 25px 0px;
+}
+
+.explore-widget-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  padding: 25px;
+  max-width: 500px;
+  max-height: 300px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px lightgrey;
+  transition: box-shadow 0.2s ease;
+}
+
+.explore-widget-container:hover {
+  box-shadow: 0 4px 8px lightgrey;
+}
+
+.explore-widget-nav-button {
+  width: 38px;
+  height: 38px;
+  border-radius: 24px;
+}
+
+.explore-widget-nav-button:hover {
+  background-color: #cccccc;
+  padding: 5px;
+}
+
+.explore-widget-nav-button img {
+  width: 15px;
+  height: 25px;
+}
+
+.explore-widget-view-button {
+  padding: 5px 15px 5px 15px;
+  background-color: lightgrey;
+  border-radius: 24px;
+  border: black;
+}
+
+.explore-widget-view-button:hover {
+  background-color: #b0b0b0;
+}
+
+.margin-big {
+  margin-bottom: 25px;
+}

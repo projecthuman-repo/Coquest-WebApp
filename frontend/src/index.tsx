@@ -40,6 +40,7 @@ import RemoveNavComponents from "./components/RemoveNavComponents";
 import OrientationRedirector from "./pages/Orientation/OrientationRedirector";
 import GlobalRedirect from "./components/AutoRedirector/GlobalRedirect";
 import { UserRegistrationProvider } from "./components/AutoRedirector/UserRegistration";
+import SearchExplore from "./pages/SearchExplore/SearchExplore";
 
 // Communities
 import CreateCommunity from "./pages/Community/CreateCommunity/Create";
@@ -305,6 +306,10 @@ const router = createBrowserRouter([
 	{
 		path: "/profile",
 		element: <UserProfile />,
+	},
+	{
+		path: "/explore",
+		element: <SearchExplore />,
 	},
 	{
 		path: "/logout",
