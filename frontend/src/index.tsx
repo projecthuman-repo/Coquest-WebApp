@@ -71,6 +71,13 @@ import ProjectMembers from "./pages/Projects/ProjectPage/Members";
 import ProjectQuests from "./pages/Projects/ProjectPage/Quests/Quests";
 import ProjectApplications from "./pages/Projects/ProjectPage/Members/Applications";
 
+// Coops
+import { CoopsContextProvider } from "./pages/Coop/CoopsContext";
+import { CoopContextProvider } from "./pages/Coop/CoopPage/CoopContext";
+import CoopPage from "./pages/Coop/CoopPage";
+import CoopQuests from "./pages/Coop/CoopPage/Quests/Quests";
+
+
 import RoleApply from "./pages/Programs/components/RoleApplicationForm/RoleApply";
 
 const root = ReactDOM.createRoot(
@@ -262,24 +269,99 @@ const router = createBrowserRouter([
 		],
 	},
 	{
-		path: "/pages/Coop",
-		element: <CreateCoop />,
+		path: "/coops",
+		element: <Outlet />,
 		children: [
 			{
-				path: "basic-information",
-				element: <CoopBasicInformation />,
+				path: ":id",
+				element: <Outlet />,
+				children: [
+					{
+						path: "",
+						element: (
+							<CoopsContextProvider>
+								<CoopPage />
+							</CoopsContextProvider>
+						),
+					},
+					{
+						path: "quests",
+						element: (
+							<CoopsContextProvider>
+								<CoopQuests />
+							</CoopsContextProvider>
+						),
+					},
+					{
+						path: "members",
+						element: <Outlet />,
+						children: [
+							{
+								path: "",
+								element: (
+									<CoopsContextProvider>
+										<CoopContextProvider>
+											<ProgramMembers />
+										</CoopContextProvider>
+									</CoopsContextProvider>
+								),
+							},
+							{
+								path: ":id/apply",
+								element: (
+									<CoopsContextProvider>
+										<CoopContextProvider>
+											<RoleApply type="program" />
+										</CoopContextProvider>
+									</CoopsContextProvider>
+								),
+							},
+							{
+								// TODO: make this route only available for coop admins (view who applied for role)
+								path: ":id/applications",
+								element: (
+									<CoopsContextProvider>
+										<CoopContextProvider>
+											<ProgramApplications />
+										</CoopContextProvider>
+									</CoopsContextProvider>
+								),
+							},
+						],
+					},
+				],
 			},
 			{
-				path: "operations",
-				element: <CoopOperations />,
+				path: "create",
+				element: <CreateCoop />,
+				children: [
+					{
+						path: "basic-information",
+						element: <CoopBasicInformation />,
+					},
+					{
+						path: "operations",
+						element: <CoopOperations />,
+					},
+					{
+						path: "budgeting",
+						element: <CoopBudgeting />,
+					},
+					{
+						path: "promotion",
+						element: <CoopPromotion />,
+					},
+				],
 			},
 			{
-				path: "budgeting",
-				element: <CoopBudgeting />,
-			},
-			{
-				path: "promotion",
-				element: <CoopPromotion />,
+				path: "edit",
+				element: <Outlet />,
+				children: [
+					{
+						path: "profile",
+						element: <EditProfile />,
+					},
+				],
 			},
 		],
 	},

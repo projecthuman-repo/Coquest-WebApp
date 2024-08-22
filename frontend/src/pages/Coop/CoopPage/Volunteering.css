@@ -1,0 +1,70 @@
+/* Widget Container and Background */
+
+.prg-v-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  width: 100%;
+}
+
+.prg-v-heading-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 25px 0;
+}
+
+.volunteering-positions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 30px;
+}
+
+.prg-v-background img {
+  width: 15px;
+  height: 10px;
+}
+
+/* Text Styles */
+
+.prg-v-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 24px;
+  overflow-wrap: break-word;
+}
+
+.prg-v-sub-heading {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 14px;
+  overflow-wrap: break-word;
+}
+
+.prg-v-text {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 16px;
+  overflow-wrap: break-word;
+  margin-top: 15px;
+}
+
+/* Buttons */
+
+.prg-v-open-button {
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 10px;
+}
+
+.prg-v-button-design {
+  width: 200px;
+  height: 40px;
+  margin: 0px 0px 0px 25px;
+  border: 1px solid black;
+  border-radius: 20px;
+}
