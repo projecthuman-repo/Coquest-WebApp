@@ -16,9 +16,7 @@ export const CoopContext = createContext<CoopContextType>({
 	setCoop: () => {},
 });
 
-export const CoopContextProvider = ({
-	children,
-}: CoopContextProviderProps) => {
+export const CoopContextProvider = ({ children }: CoopContextProviderProps) => {
 	const { coops } = useContext(CoopsContext);
 	const [coop, setCoop] = useState<Coop | null>(null);
 
@@ -32,8 +30,7 @@ export const CoopContextProvider = ({
 				if (!isNaN(coopId)) {
 					const coop = coops.find(
 						(coop) =>
-							coop.id?.localeCompare(coopId.toString()) ===
-							0,
+							coop.id?.localeCompare(coopId.toString()) === 0,
 					);
 					if (coop) {
 						setCoop(coop);

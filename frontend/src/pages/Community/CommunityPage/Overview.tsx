@@ -54,7 +54,9 @@ function CommunityPageOverview({ data }: { data: any }) {
 					</div>
 					{/* Quests */}
 					<div className="com-o-background">
-						<Quests showAllLink={`${window.location.pathname}/quests`} />
+						<Quests
+							showAllLink={`${window.location.pathname}/quests`}
+						/>
 					</div>
 				</div>
 			</div>

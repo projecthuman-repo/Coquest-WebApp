@@ -20,9 +20,7 @@ function CoopOverview() {
 		coop?.description,
 	);
 	const [editedObjective, setEditedObjective] = useState(coop?.objective);
-	const [editedInitiative, setEditedInitiative] = useState(
-		coop?.initiative,
-	);
+	const [editedInitiative, setEditedInitiative] = useState(coop?.initiative);
 
 	const handleEditDescModal = () => {
 		setEditingDescStarted(!editingDescStarted);
@@ -34,12 +32,7 @@ function CoopOverview() {
 	};
 
 	const editDesc = () => {
-		if (
-			coop &&
-			editedDescription &&
-			editedObjective &&
-			editedInitiative
-		) {
+		if (coop && editedDescription && editedObjective && editedInitiative) {
 			setCoop({
 				...coop,
 				description: editedDescription,
@@ -209,7 +202,9 @@ function CoopOverview() {
 						</div>
 						{/* Quests */}
 						<div className="prg-o-background">
-							<Quests showAllLink={`${window.location.pathname}/quests`} />
+							<Quests
+								showAllLink={`${window.location.pathname}/quests`}
+							/>
 						</div>
 						{/* Funding */}
 						<div className="prg-o-background">

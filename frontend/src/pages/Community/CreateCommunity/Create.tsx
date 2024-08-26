@@ -93,7 +93,9 @@ function CreateCommunity() {
 				>
 					{section === 0 && (
 						<div className="create-community-page">
-							<h1 className="cc-main-heading">Create a Community</h1>
+							<h1 className="cc-main-heading">
+								Create a Community
+							</h1>
 							<h2 className="cc-sub-heading">
 								Let&apos;s create a new community! Enter some
 								basic information below to get started.

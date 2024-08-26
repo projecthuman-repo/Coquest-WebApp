@@ -77,7 +77,6 @@ import { CoopContextProvider } from "./pages/Coop/CoopPage/CoopContext";
 import CoopPage from "./pages/Coop/CoopPage";
 import CoopQuests from "./pages/Coop/CoopPage/Quests/Quests";
 
-
 import RoleApply from "./pages/Programs/components/RoleApplicationForm/RoleApply";
 
 const root = ReactDOM.createRoot(

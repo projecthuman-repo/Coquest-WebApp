@@ -209,7 +209,9 @@ function ProjectOverview() {
 						</div>
 						{/* Quests */}
 						<div className="prg-o-background">
-							<Quests showAllLink={`${window.location.pathname}/quests`} />
+							<Quests
+								showAllLink={`${window.location.pathname}/quests`}
+							/>
 						</div>
 						{/* Funding */}
 						<div className="prg-o-background">

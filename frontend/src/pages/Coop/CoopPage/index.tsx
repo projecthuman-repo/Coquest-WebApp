@@ -101,8 +101,7 @@ const CoopPage = () => {
 
 	// coop sign up
 	const [coopSignUp, setCoopSignUp] = React.useState(false);
-	const [coopSignUpStarted, setCoopSignUpStarted] =
-		React.useState(false);
+	const [coopSignUpStarted, setCoopSignUpStarted] = React.useState(false);
 	const [confirmationNumber, setConfirmationNumber] = React.useState(0);
 
 	const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -168,9 +167,7 @@ const CoopPage = () => {
 						<TitleField>{coop.name}</TitleField>
 						<OutlineButton
 							name={coopSignUp ? "Signed up" : "Sign up"}
-							onClick={
-								coopSignUp ? undefined : handleSignUpModal
-							}
+							onClick={coopSignUp ? undefined : handleSignUpModal}
 							filled={coopSignUp}
 						/>
 					</Header>
@@ -246,23 +243,17 @@ const CoopPage = () => {
 						/>
 					</CustomTabs>
 					<TabPanel value={value} index="one">
-						<CoopContext.Provider
-							value={{ coop, setCoop }}
-						>
+						<CoopContext.Provider value={{ coop, setCoop }}>
 							<CoopOverview />
 						</CoopContext.Provider>
 					</TabPanel>
 					<TabPanel value={value} index="two">
-						<CoopContext.Provider
-							value={{ coop, setCoop }}
-						>
+						<CoopContext.Provider value={{ coop, setCoop }}>
 							<CoopMilestones />
 						</CoopContext.Provider>
 					</TabPanel>
 					<TabPanel value={value} index="three">
-						<CoopContext.Provider
-							value={{coop, setCoop }}
-						>
+						<CoopContext.Provider value={{ coop, setCoop }}>
 							<CoopVolunteering />
 						</CoopContext.Provider>
 					</TabPanel>
