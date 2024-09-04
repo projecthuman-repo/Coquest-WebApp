@@ -1,0 +1,163 @@
+.prg-v-background {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 25px;
+  margin: 0;
+}
+
+.volunteer-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.volunteer-header > * {
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.prg-v-background button {
+  text-align: right;
+  max-width: fit-content;
+}
+
+.prg-v-background img.volunteer-collapse-button {
+  width: fit-content;
+  height: 10px;
+}
+
+.prg-v-background img.volunteer-expand-button {
+  width: fit-content;
+  height: 15px;
+}
+
+.volunteer-responsibilities,
+.volunteer-skills {
+  margin: 10px 0;
+}
+
+.volunteer-skills ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style-type: none;
+  padding: 10px;
+}
+
+.volunteer-skills li {
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  font-size: 12.5px;
+}
+
+.volunteer-apply {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.volunteer-apply button {
+  margin: 0;
+}
+
+/* Application Modal */
+.volunteer-application-modal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.volunteer-application-modal {
+  padding: 25px;
+  background-color: #fff;
+  width: 520px;
+  height: fit-content;
+  border-radius: 10px;
+}
+
+.application-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin-bottom: 30px;
+}
+
+.application-header p {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.application-header button {
+  text-align: right;
+  height: fit-content;
+}
+
+.application-header img {
+  height: 20px;
+  width: fit-content;
+}
+
+.application-form {
+  height: fit-content;
+  max-height: 450px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.application-form::-webkit-scrollbar {
+  width: 5px;
+}
+
+.application-form::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.application-form::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.38);
+  border-radius: 4px;
+}
+
+.application-form::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.contact-information,
+.availability {
+  margin: 20px 0;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-information p,
+.availability p {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.availability textarea {
+  resize: none;
+}
+
+.volunteer-application-modal .volunteer-apply {
+  padding-top: 25px;
+}

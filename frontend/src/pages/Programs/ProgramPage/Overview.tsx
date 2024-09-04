@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import SharedCalendar from "../../../components/SharedCalendar/SharedCalendar";
-import Quests from "../../../components/Quests/Quests";
+import Quests from "../../../components/Quests";
 import Members from "../../../components/Members/index";
 import ProgramProgressBar from "../../../components/ProgramProgressBar/ProgramProgressBar";
 import Budget from "../../../components/Budget/Budget";
@@ -11,7 +11,7 @@ import { ProgramContext } from "./ProgramContext";
 import "./Overview.css";
 import "./index.css";
 
-function ProgramsOverview() {
+function ProgramOverview() {
 	const { program, setProgram } = useContext(ProgramContext);
 
 	// edit program description, objective and initiative
@@ -58,7 +58,7 @@ function ProgramsOverview() {
 			setEditedObjective(program?.objective);
 			setEditedInitiative(program?.initiative);
 		}
-	}, [editingDescStarted]);
+	}, [editingDescStarted, program]);
 
 	return (
 		<>
@@ -150,13 +150,14 @@ function ProgramsOverview() {
 					</div>
 					{/* Members */}
 					<div className="prg-o-background">
-						<h2 className="prg-o-sub-heading margin-bottom">
-							Members
-						</h2>
 						<Members
 							users={["Test"]}
 							userRole={["Role"]}
-							showAllLink="#"
+							showAllLink={
+								window.location.pathname.slice(-1) === "/"
+									? window.location.pathname + "members"
+									: window.location.pathname + "/members"
+							}
 						/>
 					</div>
 					{/* Progress */}
@@ -208,7 +209,9 @@ function ProgramsOverview() {
 						</div>
 						{/* Quests */}
 						<div className="prg-o-background">
-							<Quests />
+							<Quests
+								showAllLink={`${window.location.pathname}/quests`}
+							/>
 						</div>
 						{/* Funding */}
 						<div className="prg-o-background">
@@ -221,4 +224,4 @@ function ProgramsOverview() {
 	);
 }
 
-export default ProgramsOverview;
+export default ProgramOverview;

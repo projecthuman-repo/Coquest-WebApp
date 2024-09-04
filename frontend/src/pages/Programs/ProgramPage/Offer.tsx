@@ -1,6 +1,6 @@
 import React from "react";
 
-function ProgramsOffer() {
+function ProgramOffer() {
 	return (
 		<>
 			<p>Offer</p>
@@ -8,4 +8,4 @@ function ProgramsOffer() {
 	);
 }
 
-export default ProgramsOffer;
+export default ProgramOffer;

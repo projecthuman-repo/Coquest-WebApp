@@ -1,0 +1,128 @@
+/* Text Styles */
+
+.quests-main-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 36px;
+  padding: 0px 0px 0px 50px;
+}
+
+.quests-sub-heading {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.quests-widget-heading-small {
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.quests-widget-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+/* Heading */
+
+.quests-heading-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.quests-search {
+  border-radius: 25px;
+  border: 1px solid black;
+  padding-left: 40px;
+  width: 350px;
+  height: 48px;
+}
+
+.quests-search-container {
+  position: relative;
+  padding-right: 110px;
+  padding: 0px 50px 0px 0px;
+}
+
+.quests-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+}
+
+/* Navigation Buttons */
+
+.quests-nav-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0px 15px 0px;
+}
+
+.quests-nav-button-design {
+  width: 250px;
+  height: 50px;
+  border-bottom: 3px solid lightgrey;
+}
+
+.quests-nav-button-selected {
+  border-bottom: 3px solid black !important;
+}
+
+/* Main Content */
+
+.quests-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.quests-widget {
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px lightgrey;
+  width: 800px;
+  margin: 15px 20px 15px 0px;
+}
+
+.quests-widget-expand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quests-widget img {
+  width: 25px;
+  height: 15px;
+}
+
+/* Buttons */
+
+.quests-back-button-design {
+  display: flex;
+  flex-direction: row;
+  padding: 50px 0px 0px 50px;
+}
+
+.quests-back-button-design p {
+  margin: 0px 0px 0px 10px;
+}
+
+.quests-back-button-design img {
+  width: 10px;
+  height: 15px;
+  margin: 5px 0px 0px 0px;
+}

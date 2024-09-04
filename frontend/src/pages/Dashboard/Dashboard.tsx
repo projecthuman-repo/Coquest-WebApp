@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { subscribeToUserModelSubject } from "../../observers/userobserver";
-import { Name, User } from "../../models/usermodel";
+import { User } from "../../models/usermodel";
 import { useUserRegistration } from "../../components/AutoRedirector/UserRegistration";
 import Loading from "../../components/Loading";
 import { isCompleteRegistration } from "../../models/common";
@@ -11,26 +11,14 @@ import Members from "../../components/Members";
 
 function Dashboard() {
 	// Authentication/Registration State Variables
-	// [isRegistered] - Boolean value that determines if the user has completed the registration process.
-	// [setRegisteredStatus] - Function that sets the value of isRegistered.
-	// [authenticated] - Boolean value that determines if the user is authenticated.
-	const [isRegistered, setRegisteredStatus] = useState(false);
-	const { authenticated } = useUserRegistration();
+	const [isRegistered, setRegisteredStatus] = useState(false); // Determines if the user has completed the registration process.
+	const { authenticated } = useUserRegistration(); // Determines if the user is authenticated.
 
-	// User State Variables (Stores the information about the user)
-	// [name] - Object that stores the user's name.
-	// [setName] - Function that sets the value of the name object.
-	// [user] - Object that stores the user's information.
-	const [name, setName] = useState<Name>({
-		first: "",
-		last: "",
-	});
-	const [user, setUser] = useState<User | undefined>();
+	// User State Variables
+	const [user, setUser] = useState<User | undefined>(); // Stores all the information about the user.
 
-	// Current Communtiy State Variables (Stores the information about the current community the user has selected)
-	// [currentCommunity] - Object that stores the information about the current community.
-	// [setCurrentCommunity] - Function that sets the value of the currentCommunity object.
-	const [currentCommunity, setCurrentCommunity] = useState<any>();
+	// Current Communtiy State Variables
+	const [currentCommunity, setCurrentCommunity] = useState<any>(); // Stores information about the current community the user has selected.
 
 	// UseEffect for fetching User Data
 	// Sets the user state variables to the user data fetched from the UserModel.
@@ -39,7 +27,6 @@ function Dashboard() {
 
 		const setupSubscription = async () => {
 			unsubscribe = await subscribeToUserModelSubject((user) => {
-				setName(user.name);
 				setRegisteredStatus(isCompleteRegistration(user.registered));
 				setUser(user);
 				setCurrentCommunity(user?.communities?.[0]);
@@ -63,11 +50,6 @@ function Dashboard() {
 		});
 	};
 
-	useEffect(() => {
-		console.log(currentCommunity);
-		// Add any additional logic that should run when currentCommunity changes
-	}, [currentCommunity]);
-
 	const navigate = useNavigate();
 
 	return authenticated && isRegistered ? (
@@ -78,7 +60,7 @@ function Dashboard() {
 						<div className="db-heading-container">
 							<div>
 								<p className="db-sub-heading">
-									Welcome, {name.first}!
+									Welcome, {user?.name.first}!
 								</p>
 								<h2 className="db-main-heading">Overview</h2>
 								<div>
@@ -247,7 +229,7 @@ function Dashboard() {
 							{/* Members */}
 							<div className="db-widget">
 								<Members
-									users={[name.first, name.first, name.first]}
+									users={["Name", "Name", "Name"]}
 									userRole={["Role", "Role", "Role"]}
 									showAllLink="#"
 								/>

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import ProgramProgressBar from "../../../components/ProgramProgressBar/ProgramProgressBar";
-import MilestoneCard from "../components/MilestoneCard";
+import MilestoneCard from "../components/MilestoneCard/MilestoneCard";
 import Input from "../../../components/Input";
 import PrimaryButton from "../../../components/Buttons/PrimaryButton";
 import { ProgramContext } from "./ProgramContext";
@@ -159,14 +159,8 @@ function ProgramMilestones() {
 				{program?.milestones.map((milestone: any, index: number) => (
 					<MilestoneCard
 						key={index}
-						id={milestone?.id}
-						type={milestone?.type}
-						title={milestone?.title}
-						progress={milestone?.progress}
-						description={milestone?.description}
-						completedBy={milestone?.completedBy}
-						dateStarted={milestone?.dateStarted}
-						dateCompleted={milestone?.dateCompleted}
+						milestone={milestone}
+						type="program"
 					/>
 				))}
 			</div>

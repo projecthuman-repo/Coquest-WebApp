@@ -19,8 +19,19 @@ import { useCroppedImage } from "../UploadImage/CropperContext";
 import CropperComponent from "./DragDropCropper";
 import { Image } from "../../models/common";
 
+import { gql } from "graphql-request";
+import graphQLClient from "../../apiInterface/client";
+
 import "./DragDrop.css";
 
+const deleteImage = gql`
+	mutation DeleteFile($fileName: String!) {
+		deleteFile(fileName: $fileName) {
+			response
+			code
+		}
+	}
+`;
 const itemPreview = withRequestPreSendUpdate(
 	({ id, url, updateRequest, requestData }: any) => {
 		return (
@@ -50,6 +61,21 @@ const DragDrop = (props: any) => {
 	function handleDrop(acceptedFiles: any) {
 		setReadyForUpload(false);
 		upload(acceptedFiles);
+	}
+
+	function handleImgRemove(path: string) {
+		const fname = path.split("/").pop();
+		graphQLClient
+			.request(deleteImage, { fileName: fname })
+			.then(() => {
+				const newAttachments = attachments.filter(
+					(attachment: Image) => attachment.path !== path,
+				);
+				props.updateData(newAttachments);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
 	}
 
 	// Throw error if uploaded file is not of image type and bar Uploady from uploading the offending file
@@ -147,7 +173,7 @@ const DragDrop = (props: any) => {
 						{/* // TODO implement so that close icon deletes uploaded file from the server too */}
 						{attachments &&
 							attachments.length > 0 &&
-							attachments.map((attachment, index) => (
+							attachments.map((attachment) => (
 								<div
 									className="added-file"
 									key={attachment.path}
@@ -161,11 +187,7 @@ const DragDrop = (props: any) => {
 										className="close-icon"
 										alt="Close icon"
 										onClick={() => {
-											const newAttachments =
-												attachments.filter(
-													(_, i) => i !== index,
-												);
-											props.updateData(newAttachments);
+											handleImgRemove(attachment.path);
 										}}
 									></img>
 								</div>

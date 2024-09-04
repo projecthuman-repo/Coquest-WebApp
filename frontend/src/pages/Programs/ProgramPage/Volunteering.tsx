@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import VolunteerPositionCard from "../components/VolunteerPositionCard";
+import VolunteerPositionCard from "../components/VolunteerPositionCard/VolunteerPositionCard";
 import { ProgramContext } from "./ProgramContext";
 import "./Volunteering.css";
 import "./index.css";
 
-function ProgramsVolunteering() {
+function ProgramVolunteering() {
 	const { program } = useContext(ProgramContext);
 
 	return (
@@ -14,18 +14,24 @@ function ProgramsVolunteering() {
 					<h2 className="prg-v-heading">Volunteering</h2>
 				</div>
 
-				{program?.volunteerPositions.map((volunteerPosition, index) => (
-					<VolunteerPositionCard
-						key={index}
-						id={volunteerPosition.id}
-						title={volunteerPosition.title}
-						responsibilities={volunteerPosition.responsibilities}
-						skills={volunteerPosition.skills}
-					/>
-				))}
+				<div className="volunteering-positions">
+					{program?.volunteerPositions.map(
+						(volunteerPosition, index) => (
+							<VolunteerPositionCard
+								key={index}
+								id={volunteerPosition.id}
+								title={volunteerPosition.title}
+								responsibilities={
+									volunteerPosition.responsibilities
+								}
+								skills={volunteerPosition.skills}
+							/>
+						),
+					)}
+				</div>
 			</div>
 		</>
 	);
 }
 
-export default ProgramsVolunteering;
+export default ProgramVolunteering;

@@ -1,6 +1,6 @@
 import React from "react";
 
-function ProgramsDiscussions() {
+function ProgramDiscussions() {
 	return (
 		<>
 			<p>Discussions</p>
@@ -8,4 +8,4 @@ function ProgramsDiscussions() {
 	);
 }
 
-export default ProgramsDiscussions;
+export default ProgramDiscussions;

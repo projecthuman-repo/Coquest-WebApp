@@ -1,0 +1,139 @@
+/* Widget Container and Background */
+
+.prg-m-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  width: 100%;
+}
+
+.prg-m-pb-container {
+  margin: 25px 0;
+}
+
+.prg-m-heading-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 25px 0;
+}
+
+.project-milestones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 30px;
+}
+
+/* Text Styles */
+
+.prg-m-heading {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 20px;
+  overflow-wrap: break-word;
+}
+
+.prg-m-text {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 14px;
+  overflow-wrap: break-word;
+  margin-top: 15px;
+}
+
+.prg-m-sub-text {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 14px;
+  overflow-wrap: break-word;
+}
+
+/* Buttons */
+.prg-m-button-design {
+  width: 200px;
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+/* Add Milestone Modal */
+.add-milestone-modal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.add-milestone-modal {
+  padding: 25px;
+  background-color: #fff;
+  width: 520px;
+  height: fit-content;
+  border-radius: 10px;
+}
+
+.add-milestone-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin-bottom: 30px;
+}
+
+.add-milestone-header p {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.add-milestone-header button {
+  text-align: right;
+  height: fit-content;
+}
+
+.add-milestone-header img {
+  height: 20px;
+  width: fit-content;
+}
+
+.add-milestone-form {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.milestone-type-options {
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.milestone-type-options input[type="radio"] {
+  background-color: black;
+}
+
+.milestone-type-options label {
+  margin: 10px;
+}
+
+.availability textarea {
+  resize: none;
+}
+
+.add-milestone {
+  width: 100%;
+  text-align: right;
+  padding-top: 25px;
+}
