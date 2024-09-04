@@ -9,9 +9,10 @@ const { regenDb } = require("../db/connection");
 //attachments: links to all the files attached to the post such as images
 //createdAt: when was the post created
 //comments: list of all the comments on the post
+//tags: list of tags associated with the post, useful for filtering
 const regenquestPostSchema = new Schema({
   userID: {
-    type: mongoose.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "regenquestUser",
     required: true,
   },
@@ -23,13 +24,14 @@ const regenquestPostSchema = new Schema({
   comments: [
     {
       userID: {
-        type: mongoose.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "regenquestUser",
         required: true,
       },
       body: { type: String, required: true },
     },
   ],
+  tags: [{ type: String, default: [] }],
 });
 
 module.exports = regenDb.model("regenquestPost", regenquestPostSchema);

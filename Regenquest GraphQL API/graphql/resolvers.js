@@ -187,6 +187,17 @@ module.exports = {
       }
     },
 
+    //this method finds a post by its tags
+    async findPostbyTags(_parent, { tags }, _context, _info) {
+      try {
+        // using $all instead of $in to find posts that have all the tags
+        // because that is how it is implemented in spotstich
+        return await Post.find({ tags: { $all: tags } });
+      } catch {
+        throw new Error("Error finding post by tags");
+      }
+    },
+
     //this method finds an item by its id
     async findInventoryItembyID(_parent, { itemID }, _context, _info) {
       try {
@@ -568,7 +579,9 @@ module.exports = {
     //this method creates and add a post to the db
     async createRegenquestPost(
       _parent,
-      { userInput: { userID, title, description, attachments, comments } },
+      {
+        userInput: { userID, title, description, attachments, comments, tags },
+      },
       _context,
       _info,
     ) {
@@ -581,6 +594,7 @@ module.exports = {
         attachments: attachments ? attachments : null,
         createdAt: new Date().toLocaleString(),
         comments: comments ? comments : null,
+        tags: tags ? tags : [],
       });
 
       //add the post to the db
@@ -1133,7 +1147,17 @@ module.exports = {
     //this method updates all the properties of a post
     async updateRegenquestPost(
       _parent,
-      { userInput: { id, userID, title, description, attachments, comments } },
+      {
+        userInput: {
+          id,
+          userID,
+          title,
+          description,
+          attachments,
+          comments,
+          tags,
+        },
+      },
       _context,
       _info,
     ) {
@@ -1166,6 +1190,9 @@ module.exports = {
       }
       if (comments) {
         updatePost.comments = comments;
+      }
+      if (tags) {
+        updatePost.tags = tags;
       }
 
       try {

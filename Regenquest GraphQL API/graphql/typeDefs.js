@@ -287,6 +287,7 @@ module.exports = gql`
     attachments: [String]
     createdAt: String
     comments: [comment]
+    tags: [String]
   }
 
   input regenquestPostInput {
@@ -296,6 +297,7 @@ module.exports = gql`
     description: String
     attachments: [String]
     comments: [commentInput]
+    tags: [String]
   }
 
   type regenquestInventory {
@@ -519,6 +521,7 @@ module.exports = gql`
     findTaskbyID(taskID: String): regenquestTask @auth
     findQuestbyID(questID: String): regenquestQuest @auth
     findPostbyID(postID: String): regenquestPost @auth
+    findPostbyTags(tags: [String]): [regenquestPost] @auth
     findInventoryItembyID(itemID: String): regenquestInventory @auth
     findEventbyID(eventID: String): regenquestEvent @auth
     findCommunitybyID(id: String): regenquestCommunity
