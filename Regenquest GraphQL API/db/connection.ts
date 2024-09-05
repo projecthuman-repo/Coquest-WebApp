@@ -1,36 +1,33 @@
-const mongoose = require("mongoose");
-require("dotenv").config();
-
+import CONFIG from "@/config";
+import mongoose from "mongoose";
+import("dotenv/config");
 // Connection options (optional)
-const dbOptions = {
-  useNewUrlParser: true,
-};
 
 class DBConnection {
-  static instance = null;
+  static instance: DBConnection | null = null;
+  connection: mongoose.Connection;
 
-  static async init(connectionUri = process.env.DATABASE_CONNECTION) {
+  static async init(connectionUri = CONFIG.DATABASE_CONNECTION) {
     await this.getConnection(connectionUri).asPromise();
     console.log(`Connected to the cluster!`);
   }
 
-  static getConnection(connectionUri = process.env.DATABASE_CONNECTION) {
+  static getConnection(connectionUri = CONFIG.DATABASE_CONNECTION) {
     if (!this.instance) {
-      let connection = mongoose.createConnection(connectionUri, dbOptions);
+      let connection = mongoose.createConnection(connectionUri);
       this.instance = new DBConnection(connection);
     }
     return this.instance.connection;
   }
 
-  constructor(connection) {
+  constructor(connection: mongoose.Connection) {
     this.connection = connection;
   }
 }
 
-module.exports = {
-  DBConnection,
-  regenDb: DBConnection.getConnection().useDb(process.env.REGENQUEST_DB_NAME),
-  crossDb: DBConnection.getConnection().useDb(
-    process.env.CROSSPLATFORM_DB_NAME,
-  ),
-};
+const regenDb = DBConnection.getConnection().useDb(CONFIG.REGENQUEST_DB_NAME);
+const crossDb = DBConnection.getConnection().useDb(
+  CONFIG.CROSSPLATFORM_DB_NAME,
+);
+
+export { DBConnection, regenDb, crossDb };
