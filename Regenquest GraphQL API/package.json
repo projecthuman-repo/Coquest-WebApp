@@ -1,8 +1,15 @@
 {
   "name": "sample-http",
   "version": "0.0.1",
+  "main": "dist/index.js",
   "scripts": {
-    "dev": "functions-framework --target=handler",
+    "dev": "run-script-os",
+    "dev:windows": "concurrently --raw \"npm run dev-build > nul\" \"npm run dev-start\"",
+    "dev:nix": "concurrently --raw \"npm run dev-build > /dev/null\" \"npm run dev-start\"",
+    "dev-build": "tsc --watch",
+    "dev-start": "nodemon --watch dist/ --exec functions-framework --target=handler",
+    "build": "tsc",
+    "start": "functions-framework --target=handler",
     "lint": "run-script-os",
     "lint:win32": "eslint . & prettier . -c",
     "lint:darwin": "eslint .; prettier . -c",
@@ -33,10 +40,16 @@
   "devDependencies": {
     "@eslint/js": "^9.4.0",
     "@google-cloud/functions-framework": "^3.3.0",
+    "@types/cookie-parser": "^1.4.7",
+    "@types/eslint-config-prettier": "^6.11.3",
+    "@types/node": "^22.5.4",
+    "concurrently": "^8.2.2",
     "eslint": "^9.4.0",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.4.0",
     "prettier": "^3.3.2",
-    "run-script-os": "^1.1.6"
+    "run-script-os": "^1.1.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
   }
 }
