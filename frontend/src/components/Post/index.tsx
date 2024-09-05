@@ -6,7 +6,7 @@ import ImageCarousel from "../ImageCarousel";
 import { User } from "../../models/usermodel";
 import { Image } from "../../models/common";
 // import {get, find} from "../../apiInterface";
-//import APIReferenceComponent from "../../APIReferenceComponent";
+// import APIReferenceComponent from "../../APIReferenceComponent";
 import "./Comment.css";
 import "./index.css";
 

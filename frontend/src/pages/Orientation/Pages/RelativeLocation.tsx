@@ -20,7 +20,7 @@ function RelativeLocation(props: any) {
 
 	const { isLoaded } = useJsApiLoader({
 		id: "google-map-script",
-		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY!,
+		googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY!,
 	});
 
 	const [center, setCenter] = useState({ lat: -34.397, lng: 150.644 });
