@@ -6,12 +6,13 @@
     "target": "ES6",
     "module": "CommonJS",
     "esModuleInterop": true,
-    
     "baseUrl": ".",
     "paths": {
       "@/*": ["*"]
     },
     "skipLibCheck": true,
+    "strict": true,
+    "noImplicitAny": false
   },
   "exclude": ["node_modules", "dist"],
   "include": ["./**/*"],
