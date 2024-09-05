@@ -1,26 +1,27 @@
-const express = require("express");
-const { ApolloServer } = require("apollo-server-express");
+import express from "express";
+import { ApolloServer } from "apollo-server-express";
 // TODO: find out how to reinclude this plugin
 // const {
 //   ApolloServerPluginLandingPageLocalDefault,
 // } = require('apollo-server-core');
-const cors = require("cors");
-const { DBConnection } = require("./db/connection");
-const cookieParser = require("cookie-parser");
+import cors from "cors";
+import { DBConnection } from "./db/connection";
+import cookieParser from "cookie-parser";
 
-const AuthDirective = require("./graphql/auth");
-const VerifyTokenDirective = require("./graphql/verifyToken");
-const FormatObjDirective = require("./graphql/formatObj");
+import AuthDirective from "./graphql/auth";
+import VerifyTokenDirective from "./graphql/verifyToken";
+import FormatObjDirective from "./graphql/formatObj";
 
 // Construct a schema, using GraphQL schema language
-const typeDefs = require("./graphql/typeDefs");
+import typeDefs from "./graphql/typeDefs";
 
 // Provide resolver functions for your schema fields
-const resolvers = require("./graphql/resolvers");
+import resolvers from "./graphql/resolvers";
+import CONFIG from "./config";
 
 const corsOptions = {
   credentials: true,
-  origin: [process.env.CROSS_ORIGIN],
+  origin: [CONFIG.CROSS_ORIGIN],
 };
 
 async function startServer() {
@@ -40,7 +41,8 @@ async function startServer() {
       verifyToken: VerifyTokenDirective,
       formatObj: FormatObjDirective,
     },
-    csrfPrevention: true,
+	  csrfPrevention: true,
+	// @ts-expect-error - TODO: fix this
     cache: "bounded",
     context: ({ req, res }) => ({ req, res }),
     // plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
@@ -55,7 +57,7 @@ async function startServer() {
 
 let appPromise = startServer();
 
-exports.handler = (req, res) => {
+export const handler = (req, res) => {
   appPromise
     .then((app) => {
       app(req, res);
