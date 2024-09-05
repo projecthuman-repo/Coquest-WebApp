@@ -1,5 +1,5 @@
-const { Schema, default: mongoose } = require("mongoose");
-const { regenDb } = require("../db/connection");
+import { Schema } from "mongoose";
+import { regenDb } from "../db/connection";
 
 //postID: unique id of the post
 //userID: ID of the user that made the post
@@ -11,7 +11,7 @@ const { regenDb } = require("../db/connection");
 //comments: list of all the comments on the post
 const regenquestPostSchema = new Schema({
   userID: {
-    type: mongoose.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "regenquestUser",
     required: true,
   },
@@ -23,7 +23,7 @@ const regenquestPostSchema = new Schema({
   comments: [
     {
       userID: {
-        type: mongoose.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "regenquestUser",
         required: true,
       },
@@ -32,4 +32,4 @@ const regenquestPostSchema = new Schema({
   ],
 });
 
-module.exports = regenDb.model("regenquestPost", regenquestPostSchema);
+export default regenDb.model("regenquestPost", regenquestPostSchema);

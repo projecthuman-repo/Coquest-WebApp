@@ -1,6 +1,6 @@
-const { Schema } = require("mongoose");
-const { locationSchema } = require("./common");
-const { regenDb } = require("../db/connection");
+import { Schema } from "mongoose";
+import { locationSchema } from "./common";
+import { regenDb } from "../db/connection";
 
 //eventID: unique id of the event
 //name: name of the event
@@ -30,4 +30,4 @@ const regenquestEventSchema = new Schema({
   ],
 });
 
-module.exports = regenDb.model("regenquestEvent", regenquestEventSchema);
+export default regenDb.model("regenquestEvent", regenquestEventSchema);

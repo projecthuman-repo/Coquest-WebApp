@@ -1,6 +1,6 @@
-const { Schema, default: mongoose } = require("mongoose");
-const { locationSchema } = require("./common");
-const { regenDb } = require("../db/connection");
+import { Schema } from "mongoose";
+import { locationSchema } from "./common";
+import { regenDb } from "../db/connection";
 
 //questID: unique id of the quest
 //name: name of the quest
@@ -31,7 +31,7 @@ const regenquestQuestSchema = new Schema({
   requirements: [String],
   members: [
     {
-      type: mongoose.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "regenquestUser",
     },
   ],
@@ -39,11 +39,11 @@ const regenquestQuestSchema = new Schema({
   budget: Number,
   tasks: [
     {
-      type: mongoose.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "regenquestTask",
     },
   ],
   hashtags: [String],
 });
 
-module.exports = regenDb.model("regenquestQuest", regenquestQuestSchema);
+export default regenDb.model("regenquestQuest", regenquestQuestSchema);

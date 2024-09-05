@@ -1,5 +1,5 @@
-const { Schema } = require("mongoose");
-const { regenDb } = require("../db/connection");
+import { Schema } from "mongoose";
+import { regenDb } from "../db/connection";
 
 //list of availible genres
 const regenquestGenresSchema = new Schema({
@@ -12,4 +12,4 @@ const regenquestGenresSchema = new Schema({
   ],
 });
 
-module.exports = regenDb.model("regenquestGenres", regenquestGenresSchema);
+export default regenDb.model("regenquestGenres", regenquestGenresSchema);

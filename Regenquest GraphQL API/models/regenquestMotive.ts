@@ -1,9 +1,9 @@
-const { Schema } = require("mongoose");
-const { regenDb } = require("../db/connection");
+import { Schema } from "mongoose";
+import { regenDb } from "../db/connection";
 
 // name: name of the motive
 const regenquestMotiveSchema = new Schema({
   name: { type: String, required: true, unique: true },
 });
 
-module.exports = regenDb.model("regenquestMotive", regenquestMotiveSchema);
+export default regenDb.model("regenquestMotive", regenquestMotiveSchema);

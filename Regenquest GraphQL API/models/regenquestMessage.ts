@@ -1,5 +1,5 @@
-const { Schema, default: mongoose } = require("mongoose");
-const { regenDb } = require("../db/connection");
+import { Schema } from "mongoose";
+import { regenDb } from "../db/connection";
 
 //messageID: unique id of the message
 //chatID: id of the chat the message belongs to
@@ -9,12 +9,12 @@ const { regenDb } = require("../db/connection");
 //unreadBy: list of users from chat that have not read the message
 const regenquestMessageSchema = new Schema({
   chatID: {
-    type: mongoose.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "regenquestChat",
     required: true,
   },
   sentFrom: {
-    type: mongoose.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "regenquestUser",
     required: true,
   },
@@ -28,10 +28,10 @@ const regenquestMessageSchema = new Schema({
   },
   unreadBy: [
     {
-      type: mongoose.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "regenquestUser",
     },
   ],
 });
 
-module.exports = regenDb.model("regenquestMessage", regenquestMessageSchema);
+export default regenDb.model("regenquestMessage", regenquestMessageSchema);

@@ -1,7 +1,8 @@
-const { Schema, default: mongoose } = require("mongoose");
-const { imageSchema, locationSchema } = require("./common");
-const { regenDb } = require("../db/connection");
-const validators = require("./validators");
+import { Schema } from "mongoose";
+import { imageSchema, locationSchema } from "./common";
+import { regenDb } from "../db/connection";
+import validators from "./validators";
+import regenquestUser from "./regenquestUser";
 
 //name: name of the community
 //description: of the community
@@ -18,12 +19,9 @@ const regenquestCommunitySchema = new Schema({
   members: {
     type: [
       {
-        type: mongoose.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "regenquestUser",
-        validate: validators.idValidators(
-          () => require("./regenquestUser"),
-          "member",
-        ),
+        validate: validators.idValidators(() => regenquestUser, "member"),
       },
     ],
     validate: validators.arrValidators("members"),
@@ -34,7 +32,4 @@ const regenquestCommunitySchema = new Schema({
   images: [imageSchema],
 });
 
-module.exports = regenDb.model(
-  "regenquestCommunity",
-  regenquestCommunitySchema,
-);
+export default regenDb.model("regenquestCommunity", regenquestCommunitySchema);

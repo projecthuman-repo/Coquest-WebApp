@@ -1,13 +1,15 @@
-const { Schema, default: mongoose } = require("mongoose");
-const {
+import { Schema } from "mongoose";
+import {
   imageSchema,
   locationSchema,
   recommendationSchema,
   badgeSchema,
   skillSchema,
-} = require("./common");
-const { regenDb } = require("../db/connection");
-const validators = require("./validators");
+} from "./common";
+import { regenDb } from "../db/connection";
+import validators from "./validators";
+import CrossPlatformUser from "./crossPlatform/User";
+import regenquestCommunity from "./regenquestCommunity";
 
 //userID: a unique ID generated during registeration, used to connect user data to the user
 //name: name of the user
@@ -29,10 +31,10 @@ const regenquestUserSchema = new Schema({
   // userID is not marked as required because it needs to reference its corresponding CrossPlatform.users junction document,
   // which doesn't exist on regenquestuser creation
   userID: {
-    type: mongoose.ObjectId,
+    type: Schema.Types.ObjectId,
     unique: true,
     validate: validators.idValidators(
-      () => require("./crossPlatform/User"),
+      () => CrossPlatformUser,
       "crossplatform user",
     ),
   },
@@ -62,10 +64,10 @@ const regenquestUserSchema = new Schema({
   communities: {
     type: [
       {
-        type: mongoose.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "regenquestCommunity",
         validate: validators.idValidators(
-          () => require("./regenquestCommunity"),
+          () => regenquestCommunity,
           "community",
         ),
       },
@@ -79,4 +81,4 @@ const regenquestUserSchema = new Schema({
   recommendations: [recommendationSchema],
 });
 
-module.exports = regenDb.model("regenquestUser", regenquestUserSchema);
+export default regenDb.model("regenquestUser", regenquestUserSchema);

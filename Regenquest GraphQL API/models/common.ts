@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose");
+import { Schema } from "mongoose";
 
 const imageSchema = new Schema({
   contentType: { type: String, required: true },
@@ -25,7 +25,7 @@ const recommendationSchema = new Schema({
   comment: String,
 });
 
-module.exports = {
+export {
   imageSchema,
   locationSchema,
   skillSchema,
