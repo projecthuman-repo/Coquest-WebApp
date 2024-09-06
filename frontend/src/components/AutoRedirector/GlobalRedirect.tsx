@@ -57,7 +57,7 @@ function GlobalRedirect({ logout }: GlobalRedirectProps) {
 	//                 });
 	//         } else {
 	//             // Redirect to authentication URI
-	//             window.location.href = `${process.env.REACT_APP_AUTH_URI}?appId=2`;
+	//             window.location.href = `${import.meta.env.VITE_AUTH_FRONTEND_URI}?appId=2`;
 	//         }
 	//     } else if (authenticated && !isCompleteRegistration(registered) && loc.pathname !== "/registration") {
 	//         navigate('/registration', { replace: true });
@@ -80,7 +80,7 @@ function GlobalRedirect({ logout }: GlobalRedirectProps) {
 						});
 				} else {
 					// TODO: dynamically fetch appId from DB
-					window.location.href = `${process.env.REACT_APP_AUTH_URI}?appId=2`;
+					window.location.href = `${import.meta.env.VITE_AUTH_FRONTEND_URI}?appId=2`;
 				}
 				// Explicitly check for "/registration" pathname to prevent endless reload loop
 			} else if (

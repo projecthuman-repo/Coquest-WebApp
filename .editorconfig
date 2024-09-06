@@ -11,6 +11,10 @@ insert_final_newline = true
 [*.md]
 trim_trailing_whitespace = false
 
-[*.{ts,tsx}]
+[frontend/**/*.ts]
+indent_style = tab
+indent_size = 4
+
+[frontend/**/*.tsx]
 indent_style = tab
 indent_size = 4

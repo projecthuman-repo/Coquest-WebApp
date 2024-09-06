@@ -7,7 +7,7 @@
       "command": "npm",
       "args": ["run", "dev"],
       "options": {
-        "cwd": "${workspaceFolder}\\Regenquest GraphQL API",
+        "cwd": "${workspaceFolder}\\backend",
         "env": {
           "NODE_ENV": "${input:dev-env}"
         }
@@ -30,7 +30,7 @@
       "problemMatcher": [
         {
           "owner": "node",
-          "fileLocation": ["relative", "${workspaceFolder}/Regenquest GraphQL API"],
+          "fileLocation": ["relative", "${workspaceFolder}/backend"],
           "pattern": [
             {
               "regexp": "^\\s*(\\S.*):(\\d+):(\\d+) - error (.*)$",
@@ -114,16 +114,14 @@
           "background": {
             "beginsPattern": "Creating an optimized production build...",
             "endsPattern": "Serving!|Accepting connections at http://localhost:\\d+"
-          },
+          }
         }
       ]
     },
     {
       "label": "Start Application",
       "dependsOrder": "sequence",
-      "dependsOn": [
-        "Start API", "Start React"
-      ]
+      "dependsOn": ["Start API", "Start React"]
     },
     {
       "label": "Set Development Environment",

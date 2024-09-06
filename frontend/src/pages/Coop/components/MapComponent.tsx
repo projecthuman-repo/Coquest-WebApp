@@ -45,7 +45,7 @@ const SelectContainer = styled(Select)({
 const MapComponent = () => {
 	const { isLoaded } = useLoadScript({
 		libraries: ["places"],
-		googleMapsApiKey: "" + process.env.REACT_APP_GOOGLE_PLACES_API,
+		googleMapsApiKey: "" + import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
 	});
 
 	const [autocomplete, setAutocomplete] = useState<any>(null);

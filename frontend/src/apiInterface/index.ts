@@ -6,7 +6,7 @@ const headers = {
 };
 
 export const get = (name: string, parameters: string[]) => {
-	const request = `${process.env.REACT_APP_API_ENDPOINT}?key=${process.env.REACT_APP_API_KEY}&query=query{${name}{${parameters.join(" ")}}}`;
+	const request = `${import.meta.env.VITE_API_ENDPOINT}?key=${import.meta.env.VITE_API_KEY}&query=query{${name}{${parameters.join(" ")}}}`;
 	return fetch(request, {
 		headers,
 		mode: "cors",
@@ -45,7 +45,7 @@ export const find = (name: string, id: string, parameters: string[]) => {
 		}
 	}`;
 
-	const request = `${process.env.REACT_APP_API_ENDPOINT}?key=${process.env.REACT_APP_API_KEY}&query=${query}`;
+	const request = `${import.meta.env.VITE_API_ENDPOINT}?key=${import.meta.env.VITE_API_KEY}&query=${query}`;
 
 	console.log(request);
 

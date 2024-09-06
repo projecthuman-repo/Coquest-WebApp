@@ -117,7 +117,7 @@ const DragDrop = (props: any) => {
 			batch.items.forEach((_, index) => {
 				imgs.push({
 					contentType: imageType[index],
-					path: `${process.env.REACT_APP_STORAGE_URL!}/${imageRemotePath[index]}`,
+					path: `${import.meta.env.VITE_STORAGE_URL!}/${imageRemotePath[index]}`,
 				});
 			});
 			props.updateData(attachments.concat(imgs));

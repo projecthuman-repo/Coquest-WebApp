@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'frontend/**'
+      - "frontend/**"
 
 jobs:
   build:
@@ -15,38 +15,38 @@ jobs:
       CI: false
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
 
-    - name: Install dependencies
-      working-directory: ./frontend/
-      run: npm ci
+      - name: Install dependencies
+        working-directory: ./frontend/
+        run: npm ci
 
-    - name: Build React application
-      working-directory: ./frontend/
-      env:
-        REACT_APP_GOOGLE_MAPS_API_KEY: ${{ secrets.REACT_APP_GOOGLE_MAPS_API_KEY }}
-        REACT_APP_API: ${{ secrets.REACT_APP_API }}
-        REACT_APP_AUTH_URI: ${{ secrets.REACT_APP_AUTH_URI }}
-        REACT_APP_STORAGE_URL: ${{ secrets.REACT_APP_STORAGE_URL }}
-        REACT_APP_JWT_COOKIE: ${{ secrets.REACT_APP_JWT_COOKIE }}
-      run: npm run build
+      - name: Build React application
+        working-directory: ./frontend/
+        env:
+          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
+          VITE_API: ${{ secrets.VITE_API }}
+          VITE_AUTH_FRONTEND_URI: ${{ secrets.VITE_AUTH_FRONTEND_URI }}
+          VITE_STORAGE_URL: ${{ secrets.VITE_STORAGE_URL }}
+          VITE_JWT_COOKIE: ${{ secrets.VITE_JWT_COOKIE }}
+        run: npm run build
 
-    - name: Authenticate with Google Cloud
-      uses: 'google-github-actions/auth@v2'
-      with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - name: Authenticate with Google Cloud
+        uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-    - name: Set up Google Cloud SDK
-      uses: google-github-actions/setup-gcloud@v1
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
 
-    - name: Deploy to Google App Engine
-      working-directory: ./frontend/
-      run: |
-        echo "${{ secrets.GCP_SA_KEY }}" > ./base-map-workspace-93c116fe8662.json
-        gcloud app deploy
+      - name: Deploy to Google App Engine
+        working-directory: ./frontend/
+        run: |
+          echo "${{ secrets.GCP_SA_KEY }}" > ./base-map-workspace-93c116fe8662.json
+          gcloud app deploy
