@@ -32,7 +32,7 @@ jobs:
         env:
           VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
           VITE_API: ${{ secrets.VITE_API }}
-          VITE_AUTH_URI: ${{ secrets.VITE_AUTH_URI }}
+          VITE_AUTH_FRONTEND_URI: ${{ secrets.VITE_AUTH_FRONTEND_URI }}
           VITE_STORAGE_URL: ${{ secrets.VITE_STORAGE_URL }}
           VITE_JWT_COOKIE: ${{ secrets.VITE_JWT_COOKIE }}
         run: npm run build
