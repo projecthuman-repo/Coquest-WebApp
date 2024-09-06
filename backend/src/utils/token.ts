@@ -23,7 +23,7 @@ export async function verifyToken(token: string, secret: string, context) {
     try {
       // Verification failed, attempting to refresh the token
       const fetchRes = await fetch(
-        `${CONFIG.REACT_APP_AUTH_API_URI}/api/login/token`,
+        `${CONFIG.AUTH_BACKEND_URI}/api/login/token`,
         {
           method: "POST",
           headers: {
