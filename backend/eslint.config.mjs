@@ -5,9 +5,10 @@ import eslintConfigPrettier from "eslint-config-prettier";
 export default [
   pluginJs.configs.recommended,
   eslintConfigPrettier,
+  { ignores: ["**/dist/"] },
   {
     name: "Add keywords to Eslint Dictionary",
-    files: ["**/*.js"],
+    files: ["/src/**/*"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",

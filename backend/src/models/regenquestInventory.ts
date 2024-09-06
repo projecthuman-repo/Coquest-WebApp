@@ -39,7 +39,4 @@ const regenquestInventorySchema = new Schema({
   ],
 });
 
-export default regenDb.model(
-  "regenquestInventory",
-  regenquestInventorySchema,
-);
+export default regenDb.model("regenquestInventory", regenquestInventorySchema);

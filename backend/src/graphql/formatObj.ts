@@ -27,7 +27,8 @@ class FormatObjDirective extends SchemaDirectiveVisitor {
 
       const dbConnection = existingConnections.find((db) => db.name === dbName);
       // Note: we don't use useDb() here because it creates a new connection but the schemas aren't registered on it.
-      if (!dbConnection) throw new Error(`Connection to ${dbName} does not exist.`);
+      if (!dbConnection)
+        throw new Error(`Connection to ${dbName} does not exist.`);
 
       try {
         if (expandParsed) {
@@ -41,8 +42,12 @@ class FormatObjDirective extends SchemaDirectiveVisitor {
         }
 
         result = result.toObject();
-        // @ts-expect-error - tree probably exists, yet to test it.
-        result = toOutputFormat(result, dbConnection, dbConnection.model(modelName).schema.tree);
+        result = toOutputFormat(
+          result,
+          dbConnection,
+          // @ts-expect-error - tree probably exists, yet to test it.
+          dbConnection.model(modelName).schema.tree,
+        );
 
         return result.objValue;
       } catch (err) {

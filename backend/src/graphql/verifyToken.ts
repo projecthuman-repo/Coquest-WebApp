@@ -23,4 +23,3 @@ class VerifyTokenDirective extends SchemaDirectiveVisitor {
 }
 
 export default VerifyTokenDirective;
-
