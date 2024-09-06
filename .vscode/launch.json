@@ -10,7 +10,7 @@
       "presentation": {
         "hidden": false,
         "group": "testing",
-        "order": 1,
+        "order": 1
       }
     },
     {
@@ -34,7 +34,6 @@
         "order": 1
       }
     }
-
   ],
   "configurations": [
     {
@@ -47,8 +46,8 @@
         "maxAttempts": 3
       },
       "skipFiles": ["<node_internals>/**"],
-      "cwd": "${workspaceFolder}\\Regenquest GraphQL API",
-      "outFiles": ["${workspaceFolder}/Regenquest GraphQL API/**/*.js"],
+      "cwd": "${workspaceFolder}\\backend",
+      "outFiles": ["${workspaceFolder}/backend/**/*.js"],
       "resolveSourceMapLocations": [
         "${workspaceFolder}/**",
         "!**/node_modules/**"
@@ -73,7 +72,10 @@
       },
       "skipFiles": ["<node_internals>/**"],
       "cwd": "${workspaceFolder}\\frontend",
-      "outFiles": ["${workspaceFolder}/frontend/**/*.js", "!**/node_modules/**"],
+      "outFiles": [
+        "${workspaceFolder}/frontend/**/*.js",
+        "!**/node_modules/**"
+      ],
       "runtimeExecutable": "npm",
       "args": ["run", "${input:dev-env}"],
       "envFile": "${workspaceFolder}/.env",

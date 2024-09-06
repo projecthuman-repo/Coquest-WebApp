@@ -37,8 +37,8 @@ jobs:
 
       - name: Install backend dependencies
         run: npm ci
-        working-directory: "./Regenquest GraphQL API"
+        working-directory: "./backend"
 
       - name: Lint backend
         run: npm run lint
-        working-directory: "./Regenquest GraphQL API"
+        working-directory: "./backend"

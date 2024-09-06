@@ -8,4 +8,4 @@ DS_Store
 # Env files
 **/.env**
 
-/Regenquest GraphQL API/dist/
+/backend/dist/
