@@ -1,0 +1,5 @@
+{
+  "files.watcherExclude": {
+    "../Regenquest GraphQL API/dist": true
+  }
+}

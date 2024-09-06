@@ -10,6 +10,7 @@ import cookieParser from "cookie-parser";
 import AuthDirective from "./graphql/auth";
 import VerifyTokenDirective from "./graphql/verifyToken";
 import FormatObjDirective from "./graphql/formatObj";
+import "source-map-support/register";
 
 // Construct a schema, using GraphQL schema language
 import typeDefs from "./graphql/typeDefs";
@@ -40,8 +41,8 @@ async function startServer() {
       verifyToken: VerifyTokenDirective,
       formatObj: FormatObjDirective,
     },
-	  csrfPrevention: true,
-	// @ts-expect-error - TODO: fix this
+    csrfPrevention: true,
+    // @ts-expect-error - TODO: fix this
     cache: "bounded",
     context: ({ req, res }) => ({ req, res }),
     // plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
