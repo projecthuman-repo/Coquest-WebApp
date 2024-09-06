@@ -33,6 +33,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.1",
     "path": "^0.12.7",
+    "source-map-support": "^0.5.21",
     "typescript-eslint": "^8.4.0",
     "uuid": "^10.0.0"
   },
@@ -49,7 +50,6 @@
     "globals": "^15.4.0",
     "prettier": "^3.3.2",
     "run-script-os": "^1.1.6",
-    "source-map-support": "^0.5.21",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   }
