@@ -1,19 +1,25 @@
-const {
-  Types: { ObjectId },
-} = require("mongoose");
+// @ts-nocheck
+import mongoose from "mongoose";
+import { FieldNode, GraphQLResolveInfo, SelectionNode } from "graphql";
 
 // Constructs an object parameter for the Mongoose `.populate()` routine, specifying which properties to expand.
 // TODO: Automatically redact redundant list entries
-function buildPopulateOptions(info, db, modelName, userRequestedFields) {
+
+function buildPopulateOptions(
+  info: GraphQLResolveInfo,
+  db: mongoose.Connection,
+  modelName: string,
+  userRequestedFields,
+) {
   // Helper function to recursively find population options
   const findPopulationFields = (
     selections,
-    modelName,
+    modelName: string,
     subUserRequestedFields,
   ) => {
     const populateOptions = [];
 
-    selections.forEach((field) => {
+    selections?.forEach((field) => {
       const fieldName = field.name.value;
       const model = db.model(modelName);
       const tree = model.schema.tree[fieldName];
@@ -54,7 +60,7 @@ function buildPopulateOptions(info, db, modelName, userRequestedFields) {
     (node) => node.name.value === info.fieldName,
   );
   return findPopulationFields(
-    node.selectionSet.selections,
+    node?.selectionSet?.selections,
     modelName,
     userRequestedFields[modelName],
   );
@@ -95,7 +101,7 @@ function deduceExpandableType(expandableObj, expandedTypeName) {
 function toOutputFormat(obj, db, schema) {
   if (Array.isArray(obj)) {
     return obj.map((elem) => toOutputFormat(elem, db, schema));
-  } else if (obj instanceof ObjectId) {
+  } else if (obj instanceof mongoose.Types.ObjectId) {
     return { strValue: obj.toString() };
   } else if (typeof obj === "object" && obj !== null) {
     const processedObj = {};
@@ -126,7 +132,7 @@ function toOutputFormat(obj, db, schema) {
   }
 }
 
-module.exports = {
+export {
   buildPopulateOptions,
   coerceExpandable,
   deduceExpandableType,

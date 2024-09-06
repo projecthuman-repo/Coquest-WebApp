@@ -1,6 +1,6 @@
-import CONFIG from "@/config";
+import CONFIG from "../config";
 import mongoose from "mongoose";
-import("dotenv/config");
+import "dotenv/config";
 // Connection options (optional)
 
 class DBConnection {
@@ -14,7 +14,7 @@ class DBConnection {
 
   static getConnection(connectionUri = CONFIG.DATABASE_CONNECTION) {
     if (!this.instance) {
-      let connection = mongoose.createConnection(connectionUri);
+      const connection = mongoose.createConnection(connectionUri);
       this.instance = new DBConnection(connection);
     }
     return this.instance.connection;

@@ -7,7 +7,6 @@ import { ApolloServer } from "apollo-server-express";
 import cors from "cors";
 import { DBConnection } from "./db/connection";
 import cookieParser from "cookie-parser";
-
 import AuthDirective from "./graphql/auth";
 import VerifyTokenDirective from "./graphql/verifyToken";
 import FormatObjDirective from "./graphql/formatObj";
@@ -55,7 +54,7 @@ async function startServer() {
   return app;
 }
 
-let appPromise = startServer();
+const appPromise = startServer();
 
 export const handler = (req, res) => {
   appPromise

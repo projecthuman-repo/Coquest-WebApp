@@ -1,6 +1,6 @@
 //This file exports a gql object that contains all the
 //graphql types and graphql end-points
-const { gql } = require("apollo-server-cloud-functions");
+import { gql } from "apollo-server-cloud-functions";
 
 /*
 Normative Note about Output ID fields:
@@ -8,7 +8,7 @@ Normative Note about Output ID fields:
 - should be non-nullable to conform to mongoose's default _id query behaviour;
 - should be named _id to match MongoDB
 */
-module.exports = gql`
+export default gql`
   """
   Type wrappers for union types.
   Use these object types in conjunction with other union member types instead of their fundamental type counterparts.

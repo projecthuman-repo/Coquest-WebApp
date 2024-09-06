@@ -1,29 +1,27 @@
-const User = require("../models/regenquestUser");
-const Task = require("../models/regenquestTask");
-const Quest = require("../models/regenquestQuest");
-const Post = require("../models/regenquestPost");
-const Inventory = require("../models/regenquestInventory");
-const Event = require("../models/regenquestEvent");
-const Community = require("../models/regenquestCommunity");
-const Genres = require("../models/regenquestGenres");
-const Notification = require("../models/regenquestNotification");
-const Chat = require("../models/regenquestChat");
-const Message = require("../models/regenquestMessage");
-const Topic = require("../models/regenquestTopic");
-const Motive = require("../models/regenquestMotive");
-const CrossPlatformUser = require("../models/crossPlatform/User");
-const uuid = require("uuid");
-const { Storage } = require("@google-cloud/storage");
-var jwt = require("jsonwebtoken");
-const {
-  coerceExpandable,
-  deduceExpandableType,
-} = require("../utils/expandable");
-const { getSecret } = require("../utils/gcloud");
+// @ts-nocheck
+import User from "../models/regenquestUser";
+import Task from "../models/regenquestTask";
+import Quest from "../models/regenquestQuest";
+import Post from "../models/regenquestPost";
+import Inventory from "../models/regenquestInventory";
+import Event from "../models/regenquestEvent";
+import Community from "../models/regenquestCommunity";
+import Genres from "../models/regenquestGenres";
+import Notification from "../models/regenquestNotification";
+import Chat from "../models/regenquestChat";
+import Message from "../models/regenquestMessage";
+import Topic from "../models/regenquestTopic";
+import Motive from "../models/regenquestMotive";
+import CrossPlatformUser from "../models/crossPlatform/User";
+import uuid from "uuid";
+import { Storage } from "@google-cloud/storage";
+import jwt from "jsonwebtoken";
+import { coerceExpandable, deduceExpandableType } from "../utils/expandable";
+import { getSecret } from "../utils/gcloud";
 
 const storage = new Storage();
 
-module.exports = {
+export default {
   registered: {
     // https://stackoverflow.com/a/62185990
     __resolveType(obj) {

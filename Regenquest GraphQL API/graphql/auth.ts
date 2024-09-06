@@ -1,16 +1,18 @@
-const { SchemaDirectiveVisitor } = require("apollo-server-express");
-const { defaultFieldResolver } = require("graphql");
-const { getSecret } = require("../utils/gcloud");
-const { verifyToken } = require("../utils/token");
+import { SchemaDirectiveVisitor } from "apollo-server-express";
+import { defaultFieldResolver, GraphQLField } from "graphql";
+import { getSecret } from "../utils/gcloud";
+import { verifyToken } from "../utils/token";
+import CONFIG from "../config";
 
 class AuthDirective extends SchemaDirectiveVisitor {
-  visitFieldDefinition(field) {
+  visitFieldDefinition(field: GraphQLField<any, any>) {
     const { resolve = defaultFieldResolver } = field;
     field.resolve = async function (...args) {
       const [, , context] = args;
 
-      const token = context.req.cookies[process.env.AUTH_COOKIE_NAME];
-      const secret = await getSecret(process.env.ACCESS_JWT_NAME);
+      const token = context.req.cookies[CONFIG.AUTH_COOKIE_NAME];
+      const secret = await getSecret(CONFIG.ACCESS_JWT_NAME);
+      if (!secret) throw new Error("Secret not found.");
 
       await verifyToken(token, secret, context);
 
@@ -19,4 +21,4 @@ class AuthDirective extends SchemaDirectiveVisitor {
   }
 }
 
-module.exports = AuthDirective;
+export default AuthDirective;

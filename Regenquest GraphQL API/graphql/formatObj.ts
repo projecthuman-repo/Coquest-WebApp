@@ -1,13 +1,19 @@
-const { SchemaDirectiveVisitor } = require("apollo-server-express");
-const { defaultFieldResolver } = require("graphql");
-const { buildPopulateOptions, toOutputFormat } = require("../utils/expandable");
-const { getJson } = require("../utils/misc");
-const { DBConnection } = require("../db/connection");
+import { SchemaDirectiveVisitor } from "apollo-server-express";
+import { defaultFieldResolver, GraphQLField } from "graphql";
+import { buildPopulateOptions, toOutputFormat } from "../utils/expandable";
+import { getJson } from "../utils/misc";
+import { DBConnection } from "../db/connection";
+import mongoose from "mongoose";
+
+interface FormatObjArgs {
+  dbName: string;
+  modelName: string;
+}
 
 class FormatObjDirective extends SchemaDirectiveVisitor {
-  visitFieldDefinition(field) {
+  visitFieldDefinition(field: GraphQLField<any, any>) {
     const { resolve = defaultFieldResolver } = field;
-    const { dbName, modelName } = this.args;
+    const { dbName, modelName } = this.args as FormatObjArgs;
 
     field.resolve = async function (...args) {
       let result = await resolve.apply(this, args);
@@ -15,15 +21,19 @@ class FormatObjDirective extends SchemaDirectiveVisitor {
       const expandParsed = getJson(expand);
 
       // Note: Connection.prototype.listDatabases() member function does not work here for some reason
-      const db = DBConnection.getConnection().otherDbs.find(
-        (db) => db.name === dbName,
-      );
+      const existingConnections =
+        // @ts-expect-error - otherDbs is a valid members of getConnection()
+        DBConnection.getConnection().otherDbs as mongoose.Connection[];
+
+      const dbConnection = existingConnections.find((db) => db.name === dbName);
+      // Note: we don't use useDb() here because it creates a new connection but the schemas aren't registered on it.
+      if (!dbConnection) throw new Error(`Connection to ${dbName} does not exist.`);
 
       try {
         if (expandParsed) {
           const populateOptions = buildPopulateOptions(
             info,
-            db,
+            dbConnection,
             modelName,
             expandParsed,
           );
@@ -31,15 +41,16 @@ class FormatObjDirective extends SchemaDirectiveVisitor {
         }
 
         result = result.toObject();
-        result = toOutputFormat(result, db, db.model(modelName).schema.tree);
+        // @ts-expect-error - tree probably exists, yet to test it.
+        result = toOutputFormat(result, dbConnection, dbConnection.model(modelName).schema.tree);
 
         return result.objValue;
       } catch (err) {
         console.error(err);
-        throw new Error(err);
+        throw err;
       }
     };
   }
 }
 
-module.exports = FormatObjDirective;
+export default FormatObjDirective;

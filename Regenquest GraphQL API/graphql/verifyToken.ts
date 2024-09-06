@@ -1,16 +1,19 @@
-const { SchemaDirectiveVisitor } = require("apollo-server-express");
-const { defaultFieldResolver } = require("graphql");
-const { getSecret } = require("../utils/gcloud");
-const { verifyToken } = require("../utils/token");
+import { SchemaDirectiveVisitor } from "apollo-server-express";
+import { defaultFieldResolver, GraphQLField } from "graphql";
+import { getSecret } from "../utils/gcloud";
+import { verifyToken } from "../utils/token";
+import CONFIG from "../config";
 
 class VerifyTokenDirective extends SchemaDirectiveVisitor {
-  visitFieldDefinition(field) {
+  visitFieldDefinition(field: GraphQLField<any, any>) {
     const originalResolve = field.resolve || defaultFieldResolver;
     field.resolve = async function (...args) {
       const [, , context] = args;
       // Extract the token from arguments
       const token = args[1].token; // assuming the token is the second argument
-      const secret = await getSecret(process.env.ACCESS_JWT_NAME);
+      const secret = await getSecret(CONFIG.ACCESS_JWT_NAME);
+
+      if (!secret) throw new Error("Secret not found.");
 
       await verifyToken(token, secret, context);
 
@@ -19,4 +22,5 @@ class VerifyTokenDirective extends SchemaDirectiveVisitor {
   }
 }
 
-module.exports = VerifyTokenDirective;
+export default VerifyTokenDirective;
+
