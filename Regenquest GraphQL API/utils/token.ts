@@ -1,6 +1,7 @@
-const jwt = require("jsonwebtoken");
+import CONFIG from "../config";
+import jwt from "jsonwebtoken";
 
-async function verifyToken(token, secret, context) {
+export async function verifyToken(token: string, secret: string, context) {
   // TODO: Actually verify the token in production
   if (process.env.NODE_ENV === "production") {
     return;
@@ -11,51 +12,46 @@ async function verifyToken(token, secret, context) {
   }
 
   try {
-    await jwt.verify(token, secret);
+    jwt.verify(token, secret);
   } catch (err) {
-    // If failed, attempt to verify attempt to refresh the token
-    if (err.name === "TokenExpiredError") {
-      try {
-        const fetchRes = await fetch(
-          `${process.env.REACT_APP_AUTH_API_URI}/api/login/token`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ token: token }),
+    if (!(err instanceof jwt.TokenExpiredError)) {
+      console.error("Token verification error:", err);
+      context.res.clearCookie(CONFIG.AUTH_COOKIE_NAME);
+      throw new Error("Invalid token");
+    }
+
+    try {
+      // Verification failed, attempting to refresh the token
+      const fetchRes = await fetch(
+        `${CONFIG.REACT_APP_AUTH_API_URI}/api/login/token`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
+          body: JSON.stringify({ token: token }),
+        },
+      );
 
-        if (fetchRes.ok) {
-          const { accessToken } = await fetchRes.json();
-          context.res.cookie(process.env.AUTH_COOKIE_NAME, accessToken, {
-            httpOnly: false,
-            secure: process.env.NODE_ENV === "production",
-            path: "/",
-          });
-
-          context.req.cookies[process.env.AUTH_COOKIE_NAME] = accessToken;
-
-          // Verify the new token
-          await jwt.verify(accessToken, secret);
-        } else {
-          context.res.clearCookie(process.env.AUTH_COOKIE_NAME);
-          throw new Error("Token refresh failed");
-        }
-      } catch (refreshError) {
-        console.error("Token refresh error:", refreshError);
-        context.res.clearCookie(process.env.AUTH_COOKIE_NAME);
+      if (!fetchRes.ok) {
         throw new Error("Token refresh failed");
       }
-    } else {
-      console.error("Token verification error:", err);
-      context.res.clearCookie(process.env.AUTH_COOKIE_NAME);
-      throw new Error("Invalid token");
+
+      const { accessToken } = await fetchRes.json();
+      context.res.cookie(CONFIG.AUTH_COOKIE_NAME, accessToken, {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === "production",
+        path: "/",
+      });
+
+      context.req.cookies[CONFIG.AUTH_COOKIE_NAME] = accessToken;
+
+      // Verify the new token
+      jwt.verify(accessToken, secret);
+    } catch (refreshError) {
+      console.error("Token refresh error:", refreshError);
+      context.res.clearCookie(CONFIG.AUTH_COOKIE_NAME);
+      throw new Error("Token refresh failed");
     }
   }
 }
-
-module.exports = {
-  verifyToken,
-};
