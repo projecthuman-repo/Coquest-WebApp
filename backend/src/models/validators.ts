@@ -41,7 +41,4 @@ function idValidators(modelcb, idName) {
   ];
 }
 
-module.exports = {
-  arrValidators,
-  idValidators,
-};
+export default { arrValidators, idValidators };
