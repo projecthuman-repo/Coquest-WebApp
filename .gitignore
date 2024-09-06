@@ -8,4 +8,9 @@ DS_Store
 # Env files
 **/.env**
 
+# Build files
 /backend/dist/
+
+# Root package.json file, all modules should be installed in frontend or backend folder
+/package.json
+/package-lock.json
