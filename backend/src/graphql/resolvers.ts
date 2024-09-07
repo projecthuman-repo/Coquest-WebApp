@@ -420,56 +420,44 @@ export default {
       _context,
       _info,
     ) {
-      //create a User object
       const newUser = new User({
         userID: null,
-        name: name,
-        username: username,
-        email: email,
+        name,
+        username,
+        email,
         registered: false,
-        location: location ? location : null,
-        images: images ? images : null,
-        motives: motives ? motives : null,
-        biography: biography ? biography : null,
-        topics: topics ? topics : null,
-        // Map given community list to a list of IDs, if not already
+        location: location ?? null,
+        images: images ?? null,
+        motives: motives ?? null,
+        biography: biography ?? null,
+        topics: topics ?? null,
+        // Map given communities list to a list of IDs, if not already
         communities: coerceExpandable(communities, "id"),
-        skills: skills ? skills : null,
-        badges: badges ? badges : null,
-        currentLevel: currentLevel ? currentLevel : -1,
-        recommendations: recommendations ? recommendations : null,
+        skills: skills ?? null,
+        badges: badges ?? null,
+        currentLevel: currentLevel ?? -1,
+        recommendations: recommendations ?? null,
       });
 
-      //add the user to the db
+      // Add the user to the database
       try {
-        await newUser.save({ validateBeforeSave: false });
-        // CrossPlatformUser manages the 3 web app users (lotuslearning, regenquest, spotstitch)
-        // If the CrossPlatformUser has not been created with other platform, create a new one
-        const crossPlatformUserExists = await CrossPlatformUser.findOne({
-          email: newUser.email,
-        }).exec();
+        // Check if a cross-platform user already exists
+        let crossPlatformUserExists = await CrossPlatformUser.findOne({
+          email,
+        });
 
-        if (crossPlatformUserExists) {
-          newUser.userID = crossPlatformUserExists._id;
-          crossPlatformUserExists.regenquestUserId = newUser._id.toString();
-          await crossPlatformUserExists.save();
-        } else {
-          /*
-          Shouldn't occur because the registration logic always creates this document per user
-          */
-          const newCrossPlatformUser = new CrossPlatformUser({
-            email: newUser.email,
-            phoneNumber: "1234567890", // dummy phone number
-            regenquestUserId: newUser._id,
-          });
-          await newCrossPlatformUser.save();
+        if (!crossPlatformUserExists) {
+          // This should not occur based on registration logic
+          throw new Error("CrossPlatform user does not exist");
         }
 
+        newUser.userID = crossPlatformUserExists._id;
         await newUser.save();
+        crossPlatformUserExists.regenquestUserId = newUser._id.toString();
+        await crossPlatformUserExists.save();
 
         return { code: 0, response: "successful", id: newUser._id };
       } catch (err) {
-        console.log(err);
         return {
           code: 1,
           response: `Error creating user: ${(err as Error).message}`,
