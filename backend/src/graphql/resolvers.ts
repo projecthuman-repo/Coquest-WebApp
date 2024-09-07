@@ -18,6 +18,7 @@ import { Storage } from "@google-cloud/storage";
 import jwt from "jsonwebtoken";
 import { coerceExpandable, deduceExpandableType } from "../utils/expandable";
 import { getSecret } from "../utils/gcloud";
+import CONFIG from "../config";
 
 const storage = new Storage();
 
@@ -161,7 +162,7 @@ export default {
     //this method finds a task by its id
     async findTaskbyID(_parent, { taskID }, _context, _info) {
       try {
-        return await Task.findOne({ taskID: taskID });
+        return await Task.findOne({ _id: taskID });
       } catch {
         throw new Error("Error finding task by id");
       }
@@ -170,7 +171,7 @@ export default {
     //this method finds a quest by its id
     async findQuestbyID(_parent, { questID }, _context, _info) {
       try {
-        return await Quest.findOne({ questID: questID });
+        return await Quest.findOne({ _id: questID });
       } catch {
         throw new Error("Error finding quest by id");
       }
@@ -179,7 +180,7 @@ export default {
     //this method finds a post by its id
     async findPostbyID(_parent, { postID }, _context, _info) {
       try {
-        return await Post.findOne({ postID: postID });
+        return await Post.findOne({ _id: postID });
       } catch {
         throw new Error("Error finding post by id");
       }
@@ -188,7 +189,7 @@ export default {
     //this method finds an item by its id
     async findInventoryItembyID(_parent, { itemID }, _context, _info) {
       try {
-        return await Inventory.findOne({ itemID: itemID });
+        return await Inventory.findOne({ _id: itemID });
       } catch {
         throw new Error("Error finding item by id");
       }
@@ -197,7 +198,7 @@ export default {
     //this method finds an event by its id
     async findEventbyID(_parent, { eventID }, _context, _info) {
       try {
-        return await Event.findOne({ eventID: eventID });
+        return await Event.findOne({ _id: eventID });
       } catch {
         throw new Error("Error finding event by id");
       }
@@ -241,7 +242,7 @@ export default {
       }
 
       //check if that chat exists in the db
-      if (!(await Chat.exists({ chatID: chatID }))) {
+      if (!(await Chat.exists({ _id: chatID }))) {
         throw new Error("Chat not Found.");
       }
 
@@ -272,7 +273,9 @@ export default {
           "regenquestUserId",
         ]);
       } catch (err) {
-        throw new Error("Error finding cross-platform user:", err.message);
+        throw new Error(
+          "Error finding cross-platform user:" + (err as Error).message,
+        );
       }
     },
 
@@ -350,7 +353,7 @@ export default {
 
       //remove the notification from the db
       try {
-        await Notification.remove({
+        await Notification.deleteOne({
           _id: notificationID,
         });
         return { code: 0, response: "successful" };
@@ -361,8 +364,10 @@ export default {
 
     async getToken(_parent, _, context, _info) {
       return jwt.verify(
-        context.req.cookies[process.env.AUTH_COOKIE_NAME],
-        await getSecret(process.env.ACCESS_JWT_NAME),
+        context.req.cookies[CONFIG.AUTH_COOKIE_NAME],
+        // @ts-expect-error - I think an error should be thrown by the program if getSecret returns undefined
+        // which is why I'm not assigning a deafult string value to the return value of getSecret
+        await getSecret(CONFIG.ACCESS_JWT_NAME),
       );
     },
 
@@ -370,8 +375,8 @@ export default {
       const EXPIRES_IN_MINS = 15;
       // Option object to be passed to the 'getSignedUrl()' method
       const options = {
-        version: "v4",
-        action: "write",
+        version: "v4" as const,
+        action: "write" as const,
         expires: Date.now() + EXPIRES_IN_MINS * 60 * 1000,
         // Enforce an image mime type
         conditions: [["starts-with", "$content-type", "image/"]],
@@ -379,8 +384,8 @@ export default {
       try {
         const uniqueFileName = `${uuid.v4()}`;
         const [url] = await storage
-          .bucket(process.env.IMAGE_BUCKET_NAME)
-          .file(`${process.env.DIR_PATH}/${uniqueFileName}`)
+          .bucket(CONFIG.IMAGE_BUCKET_NAME)
+          .file(`${CONFIG.DIR_PATH}/${uniqueFileName}`)
           .getSignedUrl(options);
 
         return url;
@@ -415,57 +420,48 @@ export default {
       _context,
       _info,
     ) {
-      //create a User object
       const newUser = new User({
         userID: null,
-        name: name,
-        username: username,
-        email: email,
+        name,
+        username,
+        email,
         registered: false,
-        location: location ? location : null,
-        images: images ? images : null,
-        motives: motives ? motives : null,
-        biography: biography ? biography : null,
-        topics: topics ? topics : null,
-        // Map given community list to a list of IDs, if not already
+        location: location ?? null,
+        images: images ?? null,
+        motives: motives ?? null,
+        biography: biography ?? null,
+        topics: topics ?? null,
+        // Map given communities list to a list of IDs, if not already
         communities: coerceExpandable(communities, "id"),
-        skills: skills ? skills : null,
-        badges: badges ? badges : null,
-        currentLevel: currentLevel ? currentLevel : -1,
-        recommendations: recommendations ? recommendations : null,
+        skills: skills ?? null,
+        badges: badges ?? null,
+        currentLevel: currentLevel ?? -1,
+        recommendations: recommendations ?? null,
       });
 
-      //add the user to the db
+      // Add the user to the database
       try {
-        await newUser.save({ validateBeforeSave: false });
-        // CrossPlatformUser manages the 3 web app users (lotuslearning, regenquest, spotstitch)
-        // If the CrossPlatformUser has not been created with other platform, create a new one
-        const crossPlatformUserExists = await CrossPlatformUser.findOne({
-          email: newUser.email,
-        }).exec();
+        // Check if a cross-platform user already exists
+        let crossPlatformUserExists = await CrossPlatformUser.findOne({
+          email,
+        });
 
-        if (crossPlatformUserExists) {
-          newUser.userID = crossPlatformUserExists._id;
-          crossPlatformUserExists.regenquestUserId = newUser._id;
-          await crossPlatformUserExists.save();
-        } else {
-          /*
-          Shouldn't occur because the registration logic always creates this document per user
-          */
-          const newCrossPlatformUser = new CrossPlatformUser({
-            email: newUser.email,
-            phoneNumber: "1234567890", // dummy phone number
-            regenquestUserId: newUser._id,
-          });
-          await newCrossPlatformUser.save();
+        if (!crossPlatformUserExists) {
+          // This should not occur based on registration logic
+          throw new Error("CrossPlatform user does not exist");
         }
 
+        newUser.userID = crossPlatformUserExists._id;
         await newUser.save();
+        crossPlatformUserExists.regenquestUserId = newUser._id.toString();
+        await crossPlatformUserExists.save();
 
         return { code: 0, response: "successful", id: newUser._id };
       } catch (err) {
-        console.log(err);
-        return { code: 1, response: `Error creating user: ${err.message}` };
+        return {
+          code: 1,
+          response: `Error creating user: ${(err as Error).message}`,
+        };
       }
     },
 
@@ -504,7 +500,10 @@ export default {
         await newTask.save();
         return { code: 0, response: "successful" };
       } catch (err) {
-        return { code: 1, response: `Error creating task: ${err.message}` };
+        return {
+          code: 1,
+          response: `Error creating task: ${(err as Error).message}`,
+        };
       }
     },
 
@@ -558,7 +557,10 @@ export default {
         await newQuest.save();
         return { code: 0, response: "successful" };
       } catch (err) {
-        return { code: 1, response: `Error creating quest: ${err.message}` };
+        return {
+          code: 1,
+          response: `Error creating quest: ${(err as Error).message}`,
+        };
       }
     },
 
@@ -586,7 +588,10 @@ export default {
         await newPost.save();
         return { code: 0, response: "successful" };
       } catch (err) {
-        return { code: 1, response: `Error creating post: ${err.message}` };
+        return {
+          code: 1,
+          response: `Error creating post: ${(err as Error).message}`,
+        };
       }
     },
 
@@ -616,7 +621,10 @@ export default {
         await newInventory.save();
         return { code: 0, response: "successful" };
       } catch (err) {
-        return { code: 1, response: `Error creating item: ${err.message}` };
+        return {
+          code: 1,
+          response: `Error creating item: ${(err as Error).message}`,
+        };
       }
     },
 
@@ -654,7 +662,10 @@ export default {
         await newEvent.save();
         return { code: 0, response: "successful" };
       } catch (err) {
-        return { code: 1, response: `Error creating Event: ${err.message}` };
+        return {
+          code: 1,
+          response: `Error creating Event: ${(err as Error).message}`,
+        };
       }
     },
 
@@ -695,10 +706,9 @@ export default {
         await newCommunity.save();
         return { code: 0, response: "successful" };
       } catch (err) {
-        console.log(err);
         return {
           code: 1,
-          response: `Error creating community: ${err.message}`,
+          response: `Error creating community: ${(err as Error).message}`,
         };
       }
     },
@@ -735,7 +745,7 @@ export default {
       } catch (err) {
         return {
           code: 1,
-          response: `Error creating notification: ${err.message}`,
+          response: `Error creating notification: ${(err as Error).message}`,
         };
       }
     },
@@ -766,7 +776,10 @@ export default {
         await newChat.save();
         return { code: 0, response: "successful" };
       } catch (err) {
-        return { code: 1, response: `Error creating chat: ${err.message}` };
+        return {
+          code: 1,
+          response: `Error creating chat: ${(err as Error).message}`,
+        };
       }
     },
 
@@ -792,12 +805,12 @@ export default {
       }
 
       //check if the chat exists
-      if (!(await Chat.exists({ chatID: chatID }))) {
+      if (!(await Chat.exists({ _id: chatID }))) {
         return { code: 1, response: "Error! chat not found" };
       }
 
       //get all the members from the chat
-      const memberList = await Chat.findOne({ chatID: chatID });
+      const memberList = await Chat.findOne({ _id: chatID });
 
       //create a new message object
       const newMessage = new Message({
@@ -805,7 +818,7 @@ export default {
         sentFrom: sentFrom,
         message: message,
         time: new Date().toLocaleString(),
-        unreadBy: memberList.members.remove(sentFrom),
+        unreadBy: memberList.members.filter((member) => member !== sentFrom),
       });
 
       //add the message to the db
@@ -813,7 +826,10 @@ export default {
         await newMessage.save();
         return { code: 0, response: "successful" };
       } catch (err) {
-        return { code: 1, response: `Error creating message: ${err.message}` };
+        return {
+          code: 1,
+          response: `Error creating message: ${(err as Error).message}`,
+        };
       }
     },
 
@@ -835,7 +851,7 @@ export default {
       }
 
       //check if the chat exists
-      if (!(await Chat.exists({ chatID: chatID }))) {
+      if (!(await Chat.exists({ _id: chatID }))) {
         return { code: 1, response: "Error! chat does not exist" };
       }
 
@@ -846,15 +862,12 @@ export default {
 
       //update the member list of the chat
       try {
-        await Chat.updateOne(
-          { chatID: chatID },
-          { $push: { members: userID } },
-        );
+        await Chat.updateOne({ _id: chatID }, { $push: { members: userID } });
         return { code: 0, response: "successful" };
       } catch (err) {
         return {
           code: 1,
-          response: `Error adding member to chat: ${err.message}`,
+          response: `Error adding member to chat: ${(err as Error).message}`,
         };
       }
     },
@@ -876,21 +889,21 @@ export default {
         return { code: 1, response: "Error! must provide userID" };
       }
       //check if the message exists
-      if (!(await Message.exists({ messageID: messageID }))) {
+      if (!(await Message.exists({ _id: messageID }))) {
         return { code: 1, response: "Error! message does not exist" };
       }
 
       //mark the message as read for the given user
       try {
         await Message.updateOne(
-          { messageID: messageID },
+          { _id: messageID },
           { $pull: { unreadBy: userID } },
         );
         return { code: 0, response: "successful" };
       } catch (err) {
         return {
           code: 1,
-          response: `Error marking message as read: ${err.message}`,
+          response: `Error marking message as read: ${(err as Error).message}`,
         };
       }
     },
@@ -965,8 +978,10 @@ export default {
         await User.updateOne({ _id: id }, updateUser, { runValidators: true });
         return { code: 0, response: "successful" };
       } catch (err) {
-        console.log(err);
-        return { code: 1, response: `Error updating user: ${err.message}` };
+        return {
+          code: 1,
+          response: `Error updating user: ${(err as Error).message}`,
+        };
       }
     },
 
@@ -1029,7 +1044,10 @@ export default {
         await Task.updateOne({ _id: id }, updateTask);
         return { code: 0, response: "successful" };
       } catch (err) {
-        return { code: 1, response: `Error updating task: ${err.message}` };
+        return {
+          code: 1,
+          response: `Error updating task: ${(err as Error).message}`,
+        };
       }
     },
 
@@ -1124,7 +1142,10 @@ export default {
         await Quest.updateOne({ _id: id }, updateQuest);
         return { code: 0, response: "successful" };
       } catch (err) {
-        return { code: 1, response: `Error updating quest: ${err.message}` };
+        return {
+          code: 1,
+          response: `Error updating quest: ${(err as Error).message}`,
+        };
       }
     },
 
@@ -1170,7 +1191,10 @@ export default {
         await Post.updateOne({ _id: id }, updatePost);
         return { code: 0, response: "successful" };
       } catch (err) {
-        return { code: 1, response: `Error updating post: ${err.message}` };
+        return {
+          code: 1,
+          response: `Error updating post: ${(err as Error).message}`,
+        };
       }
     },
 
@@ -1229,7 +1253,7 @@ export default {
       } catch (err) {
         return {
           code: 1,
-          response: `Error updating inventory: ${err.message}`,
+          response: `Error updating inventory: ${(err as Error).message}`,
         };
       }
     },
@@ -1292,7 +1316,10 @@ export default {
         await Event.updateOne({ _id: id }, updateEvent);
         return { code: 0, response: "successful" };
       } catch (err) {
-        return { code: 1, response: `Error updating event: ${err.message}` };
+        return {
+          code: 1,
+          response: `Error updating event: ${(err as Error).message}`,
+        };
       }
     },
 
@@ -1348,7 +1375,7 @@ export default {
         console.log(err);
         return {
           code: 1,
-          response: `Error updating community: ${err.message}`,
+          response: `Error updating community: ${(err as Error).message}`,
         };
       }
     },
@@ -1366,7 +1393,8 @@ export default {
       }
 
       try {
-        const result = await Genres.count();
+        // TODO: Figure out what is actually being done here
+        const result = await Genres.countDocuments();
 
         if (result === 0) {
           const newGenres = new Genres({ genre: genre });
@@ -1378,7 +1406,10 @@ export default {
 
         return { code: 0, response: "successful" };
       } catch (err) {
-        return { code: 1, response: `Error updating genres: ${err.message}` };
+        return {
+          code: 1,
+          response: `Error updating genres: ${(err as Error).message}`,
+        };
       }
     },
 
@@ -1442,7 +1473,7 @@ export default {
       } catch (err) {
         return {
           code: 1,
-          response: `Error updating notification: ${err.message}`,
+          response: `Error updating notification: ${(err as Error).message}`,
         };
       }
     },
@@ -1450,22 +1481,22 @@ export default {
     async setCookieWithToken(_parent, { token }, context, _info) {
       context.res.setHeader(
         "Set-Cookie",
-        `${process.env.AUTH_COOKIE_NAME}=${token}; HttpOnly; Secure; Path=/; SameSite=None`,
+        `${CONFIG.AUTH_COOKIE_NAME}=${token}; HttpOnly; Secure; Path=/; SameSite=None`,
       );
 
       return { code: 0, response: "successful" };
     },
 
     async deleteCookieToken(_parent, _args, context, _info) {
-      context.res.clearCookie(process.env.AUTH_COOKIE_NAME);
+      context.res.clearCookie(CONFIG.AUTH_COOKIE_NAME);
       return { code: 0, response: "successful" };
     },
 
     // this deletes image (file) from the bucket
     async deleteFile(_, { fileName }) {
       try {
-        const bucket = storage.bucket(process.env.IMAGE_BUCKET_NAME);
-        const file = bucket.file(`${process.env.DIR_PATH}/${fileName}`);
+        const bucket = storage.bucket(CONFIG.IMAGE_BUCKET_NAME);
+        const file = bucket.file(`${CONFIG.DIR_PATH}/${fileName}`);
         await file.delete();
         return { code: 0, response: "successful" };
       } catch (err) {
