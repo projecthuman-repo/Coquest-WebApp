@@ -1,4 +1,3 @@
-// @ts-nocheck
 import mongoose from "mongoose";
 import { FieldNode, GraphQLResolveInfo, SelectionNode } from "graphql";
 
@@ -22,6 +21,7 @@ function buildPopulateOptions(
     selections?.forEach((field) => {
       const fieldName = field.name.value;
       const model = db.model(modelName);
+      // @ts-expect-error - tree probably exists, yet to test it.
       const tree = model.schema.tree[fieldName];
       const requestedField = subUserRequestedFields.find(
         (elem) => elem === fieldName || elem[fieldName],
@@ -43,12 +43,14 @@ function buildPopulateOptions(
           ) {
             selections = selections.selectionSet.selections[0];
           }
+          // @ts-expect-error - we are assigning to populate key here
           popOption.populate = findPopulationFields(
             selections.selectionSet.selections,
             namedType,
             requestedField[fieldName],
           );
         }
+        // @ts-expect-error - need to define proper type for populateOptions
         populateOptions.push(popOption);
       }
     });
