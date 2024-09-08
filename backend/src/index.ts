@@ -1,7 +1,7 @@
 import "source-map-support/register";
 import express from "express";
-import { ApolloServer } from "apollo-server-express";
-import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
 import cors from "cors";
 import { DBConnection } from "./db/connection";
 import cookieParser from "cookie-parser";
@@ -15,7 +15,6 @@ import CONFIG from "./config";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import formatObjDirectiveTransformer from "./graphql/formatObj";
 import authDirectiveTransformer from "./graphql/auth";
-import { verifyToken } from "./utils/token";
 import verifyTokenDirectiveTransformer from "./graphql/verifyToken";
 
 const corsOptions = {
@@ -24,7 +23,7 @@ const corsOptions = {
 };
 
 async function startServer() {
-  await DBConnection.init(process.env.DATABASE_CONNECTION);
+  await DBConnection.init(CONFIG.DATABASE_CONNECTION);
 
   const app = express();
   app.use(cors(corsOptions));
@@ -41,16 +40,18 @@ async function startServer() {
 
   const server = new ApolloServer({
     schema,
-    csrfPrevention: true,
-    cache: "bounded",
-    context: ({ req, res }) => ({ req, res }),
-    plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
+    // v4 of apollo server did not return status 400 for user query errors, this reverses it
+    status400ForVariableCoercionErrors: true,
   });
 
   await server.start();
-  // Disabling CORS again here
-  // @ts-expect-error - TypeError related to express here, but it works
-  server.applyMiddleware({ app, cors: false, path: "/" });
+
+  app.use(
+    "/",
+    expressMiddleware(server, {
+      context: async ({ req, res }) => ({ req, res }),
+    }),
+  );
 
   return app;
 }

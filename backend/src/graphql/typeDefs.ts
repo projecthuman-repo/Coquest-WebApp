@@ -1,6 +1,6 @@
 //This file exports a gql object that contains all the
 //graphql types and graphql end-points
-import { gql } from "apollo-server-cloud-functions";
+import gql from "graphql-tag";
 
 /*
 Normative Note about Output ID fields:

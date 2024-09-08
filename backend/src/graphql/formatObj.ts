@@ -56,9 +56,11 @@ function formatObjDirectiveTransformer(
               modelName,
               expandParsed,
             );
+            // @ts-expect-error - result is of type unknown
+            // I am not sure what populate() method does.
             result = await result.populate(populateOptions);
           }
-
+          // @ts-expect-error - result is of type unknown
           result = result.toObject();
           result = toOutputFormat(
             result,
@@ -67,6 +69,7 @@ function formatObjDirectiveTransformer(
             dbConnection.model(modelName).schema.tree,
           );
 
+          // @ts-expect-error - result is of type unknown
           return result.objValue;
         } catch (err) {
           console.error(err);
