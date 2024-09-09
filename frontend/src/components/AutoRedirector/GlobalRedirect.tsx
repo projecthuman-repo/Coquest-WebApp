@@ -67,7 +67,19 @@ function GlobalRedirect({ logout }: GlobalRedirectProps) {
 	useEffect(() => {
 		if (logout && logout === true) {
 			graphQLClient.request(deleteAuthCookieMutation).then(() => {
+				localStorage.removeItem("userCache");
+				if (!localStorage.getItem("userCache")) {
+					console.log(
+						"User cache successfully removed from LocalStorage.",
+					);
+				} else {
+					console.error(
+						"Failed to remove user cache from LocalStorage.",
+					);
+				}
+
 				setAuthenticated(false);
+				window.location.href = `${import.meta.env.VITE_AUTH_FRONTEND_URI}?appId=2`;
 			});
 		} else if (done) {
 			if (!authenticated) {

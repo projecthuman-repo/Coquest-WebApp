@@ -12,5 +12,6 @@ export default defineConfig({
     // this sets a default port to 3000
     port: 3000,
     strictPort: true,
+    host: "127.0.0.1", // This was set due to an unusual bug
   },
 });

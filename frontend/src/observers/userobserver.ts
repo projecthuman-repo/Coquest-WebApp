@@ -4,7 +4,8 @@ import Repository from "../repositories/repository";
 import { getUserFromJWT } from "../models/jwt";
 
 export class UserModelSubject {
-	private static instancePromise: Promise<UserModelSubject>;
+	private static instancePromise: Promise<UserModelSubject> | null = null;
+	private static cache: User | null = null;
 	readonly sub: BehaviorSubject<User>;
 
 	private constructor(userParams: UserRequired & Partial<UserOptional>) {
@@ -24,10 +25,30 @@ export class UserModelSubject {
 		this.sub.next(userModel);
 	}
 
-	private static async getInitialInstance(): Promise<UserModelSubject> {
-		const value = await firstValueFrom(
+	private static saveCacheToLocalStorage(userData: User) {
+		localStorage.setItem("userCache", JSON.stringify(userData));
+	}
+
+	private static loadCacheFromLocalStorage(): User | null {
+		const cachedData = localStorage.getItem("userCache");
+		return cachedData ? (JSON.parse(cachedData) as User) : null;
+	}
+
+	private static async fetchUserData(): Promise<User> {
+		const cachedData = this.loadCacheFromLocalStorage();
+		// Check cache first
+		if (cachedData) {
+			console.log("Using cached user data");
+			return cachedData;
+		}
+
+		// Fetch user data from the server
+		const jwtUser = await getUserFromJWT();
+		console.log("Retrieved JWT:", jwtUser);
+
+		const userData = await firstValueFrom(
 			Repository.getInstance("User", User).fetch(
-				await getUserFromJWT(),
+				jwtUser,
 				{ currentLevel: 0 },
 				{
 					expand: JSON.stringify({
@@ -36,14 +57,35 @@ export class UserModelSubject {
 				},
 			),
 		);
-		return new UserModelSubject({ _id: value.id, ...value });
+
+		// Cache the fetched data
+		this.saveCacheToLocalStorage(userData);
+
+		return userData;
 	}
 
-	static async getInstance(): Promise<UserModelSubject> {
+	private static async getInitialInstance(): Promise<UserModelSubject> {
+		try {
+			const userData = await this.fetchUserData();
+			return new UserModelSubject({ _id: userData.id, ...userData });
+		} catch (error) {
+			console.error(
+				"Error fetching initial UserModelSubject instance:",
+				error,
+			);
+			throw error;
+		}
+	}
+
+	static getInstance(): Promise<UserModelSubject> {
 		if (!this.instancePromise) {
 			this.instancePromise = this.getInitialInstance();
 		}
-		return this.instancePromise;
+
+		return this.instancePromise.catch((error) => {
+			this.instancePromise = null;
+			throw error;
+		});
 	}
 }
 
