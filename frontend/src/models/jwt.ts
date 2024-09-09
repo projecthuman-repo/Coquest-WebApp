@@ -37,7 +37,7 @@ const getTokenQuery = gql`
 
 // Constructs a new user instance using the custom claims from the JWT token
 // and the `regenquestUserId` property from the associating CrossPlatform.user document
-export async function getUserFromJWT(): Promise<User> {
+export async function jwtUser(): Promise<User> {
 	const { getToken: token }: any = await graphQLClient.request(getTokenQuery);
 	const { findCrossUser: crossUser }: any = await graphQLClient.request(
 		getCrossUserQuery,
