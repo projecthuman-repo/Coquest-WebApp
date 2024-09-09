@@ -1,25 +1,44 @@
-import { SchemaDirectiveVisitor } from "apollo-server-express";
-import { defaultFieldResolver, GraphQLField } from "graphql";
+import { defaultFieldResolver, GraphQLSchema } from "graphql";
 import { getSecret } from "../utils/gcloud";
 import { verifyToken } from "../utils/token";
 import CONFIG from "../config";
+import {
+  mapSchema,
+  getDirective,
+  MapperKind,
+  SchemaMapper,
+} from "@graphql-tools/utils";
 
-class VerifyTokenDirective extends SchemaDirectiveVisitor {
-  visitFieldDefinition(field: GraphQLField<any, any>) {
-    const originalResolve = field.resolve || defaultFieldResolver;
-    field.resolve = async function (...args) {
-      const [, , context] = args;
-      // Extract the token from arguments
-      const token = args[1].token; // assuming the token is the second argument
-      const secret = await getSecret(CONFIG.ACCESS_JWT_NAME);
+function verifyTokenDirectiveTransformer(
+  schema: GraphQLSchema,
+  directiveName: string,
+) {
+  const schemaMapper: SchemaMapper = {
+    [MapperKind.OBJECT_FIELD]: (fieldConfig) => {
+      const verifyTokenDirective = getDirective(
+        schema,
+        fieldConfig,
+        directiveName,
+      )?.[0];
 
-      if (!secret) throw new Error("Secret not found.");
+      if (!verifyTokenDirective) return fieldConfig;
 
-      await verifyToken(token, secret, context);
+      const originalResolver = fieldConfig.resolve || defaultFieldResolver;
 
-      return originalResolve.apply(this, args);
-    };
-  }
+      fieldConfig.resolve = async (source, args, context, info) => {
+        const { token } = args;
+        const secret = await getSecret(CONFIG.ACCESS_JWT_NAME);
+        if (!secret) throw new Error("Secret not found.");
+
+        await verifyToken(token, secret, context);
+
+        return originalResolver(source, args, context, info);
+      };
+
+      return fieldConfig;
+    },
+  };
+  return mapSchema(schema, schemaMapper);
 }
 
-export default VerifyTokenDirective;
+export default verifyTokenDirectiveTransformer;
