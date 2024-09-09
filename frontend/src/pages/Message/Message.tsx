@@ -333,7 +333,7 @@ const Message = () => {
 	};
 
 	return (
-		<div className="message">
+		<div>
 			<div className="title-container">
 				<h1 className="messages-title">Messages</h1>
 				<MessagesNumber number={1} />
