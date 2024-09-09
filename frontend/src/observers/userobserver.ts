@@ -1,7 +1,7 @@
 import { BehaviorSubject, firstValueFrom } from "rxjs";
 import { User, UserOptional, UserRequired } from "../models/usermodel";
 import Repository from "../repositories/repository";
-import { jwtUser } from "../models/jwt";
+import { getUserFromJWT } from "../models/jwt";
 
 export class UserModelSubject {
 	private static instancePromise: Promise<UserModelSubject> | null = null;
@@ -43,12 +43,12 @@ export class UserModelSubject {
 		}
 
 		// Fetch user data from the server
-		const jwt = await jwtUser();
-		console.log("Retrieved JWT:", jwt);
+		const jwtUser = await getUserFromJWT();
+		console.log("Retrieved JWT:", jwtUser);
 
 		const userData = await firstValueFrom(
 			Repository.getInstance("User", User).fetch(
-				jwt,
+				jwtUser,
 				{ currentLevel: 0 },
 				{
 					expand: JSON.stringify({
