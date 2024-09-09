@@ -79,7 +79,7 @@ function GlobalRedirect({ logout }: GlobalRedirectProps) {
 				}
 
 				setAuthenticated(false);
-				window.location.href = `${process.env.VITE_AUTH_FRONTEND_URI}?appId=2`;
+				window.location.href = `${import.meta.env.VITE_AUTH_FRONTEND_URI}?appId=2`;
 			});
 		} else if (done) {
 			if (!authenticated) {
