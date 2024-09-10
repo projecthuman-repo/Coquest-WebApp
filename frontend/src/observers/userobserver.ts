@@ -23,6 +23,7 @@ export class UserModelSubject {
 		});
 		// Notify subscribers by emitting the updated User instance
 		this.sub.next(userModel);
+		localStorage.setItem("userCache", JSON.stringify(userModel));
 	}
 
 	private static saveCacheToLocalStorage(userData: User) {
