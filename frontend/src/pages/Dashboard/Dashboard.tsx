@@ -55,190 +55,183 @@ function Dashboard() {
 	return authenticated && isRegistered ? (
 		<>
 			<div className="dashboard-container">
-				{currentCommunity ? (
-					<>
-						<div className="db-heading-container">
+				{/* {currentCommunity ? ( // Removed this variable, you can see community page.
+					
+				) : (
+					<p>No Communities Found!</p>
+				)} */}
+				<>
+					<div className="db-heading-container">
+						<div>
+							<p className="db-sub-heading">
+								Welcome, {user?.name.first}!
+							</p>
+							<h2 className="db-main-heading">Overview</h2>
 							<div>
-								<p className="db-sub-heading">
-									Welcome, {user?.name.first}!
-								</p>
-								<h2 className="db-main-heading">Overview</h2>
-								<div>
-									<select
-										id="dropdown"
-										className="db-dropdown"
-										onChange={handleChange}
-									>
-										{user?.communities?.map((community) => (
-											<option
-												key={community.objValue.id}
-												value={community.objValue.id}
-											>
-												{community.objValue.name}
-											</option>
-										))}
-									</select>
-								</div>
-							</div>
-							<div className="search-container">
-								<input
-									type="search"
-									className="search"
-									name="search"
-									placeholder="Search Nearby"
-								/>
-								<img
-									src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png"
-									alt="search-icon"
-									className="search-icon"
-								/>
+								<select
+									id="dropdown"
+									className="db-dropdown"
+									onChange={handleChange}
+								>
+									{user?.communities?.map((community) => (
+										<option
+											key={community.objValue.id}
+											value={community.objValue.id}
+										>
+											{community.objValue.name}
+										</option>
+									))}
+								</select>
 							</div>
 						</div>
-						<div className="db-widgets-container">
-							<div>
-								{/* Community Overview */}
-								<div className="db-widget-small">
-									<div className="db-flex-container">
-										<h2 className="db-widget-heading-small">
-											Community Overview
-										</h2>
-										<button
-											onClick={() =>
-												navigate(
-													`/communities/${currentCommunity?.objValue.id}`,
-												)
-											}
-										>
-											<img
-												src="icons/next-button-chevron.png"
-												alt="search-icon"
-											/>
-										</button>
-									</div>
-								</div>
-								{/* My Projects */}
-								<div className="db-widget-small">
-									<div className="db-flex-container">
-										<h2 className="db-widget-heading-small">
-											My Projects
-										</h2>
-										<button
-											onClick={() =>
-												navigate(
-													`/communities/${currentCommunity?.objValue.id}`,
-												)
-											}
-										>
-											<img
-												src="icons/next-button-chevron.png"
-												alt="Next-Button"
-											/>
-										</button>
-									</div>
-								</div>
-								{/* Open Projects */}
-								<div className="db-widget-small">
-									<div className="db-flex-container">
-										<h2 className="db-widget-heading-small">
-											Open Projects
-										</h2>
-										<button
-											onClick={() =>
-												navigate(
-													`/communities/${currentCommunity?.objValue.id}`,
-												)
-											}
-										>
-											<img
-												src="icons/next-button-chevron.png"
-												alt="search-icon"
-											/>
-										</button>
-									</div>
-								</div>
-								{/* Posts */}
-								<div className="db-widget">
-									<div className="db-flex-container">
-										<h2 className="db-widget-heading">
-											Posts
-										</h2>
-										<button
-											onClick={() =>
-												navigate(
-													`/communities/${currentCommunity?.objValue.id}`,
-												)
-											}
-										>
-											<img
-												src="icons/next-button-chevron.png"
-												alt="search-icon"
-											/>
-										</button>
-									</div>
-									<div className="db-posts-container">
-										<div className="db-posts-placeholder"></div>
-										<div className="db-posts-placeholder"></div>
-										<div className="db-posts-placeholder"></div>
-										<div className="db-posts-placeholder"></div>
-										<div className="db-posts-placeholder"></div>
-										<div className="db-posts-placeholder"></div>
-										<div className="db-posts-placeholder"></div>
-										<div className="db-posts-placeholder"></div>
-										<div className="db-posts-placeholder"></div>
-									</div>
-								</div>
-							</div>
-							{/* My Tasks */}
-							<div className="db-widget">
+						<div className="search-container">
+							<input
+								type="search"
+								className="search"
+								name="search"
+								placeholder="Search Nearby"
+							/>
+							<img
+								src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png"
+								alt="search-icon"
+								className="search-icon"
+							/>
+						</div>
+					</div>
+					<div className="db-widgets-container">
+						<div>
+							{/* Community Overview */}
+							<div className="db-widget-small">
 								<div className="db-flex-container">
-									<h2 className="db-widget-heading">
-										My Tasks
+									<h2 className="db-widget-heading-small">
+										Community Overview
 									</h2>
-									<a href="/" className="db-widget-link">
-										See All
-									</a>
-								</div>
-								<div className="db-tasks-container">
-									<p>You have no tasks yet.</p>
-									<button className="db-tasks-find-button">
-										Find Available Tasks
+									<button
+										onClick={() =>
+											navigate(
+												`/communities/${currentCommunity?.objValue.id}`,
+											)
+										}
+									>
+										<img
+											src="icons/next-button-chevron.png"
+											alt="search-icon"
+										/>
 									</button>
 								</div>
 							</div>
-							{/* Location/Map */}
-							<div className="db-widget-map">
-								<Maps
-									lat={
-										currentCommunity?.objValue.location.lat
-									}
-									long={
-										currentCommunity?.objValue.location.lng
-									}
-									mapZoom={14}
-									mapKey={currentCommunity?.objValue.id}
-								/>
+							{/* My Projects */}
+							<div className="db-widget-small">
+								<div className="db-flex-container">
+									<h2 className="db-widget-heading-small">
+										My Projects
+									</h2>
+									<button
+										onClick={() =>
+											navigate(
+												`/communities/${currentCommunity?.objValue.id}`,
+											)
+										}
+									>
+										<img
+											src="icons/next-button-chevron.png"
+											alt="Next-Button"
+										/>
+									</button>
+								</div>
 							</div>
-						</div>
-						<div className="db-widgets-container">
-							{/* Community Tasks */}
-							<div className="db-widget-community-tasks">
-								<h2 className="db-widget-heading">
-									Community Tasks
-								</h2>
+							{/* Open Projects */}
+							<div className="db-widget-small">
+								<div className="db-flex-container">
+									<h2 className="db-widget-heading-small">
+										Open Projects
+									</h2>
+									<button
+										onClick={() =>
+											navigate(
+												`/communities/${currentCommunity?.objValue.id}`,
+											)
+										}
+									>
+										<img
+											src="icons/next-button-chevron.png"
+											alt="search-icon"
+										/>
+									</button>
+								</div>
 							</div>
-							{/* Members */}
+							{/* Posts */}
 							<div className="db-widget">
-								<Members
-									users={["Name", "Name", "Name"]}
-									userRole={["Role", "Role", "Role"]}
-									showAllLink="#"
-								/>
+								<div className="db-flex-container">
+									<h2 className="db-widget-heading">Posts</h2>
+									<button
+										onClick={() =>
+											navigate(
+												`/communities/${currentCommunity?.objValue.id}`,
+											)
+										}
+									>
+										<img
+											src="icons/next-button-chevron.png"
+											alt="search-icon"
+										/>
+									</button>
+								</div>
+								<div className="db-posts-container">
+									<div className="db-posts-placeholder"></div>
+									<div className="db-posts-placeholder"></div>
+									<div className="db-posts-placeholder"></div>
+									<div className="db-posts-placeholder"></div>
+									<div className="db-posts-placeholder"></div>
+									<div className="db-posts-placeholder"></div>
+									<div className="db-posts-placeholder"></div>
+									<div className="db-posts-placeholder"></div>
+									<div className="db-posts-placeholder"></div>
+								</div>
 							</div>
 						</div>
-					</>
-				) : (
-					<p>No Communities Found!</p>
-				)}
+						{/* My Tasks */}
+						<div className="db-widget">
+							<div className="db-flex-container">
+								<h2 className="db-widget-heading">My Tasks</h2>
+								<a href="/" className="db-widget-link">
+									See All
+								</a>
+							</div>
+							<div className="db-tasks-container">
+								<p>You have no tasks yet.</p>
+								<button className="db-tasks-find-button">
+									Find Available Tasks
+								</button>
+							</div>
+						</div>
+						{/* Location/Map */}
+						<div className="db-widget-map">
+							<Maps
+								lat={currentCommunity?.objValue.location.lat}
+								long={currentCommunity?.objValue.location.lng}
+								mapZoom={14}
+								mapKey={currentCommunity?.objValue.id}
+							/>
+						</div>
+					</div>
+					<div className="db-widgets-container">
+						{/* Community Tasks */}
+						<div className="db-widget-community-tasks">
+							<h2 className="db-widget-heading">
+								Community Tasks
+							</h2>
+						</div>
+						{/* Members */}
+						<div className="db-widget">
+							<Members
+								users={["Name", "Name", "Name"]}
+								userRole={["Role", "Role", "Role"]}
+								showAllLink="#"
+							/>
+						</div>
+					</div>
+				</>
 			</div>
 		</>
 	) : (
