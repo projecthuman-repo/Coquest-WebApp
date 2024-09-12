@@ -1,136 +1,190 @@
-/* Apply box-sizing to all elements */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-/* Main container for messages */
-.messages-container {
-  margin-top: 12px;
-  padding: 0 15px; /* Add padding for spacing */
+.title-container {
+  width: 330px;
+  height: 54px;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between; /* Ensures space between left and right containers */
-  /* width: calc(100% - 30px); Full width of the parent minus padding */
-  gap: 16px; /* Space between left and right containers */
+  align-items: center;
+  margin-top: 57px;
+  margin-left: 212px;
 }
-
-/* Left container for messages */
-.messages-container-left {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  flex: 1; /* Flexible and responsive width */
-  min-width: 300px; /* Set a minimum width */
-}
-
-/* Right container for chat */
-.messages-container-right {
-  flex: 1; /* Flexible and responsive width */
-  min-width: 300px; /* Set a minimum width */
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  background-color: #f0f0f0;
-  margin: 0; /* Remove any extra margins */
-}
-
-/* Media queries for smaller screens */
-@media (max-width: 768px) {
-  .messages-container {
-    flex-direction: column; /* Stack containers vertically on smaller screens */
-    align-items: stretch; /* Stretch to full width */
-  }
-
-  .messages-container-left,
-  .messages-container-right {
-    width: 100%; /* Full width on small screens */
-    margin-bottom: 20px; /* Add spacing between stacked elements */
-  }
-}
-
 .messages-title {
-  font-family: "Poppins", sans-serif;
+  /* H1 */
+  font-family: "Poppins";
+  font-style: normal;
   font-weight: 600;
   font-size: 36px;
   line-height: 54px;
-  color: #000;
-  margin-left: 16px;
+
+  /* identical to box height */
+
+  color: #000000;
+}
+.messages-new-notify {
+  margin-left: 29px;
+  margin-top: 6px;
+  margin-bottom: 0px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  /* identical to box height */
+  color: #999999;
+}
+.messages-container {
+  margin-top: 12px;
+  margin-left: 212px;
+  width: 1137px;
+  height: 929px;
+}
+.messages-container-left {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  gap: 16px;
+  width: 450px;
+  height: 929px;
 }
 
 .messages-container-cards {
+  width: 450px;
+  height: 119px;
+
   background: #f1f1f1;
   border-radius: 10px;
-  padding: 16px;
 }
-
 .message-card-inner-div {
+  width: 408px;
+  height: 75px;
+  margin-left: 21px;
+  margin-top: 22px;
   display: flex;
-  align-items: center;
 }
-
 .card-icon-div {
-  width: 50px;
-  height: 50px;
+  width: 67px;
+  height: 67px;
   background: #ffffff;
-  border-radius: 50%;
-  margin-right: 16px;
+  border-radius: 100%;
+  align-items: center;
+  justify-content: center;
 }
-
 .card-content-wrapper {
-  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  margin-left: 10px;
 }
-
 .card-name-div {
+  font-family: "Poppins";
+  font-style: normal;
   font-weight: 600;
   font-size: 20px;
-  margin-bottom: 5px;
+  line-height: 30px;
 }
-
 .card-content-div {
+  font-family: "Poppins";
+  font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  color: #666;
+  line-height: 21px;
 }
+.messages-container-right {
+  width: 624px;
+  height: 659px;
+  margin-right: 30px;
+  float: right;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: #f0f0f0;
+}
+.chat-name-div {
+  width: 200px;
+  height: 36px;
+  margin-left: 275px;
+  margin-top: 22px;
 
-/* Corrected styles for the chat input area */
-.chat-input-div {
+  /* H3 */
+
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+  /* identical to box height */
+
+  color: #000000;
+}
+.chat-container {
+  margin-left: 33px;
+  margin-top: 24px;
+  width: 558px;
+  height: 475px;
+  overflow-y: auto;
+  max-height: 475px;
+}
+.chat-content-container-from-this-user {
   display: flex;
-  align-items: center; /* Align items vertically */
-  padding: 10px;
-  gap: 10px; /* Space between the input field and the button */
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  margin-right: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
-.chat-input {
-  flex: 1; /* Allow input to take the available space */
-  height: 40px;
-  padding: 8px 12px;
+.chat-content-container-from-other-user {
+  display: flex;
+  align-items: flex-start;
+  margin-left: 34px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.message-icon-div {
+  width: 48px;
+  height: 48px;
   background: #ffffff;
-  border: 1px solid #cccccc;
-  border-radius: 20px;
-  font-family: "Poppins", sans-serif;
-  font-size: 14px;
-  outline: none; /* Remove default focus outline */
-}
-
-.chat-send-button {
-  width: 40px;
-  height: 40px;
-  background: #dddddd;
-  border: none;
-  border-radius: 50%;
+  border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: background 0.3s;
+  margin-right: 8px;
 }
-
-.chat-send-button:hover {
-  background: #bbbbbb; /* Darken on hover */
+.chat-message-content-from-other-user {
+  display: inline-block;
+  width: auto;
+  max-width: 60%;
+  border-radius: 16px;
+  background-color: #da9eff;
+  margin-left: 26px;
 }
+.chat-message-content-from-this-user {
+  display: inline-block;
+  width: auto;
+  max-width: 60%;
+  border-radius: 16px;
+  background-color: #86b7ff;
+  margin-right: 26px;
+}
+.chat-message-content-inner {
+  display: inline-block;
+  width: auto;
+  padding: 8px 16px;
+}
+.chat-input-div {
+  display: flex;
+  width: 520px;
+  height: 56px;
+  margin-left: 30px;
+  margin-top: 20px;
+}
+.chat-input {
+  width: 453px;
+  height: 53px;
 
-.chat-send-button img {
-  width: 20px; /* Adjust icon size */
-  height: 20px;
+  background: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 28px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
 }
