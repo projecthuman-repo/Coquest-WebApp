@@ -515,7 +515,7 @@ export default gql`
 
     findUserbyID(id: String, expand: String): regenquestUser
       @auth
-      @formatObj(dbName: "regenquest", modelName: "regenquestUser")
+      @formatObj(dbName: "regenquest", modelName: "User")
     findTaskbyID(taskID: String): regenquestTask @auth
     findQuestbyID(questID: String): regenquestQuest @auth
     findPostbyID(postID: String): regenquestPost @auth
@@ -523,7 +523,7 @@ export default gql`
     findEventbyID(eventID: String): regenquestEvent @auth
     findCommunitybyID(id: String): regenquestCommunity
       @auth
-      @formatObj(dbName: "regenquest", modelName: "regenquestCommunity")
+      @formatObj(dbName: "regenquest", modelName: "Community")
     findCrossUser(email: String): regenquestCrossUser @auth
 
     getChatsByUserID(userID: String): [regenquestChat] @auth

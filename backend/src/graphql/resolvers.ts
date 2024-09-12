@@ -1,18 +1,18 @@
 // @ts-nocheck
-import User from "../models/regenquestUser";
-import Task from "../models/regenquestTask";
-import Quest from "../models/regenquestQuest";
-import Post from "../models/regenquestPost";
-import Inventory from "../models/regenquestInventory";
-import Event from "../models/regenquestEvent";
-import Community from "../models/regenquestCommunity";
-import Genres from "../models/regenquestGenres";
-import Notification from "../models/regenquestNotification";
-import Chat from "../models/regenquestChat";
-import Message from "../models/regenquestMessage";
-import Topic from "../models/regenquestTopic";
-import Motive from "../models/regenquestMotive";
-import CrossPlatformUser from "../models/crossPlatform/User";
+import { User } from "../models/User";
+import { Task } from "../models/Task";
+import { Quest } from "../models/Quest";
+import { Post } from "../models/Post";
+import { Inventory } from "../models/Inventory";
+import { Event } from "../models/Event";
+import { Community } from "../models/Community";
+import { Genre } from "../models/Genre";
+import { Notification } from "../models/Notification";
+import { Chat } from "../models/Chat";
+import { Message } from "../models/Message";
+import { Topic } from "../models/Topic";
+import { Motive } from "../models/Motive";
+import { CrossPlatformUser } from "../models/crossPlatform/User";
 import { v4 as uuidv4 } from "uuid";
 import { Storage } from "@google-cloud/storage";
 import jwt from "jsonwebtoken";
@@ -36,12 +36,12 @@ export default {
   },
   expandableUser: {
     __resolveType(obj) {
-      return deduceExpandableType(obj, "regenquestUser");
+      return deduceExpandableType(obj, "User");
     },
   },
   expandableCommunity: {
     __resolveType(obj) {
-      return deduceExpandableType(obj, "regenquestCommunity");
+      return deduceExpandableType(obj, "Community");
     },
   },
   Query: {
@@ -258,7 +258,7 @@ export default {
     //this method return a list of all the genres in the db
     async getGenres(_parent, _, _context, _info) {
       try {
-        return await Genres.findOne();
+        return await Genre.findOne();
       } catch {
         throw new Error("Error getting genres");
       }
@@ -1394,14 +1394,14 @@ export default {
 
       try {
         // TODO: Figure out what is actually being done here
-        const result = await Genres.countDocuments();
+        const result = await Genre.countDocuments();
 
         if (result === 0) {
-          const newGenres = new Genres({ genre: genre });
+          const newGenres = new Genre({ genre: genre });
           await newGenres.save();
         } else {
           const updateGenres = { genre: genre };
-          await Genres.updateMany(updateGenres);
+          await Genre.updateMany(updateGenres);
         }
 
         return { code: 0, response: "successful" };

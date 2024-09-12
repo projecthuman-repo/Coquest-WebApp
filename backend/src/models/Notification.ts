@@ -11,10 +11,10 @@ import { regenDb } from "../db/connection";
 //date: when this notification was created
 //isRead: has this notification been read?
 //isDeleted: has this notification been deleted?
-const regenquestNotificationSchema = new Schema({
+const notificationSchema = new Schema({
   userID: {
     type: Schema.Types.ObjectId,
-    ref: "regenquestUser",
+    ref: "User",
     required: true,
   },
   title: { type: String, required: true },
@@ -26,7 +26,4 @@ const regenquestNotificationSchema = new Schema({
   isDeleted: { type: Boolean, default: false },
 });
 
-export default regenDb.model(
-  "regenquestNotification",
-  regenquestNotificationSchema,
-);
+export const Notification = regenDb.model("Notification", notificationSchema);

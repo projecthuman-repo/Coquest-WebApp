@@ -2,8 +2,8 @@ import { Schema } from "mongoose";
 import { regenDb } from "../db/connection";
 
 // name: name of the topic
-const regenquestTopicSchema = new Schema({
+const topicSchema = new Schema({
   name: { type: String, required: true, unique: true },
 });
 
-export default regenDb.model("regenquestTopic", regenquestTopicSchema);
+export const Topic = regenDb.model("Topic", topicSchema);

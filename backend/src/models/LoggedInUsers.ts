@@ -2,16 +2,16 @@ import { Schema } from "mongoose";
 import { regenDb } from "../db/connection";
 
 //id of the logged in user
-const regenquestLoggedInUsersSchema = new Schema({
+const loggedInUsersSchema = new Schema({
   userID: {
     type: Schema.Types.ObjectId,
-    ref: "regenquestUser", // Reference to the User model
+    ref: "User", // Reference to the User model
     required: true,
     unique: true,
   },
 });
 
-export default regenDb.model(
-  "regenquestLoggedInUsers",
-  regenquestLoggedInUsersSchema,
+export const LoggedInUsers = regenDb.model(
+  "LoggedInUsers",
+  loggedInUsersSchema,
 );

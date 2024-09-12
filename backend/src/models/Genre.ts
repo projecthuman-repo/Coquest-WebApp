@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 import { regenDb } from "../db/connection";
 
 //list of availible genres
-const regenquestGenresSchema = new Schema({
+const genreSchema = new Schema({
   genre: [
     {
       type: String,
@@ -12,4 +12,4 @@ const regenquestGenresSchema = new Schema({
   ],
 });
 
-export default regenDb.model("regenquestGenres", regenquestGenresSchema);
+export const Genre = regenDb.model("Genre", genreSchema);
