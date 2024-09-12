@@ -21,7 +21,8 @@ const communitySchema = new Schema({
       {
         type: Schema.Types.ObjectId,
         ref: "User",
-        validate: validators.idValidators(() => User, "member"),
+        // TODO: This causes a circular dependency with the User model, figure out a way to resolve this
+        // validate: validators.idValidators(() => User, "member"),
       },
     ],
     validate: validators.arrValidators("members"),
