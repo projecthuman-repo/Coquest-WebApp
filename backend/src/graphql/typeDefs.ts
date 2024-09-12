@@ -135,16 +135,16 @@ export default gql`
 
   union registered = bool | int
 
-  type regenquestUserOutput {
+  type UserOutput {
     objValue: regenquestUser!
   }
 
-  type regenquestCommunityOutput {
+  type CommunityOutput {
     objValue: regenquestCommunity!
   }
 
-  union expandableUser = regenquestUserOutput | string
-  union expandableCommunity = regenquestCommunityOutput | string
+  union expandableUser = UserOutput | string
+  union expandableCommunity = CommunityOutput | string
 
   type regenquestNotification {
     _id: String

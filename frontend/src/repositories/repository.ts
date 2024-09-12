@@ -52,7 +52,7 @@ function getFetchQuery(typeName: RepoTypeName): string {
 							... on string {
 								strValue
 							}
-							... on regenquestCommunityOutput {
+							... on CommunityOutput {
 								objValue {
 									_id
 									name
@@ -73,7 +73,7 @@ function getFetchQuery(typeName: RepoTypeName): string {
 										... on string {
 											strValue
 										}
-										... on regenquestUserOutput {
+										... on UserOutput {
 											objValue {
 												_id
 												username
@@ -134,7 +134,7 @@ function getFetchQuery(typeName: RepoTypeName): string {
 							... on string {
 								strValue
 							}
-							... on regenquestUserOutput {
+							... on UserOutput {
 								objValue {
 									_id
 									username
@@ -202,7 +202,7 @@ class Repository<T extends Model> {
 					// match the data in the DB after a successful insert.
 					this.obj = this.factory.create(
 						replaceUndefinedWithNulls({
-							_id: data[`createRegenquest${this.typeName}`]["id"],
+							_id: data[`create${this.typeName}`]["id"],
 							...inputObj,
 							...overrideProps,
 						}),
@@ -246,7 +246,7 @@ class Repository<T extends Model> {
 
 		this.createMut = gql`
 			mutation CreateRegenquest${typeName}($${lowerTypeName}Input: regenquest${typeName}Input) {
-				createRegenquest${typeName}(${lowerTypeName}Input: $${lowerTypeName}Input) {
+				create${typeName}(${lowerTypeName}Input: $${lowerTypeName}Input) {
 					code
 					response
 					id
