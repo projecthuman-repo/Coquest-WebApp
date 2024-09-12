@@ -1,0 +1,16 @@
+.privacy-security-section {
+  padding: 10px 100px;
+  width: 600px; /* Increased width to make the section bigger */
+  background-color: #fff;
+}
+
+.two-factor-authentication {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.phone-number {
+  display: flex;
+  margin-top: 10px;
+}

@@ -7,7 +7,7 @@ import { Wallet, Wallets } from "../WalletData";
 
 // Start of component styling
 const Title = styled.h1({
-	width: "100%",
+	// width: "100%",
 	textAlign: "left",
 	fontWeight: 600,
 	fontSize: 36,

@@ -9,6 +9,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./styles/theme";
 import { Message } from "./pages/Message";
 import { Notifications } from "./pages/Notifications";
+import Settings from "./pages/Settings";
 import "./index.css";
 import ItemGrid from "./pages/Inventory/ItemGrid";
 import { Dashboard } from "./pages/Dashboard";
@@ -379,6 +380,10 @@ const router = createBrowserRouter([
 	{
 		path: "/wallet",
 		element: <WalletPage />,
+	},
+	{
+		path: "/settings",
+		element: <Settings />,
 	},
 	{
 		path: "/profile/:userId",

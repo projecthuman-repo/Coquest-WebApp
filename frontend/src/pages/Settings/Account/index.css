@@ -1,0 +1,96 @@
+.account-section {
+  padding: 0px 100px;
+  width: 600px; /* Increased width to make the section bigger */
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.account-title {
+  font-size: 30px; /* Slightly larger for emphasis */
+  margin-bottom: 20px;
+  color: #000000;
+  font-weight: bold;
+  text-align: left;
+}
+
+.account-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  font-size: 100px;
+}
+
+.profile-icon {
+  color: #ddd;
+  margin-left: -14px;
+}
+
+.username {
+  display: flex;
+  flex-direction: column;
+}
+
+.username-label {
+  font-size: 20px;
+  color: #000000;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.username-value {
+  font-size: 16px; /* Larger font for better readability */
+  color: #666666;
+  font-weight: 400;
+}
+
+.account-details {
+  margin-top: 45px;
+}
+
+.detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 45px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px; /* Adjusted for consistency */
+}
+
+.detail-label {
+  color: #000000;
+  font-weight: 600;
+}
+
+.edit-link {
+  font-size: 14px;
+  color: #000000;
+  text-decoration: none;
+  margin-left: 25px;
+  font-weight: 400;
+}
+
+.edit-link:hover {
+  text-decoration: underline;
+  font-weight: 400;
+}

@@ -1,0 +1,64 @@
+.settings-page {
+  display: flex;
+  flex-direction: column;
+  /* width: 100%;
+  height: 100vh; */
+}
+
+.settings-container {
+  display: flex;
+  height: calc(100vh - 200px); /* Adjust for header/navbar height */
+  width: 100%;
+}
+
+.settings-sidebar {
+  width: 500px; /* Fixed width for sidebar */
+  border-right: 1px solid #ddd;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 200px;
+  padding-right: 30px;
+}
+
+.sidebar-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 15px;
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  text-align: left;
+  font-size: 14px; /* Adjusted font size */
+  color: #414141;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 0 10px;
+  font-weight: 600;
+}
+
+.sidebar-button .icon {
+  margin-right: 10px;
+  color: #6c757d;
+  font-size: 18px; /* Adjusted icon size */
+}
+
+.sidebar-button.active {
+  background-color: #e9e9e9; /* Light gray background for active state */
+}
+
+.sidebar-button:hover {
+  background-color: #ddd;
+}
+
+.settings-content {
+  flex: 1;
+  padding: 0px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align content to start */
+  justify-content: flex-start;
+  margin-left: 20px; /* Margin to separate from sidebar */
+}

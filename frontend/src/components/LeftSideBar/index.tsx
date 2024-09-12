@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 const LeftToolBar = styled.div({
 	float: "left",
 	width: "80px",
-	height: "1024px",
+	height: "calc(100vh - 64px)",
 	alignItems: "flex-start",
 	flexDirection: "row",
 	display: "flex",
