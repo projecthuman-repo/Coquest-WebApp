@@ -245,7 +245,7 @@ class Repository<T extends Model> {
 			`;
 
 		this.createMut = gql`
-			mutation CreateRegenquest${typeName}($${lowerTypeName}Input: regenquest${typeName}Input) {
+			mutation Create${typeName}($${lowerTypeName}Input: regenquest${typeName}Input) {
 				create${typeName}(${lowerTypeName}Input: $${lowerTypeName}Input) {
 					code
 					response

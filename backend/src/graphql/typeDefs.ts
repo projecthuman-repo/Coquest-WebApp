@@ -544,24 +544,19 @@ export default gql`
   TODO: Declare and implement delete routines for all necessary models
   """
   type Mutation {
-    createRegenquestUser(userInput: regenquestUserInput): mutationResponse @auth
-    createRegenquestTask(userInput: regenquestTaskInput): mutationResponse @auth
-    createRegenquestQuest(userInput: regenquestQuestInput): mutationResponse
+    createUser(userInput: regenquestUserInput): mutationResponse @auth
+    createTask(userInput: regenquestTaskInput): mutationResponse @auth
+    createQuest(userInput: regenquestQuestInput): mutationResponse @auth
+    createPost(userInput: regenquestPostInput): mutationResponse @auth
+    createInventory(userInput: regenquestInventoryInput): mutationResponse @auth
+    createEvent(userInput: regenquestEventInput): mutationResponse @auth
+    createCommunity(communityInput: regenquestCommunityInput): mutationResponse
       @auth
-    createRegenquestPost(userInput: regenquestPostInput): mutationResponse @auth
-    createRegenquestInventory(
-      userInput: regenquestInventoryInput
-    ): mutationResponse @auth
-    createRegenquestEvent(userInput: regenquestEventInput): mutationResponse
-      @auth
-    createRegenquestCommunity(
-      communityInput: regenquestCommunityInput
-    ): mutationResponse @auth
-    createRegenquestNotification(
+    createNotification(
       userInput: regenquestNotificationInput
     ): mutationResponse @auth
 
-    createRegenquestChat(userInput: regenquestChatInput): mutationResponse @auth
+    createChat(userInput: regenquestChatInput): mutationResponse @auth
     sendRegenquestMessage(userInput: regenquestMessageInput): mutationResponse
       @auth
     addMemberToChat(userInput: addMemberToChatInput): mutationResponse @auth

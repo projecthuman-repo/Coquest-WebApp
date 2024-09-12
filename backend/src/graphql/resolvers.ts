@@ -396,9 +396,9 @@ export default {
     },
   },
   Mutation: {
-    //this method is the resolver for createRegenquestUser,
+    //this method is the resolver for createUser,
     //it creates and adds the user to the db
-    async createRegenquestUser(
+    async createUser(
       _parent,
       {
         userInput: {
@@ -465,9 +465,9 @@ export default {
       }
     },
 
-    //resolver for createRegenquestTask,
+    //resolver for createTask,
     //this method creates and add a task to the db
-    async createRegenquestTask(
+    async createTask(
       _parent,
       {
         userInput: {
@@ -507,9 +507,9 @@ export default {
       }
     },
 
-    //resolver for createRegenquestQuest,
+    //resolver for createQuest,
     //this method creates and add a quest to the db
-    async createRegenquestQuest(
+    async createQuest(
       _parent,
       {
         userInput: {
@@ -564,9 +564,9 @@ export default {
       }
     },
 
-    //resolver for createRegenquestPost,
+    //resolver for createPost,
     //this method creates and add a post to the db
-    async createRegenquestPost(
+    async createPost(
       _parent,
       { userInput: { userID, title, description, attachments, comments } },
       _context,
@@ -595,9 +595,9 @@ export default {
       }
     },
 
-    //resolver for createRegenquestInventory,
+    //resolver for createInventory,
     //this method creates and add an inventory item to the db
-    async createRegenquestInventory(
+    async createInventory(
       _parent,
       {
         userInput: { userID, taskLink, itemName, description, image, history },
@@ -628,9 +628,9 @@ export default {
       }
     },
 
-    //resolver for createRegenquestEvent,
+    //resolver for createEvent,
     //this method created and add an event to the db
-    async createRegenquestEvent(
+    async createEvent(
       _parent,
       {
         userInput: {
@@ -669,9 +669,9 @@ export default {
       }
     },
 
-    //resolver for createRegenquestCommunity,
+    //resolver for createCommunity,
     //this method creates and add a community to the db
-    async createRegenquestCommunity(
+    async createCommunity(
       _parent,
       {
         communityInput: {
@@ -713,9 +713,9 @@ export default {
       }
     },
 
-    //resolver for createRegenquestNotification,
+    //resolver for createNotification,
     //this method creates and stores a notification to the db
-    async createRegenquestNotification(
+    async createNotification(
       _parent,
       { userInput: { userID, title, content, image, link, isRead, isDeleted } },
       _context,
@@ -752,7 +752,7 @@ export default {
 
     //resolver for createRegenqestChat,
     //this method creates and add a chat to the db
-    async createRegenquestChat(
+    async createChat(
       _parent,
       { userInput: { members, name, description } },
       _context,
