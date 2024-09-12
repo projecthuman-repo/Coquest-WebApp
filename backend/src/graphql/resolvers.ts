@@ -13,7 +13,7 @@ import Message from "../models/regenquestMessage";
 import Topic from "../models/regenquestTopic";
 import Motive from "../models/regenquestMotive";
 import CrossPlatformUser from "../models/crossPlatform/User";
-import uuid from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import { Storage } from "@google-cloud/storage";
 import jwt from "jsonwebtoken";
 import { coerceExpandable, deduceExpandableType } from "../utils/expandable";
@@ -382,7 +382,7 @@ export default {
         conditions: [["starts-with", "$content-type", "image/"]],
       };
       try {
-        const uniqueFileName = `${uuid.v4()}`;
+        const uniqueFileName = `${uuidv4()}`;
         const [url] = await storage
           .bucket(CONFIG.IMAGE_BUCKET_NAME)
           .file(`${CONFIG.DIR_PATH}/${uniqueFileName}`)
