@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { regenDb } from "../db/connection";
 
 //postID: unique id of the post
@@ -32,4 +32,5 @@ const postSchema = new Schema({
   ],
 });
 
+export type PostSchemaType = InferSchemaType<typeof postSchema>;
 export const Post = regenDb.model("Post", postSchema);

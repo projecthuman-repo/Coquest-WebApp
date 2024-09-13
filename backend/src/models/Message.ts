@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { regenDb } from "../db/connection";
 
 //messageID: unique id of the message
@@ -34,4 +34,5 @@ const messageSchema = new Schema({
   ],
 });
 
+export type messageSchemaType = InferSchemaType<typeof messageSchema>;
 export const Message = regenDb.model("Message", messageSchema);

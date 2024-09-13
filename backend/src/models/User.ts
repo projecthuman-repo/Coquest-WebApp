@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import {
   imageSchema,
   locationSchema,
@@ -78,4 +78,5 @@ const userSchema = new Schema({
   recommendations: [recommendationSchema],
 });
 
+export type UserSchemaType = InferSchemaType<typeof userSchema>;
 export const User = regenDb.model("User", userSchema);

@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { regenDb } from "../db/connection";
 
 //list of availible genres
@@ -12,4 +12,5 @@ const genreSchema = new Schema({
   ],
 });
 
+export type GenreSchemaType = InferSchemaType<typeof genreSchema>;
 export const Genre = regenDb.model("Genre", genreSchema);

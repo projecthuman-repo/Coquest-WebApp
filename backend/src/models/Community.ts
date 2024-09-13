@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { imageSchema, locationSchema } from "./common";
 import { regenDb } from "../db/connection";
 import validators from "./validators";
@@ -33,4 +33,5 @@ const communitySchema = new Schema({
   images: [imageSchema],
 });
 
+export type CommunitySchemaType = InferSchemaType<typeof communitySchema>;
 export const Community = regenDb.model("Community", communitySchema);

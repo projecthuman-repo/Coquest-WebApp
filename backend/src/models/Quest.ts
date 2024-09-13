@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { locationSchema } from "./common";
 import { regenDb } from "../db/connection";
 
@@ -46,4 +46,5 @@ const questSchema = new Schema({
   hashtags: [String],
 });
 
+export type QuestSchemaType = InferSchemaType<typeof questSchema>;
 export const Quest = regenDb.model("Quest", questSchema);

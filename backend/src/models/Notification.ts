@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { imageSchema } from "./common";
 import { regenDb } from "../db/connection";
 
@@ -26,4 +26,5 @@ const notificationSchema = new Schema({
   isDeleted: { type: Boolean, default: false },
 });
 
+export type NotificationSchemaType = InferSchemaType<typeof notificationSchema>;
 export const Notification = regenDb.model("Notification", notificationSchema);

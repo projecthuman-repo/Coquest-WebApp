@@ -1,13 +1,12 @@
-// @ts-nocheck
 import { User } from "../models/User";
-import { Task } from "../models/Task";
-import { Quest } from "../models/Quest";
-import { Post } from "../models/Post";
-import { Inventory } from "../models/Inventory";
-import { Event } from "../models/Event";
-import { Community } from "../models/Community";
+import { Task, TaskSchemaType } from "../models/Task";
+import { Quest, QuestSchemaType } from "../models/Quest";
+import { Post, PostSchemaType } from "../models/Post";
+import { Inventory, InventorySchemaType } from "../models/Inventory";
+import { Event, EventSchemaType } from "../models/Event";
+import { Community, CommunitySchemaType } from "../models/Community";
 import { Genre } from "../models/Genre";
-import { Notification } from "../models/Notification";
+import { Notification, NotificationSchemaType } from "../models/Notification";
 import { Chat } from "../models/Chat";
 import { Message } from "../models/Message";
 import { Topic } from "../models/Topic";
@@ -139,6 +138,7 @@ export default {
     async findUserbyID(_parent, { id, _ }, _context, _info) {
       try {
         let result = await User.findOne({ _id: id });
+        if (!result) throw new Error("User not found");
 
         if (typeof result.registered === "boolean") {
           result.registered = {
@@ -818,6 +818,7 @@ export default {
         sentFrom: sentFrom,
         message: message,
         time: new Date().toLocaleString(),
+        // @ts-expect-error - I want the error to be thrown here if memberList is undefined
         unreadBy: memberList.members.filter((member) => member !== sentFrom),
       });
 
@@ -1015,7 +1016,7 @@ export default {
         return { code: 1, response: "Error! task not found" };
       }
 
-      const updateTask = { _id: id };
+      const updateTask: Partial<TaskSchemaType> = {};
 
       //update all the given properties
       if (userID) {
@@ -1089,7 +1090,7 @@ export default {
         return { code: 1, response: "Error! quest not found" };
       }
 
-      const updateQuest = { _id: id };
+      const updateQuest: Partial<QuestSchemaType> = {};
 
       //update all the given properties of the quest
       if (name) {
@@ -1168,7 +1169,7 @@ export default {
         return { code: 1, response: "Error! post not found" };
       }
 
-      const updatePost = { _id: id };
+      const updatePost: Partial<PostSchemaType> = {};
 
       //update all the given properties of the post
       if (userID) {
@@ -1226,7 +1227,7 @@ export default {
         return { code: 1, response: "Error! item not found" };
       }
 
-      const updateItem = { _id: id };
+      const updateItem: Partial<InventorySchemaType> = {};
       //update all the given properties of the item
       if (userID) {
         updateItem.userID = userID;
@@ -1288,7 +1289,7 @@ export default {
         return { code: 1, response: "Error! event not found" };
       }
 
-      const updateEvent = { _id: id };
+      const updateEvent: Partial<EventSchemaType> = {};
       //update all the given properties of the event
       if (name) {
         updateEvent.name = name;
@@ -1354,8 +1355,8 @@ export default {
         return { code: 1, response: "Error! community not found" };
       }
 
-      const updateCommunity = {
-        id: id,
+      // TODO: Test this, I think if members are not provided, it will replace the existing values with null/undefined in the DB.
+      const updateCommunity: CommunitySchemaType = {
         name: name,
         description: description,
         objective: objective,
@@ -1441,9 +1442,7 @@ export default {
         return { code: 1, response: "Error! notification not found" };
       }
 
-      const updateNotification = {
-        _id: id,
-      };
+      const updateNotification: Partial<NotificationSchemaType> = {};
       //update all the given properties of the notification
       if (userID) {
         updateNotification.userID = userID;

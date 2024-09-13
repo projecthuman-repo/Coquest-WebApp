@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { regenDb } from "../db/connection";
 
 //id of the logged in user
@@ -11,6 +11,9 @@ const loggedInUsersSchema = new Schema({
   },
 });
 
+export type LoggedInUsersSchemaType = InferSchemaType<
+  typeof loggedInUsersSchema
+>;
 export const LoggedInUsers = regenDb.model(
   "LoggedInUsers",
   loggedInUsersSchema,

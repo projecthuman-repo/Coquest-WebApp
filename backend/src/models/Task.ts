@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { regenDb } from "../db/connection";
 
 //taskID: unique id of the task
@@ -29,4 +29,5 @@ const taskSchema = new Schema({
   history: [String],
 });
 
+export type TaskSchemaType = InferSchemaType<typeof taskSchema>;
 export const Task = regenDb.model("Task", taskSchema);

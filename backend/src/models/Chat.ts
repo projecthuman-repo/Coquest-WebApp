@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema, InferSchemaType } from "mongoose";
 import { regenDb } from "../db/connection";
 
 //chatID: unique id of the chat
@@ -21,4 +21,5 @@ const chatSchema = new Schema({
   },
 });
 
+export type ChatSchemaType = InferSchemaType<typeof chatSchema>;
 export const Chat = regenDb.model("Chat", chatSchema);

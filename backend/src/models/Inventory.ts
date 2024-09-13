@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { imageSchema } from "./common";
 import { regenDb } from "../db/connection";
 
@@ -39,4 +39,5 @@ const inventorySchema = new Schema({
   ],
 });
 
+export type InventorySchemaType = InferSchemaType<typeof inventorySchema>;
 export const Inventory = regenDb.model("Inventory", inventorySchema);

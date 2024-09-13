@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { locationSchema } from "./common";
 import { regenDb } from "../db/connection";
 
@@ -30,4 +30,5 @@ const eventSchema = new Schema({
   ],
 });
 
+export type EventSchemaType = InferSchemaType<typeof eventSchema>;
 export const Event = regenDb.model("Event", eventSchema);
