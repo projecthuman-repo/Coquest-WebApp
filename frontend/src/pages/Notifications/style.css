@@ -31,11 +31,14 @@
   color: #999999;
 }
 .notifications-container {
-  width: 1059px;
+  /* width: 1059px; */
   height: 833px;
   margin-left: 212px;
   margin-top: 24px;
   border-radius: 10px;
+  display: flex;
+  align-items: top;
+  justify-content: flex-start;
 }
 
 .notifications-container-left {

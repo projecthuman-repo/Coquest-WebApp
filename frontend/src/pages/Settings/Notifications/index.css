@@ -1,0 +1,60 @@
+.notifications-section {
+  padding: 0px 100px;
+  width: 600px; /* Increased width to make the section bigger */
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.notifications-section h2 {
+  font-size: 30px;
+  margin-bottom: 20px;
+  color: #000000;
+  font-weight: bold;
+  text-align: left;
+}
+
+.notifications-settings {
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-option {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px 0px;
+  margin-left: -10px;
+  font-size: 16px;
+}
+
+.notification-label {
+  padding-left: 20px;
+  color: #000000;
+  font-weight: 400;
+}
+
+.notification-preferences {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #000000;
+}
+
+.notification-preferences p {
+  margin-bottom: 10px;
+}
+
+.notification-preferences label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  margin-left: -10px;
+}
+
+.notification-preferences input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
