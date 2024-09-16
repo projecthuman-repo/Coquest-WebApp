@@ -17,6 +17,8 @@ import mongoose from "mongoose";
  * This will generate the necessary types for this file
  */
 import { Resolvers } from "../__generated__/graphql";
+import { Motive } from "../models/Motive";
+import { Topic } from "../models/Topic";
 
 const storage = new Storage();
 
@@ -64,6 +66,16 @@ const resolvers: Resolvers = {
       } catch {
         throw new Error("Error getting communities");
       }
+    },
+
+    async getMotives() {
+      const motives = Motive.find();
+      return motives;
+    },
+
+    async getTopics() {
+      const topics = Topic.find();
+      return topics;
     },
 
     //this method finds a user by their id
@@ -448,9 +460,9 @@ const resolvers: Resolvers = {
       }
     },
 
-    //resolver for sendRegenquestMessage,
+    //resolver for sendMessage,
     //this method creates and stores messages to the db
-    async sendRegenquestMessage(
+    async sendMessage(
       _parent,
       { userInput: { chatID, sentFrom, message } },
       _context,
@@ -572,7 +584,7 @@ const resolvers: Resolvers = {
     },
 
     //this method updates propeties for a user
-    async updateRegenquestUser(
+    async updateUser(
       _parent,
       {
         userInput: {
@@ -651,7 +663,7 @@ const resolvers: Resolvers = {
     },
 
     //this method updates all the properties of a post
-    async updateRegenquestPost(
+    async updatePost(
       _parent,
       { userInput: { id, userID, title, description, attachments, comments } },
       _context,
@@ -697,7 +709,7 @@ const resolvers: Resolvers = {
     },
 
     //this method updates all the properties of a community
-    async updateRegenquestCommunity(
+    async updateCommunity(
       _parent,
       {
         userInput: {
@@ -754,7 +766,7 @@ const resolvers: Resolvers = {
     },
 
     //this method updates all the properties of a notification
-    async updateRegenquestNotification(
+    async updateNotification(
       _parent,
       {
         userInput: {

@@ -493,6 +493,8 @@ const schema = gql`
     getUsers: [user] @auth
     getPosts: [post] @auth
     getCommunities: [community] @auth
+    getMotives: [motive] @auth
+    getTopics: [topic] @auth
 
     findUserbyID(id: String, expand: String): user @auth
     findPostbyID(postID: String): post @auth
@@ -519,18 +521,15 @@ const schema = gql`
     createCommunity(communityInput: communityInput!): mutationResponse @auth
     createNotification(userInput: notificationInput!): mutationResponse @auth
     createChat(userInput: chatInput!): mutationResponse @auth
-    sendRegenquestMessage(userInput: messageInput!): mutationResponse @auth
+    sendMessage(userInput: messageInput!): mutationResponse @auth
     addMemberToChat(userInput: addMemberToChatInput!): mutationResponse @auth
     markMessageAsRead(userInput: markMessageAsReadInput!): mutationResponse
       @auth
 
-    updateRegenquestUser(userInput: userInput!): mutationResponse @auth
-    updateRegenquestPost(userInput: postInput!): mutationResponse @auth
-    updateRegenquestCommunity(userInput: communityInput!): mutationResponse
-      @auth
-    updateRegenquestNotification(
-      userInput: notificationInput!
-    ): mutationResponse @auth
+    updateUser(userInput: userInput!): mutationResponse @auth
+    updatePost(userInput: postInput!): mutationResponse @auth
+    updateCommunity(userInput: communityInput!): mutationResponse @auth
+    updateNotification(userInput: notificationInput!): mutationResponse @auth
     markNotificationAsRead(notificationID: String): mutationResponse @auth
     markAllNotificationsAsRead(userID: String): mutationResponse @auth
     deleteNotification(notificationID: String): mutationResponse @auth
