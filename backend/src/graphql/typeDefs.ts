@@ -7,7 +7,7 @@ Normative Note about Output ID fields:
 - should be non-nullable to conform to mongoose's default _id query behaviour;
 - should be named _id to match MongoDB
 */
-export default gql`
+const schema = gql`
   """
   Type wrappers for union types.
   Use these object types in conjunction with other union member types instead of their fundamental type counterparts.
@@ -55,8 +55,8 @@ export default gql`
     name: Name
     username: String
     email: String
-    iat: String
-    exp: String
+    iat: Int
+    exp: Int
     sub: String
   }
 
@@ -96,8 +96,8 @@ export default gql`
   }
 
   input locationInput {
-    lat: Float
-    lng: Float
+    lat: Float!
+    lng: Float!
   }
 
   type comment {
@@ -106,8 +106,8 @@ export default gql`
   }
 
   input commentInput {
-    username: String
-    body: String
+    username: String!
+    body: String!
   }
 
   type image {
@@ -116,8 +116,8 @@ export default gql`
   }
 
   input imageInput {
-    contentType: String
-    path: String
+    contentType: String!
+    path: String!
   }
 
   input registeredInput {
@@ -134,19 +134,8 @@ export default gql`
 
   union registered = bool | int
 
-  type userOutput {
-    objValue: user!
-  }
-
-  type communityOutput {
-    objValue: community!
-  }
-
-  union expandableUser = userOutput | string
-  union expandableCommunity = communityOutput | string
-
   type notification {
-    _id: String
+    _id: ID
     userID: String
     title: String
     content: String
@@ -162,14 +151,14 @@ export default gql`
     userID: String
     title: String
     content: String
-    image: [imageInput]
+    image: [imageInput!]
     link: String
     isRead: Boolean
     isDeleted: Boolean
   }
 
   type user {
-    _id: String!
+    _id: ID!
     userID: String
     name: Name
     username: String
@@ -180,7 +169,7 @@ export default gql`
     motives: [String]
     biography: String
     topics: [String]
-    communities: [expandableCommunity]
+    communities: [community]
     skills: [skill]
     badges: [badge]
     currentLevel: Int
@@ -207,14 +196,14 @@ export default gql`
   }
 
   type crossUser {
-    _id: String
+    _id: ID
     email: String
     phoneNumber: String
     regenquestUserId: String
   }
 
   type task {
-    _id: String
+    _id: ID
     userID: String
     questID: String
     createdAt: String
@@ -240,7 +229,7 @@ export default gql`
   TODO: Modify data definition at a later time
   """
   type quest {
-    _id: String
+    _id: ID
     name: String
     description: String
     objective: String
@@ -278,7 +267,7 @@ export default gql`
   }
 
   type post {
-    _id: String
+    _id: ID
     userID: String
     title: String
     description: String
@@ -293,12 +282,12 @@ export default gql`
     userID: String
     title: String
     description: String
-    attachments: [String]
-    comments: [commentInput]
+    attachments: [String!]
+    comments: [commentInput!]
   }
 
   type inventory {
-    _id: String
+    _id: ID
     userID: String
     taskLink: String
     itemName: String
@@ -319,7 +308,7 @@ export default gql`
   }
 
   type event {
-    _id: String
+    _id: ID
     name: String
     theme: String
     location: location
@@ -341,12 +330,12 @@ export default gql`
   }
 
   type community {
-    _id: String!
+    _id: ID!
     name: String
     description: String
     objective: String
     initiative: String
-    members: [expandableUser]
+    members: [user]
     tags: [String]
     location: location
     images: [image]
@@ -364,10 +353,10 @@ export default gql`
     description: String
     objective: String
     initiative: String
-    members: [communityMemberInput]
-    tags: [String]
+    members: [communityMemberInput!]
+    tags: [String!]
     location: locationInput
-    images: [imageInput]
+    images: [imageInput!]
   }
 
   type genre {
@@ -395,7 +384,7 @@ export default gql`
   }
 
   type chat {
-    _id: String
+    _id: ID
     members: [String]
     name: String
     description: String
@@ -410,7 +399,7 @@ export default gql`
   }
 
   type message {
-    _id: String
+    _id: ID
     chatID: String
     sentFrom: String
     message: String
@@ -426,12 +415,12 @@ export default gql`
   }
 
   input addMemberToChatInput {
-    _id: String
+    _id: ID
     userID: String
   }
 
   input markMessageAsReadInput {
-    _id: String
+    _id: ID
     userID: String
   }
 
@@ -502,33 +491,19 @@ export default gql`
 
   type Query {
     getUsers: [user] @auth
-    getTasks: [task] @auth
-    getQuests: [quest] @auth
     getPosts: [post] @auth
-    getItems: [inventory] @auth
-    getEvents: [event] @auth
     getCommunities: [community] @auth
-    getGenres: [genre] @auth
-    getTopics: [topic] @auth
-    getMotives: [motive] @auth
 
     findUserbyID(id: String, expand: String): user @auth
-    findTaskbyID(taskID: String): task @auth
-    findQuestbyID(questID: String): quest @auth
     findPostbyID(postID: String): post @auth
-    findInventoryItembyID(itemID: String): inventory @auth
-    findEventbyID(eventID: String): event @auth
     findCommunitybyID(id: String): community @auth
     findCrossUser(email: String): crossUser @auth
 
     getChatsByUserID(userID: String): [chat] @auth
     getMessagesByChatID(chatID: String): [message] @auth
 
-    getNotifications(userID: String): [notification] @auth
-    getUnreadNotifications(userID: String): [notification] @auth
-    markNotificationAsRead(notificationID: String): mutationResponse @auth
-    markAllNotificationsAsRead(userID: String): mutationResponse @auth
-    deleteNotification(notificationID: String): mutationResponse @auth
+    getNotifications(userID: String!): [notification] @auth
+    getUnreadNotifications(userID: String!): [notification] @auth
 
     getToken: JWT @auth
 
@@ -539,31 +514,26 @@ export default gql`
   TODO: Declare and implement delete routines for all necessary models
   """
   type Mutation {
-    createUser(userInput: userInput): mutationResponse @auth
-    createTask(userInput: taskInput): mutationResponse @auth
-    createQuest(userInput: questInput): mutationResponse @auth
-    createPost(userInput: postInput): mutationResponse @auth
-    createInventory(userInput: inventoryInput): mutationResponse @auth
-    createEvent(userInput: eventInput): mutationResponse @auth
-    createCommunity(communityInput: communityInput): mutationResponse @auth
-    createNotification(userInput: notificationInput): mutationResponse @auth
+    createUser(userInput: userInput!): mutationResponse @auth
+    createPost(userInput: postInput!): mutationResponse @auth
+    createCommunity(communityInput: communityInput!): mutationResponse @auth
+    createNotification(userInput: notificationInput!): mutationResponse @auth
+    createChat(userInput: chatInput!): mutationResponse @auth
+    sendRegenquestMessage(userInput: messageInput!): mutationResponse @auth
+    addMemberToChat(userInput: addMemberToChatInput!): mutationResponse @auth
+    markMessageAsRead(userInput: markMessageAsReadInput!): mutationResponse
+      @auth
 
-    createChat(userInput: chatInput): mutationResponse @auth
-    sendRegenquestMessage(userInput: messageInput): mutationResponse @auth
-    addMemberToChat(userInput: addMemberToChatInput): mutationResponse @auth
-    markMessageAsRead(userInput: markMessageAsReadInput): mutationResponse @auth
-
-    updateRegenquestUser(userInput: userInput): mutationResponse @auth
-    updateRegenquestTask(userInput: taskInput): mutationResponse @auth
-    updateRegenquestQuest(userInput: questInput): mutationResponse @auth
-    updateRegenquestPost(userInput: postInput): mutationResponse @auth
-    updateRegenquestInventory(userInput: inventoryInput): mutationResponse @auth
-    updateRegenquestEvent(userInput: eventInput): mutationResponse @auth
-    updateRegenquestCommunity(userInput: communityInput): mutationResponse @auth
-    updateRegenquestGenres(userInput: genreInput): mutationResponse @auth
+    updateRegenquestUser(userInput: userInput!): mutationResponse @auth
+    updateRegenquestPost(userInput: postInput!): mutationResponse @auth
+    updateRegenquestCommunity(userInput: communityInput!): mutationResponse
+      @auth
     updateRegenquestNotification(
-      userInput: notificationInput
+      userInput: notificationInput!
     ): mutationResponse @auth
+    markNotificationAsRead(notificationID: String): mutationResponse @auth
+    markAllNotificationsAsRead(userID: String): mutationResponse @auth
+    deleteNotification(notificationID: String): mutationResponse @auth
 
     setCookieWithToken(token: String!): mutationResponse @verifyToken
     deleteCookieToken: mutationResponse
@@ -571,3 +541,5 @@ export default gql`
     deleteFile(fileName: String!): mutationResponse @auth
   }
 `;
+
+export default schema;
