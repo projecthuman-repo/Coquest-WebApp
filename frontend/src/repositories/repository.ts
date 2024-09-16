@@ -52,7 +52,7 @@ function getFetchQuery(typeName: RepoTypeName): string {
 							... on string {
 								strValue
 							}
-							... on CommunityOutput {
+							... on communityOutput {
 								objValue {
 									_id
 									name
@@ -73,7 +73,7 @@ function getFetchQuery(typeName: RepoTypeName): string {
 										... on string {
 											strValue
 										}
-										... on UserOutput {
+										... on userOutput {
 											objValue {
 												_id
 												username
@@ -134,7 +134,7 @@ function getFetchQuery(typeName: RepoTypeName): string {
 							... on string {
 								strValue
 							}
-							... on UserOutput {
+							... on userOutput {
 								objValue {
 									_id
 									username
