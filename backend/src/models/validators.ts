@@ -1,10 +1,12 @@
-function capitalize(str) {
+import mongoose from "mongoose";
+
+function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.substring(1);
 }
 
 // Return a list of generic array validators for schemas.
 // Expects the name of the array field for error message formatting.
-function arrValidators(idArrName) {
+function arrValidators(idArrName: string) {
   return [
     {
       validator: function (ids) {
@@ -29,7 +31,7 @@ function arrValidators(idArrName) {
 // Return a list of single-element ID validators for schemas, querying the relevant mongoose model as appropriate.
 // Expects a callback function returning a MongoDB model and the name of the ID field for error message formatting.
 // Providing the model via return value of a callback ensures callers never violate circular dependancy rules.
-function idValidators(modelcb, idName) {
+function idValidators(modelcb: () => mongoose.Model<any>, idName: string) {
   return [
     {
       // Ensure a document with the given ID actually exists

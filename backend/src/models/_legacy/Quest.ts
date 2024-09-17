@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { locationSchema } from "./common";
 import { regenDb } from "../db/connection";
 
@@ -18,7 +18,7 @@ import { regenDb } from "../db/connection";
 //budget: budget for the quest
 //tasks: list of Ids of the tasks that belong to this quest
 //hashtags: list of hashtags corresponding to the quest
-const regenquestQuestSchema = new Schema({
+const questSchema = new Schema({
   name: { type: String, required: true },
   description: String,
   objective: String,
@@ -32,7 +32,7 @@ const regenquestQuestSchema = new Schema({
   members: [
     {
       type: Schema.Types.ObjectId,
-      ref: "regenquestUser",
+      ref: "User",
     },
   ],
   history: [String],
@@ -40,10 +40,11 @@ const regenquestQuestSchema = new Schema({
   tasks: [
     {
       type: Schema.Types.ObjectId,
-      ref: "regenquestTask",
+      ref: "Task",
     },
   ],
   hashtags: [String],
 });
 
-export default regenDb.model("regenquestQuest", regenquestQuestSchema);
+export type QuestSchemaType = InferSchemaType<typeof questSchema>;
+export const Quest = regenDb.model("Quest", questSchema);

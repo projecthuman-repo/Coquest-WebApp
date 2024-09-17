@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { regenDb } from "../db/connection";
 
 //postID: unique id of the post
@@ -9,10 +9,10 @@ import { regenDb } from "../db/connection";
 //attachments: links to all the files attached to the post such as images
 //createdAt: when was the post created
 //comments: list of all the comments on the post
-const regenquestPostSchema = new Schema({
+const postSchema = new Schema({
   userID: {
     type: Schema.Types.ObjectId,
-    ref: "regenquestUser",
+    ref: "User",
     required: true,
   },
   title: { type: String, required: true },
@@ -24,7 +24,7 @@ const regenquestPostSchema = new Schema({
     {
       userID: {
         type: Schema.Types.ObjectId,
-        ref: "regenquestUser",
+        ref: "User",
         required: true,
       },
       body: { type: String, required: true },
@@ -32,4 +32,5 @@ const regenquestPostSchema = new Schema({
   ],
 });
 
-export default regenDb.model("regenquestPost", regenquestPostSchema);
+export type PostSchemaType = InferSchemaType<typeof postSchema>;
+export const Post = regenDb.model("Post", postSchema);

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { InferSchemaType } from "mongoose";
 import { crossDb } from "../../db/connection";
 
 const userSchema = new mongoose.Schema({
@@ -22,6 +22,5 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const CrossPlatformUser = crossDb.model("User", userSchema);
-
-export default CrossPlatformUser;
+export type CrossPlatformUserSchemaType = InferSchemaType<typeof userSchema>;
+export const CrossPlatformUser = crossDb.model("User", userSchema);
