@@ -60,52 +60,52 @@ const schema = gql`
     sub: String
   }
 
-  type skill {
+  type Skill {
     skillName: String
     skillLevel: String
   }
 
-  input skillInput {
+  input SkillInput {
     skillName: String
     skillLevel: String
   }
 
-  type badge {
+  type Badge {
     badgeName: String
     badgeDescription: String
   }
 
-  input badgeInput {
+  input BadgeInput {
     badgeName: String
     badgeDescription: String
   }
 
-  type recommendations {
+  type Recommendation {
+    name: String
+    Comment: String
+  }
+
+  input RecommendationInput {
     name: String
     comment: String
   }
 
-  input recommendationsInput {
-    name: String
-    comment: String
-  }
-
-  type location {
+  type Location {
     lat: Float
     lng: Float
   }
 
-  input locationInput {
+  input LocationInput {
     lat: Float!
     lng: Float!
   }
 
-  type comment {
+  type Comment {
     username: String
     body: String
   }
 
-  input commentInput {
+  input CommentInput {
     username: String!
     body: String!
   }
@@ -128,13 +128,13 @@ const schema = gql`
 
   input userCommunityInput {
     type: expandedRepType!
-    objValue: communityInput
+    objValue: CommunityInput
     strValue: String
   }
 
   union registered = bool | int
 
-  type notification {
+  type Notification {
     _id: ID
     userID: String
     title: String
@@ -146,7 +146,7 @@ const schema = gql`
     isDeleted: Boolean
   }
 
-  input notificationInput {
+  input NotificationInput {
     id: String
     userID: String
     title: String
@@ -157,45 +157,45 @@ const schema = gql`
     isDeleted: Boolean
   }
 
-  type user {
+  type User {
     _id: ID!
     userID: String
     name: Name
     username: String
     email: String
     registered: registered
-    location: location
+    location: Location
     images: [image]
     motives: [String]
     biography: String
     topics: [String]
-    communities: [community]
-    skills: [skill]
-    badges: [badge]
+    communities: [Community]
+    skills: [Skill]
+    badges: [Badge]
     currentLevel: Int
-    recommendations: [recommendations]
+    recommendations: [Recommendation]
   }
 
-  input userInput {
+  input UserInput {
     id: String
     userID: String
     name: NameInput
     username: String
     email: String
     registered: registeredInput
-    location: locationInput
+    location: LocationInput
     images: [imageInput]
     motives: [String]
     biography: String
     topics: [String]
     communities: [userCommunityInput]
-    skills: [skillInput]
-    badges: [badgeInput]
+    skills: [SkillInput]
+    badges: [BadgeInput]
     currentLevel: Int
-    recommendations: [recommendationsInput]
+    recommendations: [RecommendationInput]
   }
 
-  type crossUser {
+  type CrossUser {
     _id: ID
     email: String
     phoneNumber: String
@@ -236,7 +236,7 @@ const schema = gql`
     initiative: String
     type: String
     duration: String
-    location: location
+    location: Location
     startDate: String
     endDate: String
     requirements: [String]
@@ -255,7 +255,7 @@ const schema = gql`
     initiative: String
     type: String
     duration: String
-    location: locationInput
+    location: LocationInput
     startDate: String
     endDate: String
     requirements: [String]
@@ -266,7 +266,7 @@ const schema = gql`
     hashtags: [String]
   }
 
-  type post {
+  type Post {
     _id: ID
     userID: String
     title: String
@@ -274,16 +274,16 @@ const schema = gql`
     likes: Int
     attachments: [String]
     createdAt: String
-    comments: [comment]
+    comments: [Comment]
   }
 
-  input postInput {
+  input PostInput {
     id: String
     userID: String
     title: String
     description: String
     attachments: [String!]
-    comments: [commentInput!]
+    comments: [CommentInput!]
   }
 
   type inventory {
@@ -311,7 +311,7 @@ const schema = gql`
     _id: ID
     name: String
     theme: String
-    location: location
+    location: Location
     time: String
     description: String
     layer: String
@@ -322,32 +322,32 @@ const schema = gql`
     id: String
     name: String
     theme: String
-    location: locationInput
+    location: LocationInput
     time: String
     description: String
     layer: String
     hashtags: [String]
   }
 
-  type community {
+  type Community {
     _id: ID!
     name: String
     description: String
     objective: String
     initiative: String
-    members: [user]
+    members: [User]
     tags: [String]
-    location: location
+    location: Location
     images: [image]
   }
 
   input communityMemberInput {
     type: expandedRepType!
-    objValue: userInput
+    objValue: UserInput
     strValue: String
   }
 
-  input communityInput {
+  input CommunityInput {
     id: String
     name: String
     description: String
@@ -355,7 +355,7 @@ const schema = gql`
     initiative: String
     members: [communityMemberInput!]
     tags: [String!]
-    location: locationInput
+    location: LocationInput
     images: [imageInput!]
   }
 
@@ -383,7 +383,7 @@ const schema = gql`
     password: String
   }
 
-  type chat {
+  type Chat {
     _id: ID
     members: [String]
     name: String
@@ -391,44 +391,44 @@ const schema = gql`
     createdAt: String
   }
 
-  input chatInput {
+  input ChatInput {
     id: String
     members: [String]
     name: String
     description: String
   }
 
-  type message {
+  type Message {
     _id: ID
     chatID: String
     sentFrom: String
-    message: String
+    Message: String
     time: String
     unreadBy: [String]
   }
 
-  input messageInput {
+  input MessageInput {
     id: String
     chatID: String
     sentFrom: String
     message: String
   }
 
-  input addMemberToChatInput {
+  input AddMemberToChatInput {
     _id: ID
     userID: String
   }
 
-  input markMessageAsReadInput {
+  input MarkMessageAsReadInput {
     _id: ID
     userID: String
   }
 
-  type topic {
+  type Topic {
     name: String
   }
 
-  type motive {
+  type Motive {
     name: String
   }
 
@@ -490,22 +490,22 @@ const schema = gql`
   directive @formatObj(dbName: String, modelName: String) on FIELD_DEFINITION
 
   type Query {
-    getUsers: [user] @auth
-    getPosts: [post] @auth
-    getCommunities: [community] @auth
-    getMotives: [motive] @auth
-    getTopics: [topic] @auth
+    getUsers: [User] @auth
+    getPosts: [Post] @auth
+    getCommunities: [Community] @auth
+    getMotives: [Motive] @auth
+    getTopics: [Topic] @auth
 
-    findUserbyID(id: String, expand: String): user @auth
-    findPostbyID(postID: String): post @auth
-    findCommunitybyID(id: String): community @auth
-    findCrossUser(email: String): crossUser @auth
+    findUserbyID(id: String, expand: String): User @auth
+    findPostbyID(postID: String): Post @auth
+    findCommunitybyID(id: String): Community @auth
+    findCrossUser(email: String): CrossUser @auth
 
-    getChatsByUserID(userID: String): [chat] @auth
-    getMessagesByChatID(chatID: String): [message] @auth
+    getChatsByUserID(userID: String): [Chat] @auth
+    getMessagesByChatID(chatID: String): [Message] @auth
 
-    getNotifications(userID: String!): [notification] @auth
-    getUnreadNotifications(userID: String!): [notification] @auth
+    getNotifications(userID: String!): [Notification] @auth
+    getUnreadNotifications(userID: String!): [Notification] @auth
 
     getToken: JWT @auth
 
@@ -516,20 +516,20 @@ const schema = gql`
   TODO: Declare and implement delete routines for all necessary models
   """
   type Mutation {
-    createUser(userInput: userInput!): mutationResponse @auth
-    createPost(userInput: postInput!): mutationResponse @auth
-    createCommunity(communityInput: communityInput!): mutationResponse @auth
-    createNotification(userInput: notificationInput!): mutationResponse @auth
-    createChat(userInput: chatInput!): mutationResponse @auth
-    sendMessage(userInput: messageInput!): mutationResponse @auth
-    addMemberToChat(userInput: addMemberToChatInput!): mutationResponse @auth
-    markMessageAsRead(userInput: markMessageAsReadInput!): mutationResponse
+    createUser(userInput: UserInput!): mutationResponse @auth
+    createPost(userInput: PostInput!): mutationResponse @auth
+    createCommunity(userInput: CommunityInput!): mutationResponse @auth
+    createNotification(userInput: NotificationInput!): mutationResponse @auth
+    createChat(userInput: ChatInput!): mutationResponse @auth
+    sendMessage(userInput: MessageInput!): mutationResponse @auth
+    addMemberToChat(userInput: AddMemberToChatInput!): mutationResponse @auth
+    markMessageAsRead(userInput: MarkMessageAsReadInput!): mutationResponse
       @auth
 
-    updateUser(userInput: userInput!): mutationResponse @auth
-    updatePost(userInput: postInput!): mutationResponse @auth
-    updateCommunity(userInput: communityInput!): mutationResponse @auth
-    updateNotification(userInput: notificationInput!): mutationResponse @auth
+    updateUser(userInput: UserInput!): mutationResponse @auth
+    updatePost(userInput: PostInput!): mutationResponse @auth
+    updateCommunity(userInput: CommunityInput!): mutationResponse @auth
+    updateNotification(userInput: NotificationInput!): mutationResponse @auth
     markNotificationAsRead(notificationID: String): mutationResponse @auth
     markAllNotificationsAsRead(userID: String): mutationResponse @auth
     deleteNotification(notificationID: String): mutationResponse @auth

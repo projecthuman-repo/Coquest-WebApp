@@ -73,6 +73,7 @@ function getFetchQuery(typeName: RepoTypeName): string {
 			`;
 			break;
 		case "Community":
+			// TODO: Add member data, the backend is not done yet
 			ret = gql`
 				query Query($id: String) {
 					findCommunitybyID(id: $id) {
@@ -89,22 +90,6 @@ function getFetchQuery(typeName: RepoTypeName): string {
 						images {
 							contentType
 							path
-						}
-						members {
-							type: __typename
-							... on string {
-								strValue
-							}
-							... on userOutput {
-								objValue {
-									_id
-									username
-									images {
-										contentType
-										path
-									}
-								}
-							}
 						}
 					}
 				}
@@ -197,7 +182,7 @@ class Repository<T extends Model> {
 		const lowerTypeName = typeName.toLowerCase();
 
 		this.updateMut = gql`
-			mutation Update${typeName}($${lowerTypeName}Input: ${lowerTypeName}Input!) {
+			mutation Update${typeName}($${lowerTypeName}Input: ${typeName}Input!) {
 					update${typeName}(${lowerTypeName}Input: $${lowerTypeName}Input) {
 						code
 						response
@@ -206,7 +191,7 @@ class Repository<T extends Model> {
 			`;
 
 		this.createMut = gql`
-			mutation Create${typeName}($${lowerTypeName}Input: ${lowerTypeName}Input!) {
+			mutation Create${typeName}($${lowerTypeName}Input: ${typeName}Input!) {
 				create${typeName}(${lowerTypeName}Input: $${lowerTypeName}Input) {
 					code
 					response

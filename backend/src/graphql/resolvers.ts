@@ -351,7 +351,7 @@ const resolvers: Resolvers = {
     async createCommunity(
       _parent,
       {
-        communityInput: {
+        userInput: {
           name,
           description,
           objective,
