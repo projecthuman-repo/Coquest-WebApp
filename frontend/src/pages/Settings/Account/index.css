@@ -75,7 +75,7 @@
 .detail {
   display: flex;
   justify-content: space-between;
-  font-size: 16px; /* Adjusted for consistency */
+  font-size: 16px; /* Adjusted for consistency font size*/
   overflow-wrap: anywhere;
 }
 
