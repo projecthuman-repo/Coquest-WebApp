@@ -1,6 +1,6 @@
 .privacy-security-section {
-  padding: 10px 100px;
-  width: 600px; /* Increased width to make the section bigger */
+  padding: 10px 10%;
+  width: 100%; /* Increased width to make the section bigger */
   background-color: #fff;
 }
 
@@ -13,4 +13,10 @@
 .phone-number {
   display: flex;
   margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .privacy-security-section {
+    padding: 0 5%;
+  }
 }

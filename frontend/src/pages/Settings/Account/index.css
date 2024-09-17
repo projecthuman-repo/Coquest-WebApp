@@ -1,6 +1,6 @@
 .account-section {
-  padding: 0px 100px;
-  width: 600px; /* Increased width to make the section bigger */
+  padding: 0px 10%;
+  width: 100%; /* Increased width to make the section bigger */
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -49,6 +49,7 @@
   font-size: 16px; /* Larger font for better readability */
   color: #666666;
   font-weight: 400;
+  overflow-wrap: anywhere;
 }
 
 .account-details {
@@ -75,6 +76,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 16px; /* Adjusted for consistency */
+  overflow-wrap: anywhere;
 }
 
 .detail-label {
@@ -93,4 +95,10 @@
 .edit-link:hover {
   text-decoration: underline;
   font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .account-section {
+    padding: 0 5%;
+  }
 }
