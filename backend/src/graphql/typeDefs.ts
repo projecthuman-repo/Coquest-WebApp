@@ -135,16 +135,16 @@ export default gql`
 
   union registered = bool | int
 
-  type UserOutput {
+  type regenquestUserOutput {
     objValue: regenquestUser!
   }
 
-  type CommunityOutput {
+  type regenquestCommunityOutput {
     objValue: regenquestCommunity!
   }
 
-  union expandableUser = UserOutput | string
-  union expandableCommunity = CommunityOutput | string
+  union expandableUser = regenquestUserOutput | string
+  union expandableCommunity = regenquestCommunityOutput | string
 
   type regenquestNotification {
     _id: String
@@ -515,7 +515,7 @@ export default gql`
 
     findUserbyID(id: String, expand: String): regenquestUser
       @auth
-      @formatObj(dbName: "regenquest", modelName: "User")
+      @formatObj(dbName: "regenquest", modelName: "regenquestUser")
     findTaskbyID(taskID: String): regenquestTask @auth
     findQuestbyID(questID: String): regenquestQuest @auth
     findPostbyID(postID: String): regenquestPost @auth
@@ -523,7 +523,7 @@ export default gql`
     findEventbyID(eventID: String): regenquestEvent @auth
     findCommunitybyID(id: String): regenquestCommunity
       @auth
-      @formatObj(dbName: "regenquest", modelName: "Community")
+      @formatObj(dbName: "regenquest", modelName: "regenquestCommunity")
     findCrossUser(email: String): regenquestCrossUser @auth
 
     getChatsByUserID(userID: String): [regenquestChat] @auth
@@ -544,19 +544,24 @@ export default gql`
   TODO: Declare and implement delete routines for all necessary models
   """
   type Mutation {
-    createUser(userInput: regenquestUserInput): mutationResponse @auth
-    createTask(userInput: regenquestTaskInput): mutationResponse @auth
-    createQuest(userInput: regenquestQuestInput): mutationResponse @auth
-    createPost(userInput: regenquestPostInput): mutationResponse @auth
-    createInventory(userInput: regenquestInventoryInput): mutationResponse @auth
-    createEvent(userInput: regenquestEventInput): mutationResponse @auth
-    createCommunity(communityInput: regenquestCommunityInput): mutationResponse
+    createRegenquestUser(userInput: regenquestUserInput): mutationResponse @auth
+    createRegenquestTask(userInput: regenquestTaskInput): mutationResponse @auth
+    createRegenquestQuest(userInput: regenquestQuestInput): mutationResponse
       @auth
-    createNotification(
+    createRegenquestPost(userInput: regenquestPostInput): mutationResponse @auth
+    createRegenquestInventory(
+      userInput: regenquestInventoryInput
+    ): mutationResponse @auth
+    createRegenquestEvent(userInput: regenquestEventInput): mutationResponse
+      @auth
+    createRegenquestCommunity(
+      communityInput: regenquestCommunityInput
+    ): mutationResponse @auth
+    createRegenquestNotification(
       userInput: regenquestNotificationInput
     ): mutationResponse @auth
 
-    createChat(userInput: regenquestChatInput): mutationResponse @auth
+    createRegenquestChat(userInput: regenquestChatInput): mutationResponse @auth
     sendRegenquestMessage(userInput: regenquestMessageInput): mutationResponse
       @auth
     addMemberToChat(userInput: addMemberToChatInput): mutationResponse @auth

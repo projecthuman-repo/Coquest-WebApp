@@ -18,7 +18,7 @@ import { regenDb } from "../db/connection";
 //budget: budget for the quest
 //tasks: list of Ids of the tasks that belong to this quest
 //hashtags: list of hashtags corresponding to the quest
-const questSchema = new Schema({
+const regenquestQuestSchema = new Schema({
   name: { type: String, required: true },
   description: String,
   objective: String,
@@ -32,7 +32,7 @@ const questSchema = new Schema({
   members: [
     {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "regenquestUser",
     },
   ],
   history: [String],
@@ -40,10 +40,10 @@ const questSchema = new Schema({
   tasks: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Task",
+      ref: "regenquestTask",
     },
   ],
   hashtags: [String],
 });
 
-export const Quest = regenDb.model("Quest", questSchema);
+export default regenDb.model("regenquestQuest", regenquestQuestSchema);

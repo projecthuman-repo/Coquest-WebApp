@@ -69,7 +69,11 @@ export class Community implements Model {
 		this.initiative = params.initiative;
 		this.location = params.location;
 		this.members = params.members
-			? (initExpandable(params.members, "User", User) as ExpandableUser[])
+			? (initExpandable(
+					params.members,
+					"regenquestUser",
+					User,
+				) as ExpandableUser[])
 			: params.members;
 		this.tags = params.tags;
 		this.images = params.images;

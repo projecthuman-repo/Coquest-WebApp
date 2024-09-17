@@ -10,7 +10,7 @@ import { regenDb } from "../db/connection";
 //description: description of the event
 //layer: the layer this event blongs to
 //hashtags[]: list of all the hashtags for this event
-const eventSchema = new Schema({
+const regenquestEventSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -30,4 +30,4 @@ const eventSchema = new Schema({
   ],
 });
 
-export const Event = regenDb.model("Event", eventSchema);
+export default regenDb.model("regenquestEvent", regenquestEventSchema);

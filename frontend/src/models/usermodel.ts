@@ -155,7 +155,7 @@ export class User implements Model {
 		this.communities = params.communities
 			? (initExpandable(
 					params.communities,
-					"Community",
+					"regenquestCommunity",
 					Community,
 				) as ExpandableCommunity[])
 			: params.communities;
