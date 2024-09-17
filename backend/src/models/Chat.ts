@@ -6,11 +6,11 @@ import { regenDb } from "../db/connection";
 //name: name of the chat
 //description: description of the chat
 //createdAt: time the chat was created
-const regenquestChatSchema = new Schema({
+const chatSchema = new Schema({
   members: [
     {
       type: Schema.Types.ObjectId,
-      ref: "regenquestUser",
+      ref: "User",
     },
   ],
   name: String,
@@ -21,4 +21,4 @@ const regenquestChatSchema = new Schema({
   },
 });
 
-export default regenDb.model("regenquestChat", regenquestChatSchema);
+export const Chat = regenDb.model("Chat", chatSchema);

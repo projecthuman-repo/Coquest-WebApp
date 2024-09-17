@@ -1,18 +1,18 @@
 // @ts-nocheck
-import User from "../models/regenquestUser";
-import Task from "../models/regenquestTask";
-import Quest from "../models/regenquestQuest";
-import Post from "../models/regenquestPost";
-import Inventory from "../models/regenquestInventory";
-import Event from "../models/regenquestEvent";
-import Community from "../models/regenquestCommunity";
-import Genres from "../models/regenquestGenres";
-import Notification from "../models/regenquestNotification";
-import Chat from "../models/regenquestChat";
-import Message from "../models/regenquestMessage";
-import Topic from "../models/regenquestTopic";
-import Motive from "../models/regenquestMotive";
-import CrossPlatformUser from "../models/crossPlatform/User";
+import { User } from "../models/User";
+import { Task } from "../models/Task";
+import { Quest } from "../models/Quest";
+import { Post } from "../models/Post";
+import { Inventory } from "../models/Inventory";
+import { Event } from "../models/Event";
+import { Community } from "../models/Community";
+import { Genre } from "../models/Genre";
+import { Notification } from "../models/Notification";
+import { Chat } from "../models/Chat";
+import { Message } from "../models/Message";
+import { Topic } from "../models/Topic";
+import { Motive } from "../models/Motive";
+import { CrossPlatformUser } from "../models/crossPlatform/User";
 import { v4 as uuidv4 } from "uuid";
 import { Storage } from "@google-cloud/storage";
 import jwt from "jsonwebtoken";
@@ -36,12 +36,12 @@ export default {
   },
   expandableUser: {
     __resolveType(obj) {
-      return deduceExpandableType(obj, "regenquestUser");
+      return deduceExpandableType(obj, "User");
     },
   },
   expandableCommunity: {
     __resolveType(obj) {
-      return deduceExpandableType(obj, "regenquestCommunity");
+      return deduceExpandableType(obj, "Community");
     },
   },
   Query: {
@@ -258,7 +258,7 @@ export default {
     //this method return a list of all the genres in the db
     async getGenres(_parent, _, _context, _info) {
       try {
-        return await Genres.findOne();
+        return await Genre.findOne();
       } catch {
         throw new Error("Error getting genres");
       }
@@ -396,9 +396,9 @@ export default {
     },
   },
   Mutation: {
-    //this method is the resolver for createRegenquestUser,
+    //this method is the resolver for createUser,
     //it creates and adds the user to the db
-    async createRegenquestUser(
+    async createUser(
       _parent,
       {
         userInput: {
@@ -465,9 +465,9 @@ export default {
       }
     },
 
-    //resolver for createRegenquestTask,
+    //resolver for createTask,
     //this method creates and add a task to the db
-    async createRegenquestTask(
+    async createTask(
       _parent,
       {
         userInput: {
@@ -507,9 +507,9 @@ export default {
       }
     },
 
-    //resolver for createRegenquestQuest,
+    //resolver for createQuest,
     //this method creates and add a quest to the db
-    async createRegenquestQuest(
+    async createQuest(
       _parent,
       {
         userInput: {
@@ -564,9 +564,9 @@ export default {
       }
     },
 
-    //resolver for createRegenquestPost,
+    //resolver for createPost,
     //this method creates and add a post to the db
-    async createRegenquestPost(
+    async createPost(
       _parent,
       { userInput: { userID, title, description, attachments, comments } },
       _context,
@@ -595,9 +595,9 @@ export default {
       }
     },
 
-    //resolver for createRegenquestInventory,
+    //resolver for createInventory,
     //this method creates and add an inventory item to the db
-    async createRegenquestInventory(
+    async createInventory(
       _parent,
       {
         userInput: { userID, taskLink, itemName, description, image, history },
@@ -628,9 +628,9 @@ export default {
       }
     },
 
-    //resolver for createRegenquestEvent,
+    //resolver for createEvent,
     //this method created and add an event to the db
-    async createRegenquestEvent(
+    async createEvent(
       _parent,
       {
         userInput: {
@@ -669,9 +669,9 @@ export default {
       }
     },
 
-    //resolver for createRegenquestCommunity,
+    //resolver for createCommunity,
     //this method creates and add a community to the db
-    async createRegenquestCommunity(
+    async createCommunity(
       _parent,
       {
         communityInput: {
@@ -713,9 +713,9 @@ export default {
       }
     },
 
-    //resolver for createRegenquestNotification,
+    //resolver for createNotification,
     //this method creates and stores a notification to the db
-    async createRegenquestNotification(
+    async createNotification(
       _parent,
       { userInput: { userID, title, content, image, link, isRead, isDeleted } },
       _context,
@@ -752,7 +752,7 @@ export default {
 
     //resolver for createRegenqestChat,
     //this method creates and add a chat to the db
-    async createRegenquestChat(
+    async createChat(
       _parent,
       { userInput: { members, name, description } },
       _context,
@@ -1394,14 +1394,14 @@ export default {
 
       try {
         // TODO: Figure out what is actually being done here
-        const result = await Genres.countDocuments();
+        const result = await Genre.countDocuments();
 
         if (result === 0) {
-          const newGenres = new Genres({ genre: genre });
+          const newGenres = new Genre({ genre: genre });
           await newGenres.save();
         } else {
           const updateGenres = { genre: genre };
-          await Genres.updateMany(updateGenres);
+          await Genre.updateMany(updateGenres);
         }
 
         return { code: 0, response: "successful" };
