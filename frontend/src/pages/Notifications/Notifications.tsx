@@ -13,7 +13,7 @@ const StyledBox = styled(Box)({
 	"& > :not(style)": {
 		m: 1,
 		width: 699,
-		height: 722,
+		height: 700,
 	},
 	borderRadius: 10,
 });
@@ -22,13 +22,17 @@ const StyledButton = styled(Button)({
 	width: 91.49,
 	height: 40,
 	marginTop: 66,
-	marginLeft: 566.5,
+	marginRight: 20,
 	backgroundColor: "#D9D9D9",
 	borderRadius: 20,
 	color: "black",
 	fontSize: 16,
 	fontWeight: 600,
 	lineHeight: 24,
+	float: "right",
+	":hover": {
+		backgroundColor: "#bcbcbc",
+	},
 });
 
 const StyledArrowIcon = styled(KeyboardArrowRightIcon)({
@@ -151,7 +155,7 @@ const Notifications: React.FC = () => {
 					})}
 				</div>
 				<StyledBox className="notifications-container-right">
-					<Paper elevation={3}>
+					<Paper elevation={3} sx={{ width: "100% !important" }}>
 						{selectedNotification !== null &&
 							notifications[selectedNotification] && (
 								<>

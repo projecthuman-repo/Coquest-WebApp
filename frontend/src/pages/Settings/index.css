@@ -12,12 +12,12 @@
 }
 
 .settings-sidebar {
-  width: 500px; /* Fixed width for sidebar */
+  width: 40%; /* Fixed width for sidebar */
   border-right: 1px solid #ddd;
   padding-top: 10px;
   display: flex;
   flex-direction: column;
-  padding-left: 200px;
+  padding-left: 11.5%;
   padding-right: 30px;
 }
 
@@ -36,6 +36,7 @@
   transition: background-color 0.3s;
   margin: 0 10px;
   font-weight: 600;
+  overflow-wrap: anywhere;
 }
 
 .sidebar-button .icon {
@@ -61,4 +62,14 @@
   align-items: flex-start; /* Align content to start */
   justify-content: flex-start;
   margin-left: 20px; /* Margin to separate from sidebar */
+}
+
+@media (max-width: 768px) {
+  .settings-sidebar {
+    padding-left: 6.5%;
+    width: 33%;
+  }
+  .settings-content {
+    padding: 0;
+  }
 }

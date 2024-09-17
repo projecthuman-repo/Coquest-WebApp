@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   margin-top: 57px;
-  margin-left: 212px;
+  margin-left: 175px;
 }
 .notifications-title {
   /* H1 */
@@ -31,75 +31,66 @@
   color: #999999;
 }
 .notifications-container {
-  /* width: 1059px; */
-  height: 833px;
-  margin-left: 212px;
-  margin-top: 24px;
-  border-radius: 10px;
+  margin-top: 12px;
+  margin-left: 175px;
   display: flex;
-  align-items: top;
+  align-items: flex-start;
   justify-content: flex-start;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .notifications-container-left {
-  float: left;
   display: flex;
   flex-direction: column;
-  width: 340px;
-  height: 833px;
   gap: 16px;
+  flex: 0 0 30%; /* Flexible width */
+  min-width: 200px;
 }
 
-.display-new-notifications-title {
-  width: 340px;
-  height: 69px;
-  background: #d9d9d9;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-align: left;
-  text-indent: 30px;
-  margin-right: 20px;
-  /* font */
-  font-family: "Poppins";
-  font-weight: 700;
-  /* identical to box height */
-  color: #000000;
-}
+.display-new-notifications-title,
 .display-notifications-title {
-  width: 340px;
+  width: 100%;
   height: 69px;
+  background: #d9d9d9;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  text-align: left;
-  text-indent: 30px;
-  border-radius: 10px;
-  /* Inside auto layout */
-  background: #d9d9d9;
-  border-radius: 10px;
-  /* font */
-  font-family: "Poppins";
+  padding: 0 20px;
+  font-family: "Poppins", sans-serif;
   font-weight: 700;
-  /* identical to box height */
+}
+
+.display-notifications-title {
   color: #666666;
 }
+
+.display-new-notifications-title,
+.display-notifications-title:hover {
+  color: #333333;
+  cursor: pointer;
+}
+
 .notifications-container-right {
-  float: right;
-  width: 699px;
-  height: 722px;
+  flex: 0 0 50%;
+  min-width: 300px;
+  padding: 0px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
 }
 .notifications-container-right-image-holder {
-  width: 612.87px;
-  height: 320px;
+  width: 90%;
+  height: 300px;
   margin-top: 37px;
-  margin-left: 43px;
+  margin-left: auto;
+  margin-right: auto;
   background: #a9a9a9;
   border-radius: 10px;
 }
 .notifications-container-right-contain {
-  width: 615.08px;
+  width: 80%;
   height: 216px;
   margin-top: 20px;
   margin-left: 43px;
@@ -110,4 +101,24 @@
   font-size: 16px;
   line-height: 24px;
   color: #000000;
+}
+
+/* Media queries for smaller screens */
+@media (max-width: 768px) {
+  .notifications-container {
+    margin-left: 135px;
+    margin-right: 50px;
+  }
+  .notifications-container {
+    flex-direction: column; /* Stacks the containers vertically on smaller screens */
+    align-items: stretch; /* Stretch containers to full width */
+  }
+
+  .notifications-container-left,
+  .notifications-container-right {
+    width: 100%; /* Full width on small screens */
+    margin-bottom: 20px; /* Add spacing between stacked elements */
+    margin-left: 0;
+    margin-right: 20px;
+  }
 }

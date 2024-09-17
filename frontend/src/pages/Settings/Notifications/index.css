@@ -1,6 +1,6 @@
 .notifications-section {
-  padding: 0px 100px;
-  width: 600px; /* Increased width to make the section bigger */
+  padding: 0px 10%;
+  width: 100%; /* Increased width to make the section bigger */
   display: flex;
   flex-direction: column;
   background-color: #fff;
@@ -57,4 +57,10 @@
   width: 16px;
   height: 16px;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .notifications-section {
+    padding: 0 5%;
+  }
 }
