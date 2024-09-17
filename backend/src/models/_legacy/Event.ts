@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { locationSchema } from "./common";
 import { regenDb } from "../db/connection";
 
@@ -10,7 +10,7 @@ import { regenDb } from "../db/connection";
 //description: description of the event
 //layer: the layer this event blongs to
 //hashtags[]: list of all the hashtags for this event
-const regenquestEventSchema = new Schema({
+const eventSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -30,4 +30,5 @@ const regenquestEventSchema = new Schema({
   ],
 });
 
-export default regenDb.model("regenquestEvent", regenquestEventSchema);
+export type EventSchemaType = InferSchemaType<typeof eventSchema>;
+export const Event = regenDb.model("Event", eventSchema);

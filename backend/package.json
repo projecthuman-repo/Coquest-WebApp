@@ -16,7 +16,8 @@
     "lint:nix": "eslint .; prettier . -c",
     "lint-fix": "run-script-os",
     "lint-fix:windows": "eslint --fix . & prettier . --write",
-    "lint-fix:nix": "eslint --fix .; prettier . --write"
+    "lint-fix:nix": "eslint --fix .; prettier . --write",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
     "@apollo/server": "^4.11.0",
@@ -39,7 +40,14 @@
   "devDependencies": {
     "@eslint/js": "^9.4.0",
     "@google-cloud/functions-framework": "^3.3.0",
+    "@graphql-codegen/cli": "5.0.2",
+    "@graphql-codegen/introspection": "4.0.3",
+    "@graphql-codegen/typescript": "4.0.9",
+    "@graphql-codegen/typescript-mongodb": "3.0.0",
+    "@graphql-codegen/typescript-resolvers": "4.2.1",
+    "@parcel/watcher": "^2.4.1",
     "@types/cookie-parser": "^1.4.7",
+    "@types/cors": "^2.8.17",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^22.5.4",
@@ -52,6 +60,6 @@
     "prettier": "^3.3.2",
     "run-script-os": "^1.1.6",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.6.2"
   }
 }

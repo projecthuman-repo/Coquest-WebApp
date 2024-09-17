@@ -87,7 +87,7 @@ function coerceExpandable(expandable, propName) {
 
 // Introspects the type of an expandable instance and sniffs out the type of the object `expandableObj`.
 // Returns one of the valid expandable member types: string or `expandedTypeName`
-function deduceExpandableType(expandableObj, expandedTypeName) {
+function deduceExpandableType(expandableObj, expandedTypeName: string) {
   if ("strValue" in expandableObj) {
     return "string";
   } else if ("objValue" in expandableObj) {

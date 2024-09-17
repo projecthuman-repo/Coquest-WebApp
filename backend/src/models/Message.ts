@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { regenDb } from "../db/connection";
 
 //messageID: unique id of the message
@@ -7,15 +7,15 @@ import { regenDb } from "../db/connection";
 //message: content of the message
 //time: time this message was sent
 //unreadBy: list of users from chat that have not read the message
-const regenquestMessageSchema = new Schema({
+const messageSchema = new Schema({
   chatID: {
     type: Schema.Types.ObjectId,
-    ref: "regenquestChat",
+    ref: "Chat",
     required: true,
   },
   sentFrom: {
     type: Schema.Types.ObjectId,
-    ref: "regenquestUser",
+    ref: "User",
     required: true,
   },
   message: {
@@ -29,9 +29,10 @@ const regenquestMessageSchema = new Schema({
   unreadBy: [
     {
       type: Schema.Types.ObjectId,
-      ref: "regenquestUser",
+      ref: "User",
     },
   ],
 });
 
-export default regenDb.model("regenquestMessage", regenquestMessageSchema);
+export type messageSchemaType = InferSchemaType<typeof messageSchema>;
+export const Message = regenDb.model("Message", messageSchema);

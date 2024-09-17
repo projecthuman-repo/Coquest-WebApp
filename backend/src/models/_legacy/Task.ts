@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { regenDb } from "../db/connection";
 
 //taskID: unique id of the task
@@ -10,16 +10,16 @@ import { regenDb } from "../db/connection";
 //requirements: list of requirements
 //completionStatus: true if task is completed, false if task is not completed
 //history: history of the task
-const regenquestTaskSchema = new Schema({
+const taskSchema = new Schema({
   userID: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: "regenquestUser",
+    ref: "User",
   },
   questID: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: "regenquestQuest",
+    ref: "Quest",
   },
   createdAt: { type: Date, default: Date.now },
   name: { type: String, required: true },
@@ -29,4 +29,5 @@ const regenquestTaskSchema = new Schema({
   history: [String],
 });
 
-export default regenDb.model("regenquestTask", regenquestTaskSchema);
+export type TaskSchemaType = InferSchemaType<typeof taskSchema>;
+export const Task = regenDb.model("Task", taskSchema);

@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import { imageSchema } from "./common";
 import { regenDb } from "../db/connection";
 
@@ -10,15 +10,15 @@ import { regenDb } from "../db/connection";
 //description: description of the item
 //image: link to the image of the item
 //history: list of userID that owned this item previously
-const regenquestInventorySchema = new Schema({
+const inventorySchema = new Schema({
   userID: {
     type: Schema.Types.ObjectId,
-    ref: "regenquestUser",
+    ref: "User",
     required: true,
   },
   taskLink: {
     type: Schema.Types.ObjectId,
-    ref: "regenquestTask",
+    ref: "Task",
     required: true,
   },
   itemName: {
@@ -34,9 +34,10 @@ const regenquestInventorySchema = new Schema({
   history: [
     {
       type: Schema.Types.ObjectId,
-      ref: "regenquestUser",
+      ref: "User",
     },
   ],
 });
 
-export default regenDb.model("regenquestInventory", regenquestInventorySchema);
+export type InventorySchemaType = InferSchemaType<typeof inventorySchema>;
+export const Inventory = regenDb.model("Inventory", inventorySchema);
