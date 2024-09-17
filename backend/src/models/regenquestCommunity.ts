@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 import { imageSchema, locationSchema } from "./common";
 import { regenDb } from "../db/connection";
 import validators from "./validators";
-import { User } from "./User";
+import regenquestUser from "./regenquestUser";
 
 //name: name of the community
 //description: of the community
@@ -11,7 +11,7 @@ import { User } from "./User";
 //members: list of userID of people in the community
 //theme: theme of the community
 //image: image for the community
-const communitySchema = new Schema({
+const regenquestCommunitySchema = new Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
   objective: { type: String, required: true },
@@ -20,9 +20,8 @@ const communitySchema = new Schema({
     type: [
       {
         type: Schema.Types.ObjectId,
-        ref: "User",
-        // TODO: This causes a circular dependency with the User model, figure out a way to resolve this
-        // validate: validators.idValidators(() => User, "member"),
+        ref: "regenquestUser",
+        validate: validators.idValidators(() => regenquestUser, "member"),
       },
     ],
     validate: validators.arrValidators("members"),
@@ -33,4 +32,4 @@ const communitySchema = new Schema({
   images: [imageSchema],
 });
 
-export const Community = regenDb.model("Community", communitySchema);
+export default regenDb.model("regenquestCommunity", regenquestCommunitySchema);

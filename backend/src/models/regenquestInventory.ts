@@ -10,15 +10,15 @@ import { regenDb } from "../db/connection";
 //description: description of the item
 //image: link to the image of the item
 //history: list of userID that owned this item previously
-const inventorySchema = new Schema({
+const regenquestInventorySchema = new Schema({
   userID: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "regenquestUser",
     required: true,
   },
   taskLink: {
     type: Schema.Types.ObjectId,
-    ref: "Task",
+    ref: "regenquestTask",
     required: true,
   },
   itemName: {
@@ -34,9 +34,9 @@ const inventorySchema = new Schema({
   history: [
     {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "regenquestUser",
     },
   ],
 });
 
-export const Inventory = regenDb.model("Inventory", inventorySchema);
+export default regenDb.model("regenquestInventory", regenquestInventorySchema);

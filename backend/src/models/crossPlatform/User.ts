@@ -22,4 +22,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-export const CrossPlatformUser = crossDb.model("User", userSchema);
+const CrossPlatformUser = crossDb.model("User", userSchema);
+
+export default CrossPlatformUser;

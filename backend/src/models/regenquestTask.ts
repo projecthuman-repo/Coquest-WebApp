@@ -10,16 +10,16 @@ import { regenDb } from "../db/connection";
 //requirements: list of requirements
 //completionStatus: true if task is completed, false if task is not completed
 //history: history of the task
-const taskSchema = new Schema({
+const regenquestTaskSchema = new Schema({
   userID: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: "User",
+    ref: "regenquestUser",
   },
   questID: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: "Quest",
+    ref: "regenquestQuest",
   },
   createdAt: { type: Date, default: Date.now },
   name: { type: String, required: true },
@@ -29,4 +29,4 @@ const taskSchema = new Schema({
   history: [String],
 });
 
-export const Task = regenDb.model("Task", taskSchema);
+export default regenDb.model("regenquestTask", regenquestTaskSchema);

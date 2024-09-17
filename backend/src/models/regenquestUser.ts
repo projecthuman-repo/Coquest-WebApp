@@ -8,8 +8,8 @@ import {
 } from "./common";
 import { regenDb } from "../db/connection";
 import validators from "./validators";
-import { CrossPlatformUser } from "./crossPlatform/User";
-import { Community } from "./Community";
+import CrossPlatformUser from "./crossPlatform/User";
+import regenquestCommunity from "./regenquestCommunity";
 
 //userID: a unique ID generated during registeration, used to connect user data to the user
 //name: name of the user
@@ -27,7 +27,7 @@ import { Community } from "./Community";
 //Badges: A list of all the badges the user has earned
 //currentLevel: placeholder for user level, will be later calculated
 //recommendations: recomendationg given by other people
-const userSchema = new Schema({
+const regenquestUserSchema = new Schema({
   // userID is not marked as required because it needs to reference its corresponding CrossPlatform.users junction document,
   // which doesn't exist on regenquestuser creation
   userID: {
@@ -65,8 +65,11 @@ const userSchema = new Schema({
     type: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Community",
-        validate: validators.idValidators(() => Community, "community"),
+        ref: "regenquestCommunity",
+        validate: validators.idValidators(
+          () => regenquestCommunity,
+          "community",
+        ),
       },
     ],
     validate: validators.arrValidators("communities"),
@@ -78,4 +81,4 @@ const userSchema = new Schema({
   recommendations: [recommendationSchema],
 });
 
-export const User = regenDb.model("User", userSchema);
+export default regenDb.model("regenquestUser", regenquestUserSchema);

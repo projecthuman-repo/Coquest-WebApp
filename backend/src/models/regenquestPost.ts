@@ -9,10 +9,10 @@ import { regenDb } from "../db/connection";
 //attachments: links to all the files attached to the post such as images
 //createdAt: when was the post created
 //comments: list of all the comments on the post
-const postSchema = new Schema({
+const regenquestPostSchema = new Schema({
   userID: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "regenquestUser",
     required: true,
   },
   title: { type: String, required: true },
@@ -24,7 +24,7 @@ const postSchema = new Schema({
     {
       userID: {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: "regenquestUser",
         required: true,
       },
       body: { type: String, required: true },
@@ -32,4 +32,4 @@ const postSchema = new Schema({
   ],
 });
 
-export const Post = regenDb.model("Post", postSchema);
+export default regenDb.model("regenquestPost", regenquestPostSchema);

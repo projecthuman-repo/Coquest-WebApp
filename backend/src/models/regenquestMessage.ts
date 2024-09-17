@@ -7,15 +7,15 @@ import { regenDb } from "../db/connection";
 //message: content of the message
 //time: time this message was sent
 //unreadBy: list of users from chat that have not read the message
-const messageSchema = new Schema({
+const regenquestMessageSchema = new Schema({
   chatID: {
     type: Schema.Types.ObjectId,
-    ref: "Chat",
+    ref: "regenquestChat",
     required: true,
   },
   sentFrom: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "regenquestUser",
     required: true,
   },
   message: {
@@ -29,9 +29,9 @@ const messageSchema = new Schema({
   unreadBy: [
     {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "regenquestUser",
     },
   ],
 });
 
-export const Message = regenDb.model("Message", messageSchema);
+export default regenDb.model("regenquestMessage", regenquestMessageSchema);
