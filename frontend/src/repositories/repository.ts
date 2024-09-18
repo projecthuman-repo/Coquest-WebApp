@@ -24,7 +24,7 @@ function getFetchQuery(typeName: RepoTypeName): string {
 		case "User":
 			// TODO: Add community data
 			ret = gql`
-				query Query($id: String, $expand: String) {
+				query FindUserByID($id: String, $expand: String) {
 					findUserbyID(id: $id, expand: $expand) {
 						userID
 						name {
@@ -75,7 +75,7 @@ function getFetchQuery(typeName: RepoTypeName): string {
 		case "Community":
 			// TODO: Add member data, the backend is not done yet
 			ret = gql`
-				query Query($id: String) {
+				query FindCommunityByID($id: String) {
 					findCommunitybyID(id: $id) {
 						_id
 						name
