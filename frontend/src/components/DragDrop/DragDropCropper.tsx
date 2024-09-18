@@ -7,7 +7,7 @@ import { gql } from "graphql-request";
 import graphQLClient from "../../apiInterface/client";
 
 const document = gql`
-	{
+	query GeneratePresignedURL {
 		generatePresignedURL
 	}
 `;
