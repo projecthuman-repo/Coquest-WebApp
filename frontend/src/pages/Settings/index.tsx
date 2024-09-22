@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Navbar from "../../components/LeftSideBar";
-import Header from "../../components/Toolbar";
 import Account from "./Account"; // Account component for the first section
 import Notifications from "./Notifications"; // Notifications component for the second section
 import PrivacySecurity from "./PrivacySecurity"; // Privacy and Security component for the third section

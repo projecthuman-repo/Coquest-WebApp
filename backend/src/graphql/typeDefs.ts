@@ -82,7 +82,7 @@ const schema = gql`
 
   type Recommendation {
     name: String
-    Comment: String
+    comment: String
   }
 
   input RecommendationInput {
