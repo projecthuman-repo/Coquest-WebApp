@@ -1,8 +1,8 @@
-import regenquestUser from "./regenquestUser";
+import { User } from "./User";
 
 const mongoose = require("mongoose");
 
-const regenquestProgramSchema = new mongoose.Schema({
+const ProgramSchema = new mongoose.Schema({
   programName: { type: String, required: true },
   programType: { type: String, required: true }, // Enum can be used to specify types
   programDescription: { type: String, required: true },
@@ -33,7 +33,7 @@ const regenquestProgramSchema = new mongoose.Schema({
   rentalSpaceDetails: { type: String }, // Details about rental space
 
   // Volunteer Opportunities
-  volunteerOpportunities: [regenquestUser],
+  volunteerOpportunities: [User],
 
   // Budgeting
   budgetingItems: {
@@ -58,6 +58,6 @@ const regenquestProgramSchema = new mongoose.Schema({
   invitedUsers: [String], // List of invited user handles (e.g., @User1, @User2)
 });
 
-const Program = mongoose.model("regenquestProgram", regenquestProgramSchema);
+const Program = mongoose.model("Program", ProgramSchema);
 
 module.exports = Program;
