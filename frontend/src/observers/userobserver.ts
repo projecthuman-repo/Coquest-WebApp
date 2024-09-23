@@ -53,7 +53,7 @@ export class UserModelSubject {
 				{ currentLevel: 0 },
 				{
 					expand: JSON.stringify({
-						regenquestUser: [{ communities: ["members"] }],
+						User: [{ communities: ["members"] }],
 					}),
 				},
 			),

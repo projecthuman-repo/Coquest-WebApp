@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { InferSchemaType, Schema } from "mongoose";
 import {
   imageSchema,
   locationSchema,
@@ -8,8 +8,8 @@ import {
 } from "./common";
 import { regenDb } from "../db/connection";
 import validators from "./validators";
-import CrossPlatformUser from "./crossPlatform/User";
-import regenquestCommunity from "./regenquestCommunity";
+import { CrossPlatformUser } from "./crossPlatform/User";
+import { Community } from "./Community";
 
 //userID: a unique ID generated during registeration, used to connect user data to the user
 //name: name of the user
@@ -27,7 +27,7 @@ import regenquestCommunity from "./regenquestCommunity";
 //Badges: A list of all the badges the user has earned
 //currentLevel: placeholder for user level, will be later calculated
 //recommendations: recomendationg given by other people
-const regenquestUserSchema = new Schema({
+const userSchema = new Schema({
   // userID is not marked as required because it needs to reference its corresponding CrossPlatform.users junction document,
   // which doesn't exist on regenquestuser creation
   userID: {
@@ -65,11 +65,8 @@ const regenquestUserSchema = new Schema({
     type: [
       {
         type: Schema.Types.ObjectId,
-        ref: "regenquestCommunity",
-        validate: validators.idValidators(
-          () => regenquestCommunity,
-          "community",
-        ),
+        ref: "Community",
+        validate: validators.idValidators(() => Community, "community"),
       },
     ],
     validate: validators.arrValidators("communities"),
@@ -81,4 +78,5 @@ const regenquestUserSchema = new Schema({
   recommendations: [recommendationSchema],
 });
 
-export default regenDb.model("regenquestUser", regenquestUserSchema);
+export type UserSchemaType = InferSchemaType<typeof userSchema>;
+export const User = regenDb.model("User", userSchema);

@@ -22,8 +22,9 @@ function getFetchQuery(typeName: RepoTypeName): string {
 	let ret: string;
 	switch (typeName) {
 		case "User":
+			// TODO: Add community data
 			ret = gql`
-				query Query($id: String, $expand: String) {
+				query FindUserByID($id: String, $expand: String) {
 					findUserbyID(id: $id, expand: $expand) {
 						userID
 						name {
@@ -45,46 +46,6 @@ function getFetchQuery(typeName: RepoTypeName): string {
 							}
 							... on int {
 								numValue
-							}
-						}
-						communities {
-							type: __typename
-							... on string {
-								strValue
-							}
-							... on regenquestCommunityOutput {
-								objValue {
-									_id
-									name
-									description
-									objective
-									initiative
-									tags
-									location {
-										lat
-										lng
-									}
-									images {
-										contentType
-										path
-									}
-									members {
-										type: __typename
-										... on string {
-											strValue
-										}
-										... on regenquestUserOutput {
-											objValue {
-												_id
-												username
-												images {
-													contentType
-													path
-												}
-											}
-										}
-									}
-								}
 							}
 						}
 						_id
@@ -112,8 +73,9 @@ function getFetchQuery(typeName: RepoTypeName): string {
 			`;
 			break;
 		case "Community":
+			// TODO: Add member data, the backend is not done yet
 			ret = gql`
-				query Query($id: String) {
+				query FindCommunityByID($id: String) {
 					findCommunitybyID(id: $id) {
 						_id
 						name
@@ -128,22 +90,6 @@ function getFetchQuery(typeName: RepoTypeName): string {
 						images {
 							contentType
 							path
-						}
-						members {
-							type: __typename
-							... on string {
-								strValue
-							}
-							... on regenquestUserOutput {
-								objValue {
-									_id
-									username
-									images {
-										contentType
-										path
-									}
-								}
-							}
 						}
 					}
 				}
@@ -202,7 +148,7 @@ class Repository<T extends Model> {
 					// match the data in the DB after a successful insert.
 					this.obj = this.factory.create(
 						replaceUndefinedWithNulls({
-							_id: data[`createRegenquest${this.typeName}`]["id"],
+							_id: data[`create${this.typeName}`]["id"],
 							...inputObj,
 							...overrideProps,
 						}),
@@ -236,8 +182,8 @@ class Repository<T extends Model> {
 		const lowerTypeName = typeName.toLowerCase();
 
 		this.updateMut = gql`
-			mutation UpdateRegenquest${typeName}($${lowerTypeName}Input: regenquest${typeName}Input) {
-					updateRegenquest${typeName}(${lowerTypeName}Input: $${lowerTypeName}Input) {
+			mutation Update${typeName}($${lowerTypeName}Input: ${typeName}Input!) {
+					update${typeName}(${lowerTypeName}Input: $${lowerTypeName}Input) {
 						code
 						response
 					}
@@ -245,8 +191,8 @@ class Repository<T extends Model> {
 			`;
 
 		this.createMut = gql`
-			mutation CreateRegenquest${typeName}($${lowerTypeName}Input: regenquest${typeName}Input) {
-				createRegenquest${typeName}(${lowerTypeName}Input: $${lowerTypeName}Input) {
+			mutation Create${typeName}($${lowerTypeName}Input: ${typeName}Input!) {
+				create${typeName}(${lowerTypeName}Input: $${lowerTypeName}Input) {
 					code
 					response
 					id

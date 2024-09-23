@@ -12,7 +12,7 @@ export type JWT = {
 };
 
 const getCrossUserQuery = gql`
-	query Query($email: String) {
+	query FindCrossUser($email: String) {
 		findCrossUser(email: $email) {
 			id: regenquestUserId
 		}

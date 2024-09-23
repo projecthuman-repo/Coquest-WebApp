@@ -29,7 +29,7 @@ const PreviewImage = styled.img`
 `;
 
 const document = gql`
-	{
+	query GeneratePresignedURL {
 		generatePresignedURL
 	}
 `;
