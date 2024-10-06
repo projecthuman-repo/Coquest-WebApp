@@ -1,5 +1,5 @@
 import { InferSchemaType, Schema } from "mongoose";
-import { regenDb } from "../db/connection";
+import { regenDb } from "../../db/connection";
 
 //list of availible genres
 const genreSchema = new Schema({

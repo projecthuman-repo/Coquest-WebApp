@@ -1,6 +1,8 @@
 import { User } from "./User";
 
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+
+import mongoose from "mongoose";
 
 const ProgramSchema = new mongoose.Schema({
   programName: { type: String, required: true },
@@ -33,15 +35,19 @@ const ProgramSchema = new mongoose.Schema({
   rentalSpaceDetails: { type: String }, // Details about rental space
 
   // Volunteer Opportunities
-  volunteerOpportunities: [User],
+  volunteerOpportunities: {
+    type: String,
+  },
 
   // Budgeting
-  budgetingItems: {
-    itemName: String,
-    quantity: { type: Number, default: 0 },
-    costEach: { type: Number, default: 0 },
-    costTotal: { type: Number, default: 0 },
-  },
+  budgetingItems: [
+    {
+      itemName: String,
+      quantity: { type: Number, default: 0 },
+      costEach: { type: Number, default: 0 },
+      costTotal: { type: Number, default: 0 },
+    },
+  ],
 
   openToBartering: { type: Boolean, default: false },
 
@@ -58,6 +64,6 @@ const ProgramSchema = new mongoose.Schema({
   invitedUsers: [String], // List of invited user handles (e.g., @User1, @User2)
 });
 
-const Program = mongoose.model("Program", ProgramSchema);
+export const Program = mongoose.model("Program", ProgramSchema);
 
 module.exports = Program;

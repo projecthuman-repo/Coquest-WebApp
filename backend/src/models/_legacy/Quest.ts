@@ -1,6 +1,6 @@
 import { InferSchemaType, Schema } from "mongoose";
-import { locationSchema } from "./common";
-import { regenDb } from "../db/connection";
+import { locationSchema } from "../common";
+import { regenDb } from "../../db/connection";
 
 //questID: unique id of the quest
 //name: name of the quest
