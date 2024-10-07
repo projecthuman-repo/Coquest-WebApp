@@ -2,6 +2,7 @@ import { User } from "../models/User";
 import { Post, PostSchemaType } from "../models/Post";
 import { Community, CommunitySchemaType } from "../models/Community";
 import { Notification, NotificationSchemaType } from "../models/Notification";
+import { Program } from "../models/Program";
 import { Chat } from "../models/Chat";
 import { Message } from "../models/Message";
 import { CrossPlatformUser } from "../models/crossPlatform/User";
@@ -241,6 +242,28 @@ const resolvers: Resolvers = {
       } catch (err) {
         console.error("Error generating signed URL:", err);
         throw new Error(`Error generating signed URL: ${err}`);
+      }
+    },
+
+    // @ts-expect-error - Date is not assignable to type 'string'
+    async getProgram(_, { id }, _context, _info) {
+      try {
+        const program = await Program.findById(id);
+        if (!program) {
+          throw new Error("Program not found");
+        }
+        return program;
+      } catch (err) {
+        throw new Error(`Error fetching program: ${err}`);
+      }
+    },
+
+    // Fetch all Programs
+    async getPrograms(_, _args, _context, _info) {
+      try {
+        return await Program.find();
+      } catch (err) {
+        throw new Error(`Error fetching programs: ${err}`);
       }
     },
   },
@@ -897,6 +920,51 @@ const resolvers: Resolvers = {
       } catch (err) {
         console.error("Error deleting file:", err);
         throw new Error(`Error deleting file: ${err}`);
+      }
+    },
+
+    // Create a new Program
+    async createProgram(_, { programInput }, _context, _info) {
+      try {
+        // Create a new program
+        const newProgram = new Program({
+          ...programInput,
+        });
+
+        await newProgram.save();
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new Error(`Error creating program: ${err}`);
+      }
+    },
+
+    // Update an existing Program
+    async updateProgram(_, { id, programInput }, _context, _info) {
+      try {
+        const updatedProgram = await Program.findByIdAndUpdate(
+          id,
+          programInput,
+          { new: true },
+        );
+        if (!updatedProgram) {
+          throw new Error("Program not found");
+        }
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new Error(`Error updating program: ${err}`);
+      }
+    },
+
+    // Delete a Program
+    async deleteProgram(_, { id }, _context, _info) {
+      try {
+        const deletedProgram = await Program.findByIdAndDelete(id);
+        if (!deletedProgram) {
+          throw new Error("Program not found");
+        }
+        return { code: 200, response: "Program deleted successfully", id };
+      } catch (err) {
+        throw new Error(`Error deleting program: ${err}`);
       }
     },
   },

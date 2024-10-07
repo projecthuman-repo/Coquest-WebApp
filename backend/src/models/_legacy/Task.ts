@@ -1,5 +1,5 @@
 import { InferSchemaType, Schema } from "mongoose";
-import { regenDb } from "../db/connection";
+import { regenDb } from "../../db/connection";
 
 //taskID: unique id of the task
 //userID: Id of the user that this task currently belongs to
