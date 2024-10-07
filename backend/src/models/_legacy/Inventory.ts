@@ -1,6 +1,6 @@
 import { InferSchemaType, Schema } from "mongoose";
-import { imageSchema } from "./common";
-import { regenDb } from "../db/connection";
+import { imageSchema } from "../common";
+import { regenDb } from "../../db/connection";
 
 //itemIDL unique id of the item
 //userID: id of the current user that owns this item

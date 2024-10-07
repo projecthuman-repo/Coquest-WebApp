@@ -15,3 +15,14 @@ export const motivesQuery = gql`
 		}
 	}
 `;
+
+export const programQuery = gql`
+	query GetPrograms {
+		getPrograms {
+			id
+			title
+			description
+			duration
+		}
+	}
+`;

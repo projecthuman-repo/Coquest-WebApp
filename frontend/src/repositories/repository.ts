@@ -95,12 +95,25 @@ function getFetchQuery(typeName: RepoTypeName): string {
 				}
 			`;
 			break;
+
+		case "Program":
+			ret = gql`
+				query FindProgramByID($id: String) {
+					findProgrambyID(id: $id) {
+						id
+						title
+						description
+						duration
+					}
+				}
+			`;
+			break;
 	}
 	return ret;
 }
 
 // TODO: make a registry of all possible Model types
-type RepoTypeName = "User" | "Community";
+type RepoTypeName = "User" | "Community" | "Program";
 
 class Repository<T extends Model> {
 	private static instances: Map<string, Repository<any>> = new Map();
