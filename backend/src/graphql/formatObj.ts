@@ -9,6 +9,7 @@ import {
   MapperKind,
   SchemaMapper,
 } from "@graphql-tools/utils";
+import { ServerError, ServerErrorCodes } from "./ServerError";
 
 interface FormatObjArgs {
   dbName: string;
@@ -46,7 +47,9 @@ function formatObjDirectiveTransformer(
         );
 
         if (!dbConnection)
-          throw new Error(`Connection to ${dbName} does not exist.`);
+          throw new ServerError(`Connection to ${dbName} does not exist.`, {
+            code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          });
 
         try {
           if (expandParsed) {
