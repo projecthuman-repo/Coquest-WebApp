@@ -9,7 +9,7 @@
     "dev-build": "tsc --watch",
     "dev-start": "nodemon --watch dist/ --exec npm run preview",
     "start": "tsc || echo Typescript errors do not prevent the program from running & npm run preview",
-    "build": "tsc",
+    "build": "npm run codegen && tsc",
     "preview": "functions-framework --target=handler",
     "lint": "run-script-os",
     "lint:windows": "eslint . & prettier . -c",
