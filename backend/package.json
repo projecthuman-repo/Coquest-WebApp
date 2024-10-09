@@ -17,7 +17,8 @@
     "lint-fix": "run-script-os",
     "lint-fix:windows": "eslint --fix . & prettier . --write",
     "lint-fix:nix": "eslint --fix .; prettier . --write",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "graphql-codegen --config codegen.ts --verbose",
+    "codegen:dev": "graphql-codegen --config codegen.ts --watch"
   },
   "dependencies": {
     "@apollo/server": "^4.11.0",
