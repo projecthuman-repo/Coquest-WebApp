@@ -6,9 +6,12 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
  */
 const config: CodegenConfig = {
 	schema: "http://localhost:8080/",
-	documents: ["./src/**/*.ts", "./src/**/*.tsx", "!./src/repositories/**/**"],
-	ignoreNoDocuments: true,
+	documents: [
+		"./src/apiInterface/example/gqlStringsExample.ts",
+		"./src/apiInterface/gqlOperations.ts",
+	],
 
+	ignoreNoDocuments: true,
 	generates: {
 		"./src/__generated__/": {
 			preset: "client",
