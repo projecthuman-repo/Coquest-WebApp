@@ -13,7 +13,7 @@ import { getSecret } from "../utils/gcloud";
 import CONFIG from "../config";
 import mongoose from "mongoose";
 /* To resolve this import please run "npm run codegen"
- * Please ensure the server is running while running the codegen command
+ * If you run "npm run dev", the codegen command will run automatically
  * This will generate the necessary types for this file
  */
 import { Resolvers } from "../__generated__/graphql";
