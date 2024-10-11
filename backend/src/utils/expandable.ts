@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { FieldNode, GraphQLResolveInfo, SelectionNode } from "graphql";
+import { GraphQLResolveInfo } from "graphql";
 
 // Constructs an object parameter for the Mongoose `.populate()` routine, specifying which properties to expand.
 // TODO: Automatically redact redundant list entries
