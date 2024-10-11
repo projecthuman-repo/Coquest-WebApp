@@ -1,17 +1,21 @@
-import { gql } from "graphql-request";
+import { graphql } from "@/__generated__";
 
-export const topicsQuery = gql`
+/*
+ * To read more, go to ./example/gqlStringsExample.ts
+ */
+
+export const topicsQuery = graphql(`
 	query GetTopics {
 		options: getTopics {
 			name
 		}
 	}
-`;
+`);
 
-export const motivesQuery = gql`
+export const motivesQuery = graphql(`
 	query GetMotives {
 		options: getMotives {
 			name
 		}
 	}
-`;
+`);
