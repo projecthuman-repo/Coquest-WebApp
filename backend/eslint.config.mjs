@@ -1,33 +1,17 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
-import eslintConfigPrettier from "eslint-config-prettier";
+import jseslint from "@eslint/js";
+import tseslint from "typescript-eslint";
 
-export default [
-  pluginJs.configs.recommended,
-  eslintConfigPrettier,
-  { ignores: ["**/dist/"] },
+export default tseslint.config(
+  { ignores: ["dist", "src/__generated__"] },
+  jseslint.configs.recommended,
+  ...tseslint.configs.recommended,
   {
-    name: "Add keywords to Eslint Dictionary",
-    files: ["/src/**/*"],
-    languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-      globals: {
-        ...globals.browser,
-        module: "readonly",
-        require: "readonly",
-        process: "readonly",
-        __dirname: "readonly",
-      },
-    },
     rules: {
-      "no-unused-vars": [
-        "error",
-        {
-          argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_",
-        },
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
-];
+);
