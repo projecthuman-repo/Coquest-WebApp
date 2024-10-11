@@ -53,7 +53,7 @@
   "scripts": {
     "dev": "concurrently --raw \"npm run codegen:dev\" \"vite\"",
     "start": "vite",
-    "build": "vite build",
+    "build": "npm run codegen && vite build",
     "preview": "vite preview",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
