@@ -1,5 +1,6 @@
 import CONFIG from "../config";
 import jwt from "jsonwebtoken";
+import { ServerError, ServerErrorCodes } from "../graphql/ServerError";
 
 export async function verifyToken(token: string, secret: string, context) {
   // TODO: Actually verify the token in production
@@ -8,7 +9,9 @@ export async function verifyToken(token: string, secret: string, context) {
   }
 
   if (!token) {
-    throw new Error("Authentication token is missing");
+    throw new ServerError("Authentication token is missing", {
+      code: ServerErrorCodes.UNAUTHENTICATED,
+    });
   }
 
   try {
@@ -17,7 +20,9 @@ export async function verifyToken(token: string, secret: string, context) {
     if (!(err instanceof jwt.TokenExpiredError)) {
       console.error("Token verification error:", err);
       context.res.clearCookie(CONFIG.AUTH_COOKIE_NAME);
-      throw new Error("Invalid token");
+      throw new ServerError("Invalid token", {
+        code: ServerErrorCodes.UNAUTHENTICATED,
+      });
     }
 
     try {
@@ -34,7 +39,9 @@ export async function verifyToken(token: string, secret: string, context) {
       );
 
       if (!fetchRes.ok) {
-        throw new Error("Token refresh failed");
+        throw new ServerError("Token refresh failed", {
+          code: ServerErrorCodes.UNAUTHENTICATED,
+        });
       }
 
       const { accessToken } = await fetchRes.json();
@@ -49,9 +56,11 @@ export async function verifyToken(token: string, secret: string, context) {
       // Verify the new token
       jwt.verify(accessToken, secret);
     } catch (refreshError) {
-      console.error("Token refresh error:", refreshError);
       context.res.clearCookie(CONFIG.AUTH_COOKIE_NAME);
-      throw new Error("Token refresh failed");
+      throw new ServerError("Token refresh failed", {
+        code: ServerErrorCodes.UNAUTHENTICATED,
+        cause: refreshError,
+      });
     }
   }
 }
