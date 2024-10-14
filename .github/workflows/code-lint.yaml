@@ -6,6 +6,8 @@ jobs:
   frontend-lint-check:
     name: Frontend lint check
     runs-on: ubuntu-latest
+    # This runs if the event is not a pull request or if the pull request is from a fork
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
 
     steps:
       - name: Checkout repository
@@ -26,6 +28,8 @@ jobs:
   backend-lint-check:
     name: Backend lint check
     runs-on: ubuntu-latest
+    # This runs if the event is not a pull request or if the pull request is from a fork
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
 
     steps:
       - name: Checkout repository
