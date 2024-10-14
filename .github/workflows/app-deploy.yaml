@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - repo/workflow
     paths:
       - "frontend/**"
   pull_request:
