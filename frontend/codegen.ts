@@ -5,7 +5,7 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
  * generate TypeScript types from the GraphQL schema and operations.
  */
 const config: CodegenConfig = {
-	schema: "../backend/src/graphql/typedefs.ts",
+	schema: "../backend/src/graphql/typeDefs.ts",
 	documents: [
 		"./src/apiInterface/example/gqlStringsExample.ts",
 		"./src/apiInterface/gqlOperations.ts",
@@ -16,12 +16,6 @@ const config: CodegenConfig = {
 		"./src/__generated__/": {
 			preset: "client",
 		},
-		// "./schema.graphql": {
-		// 	plugins: ["schema-ast"],
-		// 	config: {
-		// 		includeDirectives: true,
-		// 	},
-		// },
 	},
 };
 
