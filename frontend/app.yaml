@@ -1,15 +1,15 @@
 runtime: nodejs20
 
 handlers:
-  # First, serve static files (your React app's build)
-  - url: /static
-    static_dir: build/static
+  # Serve all static files from the dist folder
+  - url: /
+    static_dir: dist
 
-  # Then, serve the index.html for all other requests
-  - url: /.* # Match any URL path
-    static_files: build/index.html
-    upload: build/index.html
-    http_headers: # Add this section
+  # Serve the index.html file for all other requests
+  - url: /.*
+    static_files: dist/index.html
+    upload: dist/index.html
+    http_headers:
       Content-Type: text/html; charset=utf-8
 
 automatic_scaling:

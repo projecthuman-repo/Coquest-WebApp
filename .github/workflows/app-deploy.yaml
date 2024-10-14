@@ -52,7 +52,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v1
 
       - name: Deploy to Google App Engine
-        working-directory: ./
+        working-directory: ./frontend/
         run: |
           echo "${{ secrets.GCP_SA_KEY }}" > ./base-map-workspace-93c116fe8662.json
           gcloud app deploy
