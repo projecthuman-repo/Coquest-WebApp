@@ -55,4 +55,4 @@ jobs:
         working-directory: ./
         run: |
           echo "${{ secrets.GCP_SA_KEY }}" > ./base-map-workspace-93c116fe8662.json
-          gcloud app deploy ./frontend/app.yaml
+          gcloud app deploy
