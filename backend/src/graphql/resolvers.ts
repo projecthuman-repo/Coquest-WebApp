@@ -8,12 +8,12 @@ import { CrossPlatformUser } from "../models/crossPlatform/User";
 import { v4 as uuidv4 } from "uuid";
 import { Storage } from "@google-cloud/storage";
 import jwt from "jsonwebtoken";
-import { coerceExpandable, deduceExpandableType } from "../utils/expandable";
+import { coerceExpandable } from "../utils/expandable";
 import { getSecret } from "../utils/gcloud";
 import CONFIG from "../config";
 import mongoose from "mongoose";
 /** To resolve this import please run "npm run codegen"
- * Please ensure the server is running while running the codegen command
+ * If you run "npm run dev", the codegen command will run automatically
  * This will generate the necessary types for this file
  */
 import { Resolvers } from "../__generated__/graphql";
@@ -82,7 +82,7 @@ const resolvers: Resolvers = {
     // @ts-expect-error - registered is populated with its directive, it is expected here that its type won't match the schema
     async findUserbyID(_parent, { id, _ }, _context, _info) {
       try {
-        let result = await User.findOne({ _id: id });
+        const result = await User.findOne({ _id: id });
         if (!result) throw new Error("User not found");
 
         if (typeof result.registered === "boolean") {
@@ -292,7 +292,7 @@ const resolvers: Resolvers = {
       // Add the user to the database
       try {
         // Check if a cross-platform user already exists
-        let crossPlatformUserExists = await CrossPlatformUser.findOne({
+        const crossPlatformUserExists = await CrossPlatformUser.findOne({
           email,
         });
 
