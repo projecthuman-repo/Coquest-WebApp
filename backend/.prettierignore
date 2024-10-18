@@ -12,3 +12,4 @@
 **/.gcloudignore
 **/DS_Store
 **/dist
+src/__generated__/**

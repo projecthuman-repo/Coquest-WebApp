@@ -2,7 +2,6 @@ import { InferSchemaType, Schema } from "mongoose";
 import { imageSchema, locationSchema } from "./common";
 import { regenDb } from "../db/connection";
 import validators from "./validators";
-import { User } from "./User";
 
 //name: name of the community
 //description: of the community
