@@ -47,8 +47,9 @@ function formatObjDirectiveTransformer(
         );
 
         if (!dbConnection)
-          throw new ServerError(`Connection to ${dbName} does not exist.`, {
+          throw new ServerError(`There was an Internal Server Error.`, {
             code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+            cause: new Error(`Connection to ${dbName} does not exist.`),
           });
 
         try {

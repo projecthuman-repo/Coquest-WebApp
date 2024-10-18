@@ -30,8 +30,9 @@ function authDirectiveTransformer(
         const token = context.req.cookies[CONFIG.AUTH_COOKIE_NAME];
         const secret = await getSecret(CONFIG.ACCESS_JWT_NAME);
         if (!secret)
-          throw new ServerError("Secret not found.", {
+          throw new ServerError("There was an internal server error.", {
             code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+            cause: new Error("Fetching secret failed."),
           });
         await verifyToken(token, secret, context);
 

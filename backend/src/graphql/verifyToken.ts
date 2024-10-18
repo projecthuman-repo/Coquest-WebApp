@@ -30,8 +30,9 @@ function verifyTokenDirectiveTransformer(
         const { token } = args;
         const secret = await getSecret(CONFIG.ACCESS_JWT_NAME);
         if (!secret)
-          throw new ServerError("Secret not found.", {
+          throw new ServerError("There was an Internal Server Error.", {
             code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+            cause: new Error("Fetching secret failed."),
           });
 
         await verifyToken(token, secret, context);
