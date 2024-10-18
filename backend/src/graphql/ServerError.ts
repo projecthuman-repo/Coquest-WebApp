@@ -59,14 +59,34 @@ When Apollo Server formats an error in a response, it sets the code extension to
 if no other specific error code is set.
 */
 
-type ServerErrorExtensions = {
-  code: ServerErrorCodes;
-  cause?: unknown;
+type InternalServerErrorExtensions = {
+  code: ServerErrorCodes.INTERNAL_SERVER_ERROR;
+  cause: unknown;
+  privateMessage?: string;
   [key: string]: any;
 };
 
+type OtherErrorExtensions = {
+  code: Exclude<ServerErrorCodes, ServerErrorCodes.INTERNAL_SERVER_ERROR>;
+  cause?: unknown;
+  privateMessage?: string;
+  [key: string]: any;
+};
+
+type ServerErrorExtensions =
+  | InternalServerErrorExtensions
+  | OtherErrorExtensions;
+
+/**
+ * @description
+ * Custom error class for all errors that should be returned to the client.
+ * This class extends the default `GraphQLError` class and adds a custom error code.
+ * The `cause` and `privateMessage` extension is optional and can be used to provide additional context about the error.
+ * During production, all extensions except `code` will be omitted from the error response.
+ * Note: The `cause` extension is compulsory for `INTERNAL_SERVER_ERROR` errors.
+ */
 export class ServerError extends GraphQLError {
-  constructor(message: string, extensions: ServerErrorExtensions) {
-    super(message, { extensions });
+  constructor(publicMessage: string, extensions: ServerErrorExtensions) {
+    super(publicMessage, { extensions });
   }
 }

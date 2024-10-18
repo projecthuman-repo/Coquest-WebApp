@@ -251,6 +251,7 @@ const resolvers: Resolvers = {
       } catch (err) {
         throw new ServerError("Error getting unread notifications", {
           code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
         });
       }
     },
@@ -346,8 +347,11 @@ const resolvers: Resolvers = {
         if (!crossPlatformUserExists) {
           // This should not occur based on registration logic
           // This is a INTERNAL_SERVER_ERROR because it should never happen
-          throw new ServerError("CrossPlatform user does not exist", {
+          throw new ServerError("There was an error with your account", {
             code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+            cause: new Error("CrossPlatform user does not exist"),
+            privateMessage:
+              "This should not occur based on registration logic. You'll need to delete the user and try again.",
           });
         }
 
@@ -889,6 +893,7 @@ const resolvers: Resolvers = {
       } catch (err) {
         throw new ServerError("Error marking notification as read", {
           code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
         });
       }
     },
@@ -906,9 +911,10 @@ const resolvers: Resolvers = {
       try {
         await Notification.updateMany({ userID: userID }, { isRead: true });
         return { code: 0, response: "successful" };
-      } catch {
+      } catch (err) {
         throw new ServerError("Error marking all notification as read", {
           code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
         });
       }
     },
