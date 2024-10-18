@@ -12,13 +12,14 @@ import { coerceExpandable } from "../utils/expandable";
 import { getSecret } from "../utils/gcloud";
 import CONFIG from "../config";
 import mongoose from "mongoose";
-/** To resolve this import please run "npm run codegen"
+/* To resolve this import please run "npm run codegen"
  * If you run "npm run dev", the codegen command will run automatically
  * This will generate the necessary types for this file
  */
 import { Resolvers } from "../__generated__/graphql";
 import { Motive } from "../models/Motive";
 import { Topic } from "../models/Topic";
+import { ServerError, ServerErrorCodes } from "./ServerError";
 
 const storage = new Storage();
 
@@ -41,8 +42,11 @@ const resolvers: Resolvers = {
       try {
         const result = await User.find();
         return result;
-      } catch {
-        throw new Error("Error getting users");
+      } catch (err) {
+        throw new ServerError("Error getting users", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 
@@ -52,8 +56,11 @@ const resolvers: Resolvers = {
       try {
         const result = await Post.find();
         return result;
-      } catch {
-        throw new Error("Error getting posts");
+      } catch (err) {
+        throw new ServerError("Error getting posts", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 
@@ -63,8 +70,11 @@ const resolvers: Resolvers = {
       try {
         const result = await Community.find();
         return result;
-      } catch {
-        throw new Error("Error getting communities");
+      } catch (err) {
+        throw new ServerError("Error getting communities", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 
@@ -83,7 +93,10 @@ const resolvers: Resolvers = {
     async findUserbyID(_parent, { id, _ }, _context, _info) {
       try {
         const result = await User.findOne({ _id: id });
-        if (!result) throw new Error("User not found");
+        if (!result)
+          throw new ServerError("User not found", {
+            code: ServerErrorCodes.NOT_FOUND,
+          });
 
         if (typeof result.registered === "boolean") {
           result.registered = {
@@ -99,8 +112,11 @@ const resolvers: Resolvers = {
         }
 
         return result;
-      } catch {
-        throw new Error("Error finding user by ID");
+      } catch (err) {
+        throw new ServerError("Error finding user by ID", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 
@@ -108,8 +124,11 @@ const resolvers: Resolvers = {
     async findPostbyID(_parent, { postID }, _context, _info) {
       try {
         return await Post.findOne({ _id: postID });
-      } catch {
-        throw new Error("Error finding post by id");
+      } catch (err) {
+        throw new ServerError("Error finding post by id", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 
@@ -117,8 +136,11 @@ const resolvers: Resolvers = {
     async findCommunitybyID(_parent, { id }, _context, _info) {
       try {
         return await Community.findOne({ _id: id });
-      } catch {
-        throw new Error("Error finding community by id");
+      } catch (err) {
+        throw new ServerError("Error finding community by id", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 
@@ -127,20 +149,27 @@ const resolvers: Resolvers = {
     async getChatsByUserID(_parent, { userID }, _context, _info) {
       //check if userID was provided as a parameter
       if (!userID) {
-        throw new Error("Must provide userID");
+        throw new ServerError("Must provide userID", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
       }
 
       //check if the user exists
       if (!(await User.exists({ userID: userID }))) {
-        throw new Error("User not Found.");
+        throw new ServerError("User not Found.", {
+          code: ServerErrorCodes.NOT_FOUND,
+        });
       }
 
       //get the chats from the db
       try {
         const result = await Chat.find({ members: { $in: [userID] } });
         return result;
-      } catch {
-        throw new Error("Error finding chats by user id");
+      } catch (err) {
+        throw new ServerError("Error finding chats by user id", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 
@@ -149,20 +178,27 @@ const resolvers: Resolvers = {
     async getMessagesByChatID(_parent, { chatID }, _context, _info) {
       //check if chatID was provided
       if (!chatID) {
-        throw new Error("Must provide chatID.");
+        throw new ServerError("Must provide chatID.", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
       }
 
       //check if that chat exists in the db
       if (!(await Chat.exists({ _id: chatID }))) {
-        throw new Error("Chat not Found.");
+        throw new ServerError("Chat not Found.", {
+          code: ServerErrorCodes.NOT_FOUND,
+        });
       }
 
       //get all the messages belonging to that chat
       try {
         const result = await Message.find({ chatID: chatID });
         return result;
-      } catch {
-        throw new Error("Error finding messages by chat id");
+      } catch (err) {
+        throw new ServerError("Error finding messages by chat id", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 
@@ -175,8 +211,9 @@ const resolvers: Resolvers = {
           "regenquestUserId",
         ]);
       } catch (err) {
-        throw new Error(
+        throw new ServerError(
           "Error finding cross-platform user:" + (err as Error).message,
+          { code: ServerErrorCodes.INTERNAL_SERVER_ERROR, cause: err },
         );
       }
     },
@@ -190,8 +227,11 @@ const resolvers: Resolvers = {
       try {
         const res = await Notification.find({ userID });
         return res;
-      } catch {
-        throw new Error("Error gettign notifications");
+      } catch (err) {
+        throw new ServerError("Error getting notifications", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 
@@ -200,14 +240,19 @@ const resolvers: Resolvers = {
     async getUnreadNotifications(_parent, { userID }, _context, _info) {
       //check if a userID is provided
       if (!userID) {
-        throw new Error("Please provide userID");
+        throw new ServerError("Please provide userID", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
       }
 
       try {
         const res = await Notification.find({ userID: userID, isRead: false });
         return res;
-      } catch {
-        throw new Error("Error getting unread notifications");
+      } catch (err) {
+        throw new ServerError("Error getting unread notifications", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 
@@ -240,7 +285,10 @@ const resolvers: Resolvers = {
         return url;
       } catch (err) {
         console.error("Error generating signed URL:", err);
-        throw new Error(`Error generating signed URL: ${err}`);
+        throw new ServerError(`Error generating signed URL: ${err}`, {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
   },
@@ -298,7 +346,13 @@ const resolvers: Resolvers = {
 
         if (!crossPlatformUserExists) {
           // This should not occur based on registration logic
-          throw new Error("CrossPlatform user does not exist");
+          // This is a INTERNAL_SERVER_ERROR because it should never happen
+          throw new ServerError("There was an error with your account", {
+            code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+            cause: new Error("CrossPlatform user does not exist"),
+            privateMessage:
+              "This should not occur based on registration logic. You'll need to delete the user and try again.",
+          });
         }
 
         newUser.userID = crossPlatformUserExists._id;
@@ -827,15 +881,20 @@ const resolvers: Resolvers = {
     async markNotificationAsRead(_parent, { notificationID }, _context, _info) {
       //check if notification id is provided
       if (!notificationID) {
-        throw new Error("Please provide notificationID");
+        throw new ServerError("Please provide notificationID", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
       }
 
       //update the notification document in the db
       try {
         await Notification.updateOne({ _id: notificationID }, { isRead: true });
         return { code: 0, response: "successful" };
-      } catch {
-        throw new Error("Error marking notification as read");
+      } catch (err) {
+        throw new ServerError("Error marking notification as read", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 
@@ -843,15 +902,20 @@ const resolvers: Resolvers = {
     async markAllNotificationsAsRead(_parent, { userID }, _context, _info) {
       //check if userID is provided
       if (!userID) {
-        throw new Error("Please provide userID");
+        throw new ServerError("Please provide userID", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
       }
 
       //update all the notification for the user in the db
       try {
         await Notification.updateMany({ userID: userID }, { isRead: true });
         return { code: 0, response: "successful" };
-      } catch {
-        throw new Error("Error marking all notification as read");
+      } catch (err) {
+        throw new ServerError("Error marking all notification as read", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 
@@ -859,7 +923,9 @@ const resolvers: Resolvers = {
     async deleteNotification(_parent, { notificationID }, _context, _info) {
       //check if notification id is provided
       if (!notificationID) {
-        throw new Error("Please provide notificationID");
+        throw new ServerError("Please provide notificationID", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
       }
 
       //remove the notification from the db
@@ -868,8 +934,11 @@ const resolvers: Resolvers = {
           _id: notificationID,
         });
         return { code: 0, response: "successful" };
-      } catch {
-        throw new Error("Error deleting notification");
+      } catch (err) {
+        throw new ServerError("Error deleting notification", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 
@@ -896,7 +965,10 @@ const resolvers: Resolvers = {
         return { code: 0, response: "successful" };
       } catch (err) {
         console.error("Error deleting file:", err);
-        throw new Error(`Error deleting file: ${err}`);
+        throw new ServerError(`Error deleting file: ${err}`, {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
   },
