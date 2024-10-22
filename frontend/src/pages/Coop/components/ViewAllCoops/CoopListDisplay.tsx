@@ -3,7 +3,7 @@ import { styled } from "@mui/system";
 //import ProgramPane from "./CoopPane";
 //import { Program } from "../../../../models/programModel";
 import CoopPane from "./CoopPane";
-import { Coop } from "../../../../models/coopModel"
+import { Coop } from "../../../../models/coopModel";
 
 const Container = styled("div")({
 	display: "flex",
@@ -36,8 +36,7 @@ const Breaker = styled("hr")({
 });
 
 const CoopListDisplay = (props: CoopProps) => {
-	const validCoopList: Coop[] =
-		props.coopList.filter(validateCoop);
+	const validCoopList: Coop[] = props.coopList.filter(validateCoop);
 
 	return (
 		<Container>

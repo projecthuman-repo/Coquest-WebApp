@@ -7,8 +7,7 @@ import LinearProgress, {
 } from "@mui/material/LinearProgress";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 //import { Program } from "../../../../models/programModel";
-import { Coop } from "../../../../models/coopModel"
-
+import { Coop } from "../../../../models/coopModel";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 	height: 10,
@@ -67,8 +66,7 @@ const CoopPane = (props: CoopProps) => {
 				</Grid>
 				<GridCol item xs={4} sm={4}>
 					<Typography>
-						Progress:{" "}
-						{coop.progress !== null ? coop.progress : 0}%
+						Progress: {coop.progress !== null ? coop.progress : 0}%
 					</Typography>
 
 					<BorderLinearProgress

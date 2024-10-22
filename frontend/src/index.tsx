@@ -80,9 +80,7 @@ import CoopQuests from "./pages/Coop/CoopPage/Quests/Quests";
 
 import ViewAllCoops from "./pages/Coop";
 
-
 import RoleApply from "./pages/Programs/components/RoleApplicationForm/RoleApply";
-
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement,
@@ -281,7 +279,7 @@ const router = createBrowserRouter([
 				element: (
 					<CoopsContextProvider>
 						<ViewAllCoops />
-					</CoopsContextProvider>	
+					</CoopsContextProvider>
 				),
 			},
 
