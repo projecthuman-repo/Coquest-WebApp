@@ -78,6 +78,8 @@ import { CoopContextProvider } from "./pages/Coop/CoopPage/CoopContext";
 import CoopPage from "./pages/Coop/CoopPage";
 import CoopQuests from "./pages/Coop/CoopPage/Quests/Quests";
 
+import ViewAllCoops from "./pages/Coop";
+
 import RoleApply from "./pages/Programs/components/RoleApplicationForm/RoleApply";
 
 const root = ReactDOM.createRoot(
@@ -272,6 +274,15 @@ const router = createBrowserRouter([
 		path: "/coops",
 		element: <Outlet />,
 		children: [
+			{
+				path: "",
+				element: (
+					<CoopsContextProvider>
+						<ViewAllCoops />
+					</CoopsContextProvider>
+				),
+			},
+
 			{
 				path: ":id",
 				element: <Outlet />,
