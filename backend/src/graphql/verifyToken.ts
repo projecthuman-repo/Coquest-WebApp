@@ -8,6 +8,7 @@ import {
   MapperKind,
   SchemaMapper,
 } from "@graphql-tools/utils";
+import { ServerError, ServerErrorCodes } from "./ServerError";
 
 function verifyTokenDirectiveTransformer(
   schema: GraphQLSchema,
@@ -28,7 +29,11 @@ function verifyTokenDirectiveTransformer(
       fieldConfig.resolve = async (source, args, context, info) => {
         const { token } = args;
         const secret = await getSecret(CONFIG.ACCESS_JWT_NAME);
-        if (!secret) throw new Error("Secret not found.");
+        if (!secret)
+          throw new ServerError("There was an Internal Server Error.", {
+            code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+            cause: new Error("Fetching secret failed."),
+          });
 
         await verifyToken(token, secret, context);
 
