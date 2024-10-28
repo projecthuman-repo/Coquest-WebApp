@@ -19,6 +19,9 @@ import Form from "../../CoopComponents/CoopTemplate/form";
 import Header from "../../CoopComponents/CoopTemplate/header";
 import Page from "../../CoopComponents/CoopTemplate/page";
 import Sharelink from "../../CoopComponents/Sharelink";
+import { useOutletContext } from "react-router";
+import { CreateCoopOutletContext, CreateCoopProps } from "../CreateCoop";
+import PrimaryButton from "@/components/Buttons/PrimaryButton";
 
 const Map = () => {
 	const MapContainer = styled.div({
@@ -39,12 +42,13 @@ const Map = () => {
 		</>
 	);
 };
-
-const Partnership = () => {
-	const Container = styled(FormGroup)({
-		gap: 20,
-	});
-
+const Container = styled(FormGroup)({
+	gap: 20,
+});
+const Partnership = ({
+	updateCreateCoopData,
+	createCoopData,
+}: CreateCoopProps) => {
 	return (
 		<Container>
 			<FormControlLabel
@@ -54,6 +58,7 @@ const Partnership = () => {
 						checkedIcon={<RadioButtonCheckedIcon />}
 						size="small"
 						color="default"
+						checked={!!createCoopData.materialHelp}
 					/>
 				}
 				label="Material"
@@ -62,6 +67,10 @@ const Partnership = () => {
 				label="Materials and equipment"
 				placeholder="What kind of help do you need?"
 				fullWidth
+				value={createCoopData.materialHelp}
+				onChange={(e) =>
+					updateCreateCoopData({ materialHelp: e.target.value })
+				}
 			/>
 			<FormControlLabel
 				control={
@@ -70,6 +79,7 @@ const Partnership = () => {
 						checkedIcon={<RadioButtonCheckedIcon />}
 						size="small"
 						color="default"
+						checked={!!createCoopData.serviceHelp}
 					/>
 				}
 				label="Services"
@@ -78,6 +88,10 @@ const Partnership = () => {
 				label="Services"
 				placeholder="What kind of help do you need?"
 				fullWidth
+				value={createCoopData.serviceHelp}
+				onChange={(e) =>
+					updateCreateCoopData({ serviceHelp: e.target.value })
+				}
 			/>
 			<FormControlLabel
 				control={
@@ -86,6 +100,7 @@ const Partnership = () => {
 						checkedIcon={<RadioButtonCheckedIcon />}
 						size="small"
 						color="default"
+						checked={!!createCoopData.operationHelp}
 					/>
 				}
 				label="Operations"
@@ -94,6 +109,10 @@ const Partnership = () => {
 				label="Operations"
 				placeholder="What kind of help do you need?"
 				fullWidth
+				value={createCoopData.operationHelp}
+				onChange={(e) =>
+					updateCreateCoopData({ operationHelp: e.target.value })
+				}
 			/>
 		</Container>
 	);
@@ -108,22 +127,30 @@ const InviteAndShare = () => {
 			<Sharelink />
 			<FormControl>
 				<InputLabel>Invite people</InputLabel>
-				<Select id="outlined" label="invite people">
+				<Select id="outlined" label="invite people" defaultValue={""}>
 					<MenuItem value={"input"}>Input</MenuItem>
 				</Select>
 			</FormControl>
 		</>
 	);
 };
+
 function CoopPromotion() {
+	const { createCoopData, updateCreateCoopData, handleSubmit } =
+		useOutletContext<CreateCoopOutletContext>();
+
 	return (
 		<>
 			<Page>
 				<Form>
 					<Header text="Promotion" />
 					<Map />
-					<Partnership />
+					<Partnership
+						createCoopData={createCoopData}
+						updateCreateCoopData={updateCreateCoopData}
+					/>
 					<InviteAndShare />
+					<PrimaryButton onClick={handleSubmit} name="Submit"></PrimaryButton>
 				</Form>
 			</Page>
 		</>

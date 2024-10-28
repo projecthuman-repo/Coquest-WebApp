@@ -5,6 +5,7 @@ import { Notification, NotificationSchemaType } from "../models/Notification";
 import { Chat } from "../models/Chat";
 import { Message } from "../models/Message";
 import { CrossPlatformUser } from "../models/crossPlatform/User";
+import { Coop } from "../models/Coop";
 import { v4 as uuidv4 } from "uuid";
 import { Storage } from "@google-cloud/storage";
 import jwt from "jsonwebtoken";
@@ -78,6 +79,12 @@ const resolvers: Resolvers = {
       return topics;
     },
 
+    // @ts-expect-error - ObjectID is not assignable to type 'string'
+    async getCoops() {
+      const coops = await Coop.find();
+      return coops;
+    },
+
     //this method finds a user by their id
     // @ts-expect-error - registered is populated with its directive, it is expected here that its type won't match the schema
     async findUserbyID(_parent, { id, _ }, _context, _info) {
@@ -119,6 +126,14 @@ const resolvers: Resolvers = {
         return await Community.findOne({ _id: id });
       } catch {
         throw new Error("Error finding community by id");
+      }
+    },
+
+    async findCoopbyID(_parent, { id }, _context, _info) {
+      try {
+        return await Coop.findOne({ _id: id });
+      } catch {
+        throw new Error("Error finding coop by id");
       }
     },
 
@@ -386,6 +401,20 @@ const resolvers: Resolvers = {
         return {
           code: 1,
           response: `Error creating community: ${(err as Error).message}`,
+        };
+      }
+    },
+
+    async createCoop(_parent, { userInput }, _context, _info) {
+      const newCoop = new Coop(userInput);
+
+      try {
+        await newCoop.save();
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        return {
+          code: 1,
+          response: `Error creating coop: ${(err as Error).message}`,
         };
       }
     },
@@ -761,6 +790,20 @@ const resolvers: Resolvers = {
         return {
           code: 1,
           response: `Error updating community: ${(err as Error).message}`,
+        };
+      }
+    },
+
+    async updateCoop(_parent, { userInput }, _context, _info) {
+      const { id, ...updateCoop } = userInput;
+      try {
+        if (!id) throw new Error("Coop ID missing.");
+        await Coop.updateOne({ _id: id }, updateCoop, { runValidators: true });
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        return {
+          code: 1,
+          response: `Error updating coop: ${(err as Error).message}`,
         };
       }
     },

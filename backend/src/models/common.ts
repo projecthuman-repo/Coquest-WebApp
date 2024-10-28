@@ -25,10 +25,18 @@ const recommendationSchema = new Schema({
   comment: String,
 });
 
+const budgetItem = new Schema({
+  itemName: String,
+  quantity: { type: Number, default: 0 },
+  costEach: { type: Number, default: 0 },
+  costTotal: { type: Number, default: 0 },
+});
+
 export {
   imageSchema,
   locationSchema,
   skillSchema,
   badgeSchema,
   recommendationSchema,
+  budgetItem
 };

@@ -266,6 +266,100 @@ const schema = gql`
     hashtags: [String]
   }
 
+  type BudgetItem {
+    name: String
+    quantity: Int
+    costEach: Int
+    costTotal: Int
+  }
+
+  enum RecurringType {
+    DAILY
+    WEEKLY
+    MONTHLY
+    CUSTOM
+  }
+
+  type Coop {
+    _id: ID!
+    userID: String
+    name: String
+    type: String
+    summary: String
+    mission: String
+    locationAllowed: Boolean
+    notificationAllowed: Boolean
+    location: Location
+    startDate: String # Use ISO date format
+    endDate: String # Use ISO date format
+    recurring: RecurringType
+    radius: Int
+    haveNeutralMeetingSpace: Boolean
+    venues: [String!]
+    additionalInfo: String
+    budgetingItems: [BudgetItem!]
+    openToBartering: Boolean
+
+    # Participation & Crowdfunding
+    participationCost: Float
+    maxParticipants: Int
+    needsCrowdfunding: Boolean
+    crowdfundingAmount: Float
+    crowdfundingMessage: String
+
+    materialHelp: String
+    serviceHelp: String
+    operationHelp: String
+
+    # Promotion
+    promotionArea: Location
+    promotionImage: String
+    shareLink: String
+    invitedUsers: [ID!]
+  }
+
+  input BudgetItemInput {
+    name: String
+    quantity: Int
+    costEach: Int
+    costTotal: Int
+  }
+
+  input CoopInput {
+    id: ID
+    userID: ID!
+    name: String!
+    type: String
+    summary: String
+    mission: String
+    locationAllowed: Boolean
+    notificationAllowed: Boolean
+    location: LocationInput
+    startDate: String
+    startTime: String
+    endDate: String
+    endTime: String
+    recurring: RecurringType
+    radius: String
+    haveNeutralMeetingSpace: Boolean
+    venues: [String!]
+    additionalInfo: String
+    budgetingItems: [BudgetItemInput!]
+    openToBartering: Boolean
+    participationCost: Float
+    maxParticipants: Int
+    needsCrowdfunding: Boolean
+    crowdfundingAmount: Float
+    crowdfundingMessage: String
+    materialHelp: String
+    serviceHelp: String
+    operationHelp: String
+    promotionArea: LocationInput
+    promotionImage: String
+    shareLink: String
+    invitedUsers: [ID!]
+  }
+
   type Post {
     _id: ID
     userID: String
@@ -495,11 +589,13 @@ const schema = gql`
     getCommunities: [Community] @auth
     getMotives: [Motive] @auth
     getTopics: [Topic] @auth
+    getCoops: [Coop!] @auth
 
     findUserbyID(id: String, expand: String): User @auth
     findPostbyID(postID: String): Post @auth
     findCommunitybyID(id: String): Community @auth
     findCrossUser(email: String): CrossUser @auth
+    findCoopbyID(id: String): Coop @auth
 
     getChatsByUserID(userID: String): [Chat] @auth
     getMessagesByChatID(chatID: String): [Message] @auth
@@ -518,6 +614,7 @@ const schema = gql`
   type Mutation {
     createUser(userInput: UserInput!): mutationResponse @auth
     createPost(userInput: PostInput!): mutationResponse @auth
+    createCoop(userInput: CoopInput!): mutationResponse @auth
     createCommunity(userInput: CommunityInput!): mutationResponse @auth
     createNotification(userInput: NotificationInput!): mutationResponse @auth
     createChat(userInput: ChatInput!): mutationResponse @auth
@@ -529,6 +626,7 @@ const schema = gql`
     updateUser(userInput: UserInput!): mutationResponse @auth
     updatePost(userInput: PostInput!): mutationResponse @auth
     updateCommunity(userInput: CommunityInput!): mutationResponse @auth
+    updateCoop(userInput: CoopInput!): mutationResponse @auth
     updateNotification(userInput: NotificationInput!): mutationResponse @auth
     markNotificationAsRead(notificationID: String): mutationResponse @auth
     markAllNotificationsAsRead(userID: String): mutationResponse @auth

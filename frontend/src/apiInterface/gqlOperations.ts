@@ -19,3 +19,13 @@ export const motivesQuery = graphql(`
 		}
 	}
 `);
+
+export const CREATE_COOP_MUTATION = graphql(`
+	mutation CreateCoop($userInput: CoopInput!) {
+		createCoop(userInput: $userInput) {
+			code
+			id
+			response
+		}
+	}
+`);
