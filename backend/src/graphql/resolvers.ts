@@ -91,8 +91,15 @@ const resolvers: Resolvers = {
 
     // @ts-expect-error - ObjectID is not assignable to type 'string'
     async getCoops() {
-      const coops = await Coop.find();
-      return coops;
+      try {
+        const coops = await Coop.find();
+        return coops;
+      } catch (err) {
+        throw new ServerError("Error getting coops", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
     },
 
     //this method finds a user by their id
@@ -154,8 +161,11 @@ const resolvers: Resolvers = {
     async findCoopbyID(_parent, { id }, _context, _info) {
       try {
         return await Coop.findOne({ _id: id });
-      } catch {
-        throw new Error("Error finding coop by id");
+      } catch (err) {
+        throw new ServerError("Error finding coop by id", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 
@@ -851,7 +861,10 @@ const resolvers: Resolvers = {
     async updateCoop(_parent, { userInput }, _context, _info) {
       const { id, ...updateCoop } = userInput;
       try {
-        if (!id) throw new Error("Coop ID missing.");
+        if (!id)
+          throw new ServerError("Coop ID missing.", {
+            code: ServerErrorCodes.INVALID_INPUT,
+          });
         await Coop.updateOne({ _id: id }, updateCoop, { runValidators: true });
         return { code: 0, response: "successful" };
       } catch (err) {
