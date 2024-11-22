@@ -92,7 +92,7 @@ const resolvers: Resolvers = {
     // @ts-expect-error - ObjectID is not assignable to type 'string'
     async getCoops() {
       try {
-        const coops = await Coop.find();
+        const coops = await Coop.find().populate("members");
         return coops;
       } catch (err) {
         throw new ServerError("Error getting coops", {
@@ -158,9 +158,10 @@ const resolvers: Resolvers = {
       }
     },
 
+    // @ts-expect-error - TODO: type null not assignable
     async findCoopbyID(_parent, { id }, _context, _info) {
       try {
-        return await Coop.findOne({ _id: id });
+        return await Coop.findOne({ _id: id }).populate("members");
       } catch (err) {
         throw new ServerError("Error finding coop by id", {
           code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
@@ -470,16 +471,50 @@ const resolvers: Resolvers = {
     },
 
     async createCoop(_parent, { userInput }, _context, _info) {
+      if (!userInput.userID || !userInput.name) {
+        throw new ServerError("User ID and name are required.", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
+      }
       const newCoop = new Coop(userInput);
 
       try {
         await newCoop.save();
         return { code: 0, response: "successful" };
       } catch (err) {
-        return {
-          code: 1,
-          response: `Error creating coop: ${(err as Error).message}`,
-        };
+        throw new ServerError(
+          `Error creating coop. ${(err as Error).message}`,
+          {
+            code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+            cause: err,
+          },
+        );
+      }
+    },
+
+    async joinCoop(_parent, { userInput }, _context, _info) {
+      const { coopID, userID } = userInput;
+      try {
+        await Coop.updateOne({ _id: coopID }, { $push: { members: userID } });
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(`Error joining coop. ${(err as Error).message}`, {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    async leaveCoop(_parent, { userInput }, _context, _info) {
+      const { coopID, userID } = userInput;
+      try {
+        await Coop.updateOne({ _id: coopID }, { $pull: { members: userID } });
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(`Error leaving coop. ${(err as Error).message}`, {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 

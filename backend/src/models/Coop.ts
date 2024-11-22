@@ -2,13 +2,19 @@ import { InferSchemaType, Schema } from "mongoose";
 import { budgetItem, locationSchema } from "./common";
 import { regenDb } from "../db/connection";
 
+const milestoneSchema = new Schema({
+  title: { type: String },
+  description: { type: String },
+  completed: { type: Boolean, default: false },
+});
+
 const coopSchema = new Schema({
   userID: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
-  name: { type: String },
+  name: { type: String, required: true },
   type: { type: String },
   summary: { type: String },
   mission: { type: String },
@@ -19,13 +25,20 @@ const coopSchema = new Schema({
   startTime: { type: String },
   endDate: { type: String },
   endTime: { type: String },
-  recurring: { type: String, enum: ["daily", "weekly", "monthly", "custom"] },
+  recurring: { type: String, enum: ["DAILY", "WEEKLY", "MONTHLY", "CUSTOM"] },
   radius: { type: String },
   haveNeutralMeetingSpace: { type: Boolean },
   venues: [{ type: String }],
   additionalInfo: { type: String },
   budgetingItems: [budgetItem],
   openToBartering: { type: Boolean },
+  members: {
+    type: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  },
+  milestones: {
+    type: [milestoneSchema],
+    default: [],
+  },
 
   // Participation & Crowdfunding
   participationCost: { type: Number, default: 0 }, // Cost to participate

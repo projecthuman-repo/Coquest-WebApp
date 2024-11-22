@@ -38,5 +38,5 @@ export {
   skillSchema,
   badgeSchema,
   recommendationSchema,
-  budgetItem
+  budgetItem,
 };

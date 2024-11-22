@@ -280,6 +280,18 @@ const schema = gql`
     CUSTOM
   }
 
+  type Milestone {
+    title: String!
+    description: String
+    completed: Boolean!
+  }
+
+  input MilestoneInput {
+    title: String!
+    description: String
+    completed: Boolean
+  }
+
   type Coop {
     _id: ID!
     userID: String
@@ -292,13 +304,15 @@ const schema = gql`
     location: Location
     startDate: String # Use ISO date format
     endDate: String # Use ISO date format
+    milestones: [Milestone!]
     recurring: RecurringType
-    radius: Int
+    radius: String
     haveNeutralMeetingSpace: Boolean
     venues: [String!]
     additionalInfo: String
     budgetingItems: [BudgetItem!]
     openToBartering: Boolean
+    members: [User!]
 
     # Participation & Crowdfunding
     participationCost: Float
@@ -327,8 +341,8 @@ const schema = gql`
 
   input CoopInput {
     id: ID
-    userID: ID!
-    name: String!
+    userID: ID
+    name: String
     type: String
     summary: String
     mission: String
@@ -339,6 +353,7 @@ const schema = gql`
     startTime: String
     endDate: String
     endTime: String
+    milestones: [MilestoneInput!]
     recurring: RecurringType
     radius: String
     haveNeutralMeetingSpace: Boolean
@@ -513,6 +528,16 @@ const schema = gql`
     userID: String
   }
 
+  input joinCoopInput {
+    userID: String!
+    coopID: String!
+  }
+
+  input leaveCoopInput {
+    userID: String!
+    coopID: String!
+  }
+
   input MarkMessageAsReadInput {
     _id: ID
     userID: String
@@ -622,6 +647,9 @@ const schema = gql`
     addMemberToChat(userInput: AddMemberToChatInput!): mutationResponse @auth
     markMessageAsRead(userInput: MarkMessageAsReadInput!): mutationResponse
       @auth
+
+    joinCoop(userInput: joinCoopInput!): mutationResponse @auth
+    leaveCoop(userInput: leaveCoopInput!): mutationResponse @auth
 
     updateUser(userInput: UserInput!): mutationResponse @auth
     updatePost(userInput: PostInput!): mutationResponse @auth
