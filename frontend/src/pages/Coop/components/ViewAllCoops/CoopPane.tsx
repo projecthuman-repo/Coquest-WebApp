@@ -93,7 +93,7 @@ const CoopPane = (props: CoopProps) => {
 				</GridCol>
 				<GridCol item xs={1}>
 					<IconButton
-						onClick={() => navigate(`/programs/${coop.id}`)}
+						onClick={() => navigate(`/coops/${coop.id}`)}
 					>
 						<ArrowForwardIosIcon />
 					</IconButton>

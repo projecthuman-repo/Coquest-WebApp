@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import SharedCalendar from "../../../components/SharedCalendar/SharedCalendar";
 import Quests from "../../../components/Quests";
 import Members from "../../../components/Members/index";
@@ -12,7 +12,7 @@ import "./Overview.css";
 import "./index.css";
 
 function CoopOverview() {
-	const { coop, setCoop } = useContext(CoopContext);
+	const { coop, updateCoop } = useContext(CoopContext);
 
 	// edit coop description, objective and initiative
 	const [editingDescStarted, setEditingDescStarted] = useState(false);
@@ -33,7 +33,7 @@ function CoopOverview() {
 
 	const editDesc = () => {
 		if (coop && editedDescription && editedObjective && editedInitiative) {
-			setCoop({
+			updateCoop({
 				...coop,
 				description: editedDescription,
 				objective: editedObjective,
@@ -45,13 +45,13 @@ function CoopOverview() {
 		handleEditDescModal();
 	};
 
-	useEffect(() => {
-		if (!editingDescStarted) {
-			setEditedDescription(coop?.description);
-			setEditedObjective(coop?.objective);
-			setEditedInitiative(coop?.initiative);
-		}
-	}, [editingDescStarted, coop]);
+	// useEffect(() => {
+	// 	if (!editingDescStarted) {
+	// 		setEditedDescription(coop?.description);
+	// 		setEditedObjective(coop?.objective);
+	// 		setEditedInitiative(coop?.initiative);
+	// 	}
+	// }, [editingDescStarted, coop]);
 
 	return (
 		<>

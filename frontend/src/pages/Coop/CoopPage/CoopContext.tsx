@@ -1,10 +1,10 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useContext } from "react";
 import { Coop } from "../../../models/coopModel";
 import { CoopsContext } from "../CoopsContext";
 
 type CoopContextType = {
 	coop: Coop | null;
-	setCoop: React.Dispatch<React.SetStateAction<Coop | null>>;
+	updateCoop: (coop: Coop) => void;
 };
 
 type CoopContextProviderProps = {
@@ -13,35 +13,31 @@ type CoopContextProviderProps = {
 
 export const CoopContext = createContext<CoopContextType>({
 	coop: null,
-	setCoop: () => {},
+	updateCoop: () => {},
 });
 
 export const CoopContextProvider = ({ children }: CoopContextProviderProps) => {
-	const { coops } = useContext(CoopsContext);
-	const [coop, setCoop] = useState<Coop | null>(null);
+	const { coops, setCoops } = useContext(CoopsContext);
+	let coop: Coop | null = null;
 
-	useEffect(() => {
-		if (coop === null) {
-			const path = window.location.pathname;
-			const segments = path.split("/");
-			const index = segments.indexOf("coops");
-			if (index !== -1 && segments[index + 1]) {
-				const coopId = parseInt(segments[index + 1], 10);
-				if (!isNaN(coopId)) {
-					const coop = coops.find(
-						(coop) =>
-							coop.id?.localeCompare(coopId.toString()) === 0,
-					);
-					if (coop) {
-						setCoop(coop);
-					}
-				}
-			}
+	const updateCoop = (coop: Coop) => {
+		setCoops(coops.map((p) => (p.id === coop.id ? coop : p)));
+	};
+	if (coop === null) {
+		const path = window.location.pathname;
+		const segments = path.split("/");
+		const index = segments.indexOf("coops");
+		if (index !== -1 && segments[index + 1]) {
+			const coopId = segments[index + 1]; // Directly use the segment as a string ID
+			coop =
+				coops.find(
+					(c) => c.id === coopId, // Compare as strings
+				) ?? null;
 		}
-	}, [coops, coop]);
+	}
 
 	return (
-		<CoopContext.Provider value={{ coop, setCoop }}>
+		<CoopContext.Provider value={{ coop, updateCoop }}>
 			{children}
 		</CoopContext.Provider>
 	);
