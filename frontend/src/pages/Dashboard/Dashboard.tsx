@@ -56,7 +56,7 @@ function Dashboard() {
 		<>
 			<div className="dashboard-container">
 				{/* {currentCommunity ? ( // Removed this variable, you can see community page.
-					
+
 				) : (
 					<p>No Communities Found!</p>
 				)} */}
@@ -104,12 +104,12 @@ function Dashboard() {
 							<div className="db-widget-small">
 								<div className="db-flex-container">
 									<h2 className="db-widget-heading-small">
-										Community Overview
+										Communities
 									</h2>
 									<button
 										onClick={() =>
 											navigate(
-												`/communities/${currentCommunity?.objValue.id}`,
+												`/communities`,
 											)
 										}
 									>
@@ -129,7 +129,7 @@ function Dashboard() {
 									<button
 										onClick={() =>
 											navigate(
-												`/communities/${currentCommunity?.objValue.id}`,
+												`/projects`,
 											)
 										}
 									>
@@ -149,7 +149,7 @@ function Dashboard() {
 									<button
 										onClick={() =>
 											navigate(
-												`/communities/${currentCommunity?.objValue.id}`,
+												`/projects`,
 											)
 										}
 									>
@@ -167,7 +167,7 @@ function Dashboard() {
 									<button
 										onClick={() =>
 											navigate(
-												`/communities/${currentCommunity?.objValue.id}`,
+												`/posts`,
 											)
 										}
 									>
