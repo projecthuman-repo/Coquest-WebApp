@@ -1,14 +1,12 @@
 import React, { createContext, useState } from "react";
 import { Coop } from "../../models/coopModel";
-
-// import { subscribeToUserModelSubject } from "../../observers/userobserver";
-// import { User } from "../../models/usermodel";
-// import Loading from "../../components/Loading";
+import graphQLClient from "@/apiInterface/client";
+import { GET_COOPS } from "@/apiInterface/gqlOperations";
 
 // TODO fetch post data from backend
 const data: Coop[] = [
 	{
-		id: "1",
+		id: "672df962b1baba192c70b600",
 		name: "Coop 1",
 		progress: 50,
 		description:
@@ -25,7 +23,7 @@ const data: Coop[] = [
 		milestones: [
 			{
 				id: "1",
-				type: "Milestone",
+				type: "coop",
 				title: "Milestone 1",
 				progress: 100,
 				description:
@@ -36,7 +34,7 @@ const data: Coop[] = [
 			},
 			{
 				id: "2",
-				type: "Milestone",
+				type: "coop",
 				title: "Milestone 2",
 				progress: 100,
 				description:
@@ -47,7 +45,7 @@ const data: Coop[] = [
 			},
 			{
 				id: "3",
-				type: "Milestone",
+				type: "coop",
 				title: "Milestone 3",
 				progress: 20,
 				description:
@@ -58,7 +56,7 @@ const data: Coop[] = [
 			},
 			{
 				id: "4",
-				type: "Milestone",
+				type: "coop",
 				title: "Milestone 4",
 				progress: 0,
 				description:
@@ -313,7 +311,7 @@ const data: Coop[] = [
 		milestones: [
 			{
 				id: "1",
-				type: "Milestone",
+				type: "coop",
 				title: "Milestone 1",
 				progress: 17,
 				description:
@@ -324,7 +322,7 @@ const data: Coop[] = [
 			},
 			{
 				id: "2",
-				type: "Milestone",
+				type: "coop",
 				title: "Milestone 2",
 				progress: 7,
 				description:
@@ -540,7 +538,7 @@ const data: Coop[] = [
 		milestones: [
 			{
 				id: "1",
-				type: "Milestone",
+				type: "coop",
 				title: "Milestone 1",
 				progress: 100,
 				description:
@@ -551,7 +549,7 @@ const data: Coop[] = [
 			},
 			{
 				id: "2",
-				type: "Milestone",
+				type: "coop",
 				title: "Milestone 2",
 				progress: 100,
 				description:
@@ -562,7 +560,7 @@ const data: Coop[] = [
 			},
 			{
 				id: "3",
-				type: "Milestone",
+				type: "coop",
 				title: "Milestone 3",
 				progress: 20,
 				description:
@@ -603,6 +601,8 @@ export const CoopsContextProvider = ({
 	children,
 }: CoopsContextProviderProps) => {
 	const [coops, setCoops] = useState<Coop[]>(data);
+
+	// graphQLClient.request(GET_COOPS).then(({ getCoops }) => setCoops(getCoops));
 
 	return (
 		<CoopsContext.Provider value={{ coops, setCoops }}>

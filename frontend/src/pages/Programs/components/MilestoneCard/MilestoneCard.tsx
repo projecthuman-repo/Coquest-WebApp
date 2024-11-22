@@ -8,16 +8,17 @@ import { Milestone } from "../../../../models/programModel";
 import { ProgramContext } from "../../ProgramPage/ProgramContext";
 import { ProjectContext } from "../../../Projects/ProjectPage/ProjectContext";
 import "./MilestoneCard.css";
+import { CoopContext } from "@/pages/Coop/CoopPage/CoopContext";
 
 interface MilestoneCardProps {
 	milestone: Milestone;
-	type: string; // "program" or "project" for which milestone is
+	type: "program" | "project" | "coop"; // "program" or "project" for which milestone is
 }
 
 function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 	const { program, setProgram } = useContext(ProgramContext);
 	const { project, setProject } = useContext(ProjectContext);
-
+	const { coop, updateCoop } = useContext(CoopContext);
 	const [expanded, setExpanded] = useState(false);
 	const [displayDesc, setDisplayDesc] = useState(milestone.description);
 
@@ -74,6 +75,21 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 					return m;
 				}),
 			});
+		} else if (type === "coop" && coop) {
+			updateCoop({
+				...coop,
+				milestones: coop.milestones.map((m) => {
+					if (m.id === milestone.id) {
+						return {
+							...m,
+							type: milestoneType,
+							title: milestoneTitle,
+							description: milestoneDescription,
+						};
+					}
+					return m;
+				}),
+			});
 		}
 
 		//TODO edit milestone in backend
@@ -95,7 +111,15 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 					(m) => m.id !== milestone.id,
 				),
 			});
+		} else if (type === "coop" && coop) {
+			updateCoop({
+				...coop,
+				milestones: coop.milestones.filter(
+					(m) => m.id !== milestone.id,
+				),
+			});
 		}
+
 
 		//TODO delete milestone in backend
 	}
@@ -132,44 +156,6 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 						</div>
 
 						<div className="edit-milestone-form">
-							<div>
-								<p>What would you like to add</p>
-
-								<div className="milestone-type-options">
-									<div>
-										<input
-											type="radio"
-											id="milestone"
-											name="milestone"
-											value="milestone"
-											checked={
-												milestoneType === "Milestone"
-											}
-											onChange={() =>
-												setMilestoneType("Milestone")
-											}
-										/>
-										<label htmlFor="milestone">
-											Milestone
-										</label>
-									</div>
-
-									<div>
-										<input
-											type="radio"
-											id="goal"
-											name="goal"
-											value="goal"
-											checked={milestoneType === "Goal"}
-											onChange={() =>
-												setMilestoneType("Goal")
-											}
-										/>
-										<label htmlFor="goal">Goal</label>
-									</div>
-								</div>
-							</div>
-
 							<Input label="Milestone title">
 								<input
 									type="text"
