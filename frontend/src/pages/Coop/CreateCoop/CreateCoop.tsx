@@ -76,7 +76,7 @@ const CreateCoop = () => {
 	);
 	const paths = ["basic-information", "operations", "budgeting", "promotion"];
 	const [createCoopData, setCreateCoopData] = useState<CoopInput>({
-		userID: "",
+		userID: "", // This has been populated in the useEffect that subscribes to the user model
 		name: "",
 		/*
 		The above properties are placeholders for the required properties of the Coop model.
