@@ -1,5 +1,6 @@
 import { Milestone, VolunteerPosition } from "./programModel";
 import { CoopRole } from "./roleModel";
+import { User } from "./usermodel";
 
 export interface Coop {
 	readonly id: string | undefined;
@@ -16,4 +17,5 @@ export interface Coop {
 	milestones: Milestone[];
 	volunteerPositions: VolunteerPosition[];
 	openRoles: CoopRole[] | null;
+	members?: User[];
 }
