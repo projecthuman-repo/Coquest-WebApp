@@ -25,7 +25,7 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 	//edit milestone states
 	const [scrollY, setScrollY] = useState(0);
 	const [editingStarted, setEditingStarted] = useState(false);
-	const [milestoneType, setMilestoneType] = useState(type);
+	const [milestoneType, _setMilestoneType] = useState(type);
 	const [milestoneTitle, setMilestoneTitle] = useState(milestone.title);
 	const [milestoneDescription, setMilestoneDescription] = useState(
 		milestone.description,
@@ -125,7 +125,7 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 	}
 
 	useEffect(() => {
-		setMilestoneType(milestone.type);
+		// setMilestoneType(milestone.type);
 		setMilestoneTitle(milestone.title);
 		setMilestoneDescription(milestone.description);
 
