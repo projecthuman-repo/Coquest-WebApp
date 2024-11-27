@@ -49,7 +49,7 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 			setProgram({
 				...program,
 				milestones: program.milestones.map((m) => {
-					if (m.id === milestone.id) {
+					if (m._id === milestone._id) {
 						return {
 							...m,
 							type: milestoneType,
@@ -64,7 +64,7 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 			setProject({
 				...project,
 				milestones: project.milestones.map((m) => {
-					if (m.id === milestone.id) {
+					if (m._id === milestone._id) {
 						return {
 							...m,
 							type: milestoneType,
@@ -79,7 +79,7 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 			updateCoop({
 				...coop,
 				milestones: coop.milestones.map((m) => {
-					if (m.id === milestone.id) {
+					if (m._id === milestone._id) {
 						return {
 							...m,
 							type: milestoneType,
@@ -101,25 +101,24 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 			setProgram({
 				...program,
 				milestones: program.milestones.filter(
-					(m) => m.id !== milestone.id,
+					(m) => m._id !== milestone._id,
 				),
 			});
 		} else if (type === "project" && project) {
 			setProject({
 				...project,
 				milestones: project.milestones.filter(
-					(m) => m.id !== milestone.id,
+					(m) => m._id !== milestone._id,
 				),
 			});
 		} else if (type === "coop" && coop) {
 			updateCoop({
 				...coop,
 				milestones: coop.milestones.filter(
-					(m) => m.id !== milestone.id,
+					(m) => m._id !== milestone._id,
 				),
 			});
 		}
-
 
 		//TODO delete milestone in backend
 	}

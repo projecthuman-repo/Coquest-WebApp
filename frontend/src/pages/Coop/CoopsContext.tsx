@@ -22,7 +22,7 @@ const data: Coop[] = [
 		cost: 15,
 		milestones: [
 			{
-				id: "1",
+				_id: "1",
 				type: "coop",
 				title: "Milestone 1",
 				progress: 100,
@@ -33,7 +33,7 @@ const data: Coop[] = [
 				dateCompleted: "2023-08-22",
 			},
 			{
-				id: "2",
+				_id: "2",
 				type: "coop",
 				title: "Milestone 2",
 				progress: 100,
@@ -44,7 +44,7 @@ const data: Coop[] = [
 				dateCompleted: "2021-08-15",
 			},
 			{
-				id: "3",
+				_id: "3",
 				type: "coop",
 				title: "Milestone 3",
 				progress: 20,
@@ -55,7 +55,7 @@ const data: Coop[] = [
 				dateCompleted: "2024-08-15",
 			},
 			{
-				id: "4",
+				_id: "4",
 				type: "coop",
 				title: "Milestone 4",
 				progress: 0,
@@ -310,7 +310,7 @@ const data: Coop[] = [
 		cost: 20,
 		milestones: [
 			{
-				id: "1",
+				_id: "1",
 				type: "coop",
 				title: "Milestone 1",
 				progress: 17,
@@ -321,7 +321,7 @@ const data: Coop[] = [
 				dateCompleted: "2023-08-22",
 			},
 			{
-				id: "2",
+				_id: "2",
 				type: "coop",
 				title: "Milestone 2",
 				progress: 7,
@@ -537,7 +537,7 @@ const data: Coop[] = [
 		cost: 75,
 		milestones: [
 			{
-				id: "1",
+				_id: "1",
 				type: "coop",
 				title: "Milestone 1",
 				progress: 100,
@@ -548,7 +548,7 @@ const data: Coop[] = [
 				dateCompleted: "2023-08-22",
 			},
 			{
-				id: "2",
+				_id: "2",
 				type: "coop",
 				title: "Milestone 2",
 				progress: 100,
@@ -559,7 +559,7 @@ const data: Coop[] = [
 				dateCompleted: "2021-08-15",
 			},
 			{
-				id: "3",
+				_id: "3",
 				type: "coop",
 				title: "Milestone 3",
 				progress: 20,

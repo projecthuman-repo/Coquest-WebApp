@@ -18,7 +18,7 @@ export interface Program {
 }
 
 export interface Milestone {
-	readonly id: string | undefined;
+	readonly _id: string | undefined;
 	type: string;
 	// type: "program" | "coop" | "project";
 	title: string;

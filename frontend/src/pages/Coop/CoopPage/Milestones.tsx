@@ -28,7 +28,7 @@ function CoopMilestones() {
 	function handleMilestoneAdd() {
 		if (coop) {
 			const newMilestone: Milestone = {
-				id: `${coop?.milestones.length + 1}`,
+				_id: `${coop?.milestones.length + 1}`,
 				type: "coop",
 				title: milestoneTitle,
 				progress: 0,
@@ -124,7 +124,7 @@ function CoopMilestones() {
 			<div className="program-milestones">
 				{coop?.milestones.map((milestone) => (
 					<MilestoneCard
-						key={milestone.id}
+						key={milestone._id}
 						milestone={milestone}
 						type="coop"
 					/>
