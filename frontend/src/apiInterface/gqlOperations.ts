@@ -93,6 +93,8 @@ export const GET_COOPS = graphql(`
 				completed
 				description
 				title
+				dateStarted
+				dateCompleted
 			}
 			promotionArea {
 				lat

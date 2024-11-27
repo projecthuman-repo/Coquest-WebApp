@@ -281,15 +281,20 @@ const schema = gql`
   }
 
   type Milestone {
+    _id: ID
     title: String!
     description: String
     completed: Boolean!
+    dateStarted: String
+    dateCompleted: String
   }
 
   input MilestoneInput {
     title: String!
     description: String
     completed: Boolean
+    dateStarted: String
+    dateCompleted: String
   }
 
   type Coop {

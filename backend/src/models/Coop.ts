@@ -6,6 +6,8 @@ const milestoneSchema = new Schema({
   title: { type: String },
   description: { type: String },
   completed: { type: Boolean, default: false },
+  dateStarted: { type: String },
+  dateCompleted: { type: String },
 });
 
 const coopSchema = new Schema({
