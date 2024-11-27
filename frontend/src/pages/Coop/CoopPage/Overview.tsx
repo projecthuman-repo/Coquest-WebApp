@@ -16,11 +16,9 @@ function CoopOverview() {
 
 	// edit coop description, objective and initiative
 	const [editingDescStarted, setEditingDescStarted] = useState(false);
-	const [editedDescription, setEditedDescription] = useState(
-		coop?.description,
-	);
-	const [editedObjective, setEditedObjective] = useState(coop?.objective);
-	const [editedInitiative, setEditedInitiative] = useState(coop?.initiative);
+	const [editedDescription, setEditedDescription] = useState(coop?.summary);
+	const [editedObjective, setEditedObjective] = useState(coop?.mission);
+	const [editedInitiative, setEditedInitiative] = useState(coop?.type);
 
 	const handleEditDescModal = () => {
 		setEditingDescStarted(!editingDescStarted);
@@ -35,9 +33,9 @@ function CoopOverview() {
 		if (coop && editedDescription && editedObjective && editedInitiative) {
 			updateCoop({
 				...coop,
-				description: editedDescription,
-				objective: editedObjective,
-				initiative: editedInitiative,
+				summary: editedDescription,
+				mission: editedObjective,
+				type: editedInitiative,
 			});
 		}
 
@@ -126,19 +124,19 @@ function CoopOverview() {
 							</button>
 						</div>
 						<p className="prg-o-sub-text margin-top margin-bottom">
-							{coop?.description}
+							{coop?.summary}
 						</p>
 						<h2 className="prg-o-sub-heading margin-bottom">
 							Project Objective
 						</h2>
 						<p className="prg-o-sub-text margin-bottom">
-							{coop?.objective}
+							{coop?.mission}
 						</p>
 						<h2 className="prg-o-sub-heading margin-bottom">
 							Initiative
 						</h2>
 						<p className="prg-o-sub-text margin-bottom">
-							{coop?.initiative}
+							{coop?.type}
 						</p>
 					</div>
 					{/* Members */}

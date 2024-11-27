@@ -62,7 +62,7 @@ const CoopPane = (props: CoopProps) => {
 							: "(Not set yet)"}
 					</Typography>
 					<Title>{coop.name}</Title>
-					<Typography>{coop.description}</Typography>
+					<Typography>{coop.summary}</Typography>
 				</Grid>
 				<GridCol item xs={4} sm={4}>
 					<Typography>
@@ -92,9 +92,7 @@ const CoopPane = (props: CoopProps) => {
 					</Typography>
 				</GridCol>
 				<GridCol item xs={1}>
-					<IconButton
-						onClick={() => navigate(`/coops/${coop._id}`)}
-					>
+					<IconButton onClick={() => navigate(`/coops/${coop._id}`)}>
 						<ArrowForwardIosIcon />
 					</IconButton>
 				</GridCol>

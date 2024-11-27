@@ -6,9 +6,9 @@ export interface Coop {
 	readonly _id: string | undefined;
 	name: string;
 	progress: number | null;
-	description: string;
-	objective: string;
-	initiative: string;
+	summary: string;
+	mission: string;
+	type: string;
 	time: string | null;
 	date: string | null;
 	location: string;

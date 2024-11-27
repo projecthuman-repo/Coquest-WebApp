@@ -58,8 +58,8 @@ const validateCoop = (coop: Coop) => {
 		coop === null ||
 		coop.name === null ||
 		coop.name === "" ||
-		coop.description === null ||
-		coop.description === ""
+		coop.summary === null ||
+		coop.summary === ""
 	) {
 		return false;
 	}
