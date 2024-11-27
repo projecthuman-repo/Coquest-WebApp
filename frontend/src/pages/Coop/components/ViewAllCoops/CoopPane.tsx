@@ -75,15 +75,21 @@ const CoopPane = (props: CoopProps) => {
 					/>
 
 					<Typography>
-						<strong>Time: </strong>
-						{coop.time !== null && coop.time !== ""
-							? coop.time
+						<strong>Recurring: </strong>
+						{coop.recurring !== null && coop.recurring !== ""
+							? coop.recurring
 							: "(Not set yet)"}
 					</Typography>
 					<Typography>
-						<strong>Date: </strong>
-						{coop.date !== null && coop.date !== ""
-							? coop.date
+						<strong>Start Date: </strong>
+						{coop.startDate !== null && coop.startDate !== ""
+							? coop.startDate
+							: "(Not set yet)"}
+					</Typography>
+					<Typography>
+						<strong>End Date: </strong>
+						{coop.endDate !== null && coop.endDate !== ""
+							? coop.endDate
 							: "(Not set yet)"}
 					</Typography>
 					<Typography>

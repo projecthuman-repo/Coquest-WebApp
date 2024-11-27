@@ -9,8 +9,9 @@ export interface Coop {
 	summary: string;
 	mission: string;
 	type: string;
-	time: string | null;
-	date: string | null;
+	recurring: string | null;
+	startDate: string | null;
+	endDate: string | null;
 	location: string;
 	spots: number | null;
 	cost: number | null;

@@ -172,12 +172,16 @@ function CoopOverview() {
 								Coop Information
 							</h2>
 							<p className="prg-o-sub-text">
-								<b>Time: </b>
-								{coop?.time}
+								<b>Recurring: </b>
+								{coop?.recurring}
 							</p>
 							<p className="prg-o-sub-text">
-								<b>Date: </b>
-								{coop?.date}
+								<b>Start Date: </b>
+								{coop?.startDate}
+							</p>
+							<p className="prg-o-sub-text">
+								<b>End Date: </b>
+								{coop?.endDate}
 							</p>
 							<p className="prg-o-sub-text">
 								<b>Location: </b>

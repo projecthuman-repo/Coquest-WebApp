@@ -172,8 +172,9 @@ const CoopPage = () => {
 					{coopSignUpStarted && coopSignUp && (
 						<ConfirmationModal
 							name={coop.name}
-							time={coop.time}
-							date={coop.date}
+							time={coop.recurring}
+							startDate={coop.startDate}
+							endDate={coop.endDate}
 							location={coop.location}
 							cost={coop.cost}
 							confirmationNumber={confirmationNumber}
