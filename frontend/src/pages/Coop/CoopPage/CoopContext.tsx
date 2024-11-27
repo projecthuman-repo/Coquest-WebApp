@@ -21,7 +21,7 @@ export const CoopContextProvider = ({ children }: CoopContextProviderProps) => {
 	let coop: Coop | null = null;
 
 	const updateCoop = (coop: Coop) => {
-		setCoops(coops.map((p) => (p.id === coop.id ? coop : p)));
+		setCoops(coops.map((p) => (p._id === coop._id ? coop : p)));
 	};
 	if (coop === null) {
 		const path = window.location.pathname;
@@ -31,7 +31,7 @@ export const CoopContextProvider = ({ children }: CoopContextProviderProps) => {
 			const coopId = segments[index + 1]; // Directly use the segment as a string ID
 			coop =
 				coops.find(
-					(c) => c.id === coopId, // Compare as strings
+					(c) => c._id === coopId, // Compare as strings
 				) ?? null;
 		}
 	}

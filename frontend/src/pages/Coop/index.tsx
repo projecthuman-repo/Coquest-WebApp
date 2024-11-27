@@ -2,12 +2,8 @@ import React, { useContext } from "react";
 import { Typography, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
 import SearchBar from "../../components/SearchBar";
-//import ProgramListDisplay from "./components/ViewAllPrograms/ProgramListDisplay";
-//import ProgramPane from "./components/ViewAllPrograms/ProgramPane";
 import CoopListDisplay from "./components/ViewAllCoops/CoopListDisplay";
-//import CoopPane from "./components/ViewAllCoops/CoopPane";
 
-//import { populatedPrograms } from "../../testing/TestProgramsData";
 import { CoopsContext } from "./CoopsContext";
 
 const Container = styled("div")({

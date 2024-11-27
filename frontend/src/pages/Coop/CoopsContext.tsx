@@ -6,7 +6,7 @@ import { GET_COOPS } from "@/apiInterface/gqlOperations";
 // TODO fetch post data from backend
 const data: Coop[] = [
 	{
-		id: "672df962b1baba192c70b600",
+		_id: "672df962b1baba192c70b600",
 		name: "Coop 1",
 		progress: 50,
 		description:
@@ -294,7 +294,7 @@ const data: Coop[] = [
 		],
 	},
 	{
-		id: "2",
+		_id: "2",
 		name: "Coop 2",
 		progress: 15,
 		description:
@@ -521,7 +521,7 @@ const data: Coop[] = [
 		],
 	},
 	{
-		id: "3",
+		_id: "3",
 		name: "Coop 3",
 		progress: 88,
 		description:

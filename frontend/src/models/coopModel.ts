@@ -3,7 +3,7 @@ import { CoopRole } from "./roleModel";
 import { User } from "./usermodel";
 
 export interface Coop {
-	readonly id: string | undefined;
+	readonly _id: string | undefined;
 	name: string;
 	progress: number | null;
 	description: string;

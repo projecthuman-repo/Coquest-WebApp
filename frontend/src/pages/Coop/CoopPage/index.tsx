@@ -116,11 +116,11 @@ const CoopPage = () => {
 	};
 
 	const handleSignUp = async () => {
-		if (!coop?.id) throw new Error("Coop ID not found in CoopPage");
+		if (!coop?._id) throw new Error("Coop ID not found in CoopPage");
 		if (!user?.id) throw new Error("User ID not found in CoopPage");
 		await graphQLClient
 			.request(JOIN_COOP_MUTATION, {
-				userInput: { coopID: coop?.id, userID: user?.id },
+				userInput: { coopID: coop?._id, userID: user?.id },
 			})
 			.then(() => {
 				setCoopSignUp(true);
