@@ -1,31 +1,30 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Program } from "../../models/programModel";
-
-// import { subscribeToUserModelSubject } from "../../observers/userobserver";
-// import { User } from "../../models/usermodel";
-// import Loading from "../../components/Loading";
+import { Milestone } from "@/models/programModel";
+import graphQLClient from "@/apiInterface/client";
+import { GET_PROGRAMS } from "@/apiInterface/gqlOperations";
 
 // TODO fetch post data from backend
 const data: Program[] = [
 	{
-		id: "1",
+		_id: "672df962b1baba192c70b600",
 		name: "Program 1",
 		progress: 50,
-		description:
+		summary:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		objective:
+		mission:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		initiative:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		time: "every Mon and Wed, 6:00 - 6:30pm",
-		date: "Jan 1 - 31, 2023",
-		location: "Community center",
+		type: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		recurring: "every Mon and Wed, 6:00 - 6:30pm",
+		startDate: "Jan 1 - 31, 2023",
+		endDate: "Jan 2 - 31, 2023",
+		location: { name: "Community center" },
 		spots: 3,
 		cost: 15,
 		milestones: [
 			{
 				_id: "1",
-				type: "Milestone",
+				type: "program",
 				title: "Milestone 1",
 				completed: true,
 				description:
@@ -36,7 +35,7 @@ const data: Program[] = [
 			},
 			{
 				_id: "2",
-				type: "Milestone",
+				type: "program",
 				title: "Milestone 2",
 				completed: true,
 				description:
@@ -47,7 +46,7 @@ const data: Program[] = [
 			},
 			{
 				_id: "3",
-				type: "Milestone",
+				type: "program",
 				title: "Milestone 3",
 				completed: false,
 				description:
@@ -58,7 +57,7 @@ const data: Program[] = [
 			},
 			{
 				_id: "4",
-				type: "Milestone",
+				type: "program",
 				title: "Milestone 4",
 				completed: false,
 				description:
@@ -296,24 +295,24 @@ const data: Program[] = [
 		],
 	},
 	{
-		id: "2",
+		_id: "2",
 		name: "Program 2",
 		progress: 15,
-		description:
+		summary:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		objective:
+		mission:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		initiative:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		time: "every Mon and Wed, 6:00 - 6:30pm",
-		date: "Jan 1 - 31, 2023",
-		location: "Community center",
+		type: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		recurring: "every Mon and Wed, 6:00 - 6:30pm",
+		startDate: "Jan 1 - 31, 2023",
+		endDate: "Jan 2 - 31, 2023",
+		location: { name: "Community center" },
 		spots: 11,
 		cost: 20,
 		milestones: [
 			{
 				_id: "1",
-				type: "Milestone",
+				type: "program",
 				title: "Milestone 1",
 				completed: false,
 				description:
@@ -324,7 +323,7 @@ const data: Program[] = [
 			},
 			{
 				_id: "2",
-				type: "Milestone",
+				type: "program",
 				title: "Milestone 2",
 				completed: false,
 				description:
@@ -523,24 +522,24 @@ const data: Program[] = [
 		],
 	},
 	{
-		id: "3",
+		_id: "3",
 		name: "Program 3",
 		progress: 88,
-		description:
+		summary:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		objective:
+		mission:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		initiative:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		time: "every Mon and Wed, 6:00 - 6:30pm",
-		date: "Jan 1 - 31, 2023",
-		location: "Community center",
+		type: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		recurring: "every Mon and Wed, 6:00 - 6:30pm",
+		startDate: "Jan 1 - 31, 2023",
+		endDate: "Jan 2 - 31, 2023",
+		location: { name: "Community center" },
 		spots: 5,
 		cost: 75,
 		milestones: [
 			{
 				_id: "1",
-				type: "Milestone",
+				type: "program",
 				title: "Milestone 1",
 				completed: true,
 				description:
@@ -551,7 +550,7 @@ const data: Program[] = [
 			},
 			{
 				_id: "2",
-				type: "Milestone",
+				type: "program",
 				title: "Milestone 2",
 				completed: true,
 				description:
@@ -562,7 +561,7 @@ const data: Program[] = [
 			},
 			{
 				_id: "3",
-				type: "Milestone",
+				type: "program",
 				title: "Milestone 3",
 				completed: false,
 				description:
@@ -603,6 +602,35 @@ export const ProgramsContextProvider = ({
 	children,
 }: ProgramsContextProviderProps) => {
 	const [programs, setPrograms] = useState<Program[]>(data);
+
+	useEffect(() => {
+		const fetchPrograms = async () => {
+			const { getPrograms } = await graphQLClient.request(GET_PROGRAMS);
+
+			if (!getPrograms) return;
+
+			const programsWithProgress = getPrograms.map((program: Program) => {
+				if (!program.milestones || program.milestones.length === 0) {
+					return { ...program, progress: 0 };
+				}
+
+				const completedMilestones = program.milestones.filter(
+					(milestone: Milestone) => milestone.completed,
+				);
+
+				const progress = Math.round(
+					(completedMilestones.length / program.milestones.length) *
+						100,
+				);
+
+				return { ...program, progress };
+			});
+
+			setPrograms(programsWithProgress);
+		};
+
+		fetchPrograms();
+	}, []);
 
 	return (
 		<ProgramsContext.Provider value={{ programs, setPrograms }}>

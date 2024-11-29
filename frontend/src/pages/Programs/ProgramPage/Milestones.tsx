@@ -6,13 +6,13 @@ import PrimaryButton from "../../../components/Buttons/PrimaryButton";
 import { ProgramContext } from "./ProgramContext";
 import "./Milestones.css";
 import "./index.css";
+import { Milestone } from "@/models/programModel";
 
 function ProgramMilestones() {
-	const { program, setProgram } = useContext(ProgramContext);
+	const { program, updateProgram } = useContext(ProgramContext);
 
-	//milestone addition
+	// Milestone addition state
 	const [addingStarted, setAddingStarted] = useState(false);
-	const [milestoneType, setMilestoneType] = useState("Milestone");
 	const [milestoneTitle, setMilestoneTitle] = useState("");
 	const [milestoneDescription, setMilestoneDescription] = useState("");
 
@@ -27,27 +27,27 @@ function ProgramMilestones() {
 
 	function handleMilestoneAdd() {
 		if (program) {
-			const newMilestone = {
-				type: milestoneType,
+			const newMilestone: Milestone = {
+				type: "program", // Specify the type for the milestone
 				title: milestoneTitle,
 				completed: false,
 				description: milestoneDescription,
 				completedBy: "",
-				dateStarted: "",
+				dateStarted: new Date().toISOString(),
 				dateCompleted: "",
 			};
 
-			setProgram({
+			// Update the program milestones
+			updateProgram({
 				...program,
-				milestones: [...program.milestones, newMilestone],
+				milestones: [...(program.milestones || []), newMilestone],
 			});
-		}
-		//TODO: update program milestones in backend
 
-		handleAddModal();
-		setMilestoneType("Milestone");
-		setMilestoneTitle("");
-		setMilestoneDescription("");
+			// Reset modal state
+			handleAddModal();
+			setMilestoneTitle("");
+			setMilestoneDescription("");
+		}
 	}
 
 	return (
@@ -68,46 +68,11 @@ function ProgramMilestones() {
 						<div className="add-milestone-form">
 							<div>
 								<p>What would you like to add</p>
-
-								<div className="milestone-type-options">
-									<div>
-										<input
-											type="radio"
-											id="milestone"
-											name="milestone"
-											value="milestone"
-											checked={
-												milestoneType === "Milestone"
-											}
-											onChange={() =>
-												setMilestoneType("Milestone")
-											}
-										/>
-										<label htmlFor="milestone">
-											Milestone
-										</label>
-									</div>
-
-									<div>
-										<input
-											type="radio"
-											id="goal"
-											name="goal"
-											value="goal"
-											checked={milestoneType === "Goal"}
-											onChange={() =>
-												setMilestoneType("Goal")
-											}
-										/>
-										<label htmlFor="goal">Goal</label>
-									</div>
-								</div>
 							</div>
 
 							<Input label="Milestone title">
 								<input
 									type="text"
-									placeholder=""
 									value={milestoneTitle}
 									onChange={(e) =>
 										setMilestoneTitle(e.target.value)
@@ -118,7 +83,6 @@ function ProgramMilestones() {
 							<Input label="Milestone description">
 								<textarea
 									rows={5}
-									placeholder=""
 									value={milestoneDescription}
 									onChange={(e) =>
 										setMilestoneDescription(e.target.value)
@@ -155,9 +119,9 @@ function ProgramMilestones() {
 			</div>
 
 			<div className="program-milestones">
-				{program?.milestones.map((milestone: any, index: number) => (
+				{program?.milestones?.map((milestone) => (
 					<MilestoneCard
-						key={index}
+						key={`${milestone.title} + ${milestone.dateStarted}`}
 						milestone={milestone}
 						type="program"
 					/>

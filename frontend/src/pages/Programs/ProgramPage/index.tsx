@@ -1,11 +1,10 @@
 import React, { useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { Typography, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
 import OutlineButton from "../../../components/Buttons/OutlineButton";
 
-import SignUpModal from "../components/SignUpModal/SignUpModal";
-import ConfirmationModal from "../components/SignUpModal/ConfirmationModal";
+import SignUpModal from "../../Programs/components/SignUpModal/SignUpModal";
+import ConfirmationModal from "../../Programs/components/SignUpModal/ConfirmationModal";
 
 import ProgramOverview from "./Overview";
 import ProgramMilestones from "./Milestones";
@@ -14,8 +13,12 @@ import ProgramBids from "./Bids";
 import ProgramOffer from "./Offer";
 import ProgramDiscussions from "./Discussions";
 
-import { Program } from "../../../models/programModel";
-import { ProgramsContext } from "../ProgramsContext";
+import graphQLClient from "@/apiInterface/client";
+
+import "./index.css";
+import { JOIN_PROGRAM_MUTATION } from "@/apiInterface/gqlOperations";
+import { subscribeToUserModelSubject } from "@/observers/userobserver";
+import { User } from "@/models/usermodel";
 import { ProgramContext } from "./ProgramContext";
 
 import "./index.css";
@@ -92,15 +95,10 @@ function TabPanel(props: any) {
 
 const ProgramPage = () => {
 	const [value, setValue] = React.useState("one"); // which tab on program page user is on
-
-	const { id } = useParams() as { id: string };
-	const { programs, setPrograms } = useContext(ProgramsContext);
-	const [program, setProgram] = React.useState<Program | null>(
-		programs.filter((program) => program.id === id)[0],
-	);
-
+	const [user, setUser] = React.useState<User>();
+	const { program } = useContext(ProgramContext);
 	// program sign up
-	const [programSignUp, setProgramSignUp] = React.useState(false);
+	const [programSignUp, setProgramSignUp] = React.useState<boolean>();
 	const [programSignUpStarted, setProgramSignUpStarted] =
 		React.useState(false);
 	const [confirmationNumber, setConfirmationNumber] = React.useState(0);
@@ -118,24 +116,55 @@ const ProgramPage = () => {
 		} else document.body.style.overflow = "auto";
 	};
 
-	const handleSignUp = () => {
-		setConfirmationNumber(Math.floor(Math.random() * 1000000)); // TODO: fetch confirmation number from backend
+	const handleSignUp = async () => {
+		if (!program?._id)
+			throw new Error("Program ID not found in ProgramPage");
+		if (!user?.id) throw new Error("User ID not found in ProgramPage");
+		await graphQLClient
+			.request(JOIN_PROGRAM_MUTATION, {
+				userInput: { programID: program?._id, userID: user?.id },
+			})
+			.then(() => {
+				setProgramSignUp(true);
+				setConfirmationNumber(Math.floor(Math.random() * 1000000)); // TODO: fetch confirmation number from backend
+			})
+			.catch(console.error);
 		//TODO: send email to user with additional details about the program
-		setProgramSignUp(true);
-		//TODO send post request to backend to sign up for program
 	};
 
 	useEffect(() => {
-		setPrograms(
-			programs.map((p) => {
-				if (p.id) {
-					return p.id === program?.id ? program : p;
-				} else {
-					return p;
-				}
-			}),
-		); // updates programs if program was modified
-	}, [program, programs, setPrograms]);
+		let unsubscribe: (() => void) | null | undefined = null;
+
+		const setupSubscription = async () => {
+			unsubscribe = await subscribeToUserModelSubject((user) => {
+				setUser(user);
+			});
+		};
+		setupSubscription();
+		return () => {
+			if (unsubscribe) {
+				unsubscribe();
+			}
+		};
+	}, []);
+
+	useEffect(() => {
+		if (program?.members) {
+			setProgramSignUp(
+				program.members.find((member) => member?._id === user?.id)
+					? true
+					: false,
+			);
+		}
+	}, [program, user]);
+
+	if (!program) {
+		return (
+			<Container>
+				<TitleField>Program Not Found</TitleField>
+			</Container>
+		);
+	}
 
 	return (
 		<>
@@ -144,7 +173,7 @@ const ProgramPage = () => {
 					{/* Step 1 of Program SignUp process */}
 					{programSignUpStarted && !programSignUp && (
 						<SignUpModal
-							name={program.name}
+							name={program?.name ?? ""}
 							cost={program.cost}
 							handleSignUpModal={handleSignUpModal}
 							handleSignUp={handleSignUp}
@@ -154,10 +183,11 @@ const ProgramPage = () => {
 					{/* Step 2 of Program SignUp process */}
 					{programSignUpStarted && programSignUp && (
 						<ConfirmationModal
-							name={program.name}
-							time={program.time}
-							date={program.date}
-							location={program.location}
+							name={program.name ?? ""}
+							time={program.recurring ?? ""}
+							startDate={program.startDate ?? ""}
+							endDate={program.endDate ?? ""}
+							location={program?.location?.name ?? ""}
 							cost={program.cost}
 							confirmationNumber={confirmationNumber}
 							handleSignUpModal={handleSignUpModal}
@@ -246,25 +276,13 @@ const ProgramPage = () => {
 						/>
 					</CustomTabs>
 					<TabPanel value={value} index="one">
-						<ProgramContext.Provider
-							value={{ program, setProgram }}
-						>
-							<ProgramOverview />
-						</ProgramContext.Provider>
+						<ProgramOverview />
 					</TabPanel>
 					<TabPanel value={value} index="two">
-						<ProgramContext.Provider
-							value={{ program, setProgram }}
-						>
-							<ProgramMilestones />
-						</ProgramContext.Provider>
+						<ProgramMilestones />
 					</TabPanel>
 					<TabPanel value={value} index="three">
-						<ProgramContext.Provider
-							value={{ program, setProgram }}
-						>
-							<ProgramVolunteering />
-						</ProgramContext.Provider>
+						<ProgramVolunteering />
 					</TabPanel>
 					<TabPanel value={value} index="four">
 						<ProgramBids />

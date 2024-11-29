@@ -25,8 +25,6 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 interface ProgramProps {
 	program: Program;
-	// expanded: boolean;
-	// onToggleExpand: () => void;
 }
 const Container = styled("div")(({ theme }) => ({
 	width: "100%",
@@ -46,54 +44,43 @@ const GridCol = styled(Grid)({
 	flexDirection: "column",
 	justifyContent: "center",
 });
-const ProgramPane = (props: ProgramProps) => {
-	const { program } = props;
-
+const ProgramPane = ({ program }: ProgramProps) => {
 	const navigate = useNavigate();
 
 	return (
 		<Container>
 			<Grid container spacing={2}>
 				<Grid item xs={6} sm={7}>
-					<Typography>
-						{program.location !== null && program.location !== ""
-							? program.location
-							: "(Not set yet)"}
-					</Typography>
+					<Typography>{program?.location?.name}</Typography>
 					<Title>{program.name}</Title>
-					<Typography>{program.description}</Typography>
+					<Typography>{program.summary}</Typography>
 				</Grid>
 				<GridCol item xs={4} sm={4}>
-					<Typography>
-						Progress:{" "}
-						{program.progress !== null ? program.progress : 0}%
-					</Typography>
-
+					<Typography>Progress: {program.progress || 0}%</Typography>
 					<BorderLinearProgress
 						variant="determinate"
-						value={program.progress !== null ? program.progress : 0}
+						value={program.progress ?? 0}
 					/>
-
 					<Typography>
-						<strong>Time: </strong>
-						{program.time !== null && program.time !== ""
-							? program.time
-							: "(Not set yet)"}
+						<strong>Recurring: </strong>
+						{program.recurring || "(Not set yet)"}
 					</Typography>
 					<Typography>
-						<strong>Date: </strong>
-						{program.date !== null && program.date !== ""
-							? program.date
-							: "(Not set yet)"}
+						<strong>Start Date: </strong>
+						{program.startDate || "(Not set yet)"}
 					</Typography>
 					<Typography>
+						<strong>End Date: </strong>
+						{program.endDate || "(Not set yet)"}
+					</Typography>
+					{/* <Typography>
 						<strong>Spots open: </strong>
 						{program.spots !== null ? program.spots : 0} seats left
-					</Typography>
+					</Typography> */}
 				</GridCol>
 				<GridCol item xs={1}>
 					<IconButton
-						onClick={() => navigate(`/programs/${program.id}`)}
+						onClick={() => navigate(`/programs/${program._id}`)}
 					>
 						<ArrowForwardIosIcon />
 					</IconButton>

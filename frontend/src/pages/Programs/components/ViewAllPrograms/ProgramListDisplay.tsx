@@ -33,7 +33,7 @@ const Breaker = styled("hr")({
 	width: "90%",
 });
 
-const ProgramListDisplay = (props: ProgramProps) => {
+function ProgramListDisplay(props: ProgramProps) {
 	const validProgramList: Program[] =
 		props.programList.filter(validateProgram);
 
@@ -51,17 +51,18 @@ const ProgramListDisplay = (props: ProgramProps) => {
 			})}
 		</Container>
 	);
-};
-const validateProgram = (program: Program) => {
+}
+
+function validateProgram(program: Program) {
 	if (
 		program === null ||
 		program.name === null ||
 		program.name === "" ||
-		program.description === null ||
-		program.description === ""
+		program.summary === null ||
+		program.summary === ""
 	) {
 		return false;
 	}
 	return true;
-};
+}
 export default ProgramListDisplay;
