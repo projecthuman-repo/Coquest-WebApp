@@ -2,7 +2,7 @@ import React, { createContext, useContext } from "react";
 import { Coop } from "../../../models/coopModel";
 import { CoopsContext } from "../CoopsContext";
 import graphQLClient from "@/apiInterface/client";
-import { UPDATE_COOP_MUTATION } from "@/apiInterface/gqlOperations";
+import { UPDATE_COOP_MUTATION } from "@/apiInterface/gqlStrings/coopStrings";
 
 type CoopContextType = {
 	coop: Coop | null;

@@ -16,7 +16,7 @@ import ProjectDiscussions from "./Discussions";
 import graphQLClient from "@/apiInterface/client";
 
 import "./index.css";
-import { JOIN_PROJECT_MUTATION } from "@/apiInterface/gqlOperations";
+import { JOIN_PROJECT_MUTATION } from "@/apiInterface/gqlStrings/projectStrings";
 import { subscribeToUserModelSubject } from "@/observers/userobserver";
 import { User } from "@/models/usermodel";
 import { ProjectContext } from "./ProjectContext";

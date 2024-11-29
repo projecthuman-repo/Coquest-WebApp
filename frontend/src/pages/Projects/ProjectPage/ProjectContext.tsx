@@ -2,7 +2,7 @@ import React, { createContext, useContext } from "react";
 import { Project } from "../../../models/projectModel";
 import { ProjectsContext } from "../ProjectsContext";
 import graphQLClient from "@/apiInterface/client";
-import { UPDATE_PROJECT_MUTATION } from "@/apiInterface/gqlOperations";
+import { UPDATE_PROJECT_MUTATION } from "@/apiInterface/gqlStrings/projectStrings";
 
 type ProjectContextType = {
 	project: Project | null;

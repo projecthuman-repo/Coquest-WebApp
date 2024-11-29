@@ -2,7 +2,7 @@ import React, { createContext, useContext } from "react";
 import { Program } from "../../../models/programModel";
 import { ProgramsContext } from "../ProgramsContext";
 import graphQLClient from "@/apiInterface/client";
-import { UPDATE_PROGRAM_MUTATION } from "@/apiInterface/gqlOperations";
+import { UPDATE_PROGRAM_MUTATION } from "@/apiInterface/gqlStrings/programStrings";
 
 type ProgramContextType = {
 	program: Program | null;

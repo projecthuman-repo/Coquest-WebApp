@@ -16,7 +16,7 @@ import CoopDiscussions from "./Discussions";
 import graphQLClient from "@/apiInterface/client";
 
 import "./index.css";
-import { JOIN_COOP_MUTATION } from "@/apiInterface/gqlOperations";
+import { JOIN_COOP_MUTATION } from "@/apiInterface/gqlStrings/coopStrings";
 import { subscribeToUserModelSubject } from "@/observers/userobserver";
 import { User } from "@/models/usermodel";
 import { CoopContext } from "./CoopContext";

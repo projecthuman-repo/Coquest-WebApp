@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { Coop } from "../../models/coopModel";
 import graphQLClient from "@/apiInterface/client";
-import { GET_COOPS } from "@/apiInterface/gqlOperations";
+import { GET_COOPS } from "@/apiInterface/gqlStrings/coopStrings";
 import { Milestone } from "@/models/programModel";
 
 // TODO fetch post data from backend

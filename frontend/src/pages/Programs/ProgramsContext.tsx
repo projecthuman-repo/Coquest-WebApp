@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { Program } from "../../models/programModel";
 import { Milestone } from "@/models/programModel";
 import graphQLClient from "@/apiInterface/client";
-import { GET_PROGRAMS } from "@/apiInterface/gqlOperations";
+import { GET_PROGRAMS } from "@/apiInterface/gqlStrings/programStrings";
 
 // TODO fetch post data from backend
 const data: Program[] = [

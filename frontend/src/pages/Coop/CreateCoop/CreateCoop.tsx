@@ -7,7 +7,7 @@ import ProgressStepper from "../CoopComponents/ProgressStepper";
 import { CoopInput } from "@/__generated__/graphql";
 import { subscribeToUserModelSubject } from "@/observers/userobserver";
 import graphQLClient from "@/apiInterface/client";
-import { CREATE_COOP_MUTATION } from "@/apiInterface/gqlOperations";
+import { CREATE_COOP_MUTATION } from "@/apiInterface/gqlStrings/coopStrings";
 
 const Container = styled("div")({
 	display: "flex",

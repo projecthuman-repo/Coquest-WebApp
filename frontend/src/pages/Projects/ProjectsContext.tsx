@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { Project } from "../../models/projectModel";
 import { Milestone } from "@/models/programModel";
 import graphQLClient from "@/apiInterface/client";
-import { GET_PROJECTS } from "@/apiInterface/gqlOperations";
+import { GET_PROJECTS } from "@/apiInterface/gqlStrings/projectStrings";
 
 // TODO fetch post data from backend
 const data: Project[] = [

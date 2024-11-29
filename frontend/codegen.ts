@@ -9,6 +9,7 @@ const config: CodegenConfig = {
 	documents: [
 		"./src/apiInterface/example/gqlStringsExample.ts",
 		"./src/apiInterface/gqlOperations.ts",
+		"./src/apiInterface/gqlStrings/**/*.ts",
 	],
 
 	ignoreNoDocuments: true,
