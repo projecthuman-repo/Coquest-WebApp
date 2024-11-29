@@ -57,8 +57,9 @@ const CoopPane = (props: CoopProps) => {
 			<Grid container spacing={2}>
 				<Grid item xs={6} sm={7}>
 					<Typography>
-						{coop.location !== null && coop.location !== ""
-							? coop.location
+						{coop.location.name !== null &&
+						coop.location.name !== ""
+							? coop.location.name
 							: "(Not set yet)"}
 					</Typography>
 					<Title>{coop.name}</Title>

@@ -17,7 +17,7 @@ const data: Coop[] = [
 		recurring: "every Mon and Wed, 6:00 - 6:30pm",
 		startDate: "Jan 1 - 31, 2023",
 		endDate: "Jan 2 - 31, 2023",
-		location: "Community center",
+		location: { name: "Community center" },
 		spots: 3,
 		cost: 15,
 		milestones: [
@@ -305,7 +305,7 @@ const data: Coop[] = [
 		recurring: "every Mon and Wed, 6:00 - 6:30pm",
 		startDate: "Jan 1 - 31, 2023",
 		endDate: "Jan 2 - 31, 2023",
-		location: "Community center",
+		location: { name: "Community center" },
 		spots: 11,
 		cost: 20,
 		milestones: [
@@ -532,7 +532,7 @@ const data: Coop[] = [
 		recurring: "every Mon and Wed, 6:00 - 6:30pm",
 		startDate: "Jan 1 - 31, 2023",
 		endDate: "Jan 2 - 31, 2023",
-		location: "Community center",
+		location: { name: "Community center" },
 		spots: 5,
 		cost: 75,
 		milestones: [

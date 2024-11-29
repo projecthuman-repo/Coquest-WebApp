@@ -175,7 +175,7 @@ const CoopPage = () => {
 							time={coop.recurring}
 							startDate={coop.startDate}
 							endDate={coop.endDate}
-							location={coop.location}
+							location={coop.location.name}
 							cost={coop.cost}
 							confirmationNumber={confirmationNumber}
 							handleSignUpModal={handleSignUpModal}

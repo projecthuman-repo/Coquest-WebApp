@@ -185,7 +185,7 @@ function CoopOverview() {
 							</p>
 							<p className="prg-o-sub-text">
 								<b>Location: </b>
-								{coop?.location}
+								{coop?.location.name}
 							</p>
 							<p className="prg-o-sub-text">
 								<b>Spots Open: </b>

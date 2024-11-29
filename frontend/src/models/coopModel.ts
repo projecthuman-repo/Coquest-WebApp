@@ -12,7 +12,11 @@ export interface Coop {
 	recurring: string | null;
 	startDate: string | null;
 	endDate: string | null;
-	location: string;
+	location: {
+		name: string;
+		lat?: number;
+		lng?: number;
+	};
 	spots: number | null;
 	cost: number | null;
 	milestones: Milestone[];
