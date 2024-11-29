@@ -1,42 +1,48 @@
 import { Schema } from "mongoose";
 
-const imageSchema = new Schema({
+export const imageSchema = new Schema({
   contentType: { type: String, required: true },
   path: { type: String, required: true },
 });
 
-const locationSchema = new Schema({
-  lat: { type: Number, required: true },
-  lng: { type: Number, required: true },
+export const locationSchema = new Schema({
+  name: { type: String, required: true },
+  lat: { type: Number },
+  lng: { type: Number },
 });
 
-const skillSchema = new Schema({
+export const skillSchema = new Schema({
   skillName: String,
   skillLevel: String,
 });
 
-const badgeSchema = new Schema({
+export const badgeSchema = new Schema({
   badgeName: String,
   badgeDescription: String,
 });
 
-const recommendationSchema = new Schema({
+export const recommendationSchema = new Schema({
   name: String,
   comment: String,
 });
 
-const budgetItem = new Schema({
+export const budgetItem = new Schema({
   itemName: String,
   quantity: { type: Number, default: 0 },
   costEach: { type: Number, default: 0 },
   costTotal: { type: Number, default: 0 },
 });
 
-export {
-  imageSchema,
-  locationSchema,
-  skillSchema,
-  badgeSchema,
-  recommendationSchema,
-  budgetItem,
-};
+export const volunteerPositionSchema = new Schema({
+  title: { type: String, required: true },
+  responsibilities: { type: String },
+  skills: [{ type: String }],
+});
+
+export const milestoneSchema = new Schema({
+  title: { type: String },
+  description: { type: String },
+  completed: { type: Boolean, default: false },
+  dateStarted: { type: String },
+  dateCompleted: { type: String },
+});

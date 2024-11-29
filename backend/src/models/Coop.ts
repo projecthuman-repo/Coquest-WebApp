@@ -1,14 +1,11 @@
 import { InferSchemaType, Schema } from "mongoose";
-import { budgetItem, locationSchema } from "./common";
+import {
+  budgetItem,
+  locationSchema,
+  milestoneSchema,
+  volunteerPositionSchema,
+} from "./common";
 import { regenDb } from "../db/connection";
-
-const milestoneSchema = new Schema({
-  title: { type: String },
-  description: { type: String },
-  completed: { type: Boolean, default: false },
-  dateStarted: { type: String },
-  dateCompleted: { type: String },
-});
 
 const coopSchema = new Schema({
   userID: {
@@ -41,7 +38,10 @@ const coopSchema = new Schema({
     type: [milestoneSchema],
     default: [],
   },
-
+  volunteerPositions: {
+    type: [volunteerPositionSchema],
+    default: [],
+  },
   // Participation & Crowdfunding
   participationCost: { type: Number, default: 0 }, // Cost to participate
   maxParticipants: { type: Number, default: null }, // Max number of participants

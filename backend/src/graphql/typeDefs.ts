@@ -91,11 +91,13 @@ const schema = gql`
   }
 
   type Location {
+    name: String
     lat: Float
     lng: Float
   }
 
   input LocationInput {
+    name: String!
     lat: Float!
     lng: Float!
   }
@@ -273,6 +275,18 @@ const schema = gql`
     costTotal: Int
   }
 
+  type VolunteerPosition {
+    title: String!
+    responsibilities: String
+    skills: [String!]
+  }
+
+  input VolunteerPositionInput {
+    title: String!
+    responsibilities: String
+    skills: [String!]
+  }
+
   enum RecurringType {
     DAILY
     WEEKLY
@@ -310,6 +324,7 @@ const schema = gql`
     startDate: String # Use ISO date format
     endDate: String # Use ISO date format
     milestones: [Milestone!]
+    volunteerPositions: [VolunteerPosition!]
     recurring: RecurringType
     radius: String
     haveNeutralMeetingSpace: Boolean
@@ -359,6 +374,7 @@ const schema = gql`
     endDate: String
     endTime: String
     milestones: [MilestoneInput!]
+    volunteerPositions: [VolunteerPositionInput!]
     recurring: RecurringType
     radius: String
     haveNeutralMeetingSpace: Boolean
