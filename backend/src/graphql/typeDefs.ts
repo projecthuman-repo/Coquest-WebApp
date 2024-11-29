@@ -474,6 +474,84 @@ const schema = gql`
     invitedUsers: [ID!]
   }
 
+  type Program {
+    _id: ID!
+    userID: String
+    name: String
+    type: String
+    summary: String
+    mission: String
+    locationAllowed: Boolean
+    notificationAllowed: Boolean
+    location: Location
+    startDate: String # Use ISO date format
+    endDate: String # Use ISO date format
+    milestones: [Milestone!]
+    volunteerPositions: [VolunteerPosition!]
+    recurring: RecurringType
+    radius: String
+    haveNeutralMeetingSpace: Boolean
+    venues: [String!]
+    additionalInfo: String
+    budgetingItems: [BudgetItem!]
+    openToBartering: Boolean
+    members: [User!]
+
+    # Participation & Crowdfunding
+    participationCost: Float
+    maxParticipants: Int
+    needsCrowdfunding: Boolean
+    crowdfundingAmount: Float
+    crowdfundingMessage: String
+
+    materialHelp: String
+    serviceHelp: String
+    operationHelp: String
+
+    # Promotion
+    promotionArea: Location
+    promotionImage: String
+    shareLink: String
+    invitedUsers: [ID!]
+  }
+
+  input ProgramInput {
+    _id: ID
+    userID: ID
+    name: String
+    type: String
+    summary: String
+    mission: String
+    locationAllowed: Boolean
+    notificationAllowed: Boolean
+    location: LocationInput
+    startDate: String
+    startTime: String
+    endDate: String
+    endTime: String
+    milestones: [MilestoneInput!]
+    volunteerPositions: [VolunteerPositionInput!]
+    recurring: RecurringType
+    radius: String
+    haveNeutralMeetingSpace: Boolean
+    venues: [String!]
+    additionalInfo: String
+    budgetingItems: [BudgetItemInput!]
+    openToBartering: Boolean
+    participationCost: Float
+    maxParticipants: Int
+    needsCrowdfunding: Boolean
+    crowdfundingAmount: Float
+    crowdfundingMessage: String
+    materialHelp: String
+    serviceHelp: String
+    operationHelp: String
+    promotionArea: LocationInput
+    promotionImage: String
+    shareLink: String
+    invitedUsers: [ID!]
+  }
+
   type Post {
     _id: ID
     userID: String
@@ -637,6 +715,11 @@ const schema = gql`
     projectID: String!
   }
 
+  input joinProgramInput {
+    userID: String!
+    programID: String!
+  }
+
   input leaveCoopInput {
     userID: String!
     coopID: String!
@@ -645,6 +728,11 @@ const schema = gql`
   input leaveProjectInput {
     userID: String!
     projectID: String!
+  }
+
+  input leaveProgramInput {
+    userID: String!
+    programID: String!
   }
 
   input MarkMessageAsReadInput {
@@ -725,6 +813,7 @@ const schema = gql`
     getTopics: [Topic] @auth
     getCoops: [Coop!] @auth
     getProjects: [Project!] @auth
+    getPrograms: [Program!] @auth
 
     findUserbyID(id: String, expand: String): User @auth
     findPostbyID(postID: String): Post @auth
@@ -732,6 +821,7 @@ const schema = gql`
     findCrossUser(email: String): CrossUser @auth
     findCoopbyID(id: String): Coop @auth
     findProjectbyID(id: String): Project @auth
+    findProgrambyID(id: String): Program @auth
 
     getChatsByUserID(userID: String): [Chat] @auth
     getMessagesByChatID(chatID: String): [Message] @auth
@@ -752,6 +842,8 @@ const schema = gql`
     createPost(userInput: PostInput!): mutationResponse @auth
     createCoop(userInput: CoopInput!): mutationResponse @auth
     createProject(userInput: ProjectInput!): mutationResponse @auth
+    createProgram(userInput: ProgramInput!): mutationResponse @auth
+
     createCommunity(userInput: CommunityInput!): mutationResponse @auth
     createNotification(userInput: NotificationInput!): mutationResponse @auth
     createChat(userInput: ChatInput!): mutationResponse @auth
@@ -764,12 +856,15 @@ const schema = gql`
     leaveCoop(userInput: leaveCoopInput!): mutationResponse @auth
     joinProject(userInput: joinProjectInput!): mutationResponse @auth
     leaveProject(userInput: leaveProjectInput!): mutationResponse @auth
+    joinProgram(userInput: joinProgramInput!): mutationResponse @auth
+    leaveProgram(userInput: leaveProgramInput!): mutationResponse @auth
 
     updateUser(userInput: UserInput!): mutationResponse @auth
     updatePost(userInput: PostInput!): mutationResponse @auth
     updateCommunity(userInput: CommunityInput!): mutationResponse @auth
     updateCoop(userInput: CoopInput!): mutationResponse @auth
     updateProject(userInput: ProjectInput!): mutationResponse @auth
+    updateProgram(userInput: ProgramInput!): mutationResponse @auth
     updateNotification(userInput: NotificationInput!): mutationResponse @auth
     markNotificationAsRead(notificationID: String): mutationResponse @auth
     markAllNotificationsAsRead(userID: String): mutationResponse @auth

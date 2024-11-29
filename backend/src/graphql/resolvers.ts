@@ -22,6 +22,7 @@ import { Motive } from "../models/Motive";
 import { Topic } from "../models/Topic";
 import { ServerError, ServerErrorCodes } from "./ServerError";
 import { Project } from "../models/Project";
+import { Program } from "../models/Program";
 
 const storage = new Storage();
 
@@ -116,6 +117,19 @@ const resolvers: Resolvers = {
       }
     },
 
+    // @ts-expect-error - ObjectID is not assignable to type 'string'
+    async getPrograms() {
+      try {
+        const programs = await Program.find();
+        return programs;
+      } catch (err) {
+        throw new ServerError("Error getting programs", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
     //this method finds a user by their id
     // @ts-expect-error - registered is populated with its directive, it is expected here that its type won't match the schema
     async findUserbyID(_parent, { id, _ }, _context, _info) {
@@ -190,6 +204,17 @@ const resolvers: Resolvers = {
         return await Project.findOne({ _id: id }).populate("members");
       } catch (err) {
         throw new ServerError("Error finding project by id", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    async findProgrambyID(_parent, { id }, _context, _info) {
+      try {
+        return await Program.findOne({ _id: id });
+      } catch (err) {
+        throw new ServerError("Error finding program by id", {
           code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
           cause: err,
         });
@@ -540,6 +565,28 @@ const resolvers: Resolvers = {
       }
     },
 
+    async createProgram(_parent, { userInput }, _context, _info) {
+      if (!userInput.userID || !userInput.name) {
+        throw new ServerError("User ID and name are required.", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
+      }
+      const newProgram = new Program(userInput);
+
+      try {
+        await newProgram.save();
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(
+          `Error creating program. ${(err as Error).message}`,
+          {
+            code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+            cause: err,
+          },
+        );
+      }
+    },
+
     async joinCoop(_parent, { userInput }, _context, _info) {
       const { coopID, userID } = userInput;
       try {
@@ -587,6 +634,38 @@ const resolvers: Resolvers = {
       try {
         await Project.updateOne(
           { _id: projectID },
+          { $pull: { members: userID } },
+        );
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(`Error leaving coop. ${(err as Error).message}`, {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    async joinProgram(_parent, { userInput }, _context, _info) {
+      const { programID, userID } = userInput;
+      try {
+        await Program.updateOne(
+          { _id: programID },
+          { $push: { members: userID } },
+        );
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(`Error joining coop. ${(err as Error).message}`, {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    async leaveProgram(_parent, { userInput }, _context, _info) {
+      const { programID, userID } = userInput;
+      try {
+        await Program.updateOne(
+          { _id: programID },
           { $pull: { members: userID } },
         );
         return { code: 0, response: "successful" };
@@ -1005,6 +1084,25 @@ const resolvers: Resolvers = {
             code: ServerErrorCodes.INVALID_INPUT,
           });
         await Project.updateOne({ _id }, updateProject, {
+          runValidators: true,
+        });
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        return {
+          code: 1,
+          response: `Error updating project: ${(err as Error).message}`,
+        };
+      }
+    },
+
+    async updateProgram(_parent, { userInput }, _context, _info) {
+      const { _id, ...updateProgram } = userInput;
+      try {
+        if (!_id)
+          throw new ServerError("Program ID missing.", {
+            code: ServerErrorCodes.INVALID_INPUT,
+          });
+        await Program.updateOne({ _id }, updateProgram, {
           runValidators: true,
         });
         return { code: 0, response: "successful" };
