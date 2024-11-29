@@ -1,31 +1,35 @@
 import React, { useState, useEffect, useContext } from "react";
-import MilestoneProgressBar from "../../../../components/ProgramProgressBar/MilestoneProgressBar";
-import DeleteButton from "../../../../components/Buttons/DeleteButton";
-import OutlineButton from "../../../../components/Buttons/OutlineButton";
-import Input from "../../../../components/Input";
-import PrimaryButton from "../../../../components/Buttons/PrimaryButton";
-import { Milestone } from "../../../../models/programModel";
-import { ProgramContext } from "../../ProgramPage/ProgramContext";
-import { ProjectContext } from "../../../Projects/ProjectPage/ProjectContext";
+import MilestoneProgressBar from "@/components/ProgramProgressBar/MilestoneProgressBar";
+import DeleteButton from "@/components/Buttons/DeleteButton";
+import OutlineButton from "@/components/Buttons/OutlineButton";
+import Input from "@/components/Input";
+import PrimaryButton from "@/components/Buttons/PrimaryButton";
+import { Milestone } from "@/models/programModel";
+import { ProgramContext } from "@/pages/Programs/ProgramPage/ProgramContext";
+import { ProjectContext } from "@/pages//Projects/ProjectPage/ProjectContext";
 import "./MilestoneCard.css";
+import { CoopContext } from "@/pages/Coop/CoopPage/CoopContext";
 
 interface MilestoneCardProps {
 	milestone: Milestone;
-	type: string; // "program" or "project" for which milestone is
+	type: "program" | "project" | "coop"; // "program" or "project" for which milestone is
 }
 
 function MilestoneCard({ milestone, type }: MilestoneCardProps) {
-	const { program, setProgram } = useContext(ProgramContext);
-	const { project, setProject } = useContext(ProjectContext);
-
+	const { program, updateProgram } = useContext(ProgramContext);
+	const { project, updateProject } = useContext(ProjectContext);
+	const { coop, updateCoop } = useContext(CoopContext);
 	const [expanded, setExpanded] = useState(false);
 	const [displayDesc, setDisplayDesc] = useState(milestone.description);
 
 	//edit milestone states
 	const [scrollY, setScrollY] = useState(0);
 	const [editingStarted, setEditingStarted] = useState(false);
-	const [milestoneType, setMilestoneType] = useState(type);
+	const [milestoneType, _setMilestoneType] = useState(type);
 	const [milestoneTitle, setMilestoneTitle] = useState(milestone.title);
+	const [milestoneCompleted, setMilestoneCompleted] = useState(
+		milestone.completed,
+	);
 	const [milestoneDescription, setMilestoneDescription] = useState(
 		milestone.description,
 	);
@@ -43,32 +47,71 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 		}
 	}
 
-	function handleMilestoneEdit() {
+	function handleMilestoneEdit({
+		milestoneCompleted,
+	}: { milestoneCompleted?: boolean } = {}) {
 		if (type === "program" && program) {
-			setProgram({
+			updateProgram({
 				...program,
-				milestones: program.milestones.map((m) => {
-					if (m.id === milestone.id) {
+				milestones: program.milestones?.map((m) => {
+					if (
+						`${m.title} + ${m.dateStarted}` ===
+						`${milestone.title} + ${milestone.dateStarted}`
+					) {
 						return {
 							...m,
 							type: milestoneType,
 							title: milestoneTitle,
 							description: milestoneDescription,
+							completed: milestoneCompleted,
+							dateCompleted: milestoneCompleted
+								? new Date().toISOString()
+								: "",
 						};
 					}
 					return m;
 				}),
 			});
 		} else if (type === "project" && project) {
-			setProject({
+			updateProject({
 				...project,
-				milestones: project.milestones.map((m) => {
-					if (m.id === milestone.id) {
+				milestones: project.milestones?.map((m) => {
+					if (
+						`${m.title} + ${m.dateStarted}` ===
+						`${milestone.title} + ${milestone.dateStarted}`
+					) {
 						return {
 							...m,
 							type: milestoneType,
 							title: milestoneTitle,
 							description: milestoneDescription,
+							completed: milestoneCompleted,
+							dateCompleted: milestoneCompleted
+								? new Date().toISOString()
+								: "",
+						};
+					}
+					return m;
+				}),
+			});
+		} else if (type === "coop" && coop) {
+			updateCoop({
+				...coop,
+				milestones: coop?.milestones?.map((m) => {
+					`${milestone.title} + ${milestone.dateStarted}`;
+					if (
+						`${m.title} + ${m.dateStarted}` ===
+						`${milestone.title} + ${milestone.dateStarted}`
+					) {
+						return {
+							...m,
+							type: milestoneType,
+							title: milestoneTitle,
+							description: milestoneDescription,
+							completed: milestoneCompleted,
+							dateCompleted: milestoneCompleted
+								? new Date().toISOString()
+								: "",
 						};
 					}
 					return m;
@@ -82,17 +125,31 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 
 	function handleDelete() {
 		if (type === "program" && program) {
-			setProgram({
+			updateProgram({
 				...program,
-				milestones: program.milestones.filter(
-					(m) => m.id !== milestone.id,
+				milestones: program.milestones?.filter(
+					(m) =>
+						`${m.title} + ${m.dateStarted}` !=
+						`${milestone.title} + ${milestone.dateStarted}`,
 				),
 			});
 		} else if (type === "project" && project) {
-			setProject({
+			updateProject({
 				...project,
-				milestones: project.milestones.filter(
-					(m) => m.id !== milestone.id,
+				milestones: project.milestones?.filter(
+					(m) =>
+						`${m.title} + ${m.dateStarted}` !=
+						`${milestone.title} + ${milestone.dateStarted}`,
+				),
+			});
+		} else if (type === "coop" && coop) {
+			if (!coop.milestones) return;
+			updateCoop({
+				...coop,
+				milestones: coop.milestones.filter(
+					(m) =>
+						`${m.title} + ${m.dateStarted}` !=
+						`${milestone.title} + ${milestone.dateStarted}`,
 				),
 			});
 		}
@@ -101,13 +158,14 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 	}
 
 	useEffect(() => {
-		setMilestoneType(milestone.type);
+		// setMilestoneType(milestone.type);
 		setMilestoneTitle(milestone.title);
 		setMilestoneDescription(milestone.description);
-
-		if (milestone.description.length > 350 && !expanded) {
-			setDisplayDesc(milestone.description.slice(0, 350) + "...");
-		} else setDisplayDesc(milestone.description);
+		if (milestone.description) {
+			if (milestone.description.length > 350 && !expanded) {
+				setDisplayDesc(milestone?.description?.slice(0, 350) + "...");
+			} else setDisplayDesc(milestone.description);
+		}
 	}, [
 		milestone.description,
 		expanded,
@@ -132,49 +190,11 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 						</div>
 
 						<div className="edit-milestone-form">
-							<div>
-								<p>What would you like to add</p>
-
-								<div className="milestone-type-options">
-									<div>
-										<input
-											type="radio"
-											id="milestone"
-											name="milestone"
-											value="milestone"
-											checked={
-												milestoneType === "Milestone"
-											}
-											onChange={() =>
-												setMilestoneType("Milestone")
-											}
-										/>
-										<label htmlFor="milestone">
-											Milestone
-										</label>
-									</div>
-
-									<div>
-										<input
-											type="radio"
-											id="goal"
-											name="goal"
-											value="goal"
-											checked={milestoneType === "Goal"}
-											onChange={() =>
-												setMilestoneType("Goal")
-											}
-										/>
-										<label htmlFor="goal">Goal</label>
-									</div>
-								</div>
-							</div>
-
 							<Input label="Milestone title">
 								<input
 									type="text"
 									placeholder=""
-									value={milestoneTitle}
+									value={milestoneTitle ?? ""}
 									onChange={(e) =>
 										setMilestoneTitle(e.target.value)
 									}
@@ -185,7 +205,7 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 								<textarea
 									rows={5}
 									placeholder=""
-									value={milestoneDescription}
+									value={milestoneDescription ?? ""}
 									onChange={(e) =>
 										setMilestoneDescription(e.target.value)
 									}
@@ -209,7 +229,7 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 						<p className="prg-m-heading">{milestone.title}</p>
 						<div className="prg-m-mpb-container">
 							<MilestoneProgressBar
-								progress={milestone.progress}
+								progress={milestone.completed ? 100 : 0}
 							/>
 						</div>
 					</div>
@@ -225,10 +245,13 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 					{expanded && (
 						<p className="prg-m-sub-text">
 							<b>Date Started: </b>
-							{new Date(milestone.dateStarted) instanceof Date &&
-							!isNaN(new Date(milestone.dateStarted).getTime())
+							{new Date(milestone.dateStarted ?? "") instanceof
+								Date &&
+							!isNaN(
+								new Date(milestone.dateStarted ?? "").getTime(),
+							)
 								? new Date(
-										milestone.dateStarted,
+										milestone.dateStarted ?? "",
 									).toLocaleDateString("en-US", {
 										year: "numeric",
 										month: "long",
@@ -240,11 +263,15 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 					{expanded && (
 						<p className="prg-m-sub-text">
 							<b>Date Completed: </b>
-							{new Date(milestone.dateCompleted) instanceof
+							{new Date(milestone.dateCompleted ?? "") instanceof
 								Date &&
-							!isNaN(new Date(milestone.dateCompleted).getTime())
+							!isNaN(
+								new Date(
+									milestone.dateCompleted ?? "",
+								).getTime(),
+							)
 								? new Date(
-										milestone.dateCompleted,
+										milestone.dateCompleted ?? "",
 									).toLocaleDateString("en-US", {
 										year: "numeric",
 										month: "long",
@@ -260,6 +287,29 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 								name="Edit"
 								onClick={handleEditModal}
 							/>
+							{milestoneCompleted ? (
+								<OutlineButton
+									name="Mark Incomplete"
+									onClick={() => {
+										setMilestoneCompleted(false);
+										handleMilestoneEdit({
+											milestoneCompleted: false,
+										});
+										setEditingStarted(false);
+									}}
+								/>
+							) : (
+								<OutlineButton
+									name="Mark Complete"
+									onClick={() => {
+										setMilestoneCompleted(true);
+										handleMilestoneEdit({
+											milestoneCompleted: true,
+										});
+										setEditingStarted(false);
+									}}
+								/>
+							)}
 						</div>
 					)}
 					<button onClick={() => setExpanded(!expanded)}>

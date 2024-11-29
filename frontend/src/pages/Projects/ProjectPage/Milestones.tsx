@@ -1,18 +1,18 @@
 import React, { useState, useContext } from "react";
 import ProgramProgressBar from "../../../components/ProgramProgressBar/ProgramProgressBar";
-import MilestoneCard from "../../Programs/components/MilestoneCard/MilestoneCard";
 import Input from "../../../components/Input";
 import PrimaryButton from "../../../components/Buttons/PrimaryButton";
+import MilestoneCard from "@/pages/Programs/components/MilestoneCard/MilestoneCard";
 import { ProjectContext } from "./ProjectContext";
+import { Milestone } from "@/models/programModel";
 import "./Milestones.css";
 import "./index.css";
 
 function ProjectMilestones() {
-	const { project, setProject } = useContext(ProjectContext);
+	const { project, updateProject } = useContext(ProjectContext);
 
-	//milestone addition
+	// Milestone addition state
 	const [addingStarted, setAddingStarted] = useState(false);
-	const [milestoneType, setMilestoneType] = useState("Milestone");
 	const [milestoneTitle, setMilestoneTitle] = useState("");
 	const [milestoneDescription, setMilestoneDescription] = useState("");
 
@@ -27,28 +27,27 @@ function ProjectMilestones() {
 
 	function handleMilestoneAdd() {
 		if (project) {
-			const newMilestone = {
-				id: `${project?.milestones.length + 1}`,
-				type: milestoneType,
+			const newMilestone: Milestone = {
+				type: "project", // Specify the type for the milestone
 				title: milestoneTitle,
-				progress: 0,
+				completed: false,
 				description: milestoneDescription,
 				completedBy: "",
-				dateStarted: "",
+				dateStarted: new Date().toISOString(),
 				dateCompleted: "",
 			};
 
-			setProject({
+			// Update the project milestones
+			updateProject({
 				...project,
-				milestones: [...project.milestones, newMilestone],
+				milestones: [...(project.milestones || []), newMilestone],
 			});
-		}
-		//TODO: update project milestones in backend
 
-		handleAddModal();
-		setMilestoneType("Milestone");
-		setMilestoneTitle("");
-		setMilestoneDescription("");
+			// Reset modal state
+			handleAddModal();
+			setMilestoneTitle("");
+			setMilestoneDescription("");
+		}
 	}
 
 	return (
@@ -69,46 +68,11 @@ function ProjectMilestones() {
 						<div className="add-milestone-form">
 							<div>
 								<p>What would you like to add</p>
-
-								<div className="milestone-type-options">
-									<div>
-										<input
-											type="radio"
-											id="milestone"
-											name="milestone"
-											value="milestone"
-											checked={
-												milestoneType === "Milestone"
-											}
-											onChange={() =>
-												setMilestoneType("Milestone")
-											}
-										/>
-										<label htmlFor="milestone">
-											Milestone
-										</label>
-									</div>
-
-									<div>
-										<input
-											type="radio"
-											id="goal"
-											name="goal"
-											value="goal"
-											checked={milestoneType === "Goal"}
-											onChange={() =>
-												setMilestoneType("Goal")
-											}
-										/>
-										<label htmlFor="goal">Goal</label>
-									</div>
-								</div>
 							</div>
 
 							<Input label="Milestone title">
 								<input
 									type="text"
-									placeholder=""
 									value={milestoneTitle}
 									onChange={(e) =>
 										setMilestoneTitle(e.target.value)
@@ -119,7 +83,6 @@ function ProjectMilestones() {
 							<Input label="Milestone description">
 								<textarea
 									rows={5}
-									placeholder=""
 									value={milestoneDescription}
 									onChange={(e) =>
 										setMilestoneDescription(e.target.value)
@@ -156,9 +119,9 @@ function ProjectMilestones() {
 			</div>
 
 			<div className="project-milestones">
-				{project?.milestones.map((milestone: any, index: number) => (
+				{project?.milestones?.map((milestone) => (
 					<MilestoneCard
-						key={index}
+						key={`${milestone.title} + ${milestone.dateStarted}`}
 						milestone={milestone}
 						type="project"
 					/>

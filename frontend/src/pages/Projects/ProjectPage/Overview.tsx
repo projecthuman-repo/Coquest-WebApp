@@ -1,28 +1,26 @@
-import React, { useState, useContext, useEffect } from "react";
-import SharedCalendar from "../../../components/SharedCalendar/SharedCalendar";
-import Quests from "../../../components/Quests";
-import Members from "../../../components/Members/index";
-import ProgramProgressBar from "../../../components/ProgramProgressBar/ProgramProgressBar";
-import Budget from "../../../components/Budget/Budget";
-import Funding from "../../../components/Funding/Funding";
-import Input from "../../../components/Input";
-import PrimaryButton from "../../../components/Buttons/PrimaryButton";
+import React, { useState, useContext } from "react";
+import SharedCalendar from "@/components/SharedCalendar/SharedCalendar";
+import Quests from "@/components/Quests";
+import Members from "@/components/Members/index";
+import ProgramProgressBar from "@/components/ProgramProgressBar/ProgramProgressBar";
+import Budget from "@/components/Budget/Budget";
+import Funding from "@/components/Funding/Funding";
+import Input from "@/components/Input";
+import PrimaryButton from "@/components/Buttons/PrimaryButton";
 import { ProjectContext } from "./ProjectContext";
 import "./Overview.css";
 import "./index.css";
 
 function ProjectOverview() {
-	const { project, setProject } = useContext(ProjectContext);
+	const { project, updateProject } = useContext(ProjectContext);
 
 	// edit project description, objective and initiative
 	const [editingDescStarted, setEditingDescStarted] = useState(false);
 	const [editedDescription, setEditedDescription] = useState(
-		project?.description,
+		project?.summary,
 	);
-	const [editedObjective, setEditedObjective] = useState(project?.objective);
-	const [editedInitiative, setEditedInitiative] = useState(
-		project?.initiative,
-	);
+	const [editedObjective, setEditedObjective] = useState(project?.mission);
+	const [editedInitiative, setEditedInitiative] = useState(project?.type);
 
 	const handleEditDescModal = () => {
 		setEditingDescStarted(!editingDescStarted);
@@ -40,25 +38,16 @@ function ProjectOverview() {
 			editedObjective &&
 			editedInitiative
 		) {
-			setProject({
+			updateProject({
 				...project,
-				description: editedDescription,
-				objective: editedObjective,
-				initiative: editedInitiative,
+				summary: editedDescription,
+				mission: editedObjective,
+				type: editedInitiative,
 			});
 		}
 
-		//TODO edit project description in backend
 		handleEditDescModal();
 	};
-
-	useEffect(() => {
-		if (!editingDescStarted) {
-			setEditedDescription(project?.description);
-			setEditedObjective(project?.objective);
-			setEditedInitiative(project?.initiative);
-		}
-	}, [editingDescStarted, project]);
 
 	return (
 		<>
@@ -80,7 +69,7 @@ function ProjectOverview() {
 								<textarea
 									rows={3}
 									placeholder=""
-									value={editedDescription}
+									value={editedDescription ?? ""}
 									onChange={(e) =>
 										setEditedDescription(e.target.value)
 									}
@@ -91,7 +80,7 @@ function ProjectOverview() {
 								<textarea
 									rows={3}
 									placeholder=""
-									value={editedObjective}
+									value={editedObjective ?? ""}
 									onChange={(e) =>
 										setEditedObjective(e.target.value)
 									}
@@ -102,7 +91,7 @@ function ProjectOverview() {
 								<textarea
 									rows={3}
 									placeholder=""
-									value={editedInitiative}
+									value={editedInitiative ?? ""}
 									onChange={(e) =>
 										setEditedInitiative(e.target.value)
 									}
@@ -133,25 +122,29 @@ function ProjectOverview() {
 							</button>
 						</div>
 						<p className="prg-o-sub-text margin-top margin-bottom">
-							{project?.description}
+							{project?.summary}
 						</p>
 						<h2 className="prg-o-sub-heading margin-bottom">
 							Project Objective
 						</h2>
 						<p className="prg-o-sub-text margin-bottom">
-							{project?.objective}
+							{project?.mission}
 						</p>
 						<h2 className="prg-o-sub-heading margin-bottom">
 							Initiative
 						</h2>
 						<p className="prg-o-sub-text margin-bottom">
-							{project?.initiative}
+							{project?.type}
 						</p>
 					</div>
 					{/* Members */}
 					<div className="prg-o-background">
 						<Members
-							users={["Test"]}
+							users={
+								project?.members?.map(
+									(member) => member.username ?? "",
+								) ?? []
+							}
 							userRole={["Role"]}
 							showAllLink={
 								window.location.pathname.slice(-1) === "/"
@@ -181,16 +174,20 @@ function ProjectOverview() {
 								Project Information
 							</h2>
 							<p className="prg-o-sub-text">
-								<b>Time: </b>
-								{project?.time}
+								<b>Recurring: </b>
+								{project?.recurring}
 							</p>
 							<p className="prg-o-sub-text">
-								<b>Date: </b>
-								{project?.date}
+								<b>Start Date: </b>
+								{project?.startDate}
+							</p>
+							<p className="prg-o-sub-text">
+								<b>End Date: </b>
+								{project?.endDate}
 							</p>
 							<p className="prg-o-sub-text">
 								<b>Location: </b>
-								{project?.location}
+								{project?.location?.name}
 							</p>
 							<p className="prg-o-sub-text">
 								<b>Spots Open: </b>
@@ -208,11 +205,11 @@ function ProjectOverview() {
 							<SharedCalendar />
 						</div>
 						{/* Quests */}
-						<div className="prg-o-background">
+						{/* <div className="prg-o-background">
 							<Quests
 								showAllLink={`${window.location.pathname}/quests`}
 							/>
-						</div>
+						</div> */}
 						{/* Funding */}
 						<div className="prg-o-background">
 							<Funding />

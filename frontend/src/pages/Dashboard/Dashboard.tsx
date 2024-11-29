@@ -56,7 +56,7 @@ function Dashboard() {
 		<>
 			<div className="dashboard-container">
 				{/* {currentCommunity ? ( // Removed this variable, you can see community page.
-					
+
 				) : (
 					<p>No Communities Found!</p>
 				)} */}
@@ -104,14 +104,10 @@ function Dashboard() {
 							<div className="db-widget-small">
 								<div className="db-flex-container">
 									<h2 className="db-widget-heading-small">
-										Community Overview
+										Communities
 									</h2>
 									<button
-										onClick={() =>
-											navigate(
-												`/communities/${currentCommunity?.objValue.id}`,
-											)
-										}
+										onClick={() => navigate(`/communities`)}
 									>
 										<img
 											src="icons/next-button-chevron.png"
@@ -127,11 +123,7 @@ function Dashboard() {
 										My Projects
 									</h2>
 									<button
-										onClick={() =>
-											navigate(
-												`/communities/${currentCommunity?.objValue.id}`,
-											)
-										}
+										onClick={() => navigate(`/projects`)}
 									>
 										<img
 											src="icons/next-button-chevron.png"
@@ -147,11 +139,7 @@ function Dashboard() {
 										Open Projects
 									</h2>
 									<button
-										onClick={() =>
-											navigate(
-												`/communities/${currentCommunity?.objValue.id}`,
-											)
-										}
+										onClick={() => navigate(`/projects`)}
 									>
 										<img
 											src="icons/next-button-chevron.png"
@@ -164,13 +152,7 @@ function Dashboard() {
 							<div className="db-widget">
 								<div className="db-flex-container">
 									<h2 className="db-widget-heading">Posts</h2>
-									<button
-										onClick={() =>
-											navigate(
-												`/communities/${currentCommunity?.objValue.id}`,
-											)
-										}
-									>
+									<button onClick={() => navigate(`/posts`)}>
 										<img
 											src="icons/next-button-chevron.png"
 											alt="search-icon"

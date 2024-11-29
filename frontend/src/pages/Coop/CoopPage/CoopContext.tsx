@@ -1,10 +1,12 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useContext } from "react";
 import { Coop } from "../../../models/coopModel";
 import { CoopsContext } from "../CoopsContext";
+import graphQLClient from "@/apiInterface/client";
+import { UPDATE_COOP_MUTATION } from "@/apiInterface/gqlStrings/coopStrings";
 
 type CoopContextType = {
 	coop: Coop | null;
-	setCoop: React.Dispatch<React.SetStateAction<Coop | null>>;
+	updateCoop: (coop: Coop) => void;
 };
 
 type CoopContextProviderProps = {
@@ -13,35 +15,50 @@ type CoopContextProviderProps = {
 
 export const CoopContext = createContext<CoopContextType>({
 	coop: null,
-	setCoop: () => {},
+	updateCoop: () => {},
 });
 
 export const CoopContextProvider = ({ children }: CoopContextProviderProps) => {
-	const { coops } = useContext(CoopsContext);
-	const [coop, setCoop] = useState<Coop | null>(null);
+	const { coops, setCoops } = useContext(CoopsContext);
+	let coop: Coop | null = null;
 
-	useEffect(() => {
-		if (coop === null) {
-			const path = window.location.pathname;
-			const segments = path.split("/");
-			const index = segments.indexOf("coops");
-			if (index !== -1 && segments[index + 1]) {
-				const coopId = parseInt(segments[index + 1], 10);
-				if (!isNaN(coopId)) {
-					const coop = coops.find(
-						(coop) =>
-							coop.id?.localeCompare(coopId.toString()) === 0,
-					);
-					if (coop) {
-						setCoop(coop);
-					}
-				}
-			}
+	const updateCoop = (coop: Coop) => {
+		console.log("Updating coop", coop);
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const { milestones, recurring, progress, members, ...coopInput } = coop;
+		const filteredMilestones = milestones?.filter(
+			(milestone) => milestone.title,
+		);
+		const removedFromMilestones = filteredMilestones?.map((milestone) => {
+			// these were removed because they dont exist in schema
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const { type, completedBy, ...rest } = milestone;
+			return rest;
+		});
+		graphQLClient
+			.request(UPDATE_COOP_MUTATION, {
+				// @ts-expect-error TS thinks title maybe undefined, I have filtered it before
+				userInput: { ...coopInput, milestones: removedFromMilestones },
+			})
+			.then(console.log)
+			.catch(console.error);
+		setCoops(coops.map((p) => (p._id === coop._id ? coop : p)));
+	};
+	if (coop === null) {
+		const path = window.location.pathname;
+		const segments = path.split("/");
+		const index = segments.indexOf("coops");
+		if (index !== -1 && segments[index + 1]) {
+			const coopId = segments[index + 1]; // Directly use the segment as a string ID
+			coop =
+				coops.find(
+					(c) => c._id === coopId, // Compare as strings
+				) ?? null;
 		}
-	}, [coops, coop]);
+	}
 
 	return (
-		<CoopContext.Provider value={{ coop, setCoop }}>
+		<CoopContext.Provider value={{ coop, updateCoop }}>
 			{children}
 		</CoopContext.Provider>
 	);

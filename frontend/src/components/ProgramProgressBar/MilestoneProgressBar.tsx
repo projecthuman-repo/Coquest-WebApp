@@ -11,6 +11,7 @@ function MilestoneProgressBar({ progress }: MilestoneProgressBarProps) {
 	useEffect(() => {
 		setProgressText(`Progress: ${progress}%`);
 		if (progress == 100) setProgressText("Completed");
+		if (progress == 0) setProgressText("Not Started");
 	}, [progress]);
 
 	return (

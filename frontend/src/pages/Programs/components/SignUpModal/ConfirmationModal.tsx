@@ -5,9 +5,10 @@ import "./SignUpModal.css";
 interface ConfirmationModalProps {
 	name: string;
 	time: string | null;
-	date: string | null;
+	startDate: string | null;
+	endDate: string | null;
 	location: string;
-	cost: number | null;
+	cost: number | null | undefined;
 	confirmationNumber: number;
 	handleSignUpModal: () => void;
 }
@@ -15,7 +16,7 @@ interface ConfirmationModalProps {
 function ConfirmationModal({
 	name,
 	time,
-	date,
+	startDate,
 	location,
 	cost,
 	confirmationNumber,
@@ -47,8 +48,12 @@ function ConfirmationModal({
 								{time}
 							</p>
 							<p>
-								<span className="bolded">Date: </span>
-								{date}
+								<span className="bolded">Start Date: </span>
+								{startDate}
+							</p>
+							<p>
+								<span className="bolded">End Date: </span>
+								{startDate}
 							</p>
 							<p>
 								<span className="bolded">Location: </span>

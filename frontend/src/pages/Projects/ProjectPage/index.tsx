@@ -1,8 +1,7 @@
 import React, { useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { Typography, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
-import OutlineButton from "../../../components/Buttons/OutlineButton";
+import OutlineButton from "@/components/Buttons/OutlineButton";
 
 import SignUpModal from "../../Programs/components/SignUpModal/SignUpModal";
 import ConfirmationModal from "../../Programs/components/SignUpModal/ConfirmationModal";
@@ -14,8 +13,12 @@ import ProjectBids from "./Bids";
 import ProjectOffer from "./Offer";
 import ProjectDiscussions from "./Discussions";
 
-import { Project } from "../../../models/projectModel";
-import { ProjectsContext } from "../ProjectsContext";
+import graphQLClient from "@/apiInterface/client";
+
+import "./index.css";
+import { JOIN_PROJECT_MUTATION } from "@/apiInterface/gqlStrings/projectStrings";
+import { subscribeToUserModelSubject } from "@/observers/userobserver";
+import { User } from "@/models/usermodel";
 import { ProjectContext } from "./ProjectContext";
 
 import "./index.css";
@@ -92,15 +95,10 @@ function TabPanel(props: any) {
 
 const ProjectPage = () => {
 	const [value, setValue] = React.useState("one"); // which tab on project page user is on
-
-	const { id } = useParams() as { id: string };
-	const { projects, setProjects } = useContext(ProjectsContext);
-	const [project, setProject] = React.useState<Project | null>(
-		projects.filter((project) => project.id === id)[0],
-	);
-
+	const [user, setUser] = React.useState<User>();
+	const { project } = useContext(ProjectContext);
 	// project sign up
-	const [projectSignUp, setProjectSignUp] = React.useState(false);
+	const [projectSignUp, setProjectSignUp] = React.useState<boolean>();
 	const [projectSignUpStarted, setProjectSignUpStarted] =
 		React.useState(false);
 	const [confirmationNumber, setConfirmationNumber] = React.useState(0);
@@ -118,24 +116,55 @@ const ProjectPage = () => {
 		} else document.body.style.overflow = "auto";
 	};
 
-	const handleSignUp = () => {
-		setConfirmationNumber(Math.floor(Math.random() * 1000000)); // TODO: fetch confirmation number from backend
+	const handleSignUp = async () => {
+		if (!project?._id)
+			throw new Error("Project ID not found in ProjectPage");
+		if (!user?.id) throw new Error("User ID not found in ProjectPage");
+		await graphQLClient
+			.request(JOIN_PROJECT_MUTATION, {
+				userInput: { projectID: project?._id, userID: user?.id },
+			})
+			.then(() => {
+				setProjectSignUp(true);
+				setConfirmationNumber(Math.floor(Math.random() * 1000000)); // TODO: fetch confirmation number from backend
+			})
+			.catch(console.error);
 		//TODO: send email to user with additional details about the project
-		setProjectSignUp(true);
-		//TODO send post request to backend to sign up for project
 	};
 
 	useEffect(() => {
-		setProjects(
-			projects.map((p) => {
-				if (p.id) {
-					return p.id === project?.id ? project : p;
-				} else {
-					return p;
-				}
-			}),
-		); // updates projects if project was modified
-	}, [project, projects, setProjects]);
+		let unsubscribe: (() => void) | null | undefined = null;
+
+		const setupSubscription = async () => {
+			unsubscribe = await subscribeToUserModelSubject((user) => {
+				setUser(user);
+			});
+		};
+		setupSubscription();
+		return () => {
+			if (unsubscribe) {
+				unsubscribe();
+			}
+		};
+	}, []);
+
+	useEffect(() => {
+		if (project?.members) {
+			setProjectSignUp(
+				project.members.find((member) => member?._id === user?.id)
+					? true
+					: false,
+			);
+		}
+	}, [project, user]);
+
+	if (!project) {
+		return (
+			<Container>
+				<TitleField>Project Not Found</TitleField>
+			</Container>
+		);
+	}
 
 	return (
 		<>
@@ -144,7 +173,7 @@ const ProjectPage = () => {
 					{/* Step 1 of Project SignUp process */}
 					{projectSignUpStarted && !projectSignUp && (
 						<SignUpModal
-							name={project.name}
+							name={project?.name ?? ""}
 							cost={project.cost}
 							handleSignUpModal={handleSignUpModal}
 							handleSignUp={handleSignUp}
@@ -154,10 +183,11 @@ const ProjectPage = () => {
 					{/* Step 2 of Project SignUp process */}
 					{projectSignUpStarted && projectSignUp && (
 						<ConfirmationModal
-							name={project.name}
-							time={project.time}
-							date={project.date}
-							location={project.location}
+							name={project.name ?? ""}
+							time={project.recurring ?? ""}
+							startDate={project.startDate ?? ""}
+							endDate={project.endDate ?? ""}
+							location={project?.location?.name ?? ""}
 							cost={project.cost}
 							confirmationNumber={confirmationNumber}
 							handleSignUpModal={handleSignUpModal}
@@ -246,25 +276,13 @@ const ProjectPage = () => {
 						/>
 					</CustomTabs>
 					<TabPanel value={value} index="one">
-						<ProjectContext.Provider
-							value={{ project, setProject }}
-						>
-							<ProjectOverview />
-						</ProjectContext.Provider>
+						<ProjectOverview />
 					</TabPanel>
 					<TabPanel value={value} index="two">
-						<ProjectContext.Provider
-							value={{ project, setProject }}
-						>
-							<ProjectMilestones />
-						</ProjectContext.Provider>
+						<ProjectMilestones />
 					</TabPanel>
 					<TabPanel value={value} index="three">
-						<ProjectContext.Provider
-							value={{ project, setProject }}
-						>
-							<ProjectVolunteering />
-						</ProjectContext.Provider>
+						<ProjectVolunteering />
 					</TabPanel>
 					<TabPanel value={value} index="four">
 						<ProjectBids />

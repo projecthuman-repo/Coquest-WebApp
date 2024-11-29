@@ -19,8 +19,13 @@ import {
 import Form from "../../CoopComponents/CoopTemplate/form";
 import Header from "../../CoopComponents/CoopTemplate/header";
 import Page from "../../CoopComponents/CoopTemplate/page";
+import { useOutletContext } from "react-router";
+import { CreateCoopOutletContext, CreateCoopProps } from "../CreateCoop";
 
-const TimeDate = () => {
+const TimeDate = ({
+	updateCreateCoopData,
+	createCoopData,
+}: CreateCoopProps) => {
 	const Container = styled.div({
 		display: "flex",
 		// justifyContent: "center",
@@ -63,6 +68,10 @@ const TimeDate = () => {
 						}
 						id="outlined"
 						label="Start date"
+						value={createCoopData.startDate ?? ""}
+						onChange={(e) =>
+							updateCreateCoopData({ startDate: e.target.value })
+						}
 					>
 						<MenuItem value={"Jan"}>Jan</MenuItem>
 						<MenuItem value={"Sept"}>Sept</MenuItem>
@@ -79,6 +88,10 @@ const TimeDate = () => {
 						}
 						id="outlined"
 						label="End date"
+						value={createCoopData.endDate ?? ""}
+						onChange={(e) =>
+							updateCreateCoopData({ endDate: e.target.value })
+						}
 					>
 						<MenuItem value={"Jan"}>Jan</MenuItem>
 						<MenuItem value={"Sept"}>Sept</MenuItem>
@@ -95,6 +108,10 @@ const TimeDate = () => {
 						}
 						id="outlined"
 						label="Start time"
+						value={createCoopData.startTime ?? ""}
+						onChange={(e) =>
+							updateCreateCoopData({ startTime: e.target.value })
+						}
 					>
 						<MenuItem value={"Jan"}>Jan</MenuItem>
 						<MenuItem value={"Sept"}>Sept</MenuItem>
@@ -111,6 +128,10 @@ const TimeDate = () => {
 						}
 						id="outlined"
 						label="End time"
+						value={createCoopData.endTime ?? ""}
+						onChange={(e) =>
+							updateCreateCoopData({ endTime: e.target.value })
+						}
 					>
 						<MenuItem value={"Jan"}>Jan</MenuItem>
 						<MenuItem value={"Sept"}>Sept</MenuItem>
@@ -121,30 +142,39 @@ const TimeDate = () => {
 			<RadioContainer>
 				<FormControl>
 					<Typography variant="body2"> Recurring:</Typography>
-					<RadioGroup>
+					<RadioGroup
+						value={createCoopData.recurring}
+						onChange={(e) => {
+							updateCreateCoopData({
+								// @ts-expect-error - Type 'string' is not assignable to type 'RecurringType',
+								// TODO: Figure out a type safe way to do it instead of 'as RecurringType' assertion
+								recurring: e.target.value,
+							});
+						}}
+					>
 						<CustomRadio
-							value="daily"
+							value="DAILY"
 							control={<Radio size="small" color="default" />}
 							label={
 								<Typography variant="body2">Daily</Typography>
 							}
 						/>
 						<CustomRadio
-							value="weekly"
+							value="WEEKLY"
 							control={<Radio size="small" color="default" />}
 							label={
 								<Typography variant="body2">Weekly</Typography>
 							}
 						/>
 						<CustomRadio
-							value="monthly"
+							value="MONTHLY"
 							control={<Radio size="small" color="default" />}
 							label={
 								<Typography variant="body2">Monthly</Typography>
 							}
 						/>
 						<CustomRadio
-							value="custom"
+							value="CUSTOM"
 							control={<Radio size="small" color="default" />}
 							label={
 								<Typography variant="body2">Custom</Typography>
@@ -157,13 +187,16 @@ const TimeDate = () => {
 	);
 };
 
-const Location = () => {
-	const Container = styled.div({
-		display: "flex",
-		flexDirection: "column",
-		gap: 15,
-	});
+const Container = styled.div({
+	display: "flex",
+	flexDirection: "column",
+	gap: 15,
+});
 
+const Location = ({
+	updateCreateCoopData,
+	createCoopData,
+}: CreateCoopProps) => {
 	const Cont = styled.div({
 		display: "flex",
 		justifyContent: "space-between",
@@ -219,6 +252,10 @@ const Location = () => {
 						}
 						id="outlined"
 						label="Radius"
+						value={createCoopData.radius ?? ""}
+						onChange={(e) =>
+							updateCreateCoopData({ radius: e.target.value })
+						}
 					>
 						<MenuItem value={"20 km"}>20 km</MenuItem>
 						<MenuItem value={"50 km"}>50 km</MenuItem>
@@ -235,14 +272,22 @@ const Location = () => {
 				<Typography variant="body2">
 					Do you have a neutral meeting space?
 				</Typography>
-				<RadioGroup>
+				<RadioGroup
+					value={String(createCoopData.haveNeutralMeetingSpace)}
+					onChange={(e) => {
+						updateCreateCoopData({
+							// converting to boolean
+							haveNeutralMeetingSpace: e.target.value === "true",
+						});
+					}}
+				>
 					<CustomRadio
-						value="yes"
+						value={"true"}
 						control={<Radio size="small" color="default" />}
 						label={<Typography variant="body2">Yes</Typography>}
 					/>
 					<CustomRadio
-						value="no"
+						value={"false"}
 						control={<Radio size="small" color="default" />}
 						label={<Typography variant="body2">No</Typography>}
 					/>
@@ -264,12 +309,18 @@ const Location = () => {
 				multiline
 				rows={4}
 				fullWidth
+				value={createCoopData.additionalInfo ?? ""}
+				onChange={(e) =>
+					updateCreateCoopData({ additionalInfo: e.target.value })
+				}
 			/>
 		</Container>
 	);
 };
 
 function CoopOperations() {
+	const { updateCreateCoopData, createCoopData } =
+		useOutletContext<CreateCoopOutletContext>();
 	return (
 		<>
 			<Page>
@@ -278,8 +329,14 @@ function CoopOperations() {
 					<Typography>
 						<b>Time, date and location</b>
 					</Typography>
-					<TimeDate />
-					<Location />
+					<TimeDate
+						updateCreateCoopData={updateCreateCoopData}
+						createCoopData={createCoopData}
+					/>
+					<Location
+						updateCreateCoopData={updateCreateCoopData}
+						createCoopData={createCoopData}
+					/>
 				</Form>
 			</Page>
 		</>

@@ -4,6 +4,10 @@ import { styled } from "@mui/system";
 import { Outlet } from "react-router-dom";
 import { useLocation, Link } from "react-router-dom";
 import ProgressStepper from "../CoopComponents/ProgressStepper";
+import { CoopInput } from "@/__generated__/graphql";
+import { subscribeToUserModelSubject } from "@/observers/userobserver";
+import graphQLClient from "@/apiInterface/client";
+import { CREATE_COOP_MUTATION } from "@/apiInterface/gqlStrings/coopStrings";
 
 const Container = styled("div")({
 	display: "flex",
@@ -51,6 +55,19 @@ const getCurrPath = (fullpath: string) => {
 	return fullpath.substring(17, fullpath.length);
 };
 
+export type CoopCreateData = Partial<CoopInput>;
+
+export interface CreateCoopOutletContext {
+	createCoopData: CoopCreateData;
+	updateCreateCoopData: (data: CoopCreateData) => void;
+	handleSubmit: () => void;
+}
+
+export interface CreateCoopProps {
+	createCoopData: CoopCreateData;
+	updateCreateCoopData: (data: CoopCreateData) => void;
+}
+
 const CreateCoop = () => {
 	const location = useLocation();
 	const [pageIndex, setPageIndex] = useState(0);
@@ -58,12 +75,69 @@ const CreateCoop = () => {
 		getCurrPath(location.pathname),
 	);
 	const paths = ["basic-information", "operations", "budgeting", "promotion"];
+	const [createCoopData, setCreateCoopData] = useState<CoopInput>({
+		userID: "", // This has been populated in the useEffect that subscribes to the user model
+		name: "",
+		/*
+		The above properties are placeholders for the required properties of the Coop model.
+		These properties will be updated later.
+		Other optional properties will be added by other components
+		*/
+	});
+
+	const updateCreateCoopData = (data: CoopCreateData) => {
+		setCreateCoopData({ ...createCoopData, ...data });
+	};
 
 	useEffect(() => {
 		setPageIndex(paths.indexOf(currentPath));
 	}, []);
 
+	useEffect(() => {
+		let unsubscribe: (() => void) | null | undefined = null;
+
+		const setupSubscription = async () => {
+			unsubscribe = await subscribeToUserModelSubject((user) => {
+				// Updating the userID in the createCoopData
+				updateCreateCoopData({ userID: user.id });
+			});
+		};
+		setupSubscription();
+		return () => {
+			if (unsubscribe) {
+				unsubscribe();
+			}
+		};
+	}, []);
+
+	const handleSubmit = () => {
+		console.log(createCoopData);
+		// Add the mutation here
+		if (!createCoopData.userID || !createCoopData.name) {
+			console.log("UserId: ", createCoopData.userID, " is required");
+			console.log("Name: ", createCoopData.name, " is required");
+			return;
+		}
+		graphQLClient
+			.request(CREATE_COOP_MUTATION, {
+				userInput: createCoopData,
+			})
+			.then((data) => {
+				console.log(data);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	};
+
+	const outletContext: CreateCoopOutletContext = {
+		createCoopData,
+		updateCreateCoopData,
+		handleSubmit,
+	};
+
 	console.log(currentPath);
+
 	return (
 		<Container>
 			<ProgressBarContainer>
@@ -98,7 +172,7 @@ const CreateCoop = () => {
 					</Link>
 				)}
 			</NavigateButtons>
-			<Outlet />
+			<Outlet context={outletContext} />
 		</Container>
 	);
 };

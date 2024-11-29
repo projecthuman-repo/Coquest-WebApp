@@ -91,13 +91,15 @@ const schema = gql`
   }
 
   type Location {
+    name: String
     lat: Float
     lng: Float
   }
 
   input LocationInput {
-    lat: Float!
-    lng: Float!
+    name: String
+    lat: Float
+    lng: Float
   }
 
   type Comment {
@@ -266,6 +268,290 @@ const schema = gql`
     hashtags: [String]
   }
 
+  type BudgetItem {
+    name: String
+    quantity: Int
+    costEach: Int
+    costTotal: Int
+  }
+
+  type VolunteerPosition {
+    title: String!
+    responsibilities: String
+    skills: [String!]
+  }
+
+  input VolunteerPositionInput {
+    title: String
+    responsibilities: String
+    skills: [String!]
+  }
+
+  enum RecurringType {
+    DAILY
+    WEEKLY
+    MONTHLY
+    CUSTOM
+  }
+
+  type Milestone {
+    _id: ID
+    title: String!
+    description: String
+    completed: Boolean!
+    dateStarted: String
+    dateCompleted: String
+  }
+
+  input MilestoneInput {
+    title: String!
+    description: String
+    completed: Boolean
+    dateStarted: String
+    dateCompleted: String
+  }
+
+  type Coop {
+    _id: ID!
+    userID: String
+    name: String
+    type: String
+    summary: String
+    mission: String
+    locationAllowed: Boolean
+    notificationAllowed: Boolean
+    location: Location
+    startDate: String # Use ISO date format
+    endDate: String # Use ISO date format
+    milestones: [Milestone!]
+    volunteerPositions: [VolunteerPosition!]
+    recurring: RecurringType
+    radius: String
+    haveNeutralMeetingSpace: Boolean
+    venues: [String!]
+    additionalInfo: String
+    budgetingItems: [BudgetItem!]
+    openToBartering: Boolean
+    members: [User!]
+
+    # Participation & Crowdfunding
+    participationCost: Float
+    maxParticipants: Int
+    needsCrowdfunding: Boolean
+    crowdfundingAmount: Float
+    crowdfundingMessage: String
+
+    materialHelp: String
+    serviceHelp: String
+    operationHelp: String
+
+    # Promotion
+    promotionArea: Location
+    promotionImage: String
+    shareLink: String
+    invitedUsers: [ID!]
+  }
+
+  input BudgetItemInput {
+    name: String
+    quantity: Int
+    costEach: Int
+    costTotal: Int
+  }
+
+  input CoopInput {
+    _id: ID
+    userID: ID
+    name: String
+    type: String
+    summary: String
+    mission: String
+    locationAllowed: Boolean
+    notificationAllowed: Boolean
+    location: LocationInput
+    startDate: String
+    startTime: String
+    endDate: String
+    endTime: String
+    milestones: [MilestoneInput!]
+    volunteerPositions: [VolunteerPositionInput!]
+    recurring: RecurringType
+    radius: String
+    haveNeutralMeetingSpace: Boolean
+    venues: [String!]
+    additionalInfo: String
+    budgetingItems: [BudgetItemInput!]
+    openToBartering: Boolean
+    participationCost: Float
+    maxParticipants: Int
+    needsCrowdfunding: Boolean
+    crowdfundingAmount: Float
+    crowdfundingMessage: String
+    materialHelp: String
+    serviceHelp: String
+    operationHelp: String
+    promotionArea: LocationInput
+    promotionImage: String
+    shareLink: String
+    invitedUsers: [ID!]
+  }
+
+  type Project {
+    _id: ID!
+    userID: String
+    name: String
+    type: String
+    summary: String
+    mission: String
+    locationAllowed: Boolean
+    notificationAllowed: Boolean
+    location: Location
+    startDate: String # Use ISO date format
+    endDate: String # Use ISO date format
+    milestones: [Milestone!]
+    volunteerPositions: [VolunteerPosition!]
+    recurring: RecurringType
+    radius: String
+    haveNeutralMeetingSpace: Boolean
+    venues: [String!]
+    additionalInfo: String
+    budgetingItems: [BudgetItem!]
+    openToBartering: Boolean
+    members: [User!]
+
+    # Participation & Crowdfunding
+    participationCost: Float
+    maxParticipants: Int
+    needsCrowdfunding: Boolean
+    crowdfundingAmount: Float
+    crowdfundingMessage: String
+
+    materialHelp: String
+    serviceHelp: String
+    operationHelp: String
+
+    # Promotion
+    promotionArea: Location
+    promotionImage: String
+    shareLink: String
+    invitedUsers: [ID!]
+  }
+
+  input ProjectInput {
+    _id: ID
+    userID: ID
+    name: String
+    type: String
+    summary: String
+    mission: String
+    locationAllowed: Boolean
+    notificationAllowed: Boolean
+    location: LocationInput
+    startDate: String
+    startTime: String
+    endDate: String
+    endTime: String
+    milestones: [MilestoneInput!]
+    volunteerPositions: [VolunteerPositionInput!]
+    recurring: RecurringType
+    radius: String
+    haveNeutralMeetingSpace: Boolean
+    venues: [String!]
+    additionalInfo: String
+    budgetingItems: [BudgetItemInput!]
+    openToBartering: Boolean
+    participationCost: Float
+    maxParticipants: Int
+    needsCrowdfunding: Boolean
+    crowdfundingAmount: Float
+    crowdfundingMessage: String
+    materialHelp: String
+    serviceHelp: String
+    operationHelp: String
+    promotionArea: LocationInput
+    promotionImage: String
+    shareLink: String
+    invitedUsers: [ID!]
+  }
+
+  type Program {
+    _id: ID!
+    userID: String
+    name: String
+    type: String
+    summary: String
+    mission: String
+    locationAllowed: Boolean
+    notificationAllowed: Boolean
+    location: Location
+    startDate: String # Use ISO date format
+    endDate: String # Use ISO date format
+    milestones: [Milestone!]
+    volunteerPositions: [VolunteerPosition!]
+    recurring: RecurringType
+    radius: String
+    haveNeutralMeetingSpace: Boolean
+    venues: [String!]
+    additionalInfo: String
+    budgetingItems: [BudgetItem!]
+    openToBartering: Boolean
+    members: [User!]
+
+    # Participation & Crowdfunding
+    participationCost: Float
+    maxParticipants: Int
+    needsCrowdfunding: Boolean
+    crowdfundingAmount: Float
+    crowdfundingMessage: String
+
+    materialHelp: String
+    serviceHelp: String
+    operationHelp: String
+
+    # Promotion
+    promotionArea: Location
+    promotionImage: String
+    shareLink: String
+    invitedUsers: [ID!]
+  }
+
+  input ProgramInput {
+    _id: ID
+    userID: ID
+    name: String
+    type: String
+    summary: String
+    mission: String
+    locationAllowed: Boolean
+    notificationAllowed: Boolean
+    location: LocationInput
+    startDate: String
+    startTime: String
+    endDate: String
+    endTime: String
+    milestones: [MilestoneInput!]
+    volunteerPositions: [VolunteerPositionInput!]
+    recurring: RecurringType
+    radius: String
+    haveNeutralMeetingSpace: Boolean
+    venues: [String!]
+    additionalInfo: String
+    budgetingItems: [BudgetItemInput!]
+    openToBartering: Boolean
+    participationCost: Float
+    maxParticipants: Int
+    needsCrowdfunding: Boolean
+    crowdfundingAmount: Float
+    crowdfundingMessage: String
+    materialHelp: String
+    serviceHelp: String
+    operationHelp: String
+    promotionArea: LocationInput
+    promotionImage: String
+    shareLink: String
+    invitedUsers: [ID!]
+  }
+
   type Post {
     _id: ID
     userID: String
@@ -419,6 +705,36 @@ const schema = gql`
     userID: String
   }
 
+  input joinCoopInput {
+    userID: String!
+    coopID: String!
+  }
+
+  input joinProjectInput {
+    userID: String!
+    projectID: String!
+  }
+
+  input joinProgramInput {
+    userID: String!
+    programID: String!
+  }
+
+  input leaveCoopInput {
+    userID: String!
+    coopID: String!
+  }
+
+  input leaveProjectInput {
+    userID: String!
+    projectID: String!
+  }
+
+  input leaveProgramInput {
+    userID: String!
+    programID: String!
+  }
+
   input MarkMessageAsReadInput {
     _id: ID
     userID: String
@@ -495,11 +811,17 @@ const schema = gql`
     getCommunities: [Community] @auth
     getMotives: [Motive] @auth
     getTopics: [Topic] @auth
+    getCoops: [Coop!] @auth
+    getProjects: [Project!] @auth
+    getPrograms: [Program!] @auth
 
     findUserbyID(id: String, expand: String): User @auth
     findPostbyID(postID: String): Post @auth
     findCommunitybyID(id: String): Community @auth
     findCrossUser(email: String): CrossUser @auth
+    findCoopbyID(id: String): Coop @auth
+    findProjectbyID(id: String): Project @auth
+    findProgrambyID(id: String): Program @auth
 
     getChatsByUserID(userID: String): [Chat] @auth
     getMessagesByChatID(chatID: String): [Message] @auth
@@ -518,6 +840,10 @@ const schema = gql`
   type Mutation {
     createUser(userInput: UserInput!): mutationResponse @auth
     createPost(userInput: PostInput!): mutationResponse @auth
+    createCoop(userInput: CoopInput!): mutationResponse @auth
+    createProject(userInput: ProjectInput!): mutationResponse @auth
+    createProgram(userInput: ProgramInput!): mutationResponse @auth
+
     createCommunity(userInput: CommunityInput!): mutationResponse @auth
     createNotification(userInput: NotificationInput!): mutationResponse @auth
     createChat(userInput: ChatInput!): mutationResponse @auth
@@ -526,9 +852,19 @@ const schema = gql`
     markMessageAsRead(userInput: MarkMessageAsReadInput!): mutationResponse
       @auth
 
+    joinCoop(userInput: joinCoopInput!): mutationResponse @auth
+    leaveCoop(userInput: leaveCoopInput!): mutationResponse @auth
+    joinProject(userInput: joinProjectInput!): mutationResponse @auth
+    leaveProject(userInput: leaveProjectInput!): mutationResponse @auth
+    joinProgram(userInput: joinProgramInput!): mutationResponse @auth
+    leaveProgram(userInput: leaveProgramInput!): mutationResponse @auth
+
     updateUser(userInput: UserInput!): mutationResponse @auth
     updatePost(userInput: PostInput!): mutationResponse @auth
     updateCommunity(userInput: CommunityInput!): mutationResponse @auth
+    updateCoop(userInput: CoopInput!): mutationResponse @auth
+    updateProject(userInput: ProjectInput!): mutationResponse @auth
+    updateProgram(userInput: ProgramInput!): mutationResponse @auth
     updateNotification(userInput: NotificationInput!): mutationResponse @auth
     markNotificationAsRead(notificationID: String): mutationResponse @auth
     markAllNotificationsAsRead(userID: String): mutationResponse @auth

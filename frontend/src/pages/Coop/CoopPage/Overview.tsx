@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import SharedCalendar from "../../../components/SharedCalendar/SharedCalendar";
 import Quests from "../../../components/Quests";
 import Members from "../../../components/Members/index";
@@ -12,15 +12,13 @@ import "./Overview.css";
 import "./index.css";
 
 function CoopOverview() {
-	const { coop, setCoop } = useContext(CoopContext);
+	const { coop, updateCoop } = useContext(CoopContext);
 
 	// edit coop description, objective and initiative
 	const [editingDescStarted, setEditingDescStarted] = useState(false);
-	const [editedDescription, setEditedDescription] = useState(
-		coop?.description,
-	);
-	const [editedObjective, setEditedObjective] = useState(coop?.objective);
-	const [editedInitiative, setEditedInitiative] = useState(coop?.initiative);
+	const [editedDescription, setEditedDescription] = useState(coop?.summary);
+	const [editedObjective, setEditedObjective] = useState(coop?.mission);
+	const [editedInitiative, setEditedInitiative] = useState(coop?.type);
 
 	const handleEditDescModal = () => {
 		setEditingDescStarted(!editingDescStarted);
@@ -33,25 +31,16 @@ function CoopOverview() {
 
 	const editDesc = () => {
 		if (coop && editedDescription && editedObjective && editedInitiative) {
-			setCoop({
+			updateCoop({
 				...coop,
-				description: editedDescription,
-				objective: editedObjective,
-				initiative: editedInitiative,
+				summary: editedDescription,
+				mission: editedObjective,
+				type: editedInitiative,
 			});
 		}
 
-		//TODO edit coop description in backend
 		handleEditDescModal();
 	};
-
-	useEffect(() => {
-		if (!editingDescStarted) {
-			setEditedDescription(coop?.description);
-			setEditedObjective(coop?.objective);
-			setEditedInitiative(coop?.initiative);
-		}
-	}, [editingDescStarted, coop]);
 
 	return (
 		<>
@@ -73,7 +62,7 @@ function CoopOverview() {
 								<textarea
 									rows={3}
 									placeholder=""
-									value={editedDescription}
+									value={editedDescription ?? ""}
 									onChange={(e) =>
 										setEditedDescription(e.target.value)
 									}
@@ -84,7 +73,7 @@ function CoopOverview() {
 								<textarea
 									rows={3}
 									placeholder=""
-									value={editedObjective}
+									value={editedObjective ?? ""}
 									onChange={(e) =>
 										setEditedObjective(e.target.value)
 									}
@@ -95,7 +84,7 @@ function CoopOverview() {
 								<textarea
 									rows={3}
 									placeholder=""
-									value={editedInitiative}
+									value={editedInitiative ?? ""}
 									onChange={(e) =>
 										setEditedInitiative(e.target.value)
 									}
@@ -126,25 +115,29 @@ function CoopOverview() {
 							</button>
 						</div>
 						<p className="prg-o-sub-text margin-top margin-bottom">
-							{coop?.description}
+							{coop?.summary}
 						</p>
 						<h2 className="prg-o-sub-heading margin-bottom">
 							Project Objective
 						</h2>
 						<p className="prg-o-sub-text margin-bottom">
-							{coop?.objective}
+							{coop?.mission}
 						</p>
 						<h2 className="prg-o-sub-heading margin-bottom">
 							Initiative
 						</h2>
 						<p className="prg-o-sub-text margin-bottom">
-							{coop?.initiative}
+							{coop?.type}
 						</p>
 					</div>
 					{/* Members */}
 					<div className="prg-o-background">
 						<Members
-							users={["Test"]}
+							users={
+								coop?.members?.map(
+									(member) => member.username ?? "",
+								) ?? []
+							}
 							userRole={["Role"]}
 							showAllLink={
 								window.location.pathname.slice(-1) === "/"
@@ -174,16 +167,20 @@ function CoopOverview() {
 								Coop Information
 							</h2>
 							<p className="prg-o-sub-text">
-								<b>Time: </b>
-								{coop?.time}
+								<b>Recurring: </b>
+								{coop?.recurring}
 							</p>
 							<p className="prg-o-sub-text">
-								<b>Date: </b>
-								{coop?.date}
+								<b>Start Date: </b>
+								{coop?.startDate}
+							</p>
+							<p className="prg-o-sub-text">
+								<b>End Date: </b>
+								{coop?.endDate}
 							</p>
 							<p className="prg-o-sub-text">
 								<b>Location: </b>
-								{coop?.location}
+								{coop?.location?.name}
 							</p>
 							<p className="prg-o-sub-text">
 								<b>Spots Open: </b>
@@ -201,11 +198,11 @@ function CoopOverview() {
 							<SharedCalendar />
 						</div>
 						{/* Quests */}
-						<div className="prg-o-background">
+						{/* <div className="prg-o-background">
 							<Quests
 								showAllLink={`${window.location.pathname}/quests`}
 							/>
-						</div>
+						</div> */}
 						{/* Funding */}
 						<div className="prg-o-background">
 							<Funding />

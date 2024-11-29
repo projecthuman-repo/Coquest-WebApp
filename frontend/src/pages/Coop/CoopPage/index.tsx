@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { Typography, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
 import OutlineButton from "../../../components/Buttons/OutlineButton";
@@ -14,11 +13,13 @@ import CoopBids from "./Bids";
 import CoopOffer from "./Offer";
 import CoopDiscussions from "./Discussions";
 
-import { Coop } from "../../../models/coopModel";
-import { CoopsContext } from "../CoopsContext";
-import { CoopContext } from "./CoopContext";
+import graphQLClient from "@/apiInterface/client";
 
 import "./index.css";
+import { JOIN_COOP_MUTATION } from "@/apiInterface/gqlStrings/coopStrings";
+import { subscribeToUserModelSubject } from "@/observers/userobserver";
+import { User } from "@/models/usermodel";
+import { CoopContext } from "./CoopContext";
 
 const Container = styled("div")({
 	display: "flex",
@@ -92,15 +93,12 @@ function TabPanel(props: any) {
 
 const CoopPage = () => {
 	const [value, setValue] = React.useState("one"); // which tab on coop page user is on
-
-	const { id } = useParams() as { id: string };
-	const { coops, setCoops } = useContext(CoopsContext);
-	const [coop, setCoop] = React.useState<Coop | null>(
-		coops.filter((coop) => coop.id === id)[0],
-	);
-
+	const [user, setUser] = React.useState<User>();
+	const { coop } = useContext(CoopContext);
 	// coop sign up
-	const [coopSignUp, setCoopSignUp] = React.useState(false);
+	const [coopSignUp, setCoopSignUp] = React.useState<boolean>();
+	console.log(coop);
+	console.log(user);
 	const [coopSignUpStarted, setCoopSignUpStarted] = React.useState(false);
 	const [confirmationNumber, setConfirmationNumber] = React.useState(0);
 
@@ -117,24 +115,54 @@ const CoopPage = () => {
 		} else document.body.style.overflow = "auto";
 	};
 
-	const handleSignUp = () => {
-		setConfirmationNumber(Math.floor(Math.random() * 1000000)); // TODO: fetch confirmation number from backend
+	const handleSignUp = async () => {
+		if (!coop?._id) throw new Error("Coop ID not found in CoopPage");
+		if (!user?.id) throw new Error("User ID not found in CoopPage");
+		await graphQLClient
+			.request(JOIN_COOP_MUTATION, {
+				userInput: { coopID: coop?._id, userID: user?.id },
+			})
+			.then(() => {
+				setCoopSignUp(true);
+				setConfirmationNumber(Math.floor(Math.random() * 1000000)); // TODO: fetch confirmation number from backend
+			})
+			.catch(console.error);
 		//TODO: send email to user with additional details about the coop
-		setCoopSignUp(true);
-		//TODO send post request to backend to sign up for coop
 	};
 
 	useEffect(() => {
-		setCoops(
-			coops.map((p) => {
-				if (p.id) {
-					return p.id === coop?.id ? coop : p;
-				} else {
-					return p;
-				}
-			}),
-		); // updates coops if coop was modified
-	}, [coop, coops, setCoops]);
+		let unsubscribe: (() => void) | null | undefined = null;
+
+		const setupSubscription = async () => {
+			unsubscribe = await subscribeToUserModelSubject((user) => {
+				setUser(user);
+			});
+		};
+		setupSubscription();
+		return () => {
+			if (unsubscribe) {
+				unsubscribe();
+			}
+		};
+	}, []);
+
+	useEffect(() => {
+		if (coop?.members) {
+			setCoopSignUp(
+				coop.members.find((member) => member?._id === user?.id)
+					? true
+					: false,
+			);
+		}
+	}, [coop, user]);
+
+	if (!coop) {
+		return (
+			<Container>
+				<TitleField>Coop Not Found</TitleField>
+			</Container>
+		);
+	}
 
 	return (
 		<>
@@ -143,7 +171,7 @@ const CoopPage = () => {
 					{/* Step 1 of Coop SignUp process */}
 					{coopSignUpStarted && !coopSignUp && (
 						<SignUpModal
-							name={coop.name}
+							name={coop?.name ?? ""}
 							cost={coop.cost}
 							handleSignUpModal={handleSignUpModal}
 							handleSignUp={handleSignUp}
@@ -153,10 +181,11 @@ const CoopPage = () => {
 					{/* Step 2 of Coop SignUp process */}
 					{coopSignUpStarted && coopSignUp && (
 						<ConfirmationModal
-							name={coop.name}
-							time={coop.time}
-							date={coop.date}
-							location={coop.location}
+							name={coop.name ?? ""}
+							time={coop.recurring ?? ""}
+							startDate={coop.startDate ?? ""}
+							endDate={coop.endDate ?? ""}
+							location={coop?.location?.name ?? ""}
 							cost={coop.cost}
 							confirmationNumber={confirmationNumber}
 							handleSignUpModal={handleSignUpModal}
@@ -243,19 +272,13 @@ const CoopPage = () => {
 						/>
 					</CustomTabs>
 					<TabPanel value={value} index="one">
-						<CoopContext.Provider value={{ coop, setCoop }}>
-							<CoopOverview />
-						</CoopContext.Provider>
+						<CoopOverview />
 					</TabPanel>
 					<TabPanel value={value} index="two">
-						<CoopContext.Provider value={{ coop, setCoop }}>
-							<CoopMilestones />
-						</CoopContext.Provider>
+						<CoopMilestones />
 					</TabPanel>
 					<TabPanel value={value} index="three">
-						<CoopContext.Provider value={{ coop, setCoop }}>
-							<CoopVolunteering />
-						</CoopContext.Provider>
+						<CoopVolunteering />
 					</TabPanel>
 					<TabPanel value={value} index="four">
 						<CoopBids />

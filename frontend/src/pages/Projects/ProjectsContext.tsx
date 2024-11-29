@@ -1,29 +1,32 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Project } from "../../models/projectModel";
+import { Milestone } from "@/models/programModel";
+import graphQLClient from "@/apiInterface/client";
+import { GET_PROJECTS } from "@/apiInterface/gqlStrings/projectStrings";
 
 // TODO fetch post data from backend
 const data: Project[] = [
 	{
-		id: "1",
+		_id: "672df962b1baba192c70b600",
 		name: "Project 1",
 		progress: 50,
-		description:
+		summary:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		objective:
+		mission:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		initiative:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		time: "every Mon and Wed, 6:00 - 6:30pm",
-		date: "Jan 1 - 31, 2023",
-		location: "Community center",
+		type: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		recurring: "every Mon and Wed, 6:00 - 6:30pm",
+		startDate: "Jan 1 - 31, 2023",
+		endDate: "Jan 2 - 31, 2023",
+		location: { name: "Community center" },
 		spots: 3,
 		cost: 15,
 		milestones: [
 			{
-				id: "1",
-				type: "Milestone",
+				_id: "1",
+				type: "project",
 				title: "Milestone 1",
-				progress: 100,
+				completed: true,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				completedBy: "John Doe",
@@ -31,10 +34,10 @@ const data: Project[] = [
 				dateCompleted: "2023-08-22",
 			},
 			{
-				id: "2",
-				type: "Milestone",
+				_id: "2",
+				type: "project",
 				title: "Milestone 2",
-				progress: 100,
+				completed: true,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Vitae cum eget dolor vehicula massa porttitor tortor eget. Vitae egestas lorem viverra sit. Arcu placerat suspendisse ac eget sed. Ut etiam ut sit cursus sem.",
 				completedBy: "John Doe",
@@ -42,10 +45,10 @@ const data: Project[] = [
 				dateCompleted: "2021-08-15",
 			},
 			{
-				id: "3",
-				type: "Milestone",
+				_id: "3",
+				type: "project",
 				title: "Milestone 3",
-				progress: 20,
+				completed: false,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Vitae cum eget dolor vehicula massa porttitor tortor eget. Vitae egestas lorem viverra sit. Arcu placerat suspendisse ac eget sed. Ut etiam ut sit cursus sem.",
 				completedBy: "John Doe",
@@ -53,10 +56,10 @@ const data: Project[] = [
 				dateCompleted: "2024-08-15",
 			},
 			{
-				id: "4",
-				type: "Milestone",
+				_id: "4",
+				type: "project",
 				title: "Milestone 4",
-				progress: 0,
+				completed: false,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Vitae cum eget dolor vehicula massa porttitor tortor eget. Vitae egestas lorem viverra sit. Arcu placerat suspendisse ac eget sed. Ut etiam ut sit cursus sem.",
 				completedBy: "John Doe",
@@ -292,26 +295,26 @@ const data: Project[] = [
 		],
 	},
 	{
-		id: "2",
+		_id: "2",
 		name: "Project 2",
 		progress: 15,
-		description:
+		summary:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		objective:
+		mission:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		initiative:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		time: "every Mon and Wed, 6:00 - 6:30pm",
-		date: "Jan 1 - 31, 2023",
-		location: "Community center",
+		type: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		recurring: "every Mon and Wed, 6:00 - 6:30pm",
+		startDate: "Jan 1 - 31, 2023",
+		endDate: "Jan 2 - 31, 2023",
+		location: { name: "Community center" },
 		spots: 11,
 		cost: 20,
 		milestones: [
 			{
-				id: "1",
-				type: "Milestone",
+				_id: "1",
+				type: "project",
 				title: "Milestone 1",
-				progress: 17,
+				completed: false,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				completedBy: "John Doe",
@@ -319,10 +322,10 @@ const data: Project[] = [
 				dateCompleted: "2023-08-22",
 			},
 			{
-				id: "2",
-				type: "Milestone",
+				_id: "2",
+				type: "project",
 				title: "Milestone 2",
-				progress: 7,
+				completed: false,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Vitae cum eget dolor vehicula massa porttitor tortor eget. Vitae egestas lorem viverra sit. Arcu placerat suspendisse ac eget sed. Ut etiam ut sit cursus sem.",
 				completedBy: "John Doe",
@@ -519,26 +522,26 @@ const data: Project[] = [
 		],
 	},
 	{
-		id: "3",
+		_id: "3",
 		name: "Project 3",
 		progress: 88,
-		description:
+		summary:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		objective:
+		mission:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		initiative:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		time: "every Mon and Wed, 6:00 - 6:30pm",
-		date: "Jan 1 - 31, 2023",
-		location: "Community center",
+		type: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		recurring: "every Mon and Wed, 6:00 - 6:30pm",
+		startDate: "Jan 1 - 31, 2023",
+		endDate: "Jan 2 - 31, 2023",
+		location: { name: "Community center" },
 		spots: 5,
 		cost: 75,
 		milestones: [
 			{
-				id: "1",
-				type: "Milestone",
+				_id: "1",
+				type: "project",
 				title: "Milestone 1",
-				progress: 100,
+				completed: true,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				completedBy: "John Doe",
@@ -546,10 +549,10 @@ const data: Project[] = [
 				dateCompleted: "2023-08-22",
 			},
 			{
-				id: "2",
-				type: "Milestone",
+				_id: "2",
+				type: "project",
 				title: "Milestone 2",
-				progress: 100,
+				completed: true,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Vitae cum eget dolor vehicula massa porttitor tortor eget. Vitae egestas lorem viverra sit. Arcu placerat suspendisse ac eget sed. Ut etiam ut sit cursus sem.",
 				completedBy: "John Doe",
@@ -557,10 +560,10 @@ const data: Project[] = [
 				dateCompleted: "2021-08-15",
 			},
 			{
-				id: "3",
-				type: "Milestone",
+				_id: "3",
+				type: "project",
 				title: "Milestone 3",
-				progress: 20,
+				completed: false,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Vitae cum eget dolor vehicula massa porttitor tortor eget. Vitae egestas lorem viverra sit. Arcu placerat suspendisse ac eget sed. Ut etiam ut sit cursus sem.",
 				completedBy: "John Doe",
@@ -599,6 +602,35 @@ export const ProjectsContextProvider = ({
 	children,
 }: ProjectsContextProviderProps) => {
 	const [projects, setProjects] = useState<Project[]>(data);
+
+	useEffect(() => {
+		const fetchProjects = async () => {
+			const { getProjects } = await graphQLClient.request(GET_PROJECTS);
+
+			if (!getProjects) return;
+
+			const projectsWithProgress = getProjects.map((project: Project) => {
+				if (!project.milestones || project.milestones.length === 0) {
+					return { ...project, progress: 0 };
+				}
+
+				const completedMilestones = project.milestones.filter(
+					(milestone: Milestone) => milestone.completed,
+				);
+
+				const progress = Math.round(
+					(completedMilestones.length / project.milestones.length) *
+						100,
+				);
+
+				return { ...project, progress };
+			});
+
+			setProjects(projectsWithProgress);
+		};
+
+		fetchProjects();
+	}, []);
 
 	return (
 		<ProjectsContext.Provider value={{ projects, setProjects }}>

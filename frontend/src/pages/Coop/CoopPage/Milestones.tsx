@@ -1,18 +1,18 @@
 import React, { useState, useContext } from "react";
 import ProgramProgressBar from "../../../components/ProgramProgressBar/ProgramProgressBar";
-// import MilestoneCard from "../components/MilestoneCard/MilestoneCard";
 import Input from "../../../components/Input";
 import PrimaryButton from "../../../components/Buttons/PrimaryButton";
 import { CoopContext } from "./CoopContext";
 import "./Milestones.css";
 import "./index.css";
+import MilestoneCard from "@/pages/Programs/components/MilestoneCard/MilestoneCard";
+import { Milestone } from "@/models/programModel";
 
 function CoopMilestones() {
-	const { coop, setCoop } = useContext(CoopContext);
+	const { coop, updateCoop } = useContext(CoopContext);
 
 	//milestone addition
 	const [addingStarted, setAddingStarted] = useState(false);
-	const [milestoneType, setMilestoneType] = useState("Milestone");
 	const [milestoneTitle, setMilestoneTitle] = useState("");
 	const [milestoneDescription, setMilestoneDescription] = useState("");
 
@@ -27,26 +27,25 @@ function CoopMilestones() {
 
 	function handleMilestoneAdd() {
 		if (coop) {
-			const newMilestone = {
-				id: `${coop?.milestones.length + 1}`,
-				type: milestoneType,
+			const newMilestone: Milestone = {
+				type: "coop",
 				title: milestoneTitle,
-				progress: 0,
+				completed: false,
 				description: milestoneDescription,
 				completedBy: "",
-				dateStarted: "",
+				dateStarted: new Date().toISOString(),
 				dateCompleted: "",
 			};
 
-			setCoop({
-				...coop,
-				milestones: [...coop.milestones, newMilestone],
-			});
+			if (coop.milestones)
+				updateCoop({
+					...coop,
+					milestones: [...coop.milestones, newMilestone],
+				});
 		}
-		//TODO: update program milestones in backend
 
+		// Resetting previous values
 		handleAddModal();
-		setMilestoneType("Milestone");
 		setMilestoneTitle("");
 		setMilestoneDescription("");
 	}
@@ -69,40 +68,6 @@ function CoopMilestones() {
 						<div className="add-milestone-form">
 							<div>
 								<p>What would you like to add</p>
-
-								<div className="milestone-type-options">
-									<div>
-										<input
-											type="radio"
-											id="milestone"
-											name="milestone"
-											value="milestone"
-											checked={
-												milestoneType === "Milestone"
-											}
-											onChange={() =>
-												setMilestoneType("Milestone")
-											}
-										/>
-										<label htmlFor="milestone">
-											Milestone
-										</label>
-									</div>
-
-									<div>
-										<input
-											type="radio"
-											id="goal"
-											name="goal"
-											value="goal"
-											checked={milestoneType === "Goal"}
-											onChange={() =>
-												setMilestoneType("Goal")
-											}
-										/>
-										<label htmlFor="goal">Goal</label>
-									</div>
-								</div>
 							</div>
 
 							<Input label="Milestone title">
@@ -155,15 +120,15 @@ function CoopMilestones() {
 				</button>
 			</div>
 
-			{/* <div className="program-milestones">
-				{coop?.milestones.map((milestone: any, index: number) => (
+			<div className="program-milestones">
+				{coop?.milestones?.map((milestone) => (
 					<MilestoneCard
-						key={index}
+						key={`${milestone.title} + ${milestone.dateStarted}`}
 						milestone={milestone}
-						type="program"
+						type="coop"
 					/>
 				))}
-			</div> */}
+			</div>
 		</div>
 	);
 }

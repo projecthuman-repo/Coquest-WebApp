@@ -6,7 +6,6 @@ import LinearProgress, {
 	linearProgressClasses,
 } from "@mui/material/LinearProgress";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-//import { Program } from "../../../../models/programModel";
 import { Coop } from "../../../../models/coopModel";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -26,8 +25,6 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 interface CoopProps {
 	coop: Coop;
-	// expanded: boolean;
-	// onToggleExpand: () => void;
 }
 const Container = styled("div")(({ theme }) => ({
 	width: "100%",
@@ -47,54 +44,42 @@ const GridCol = styled(Grid)({
 	flexDirection: "column",
 	justifyContent: "center",
 });
-const CoopPane = (props: CoopProps) => {
-	const { coop } = props;
-
+const CoopPane = ({ coop }: CoopProps) => {
 	const navigate = useNavigate();
 
 	return (
 		<Container>
 			<Grid container spacing={2}>
 				<Grid item xs={6} sm={7}>
-					<Typography>
-						{coop.location !== null && coop.location !== ""
-							? coop.location
-							: "(Not set yet)"}
-					</Typography>
+					<Typography>{coop?.location?.name}</Typography>
 					<Title>{coop.name}</Title>
-					<Typography>{coop.description}</Typography>
+					<Typography>{coop.summary}</Typography>
 				</Grid>
 				<GridCol item xs={4} sm={4}>
-					<Typography>
-						Progress: {coop.progress !== null ? coop.progress : 0}%
-					</Typography>
-
+					<Typography>Progress: {coop.progress || 0}%</Typography>
 					<BorderLinearProgress
 						variant="determinate"
-						value={coop.progress !== null ? coop.progress : 0}
+						value={coop.progress ?? 0}
 					/>
-
 					<Typography>
-						<strong>Time: </strong>
-						{coop.time !== null && coop.time !== ""
-							? coop.time
-							: "(Not set yet)"}
+						<strong>Recurring: </strong>
+						{coop.recurring || "(Not set yet)"}
 					</Typography>
 					<Typography>
-						<strong>Date: </strong>
-						{coop.date !== null && coop.date !== ""
-							? coop.date
-							: "(Not set yet)"}
+						<strong>Start Date: </strong>
+						{coop.startDate || "(Not set yet)"}
 					</Typography>
 					<Typography>
+						<strong>End Date: </strong>
+						{coop.endDate || "(Not set yet)"}
+					</Typography>
+					{/* <Typography>
 						<strong>Spots open: </strong>
 						{coop.spots !== null ? coop.spots : 0} seats left
-					</Typography>
+					</Typography> */}
 				</GridCol>
 				<GridCol item xs={1}>
-					<IconButton
-						onClick={() => navigate(`/programs/${coop.id}`)}
-					>
+					<IconButton onClick={() => navigate(`/coops/${coop._id}`)}>
 						<ArrowForwardIosIcon />
 					</IconButton>
 				</GridCol>

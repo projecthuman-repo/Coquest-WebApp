@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Typography, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
 import SearchBar from "../../components/SearchBar";
 import ProgramListDisplay from "./components/ViewAllPrograms/ProgramListDisplay";
-//import { populatedPrograms } from "../../testing/TestProgramsData";
 import { ProgramsContext } from "./ProgramsContext";
+
+import { subscribeToUserModelSubject } from "@/observers/userobserver";
+import { User } from "@/models/usermodel";
 
 const Container = styled("div")({
 	display: "flex",
@@ -75,10 +77,45 @@ function TabPanel(props: any) {
 const ViewAllPrograms = () => {
 	const { programs } = useContext(ProgramsContext);
 	const [value, setValue] = React.useState("one");
+	const [user, setUser] = React.useState<User>();
+
+	const completedPrograms = programs.filter(
+		(program) => program.progress === 100,
+	);
+	const createdByMePrograms = programs.filter(
+		(program) => program.userID === user?.id,
+	);
+	const participatingInPrograms = programs.filter((program) =>
+		program.members?.some((member) => member._id === user?.id),
+	);
+	const otherPrograms = programs.filter(
+		(program) =>
+			!createdByMePrograms.includes(program) &&
+			!participatingInPrograms.includes(program) &&
+			!completedPrograms.includes(program),
+	);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
 	};
+
+	useEffect(() => {
+		let unsubscribe: (() => void) | null | undefined = null;
+
+		const setupSubscription = async () => {
+			unsubscribe = await subscribeToUserModelSubject((user) => {
+				setUser(user); // Update to use the 'name' field
+			});
+		};
+
+		setupSubscription();
+
+		return () => {
+			if (unsubscribe) {
+				unsubscribe(); // Ensure proper cleanup on component unmount
+			}
+		};
+	}, []);
 
 	return (
 		<Container>
@@ -124,15 +161,28 @@ const ViewAllPrograms = () => {
 					sx={{ textTransform: "none" }}
 					label="Completed"
 				/>
+				<CustomTab
+					style={
+						value === "four"
+							? tabStyle.active_tab
+							: tabStyle.default_tab
+					}
+					value="four"
+					sx={{ textTransform: "none" }}
+					label="Other"
+				/>
 			</CustomTabs>
 			<TabPanel value={value} index="one">
-				<ProgramListDisplay programList={programs} />
+				<ProgramListDisplay programList={createdByMePrograms} />
 			</TabPanel>
 			<TabPanel value={value} index="two">
-				<div className="">Second page</div>
+				<ProgramListDisplay programList={participatingInPrograms} />
 			</TabPanel>
 			<TabPanel value={value} index="three">
-				<div className="">Third page</div>
+				<ProgramListDisplay programList={completedPrograms} />
+			</TabPanel>
+			<TabPanel value={value} index="four">
+				<ProgramListDisplay programList={otherPrograms} />
 			</TabPanel>
 		</Container>
 	);

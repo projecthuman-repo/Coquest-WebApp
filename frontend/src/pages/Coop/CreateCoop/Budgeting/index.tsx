@@ -14,10 +14,14 @@ import {
 	TextField,
 	Typography,
 } from "@mui/material";
-import ClearIcon from "@mui/icons-material/Clear";
 import EventIcon from "@mui/icons-material/Event";
+import ClearIcon from "@mui/icons-material/Clear";
+import AddIcon from "@mui/icons-material/Add";
 import Header from "../../CoopComponents/CoopTemplate/header";
 import Page from "../../CoopComponents/CoopTemplate/page";
+import { useOutletContext } from "react-router";
+import { CreateCoopOutletContext, CreateCoopProps } from "../CreateCoop";
+import { BudgetItemInput } from "@/__generated__/graphql";
 
 const Form = styled.div({
 	display: "flex",
@@ -26,69 +30,94 @@ const Form = styled.div({
 	width: 1000,
 });
 
-const SuppliesandMaterialsComponent = () => {
-	const Cont = styled.div({
-		display: "flex",
-		flexDirection: "row",
-		gap: 10,
-	});
+interface SuppliesandMaterialsProps {
+	item: BudgetItemInput;
+	index: number;
+	updateItem: (index: number, newItem: BudgetItemInput) => void;
+	removeItem: (index: number) => void;
+}
 
-	const Label = styled.div({
-		display: "flex",
-		flexDirection: "column",
-		gap: 10,
-	});
+const Cont = styled.div({
+	display: "flex",
+	flexDirection: "row",
+	gap: 10,
+});
 
-	const ItemLabel = styled(TextField)({
-		display: "flex",
-		width: 200,
-	});
+const Label = styled.div({
+	display: "flex",
+	flexDirection: "column",
+	gap: 10,
+});
 
-	const Item = styled(TextField)({
-		display: "flex",
-		width: 200,
-		marginTop: 31.5,
-	});
+const ItemLabel = styled(TextField)({
+	display: "flex",
+	width: 200,
+});
 
-	const Quantity = styled(TextField)({
-		display: "flex",
-		width: 100,
-	});
+const Quantity = styled(TextField)({
+	display: "flex",
+	width: 100,
+});
 
-	const Coste = styled(TextField)({
-		display: "flex",
-		width: 100,
-	});
+const Coste = styled(TextField)({
+	display: "flex",
+	width: 100,
+});
 
-	const Costt = styled(TextField)({
-		display: "flex",
-		width: 100,
-	});
+const Costt = styled(TextField)({
+	display: "flex",
+	width: 100,
+});
 
-	const ButtonCont = styled(IconButton)({
-		display: "flex",
-		marginTop: 45,
-		height: 30,
-		width: 30,
-	});
+const ButtonCont = styled(IconButton)({
+	display: "flex",
+	marginTop: 45,
+	height: 30,
+	width: 30,
+});
 
+// Define the component that renders each item
+const SuppliesandMaterialsComponent = ({
+	item,
+	index,
+	updateItem,
+	removeItem,
+}: SuppliesandMaterialsProps) => {
 	return (
 		<Cont>
 			<Label>
 				<Typography variant="body2">Item</Typography>
-				<ItemLabel label="Item 1" variant="outlined" />
+				<ItemLabel
+					label={`Item ${index + 1}`}
+					variant="outlined"
+					value={item.name || ""}
+					onChange={(e) =>
+						updateItem(index, { name: e.target.value })
+					}
+				/>
 			</Label>
-			<Item label="Item 2" variant="outlined" />
-			<Item label="Item 3" variant="outlined" />
 			<Label>
 				<Typography variant="body2">Quantity</Typography>
-				<Quantity label="" variant="outlined" />
+				<Quantity
+					label=""
+					variant="outlined"
+					type="number"
+					value={item.quantity || ""}
+					onChange={(e) =>
+						updateItem(index, { quantity: Number(e.target.value) })
+					}
+				/>
 			</Label>
 			<Label>
 				<Typography variant="body2">Cost (each)</Typography>
 				<Coste
 					label=""
 					variant="outlined"
+					type="number"
+					value={item.costEach || ""}
+					onChange={(e) =>
+						updateItem(index, { costEach: Number(e.target.value) })
+					}
 					InputProps={{
 						startAdornment: (
 							<InputAdornment position="start">$</InputAdornment>
@@ -101,55 +130,104 @@ const SuppliesandMaterialsComponent = () => {
 				<Costt
 					label=""
 					variant="outlined"
+					value={
+						item.quantity && item.costEach
+							? item.quantity * item.costEach
+							: ""
+					}
 					InputProps={{
 						startAdornment: (
 							<InputAdornment position="start">$</InputAdornment>
 						),
 					}}
+					disabled
 				/>
 			</Label>
-			<ButtonCont>
+			<ButtonCont onClick={() => removeItem(index)}>
 				<ClearIcon />
 			</ButtonCont>
 		</Cont>
 	);
 };
 
-const SuppliesandMaterials = () => {
-	const Container = styled.div({
-		display: "flex",
-		flexDirection: "column",
-		gap: 10,
-	});
+const Container = styled.div({
+	display: "flex",
+	flexDirection: "column",
+	gap: 10,
+});
+
+// Define the main component that holds the list of items
+const SuppliesandMaterials = ({
+	updateCreateCoopData,
+	createCoopData,
+}: CreateCoopProps) => {
+	const budgetingItems = createCoopData.budgetingItems || [{}];
+
+	const updateItem = (index: number, newItem: BudgetItemInput) => {
+		budgetingItems[index] = { ...budgetingItems[index], ...newItem };
+		updateCreateCoopData({ budgetingItems });
+	};
+
+	const addItem = () => {
+		budgetingItems.push({});
+		console.log(budgetingItems);
+		updateCreateCoopData({ budgetingItems });
+	};
+
+	const removeItem = (index: number) => {
+		budgetingItems.splice(index, 1);
+		updateCreateCoopData({ budgetingItems });
+	};
 
 	return (
 		<Container>
 			<Typography>
 				<b>Supplies and Materials</b>
 			</Typography>
-			<SuppliesandMaterialsComponent />
-			<SuppliesandMaterialsComponent />
-			<SuppliesandMaterialsComponent />
+			{budgetingItems.map((item, index) => (
+				<SuppliesandMaterialsComponent
+					key={index}
+					item={item}
+					index={index}
+					updateItem={updateItem}
+					removeItem={removeItem}
+				/>
+			))}
+			<IconButton onClick={addItem}>
+				<AddIcon />
+			</IconButton>
 		</Container>
 	);
 };
 
-const Bartering = () => {
-	const CustomRadio = styled(FormControlLabel)({
-		height: 30,
-		marginLeft: 5,
-	});
+const CustomRadio = styled(FormControlLabel)({
+	height: 30,
+	marginLeft: 5,
+});
+
+const Bartering = ({
+	updateCreateCoopData,
+	createCoopData,
+}: CreateCoopProps) => {
 	return (
 		<FormControl>
 			<Typography variant="body2">Are you open to bartering?</Typography>
-			<RadioGroup>
+			<RadioGroup
+				value={String(createCoopData.openToBartering)}
+				onChange={(e) =>
+					// converting to boolean
+					updateCreateCoopData({
+						openToBartering: e.target.value === "true",
+					})
+				}
+			>
 				<CustomRadio
-					value="yes"
+					value={"true"}
 					control={<Radio size="small" color="default" />}
 					label={<Typography variant="body2">Yes</Typography>}
 				/>
 				<CustomRadio
-					value="no"
+					value={"false"}
 					control={<Radio size="small" color="default" />}
 					label={<Typography variant="body2">No</Typography>}
 				/>
@@ -158,7 +236,10 @@ const Bartering = () => {
 	);
 };
 
-const Participation = () => {
+const Participation = ({
+	updateCreateCoopData,
+	createCoopData,
+}: CreateCoopProps) => {
 	return (
 		<>
 			<Typography>
@@ -166,13 +247,31 @@ const Participation = () => {
 			</Typography>
 			<FormControl>
 				<InputLabel>Cost to participate</InputLabel>
-				<Select id="outlined" label="cost to participate">
+				<Select
+					id="outlined"
+					label="cost to participate"
+					value={createCoopData.participationCost ?? ""}
+					onChange={(e) =>
+						updateCreateCoopData({
+							participationCost: Number(e.target.value),
+						})
+					}
+				>
 					<MenuItem value={0}>No Cost</MenuItem>
 				</Select>
 			</FormControl>
 			<FormControl>
 				<InputLabel>Maximum number of participants</InputLabel>
-				<Select id="outlined" label="maximum number of participants">
+				<Select
+					id="outlined"
+					label="maximum number of participants"
+					value={createCoopData.maxParticipants ?? ""}
+					onChange={(e) =>
+						updateCreateCoopData({
+							maxParticipants: Number(e.target.value),
+						})
+					}
+				>
 					<MenuItem value={10}>10</MenuItem>
 				</Select>
 			</FormControl>
@@ -181,11 +280,10 @@ const Participation = () => {
 	);
 };
 
-const Crowdfunding = () => {
-	const CustomRadio = styled(FormControlLabel)({
-		height: 30,
-		marginLeft: 5,
-	});
+const Crowdfunding = ({
+	updateCreateCoopData,
+	createCoopData,
+}: CreateCoopProps) => {
 	return (
 		<>
 			<Typography>
@@ -195,14 +293,22 @@ const Crowdfunding = () => {
 				<Typography variant="body2">
 					Are you open to bartering?
 				</Typography>
-				<RadioGroup>
+				<RadioGroup
+					value={String(createCoopData.openToBartering)}
+					onChange={(e) =>
+						updateCreateCoopData({
+							// converting to boolean
+							openToBartering: e.target.value === "true",
+						})
+					}
+				>
 					<CustomRadio
-						value="yes"
+						value={true}
 						control={<Radio size="small" color="default" />}
 						label={<Typography variant="body2">Yes</Typography>}
 					/>
 					<CustomRadio
-						value="no"
+						value={false}
 						control={<Radio size="small" color="default" />}
 						label={<Typography variant="body2">No</Typography>}
 					/>
@@ -218,6 +324,10 @@ const Crowdfunding = () => {
 					}
 					id="outlined"
 					label="Deadline for funding"
+					value={createCoopData.endDate ?? ""}
+					onChange={(e) =>
+						updateCreateCoopData({ endDate: e.target.value })
+					}
 				>
 					<MenuItem value={"Date"}>Date</MenuItem>
 				</Select>
@@ -229,6 +339,17 @@ const Crowdfunding = () => {
 						<InputAdornment position="start">$</InputAdornment>
 					),
 				}}
+				type="number"
+				value={
+					createCoopData.crowdfundingAmount
+						? createCoopData.crowdfundingAmount
+						: ""
+				}
+				onChange={(e) =>
+					updateCreateCoopData({
+						crowdfundingAmount: Number(e.target.value),
+					})
+				}
 			/>
 			<TextField
 				label="Message"
@@ -236,20 +357,41 @@ const Crowdfunding = () => {
 				multiline
 				rows={7}
 				fullWidth
+				value={createCoopData.crowdfundingMessage ?? ""}
+				onChange={(e) =>
+					updateCreateCoopData({
+						crowdfundingMessage: e.target.value,
+					})
+				}
 			/>
 		</>
 	);
 };
 function Budgeting() {
+	const { updateCreateCoopData, createCoopData } =
+		useOutletContext<CreateCoopOutletContext>();
+
 	return (
 		<>
 			<Page>
 				<Form>
 					<Header text="Budgeting" />
-					<SuppliesandMaterials />
-					<Bartering />
-					<Participation />
-					<Crowdfunding />
+					<SuppliesandMaterials
+						updateCreateCoopData={updateCreateCoopData}
+						createCoopData={createCoopData}
+					/>
+					<Bartering
+						updateCreateCoopData={updateCreateCoopData}
+						createCoopData={createCoopData}
+					/>
+					<Participation
+						updateCreateCoopData={updateCreateCoopData}
+						createCoopData={createCoopData}
+					/>
+					<Crowdfunding
+						updateCreateCoopData={updateCreateCoopData}
+						createCoopData={createCoopData}
+					/>
 				</Form>
 			</Page>
 		</>

@@ -15,7 +15,7 @@ function CoopVolunteering() {
 				</div>
 
 				<div className="volunteering-positions">
-					{coop?.volunteerPositions.map(
+					{coop?.volunteerPositions?.map(
 						(volunteerPosition, index) => (
 							<VolunteerPositionCard
 								key={index}

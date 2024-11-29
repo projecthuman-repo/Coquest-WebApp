@@ -1,9 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Typography, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
 import SearchBar from "../../components/SearchBar";
 import ProjectListDisplay from "./components/ViewAllProjects/ProjectListDisplay";
 import { ProjectsContext } from "./ProjectsContext";
+
+import { subscribeToUserModelSubject } from "@/observers/userobserver";
+import { User } from "@/models/usermodel";
 
 const Container = styled("div")({
 	display: "flex",
@@ -74,10 +77,45 @@ function TabPanel(props: any) {
 const ViewAllProjects = () => {
 	const { projects } = useContext(ProjectsContext);
 	const [value, setValue] = React.useState("one");
+	const [user, setUser] = React.useState<User>();
+
+	const completedProjects = projects.filter(
+		(project) => project.progress === 100,
+	);
+	const createdByMeProjects = projects.filter(
+		(project) => project.userID === user?.id,
+	);
+	const participatingInProjects = projects.filter((project) =>
+		project.members?.some((member) => member._id === user?.id),
+	);
+	const otherProjects = projects.filter(
+		(project) =>
+			!createdByMeProjects.includes(project) &&
+			!participatingInProjects.includes(project) &&
+			!completedProjects.includes(project),
+	);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
 	};
+
+	useEffect(() => {
+		let unsubscribe: (() => void) | null | undefined = null;
+
+		const setupSubscription = async () => {
+			unsubscribe = await subscribeToUserModelSubject((user) => {
+				setUser(user); // Update to use the 'name' field
+			});
+		};
+
+		setupSubscription();
+
+		return () => {
+			if (unsubscribe) {
+				unsubscribe(); // Ensure proper cleanup on component unmount
+			}
+		};
+	}, []);
 
 	return (
 		<Container>
@@ -123,15 +161,28 @@ const ViewAllProjects = () => {
 					sx={{ textTransform: "none" }}
 					label="Completed"
 				/>
+				<CustomTab
+					style={
+						value === "four"
+							? tabStyle.active_tab
+							: tabStyle.default_tab
+					}
+					value="four"
+					sx={{ textTransform: "none" }}
+					label="Other"
+				/>
 			</CustomTabs>
 			<TabPanel value={value} index="one">
-				<ProjectListDisplay projectList={projects} />
+				<ProjectListDisplay projectList={createdByMeProjects} />
 			</TabPanel>
 			<TabPanel value={value} index="two">
-				<div className="">Second page</div>
+				<ProjectListDisplay projectList={participatingInProjects} />
 			</TabPanel>
 			<TabPanel value={value} index="three">
-				<div className="">Third page</div>
+				<ProjectListDisplay projectList={completedProjects} />
+			</TabPanel>
+			<TabPanel value={value} index="four">
+				<ProjectListDisplay projectList={otherProjects} />
 			</TabPanel>
 		</Container>
 	);

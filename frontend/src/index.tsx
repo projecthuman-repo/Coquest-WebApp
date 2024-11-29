@@ -272,36 +272,32 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/coops",
-		element: <Outlet />,
+		element: (
+			<CoopsContextProvider>
+				<Outlet />
+			</CoopsContextProvider>
+		),
 		children: [
 			{
 				path: "",
-				element: (
-					<CoopsContextProvider>
-						<ViewAllCoops />
-					</CoopsContextProvider>
-				),
+				element: <ViewAllCoops />,
 			},
 
 			{
 				path: ":id",
-				element: <Outlet />,
+				element: (
+					<CoopContextProvider>
+						<Outlet />
+					</CoopContextProvider>
+				),
 				children: [
 					{
 						path: "",
-						element: (
-							<CoopsContextProvider>
-								<CoopPage />
-							</CoopsContextProvider>
-						),
+						element: <CoopPage />,
 					},
 					{
 						path: "quests",
-						element: (
-							<CoopsContextProvider>
-								<CoopQuests />
-							</CoopsContextProvider>
-						),
+						element: <CoopQuests />,
 					},
 					{
 						path: "members",
@@ -309,34 +305,16 @@ const router = createBrowserRouter([
 						children: [
 							{
 								path: "",
-								element: (
-									<CoopsContextProvider>
-										<CoopContextProvider>
-											<ProgramMembers />
-										</CoopContextProvider>
-									</CoopsContextProvider>
-								),
+								element: <ProgramMembers />,
 							},
 							{
 								path: ":id/apply",
-								element: (
-									<CoopsContextProvider>
-										<CoopContextProvider>
-											<RoleApply type="program" />
-										</CoopContextProvider>
-									</CoopsContextProvider>
-								),
+								element: <RoleApply type="program" />,
 							},
 							{
 								// TODO: make this route only available for coop admins (view who applied for role)
 								path: ":id/applications",
-								element: (
-									<CoopsContextProvider>
-										<CoopContextProvider>
-											<ProgramApplications />
-										</CoopContextProvider>
-									</CoopsContextProvider>
-								),
+								element: <ProgramApplications />,
 							},
 						],
 					},

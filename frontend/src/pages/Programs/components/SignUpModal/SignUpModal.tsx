@@ -5,7 +5,7 @@ import "./SignUpModal.css";
 
 interface SignUpModalProps {
 	name: string;
-	cost: number | null;
+	cost: number | null | undefined;
 	handleSignUpModal: () => void;
 	handleSignUp: () => void;
 }

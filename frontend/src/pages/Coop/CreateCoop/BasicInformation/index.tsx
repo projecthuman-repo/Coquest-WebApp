@@ -24,6 +24,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Header from "../../CoopComponents/CoopTemplate/header";
 import Form from "../../CoopComponents/CoopTemplate/form";
 import Page from "../../CoopComponents/CoopTemplate/page";
+import { useOutletContext } from "react-router";
+import { CreateCoopOutletContext, CreateCoopProps } from "../CreateCoop";
 
 const categories = [
 	{
@@ -43,52 +45,16 @@ const categories = [
 	},
 ];
 
-// const CoopInfo = () => {
-//     // const Container = styled.div({
-//     //     display: "flex",
-//     //     flexDirection: "column",
-//     //     gap: 40,
-//     // });
-
-//     return (
-//         // <Container>
-//         // <TextField label="Co-op name"></TextField>
-//         // <FormControl>
-//         //     <InputLabel>Co-op type</InputLabel>
-//         //     <Select id="outlined" label="cost to participate">
-//         //         <MenuItem
-//         //             value={"Community Gardens - Food and Agriculture"}
-//         //         >
-//         //             Community Gardens - Food and Agriculture
-//         //         </MenuItem>
-//         //         <MenuItem
-//         //             value={"Food Processing Co-ops - Food and Agriculture"}
-//         //         >
-//         //             Food Processing Co-ops - Food and Agriculture
-//         //         </MenuItem>
-//         //         <MenuItem
-//         //             value={
-//         //                 "(Raw and Processed) Food Delivery System - Agriculture"
-//         //             }
-//         //         >
-//         //             (Raw and Processed) Food Delivery System - Agriculture
-//         //         </MenuItem>
-//         //         <MenuItem
-//         //             value={"Goods and Craft collectives - Community Art"}
-//         //         >
-//         //             Goods and Craft collectives - Community Art
-//         //         </MenuItem>
-//         //     </Select>
-//         // </FormControl>
-//         // <TextField label="Co-op Summary" multiline rows={4} fullWidth />
-//         // <TextField label="Mission" multiline rows={5} fullWidth />
-//         // </Container>
-//     );
-// };
-
-function Categories() {
+function Categories({ updateCreateCoopData, createCoopData }: CreateCoopProps) {
 	return (
-		<TextField select label="Co-op type">
+		<TextField
+			select
+			label="Co-op type"
+			onChange={(e) => {
+				updateCreateCoopData({ type: e.target.value });
+			}}
+			value={createCoopData.type ?? ""}
+		>
 			{categories.map((option) => (
 				<MenuItem key={option.label} value={option.label}>
 					{option.label}
@@ -98,15 +64,33 @@ function Categories() {
 	);
 }
 
-function Summary() {
-	return <TextField label="Co-op Summary" multiline rows={4} fullWidth />;
+function Summary({ updateCreateCoopData, createCoopData }: CreateCoopProps) {
+	return (
+		<TextField
+			label="Co-op Summary"
+			multiline
+			rows={4}
+			fullWidth
+			value={createCoopData.summary ?? ""}
+			onChange={(e) => updateCreateCoopData({ summary: e.target.value })}
+		/>
+	);
 }
 
-function Mission() {
-	return <TextField label="Mission" multiline rows={5} fullWidth />;
+function Mission({ updateCreateCoopData, createCoopData }: CreateCoopProps) {
+	return (
+		<TextField
+			label="Mission"
+			multiline
+			rows={5}
+			fullWidth
+			value={createCoopData.mission ?? ""}
+			onChange={(e) => updateCreateCoopData({ mission: e.target.value })}
+		/>
+	);
 }
 
-function CheckBox() {
+function CheckBox({ updateCreateCoopData, createCoopData }: CreateCoopProps) {
 	return (
 		<FormGroup>
 			<FormControlLabel
@@ -116,6 +100,12 @@ function CheckBox() {
 						checkedIcon={<RadioButtonCheckedIcon />}
 						size="small"
 						color="default"
+						defaultChecked={createCoopData.locationAllowed ?? false}
+						onChange={(e) =>
+							updateCreateCoopData({
+								locationAllowed: e.target.checked,
+							})
+						}
 					/>
 				}
 				label="Allow for location information"
@@ -127,6 +117,14 @@ function CheckBox() {
 						checkedIcon={<RadioButtonCheckedIcon />}
 						size="small"
 						color="default"
+						defaultChecked={
+							createCoopData.notificationAllowed ?? false
+						}
+						onChange={(e) =>
+							updateCreateCoopData({
+								notificationAllowed: e.target.checked,
+							})
+						}
 					/>
 				}
 				label="Notification ON/OFF"
@@ -185,7 +183,7 @@ function CoopCard() {
 		>
 			<CardMedia
 				sx={{ height: 160, width: 230 }}
-				image=""
+				src="./placeholder"
 				title="photo"
 			/>
 			<CardHeader
@@ -218,15 +216,36 @@ const CardContainer = styled.div({
 });
 
 function CoopBasicInformation() {
+	const { updateCreateCoopData, createCoopData } =
+		useOutletContext<CreateCoopOutletContext>();
+
 	return (
 		<Page>
 			<Form>
 				<Header text="Start a Co-op" />
-				<TextField label="Co-op name"></TextField>
-				<Categories />
-				<Summary />
-				<Mission />
-				<CheckBox />
+				<TextField
+					label="Co-op name"
+					value={createCoopData.name ?? ""}
+					onChange={(e) =>
+						updateCreateCoopData({ name: e.target.value })
+					}
+				></TextField>
+				<Categories
+					updateCreateCoopData={updateCreateCoopData}
+					createCoopData={createCoopData}
+				/>
+				<Summary
+					updateCreateCoopData={updateCreateCoopData}
+					createCoopData={createCoopData}
+				/>
+				<Mission
+					updateCreateCoopData={updateCreateCoopData}
+					createCoopData={createCoopData}
+				/>
+				<CheckBox
+					updateCreateCoopData={updateCreateCoopData}
+					createCoopData={createCoopData}
+				/>
 				<SearchBar />
 
 				<CardContainer>

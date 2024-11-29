@@ -5,6 +5,7 @@ import { Notification, NotificationSchemaType } from "../models/Notification";
 import { Chat } from "../models/Chat";
 import { Message } from "../models/Message";
 import { CrossPlatformUser } from "../models/crossPlatform/User";
+import { Coop } from "../models/Coop";
 import { v4 as uuidv4 } from "uuid";
 import { Storage } from "@google-cloud/storage";
 import jwt from "jsonwebtoken";
@@ -20,6 +21,8 @@ import { Resolvers } from "../__generated__/graphql";
 import { Motive } from "../models/Motive";
 import { Topic } from "../models/Topic";
 import { ServerError, ServerErrorCodes } from "./ServerError";
+import { Project } from "../models/Project";
+import { Program } from "../models/Program";
 
 const storage = new Storage();
 
@@ -88,6 +91,45 @@ const resolvers: Resolvers = {
       return topics;
     },
 
+    // @ts-expect-error - ObjectID is not assignable to type 'string'
+    async getCoops() {
+      try {
+        const coops = await Coop.find().populate("members");
+        return coops;
+      } catch (err) {
+        throw new ServerError("Error getting coops", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    // @ts-expect-error - ObjectID is not assignable to type 'string'
+    async getProjects() {
+      try {
+        const projects = await Project.find();
+        return projects;
+      } catch (err) {
+        throw new ServerError("Error getting projects", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    // @ts-expect-error - ObjectID is not assignable to type 'string'
+    async getPrograms() {
+      try {
+        const programs = await Program.find();
+        return programs;
+      } catch (err) {
+        throw new ServerError("Error getting programs", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
     //this method finds a user by their id
     // @ts-expect-error - registered is populated with its directive, it is expected here that its type won't match the schema
     async findUserbyID(_parent, { id, _ }, _context, _info) {
@@ -138,6 +180,41 @@ const resolvers: Resolvers = {
         return await Community.findOne({ _id: id });
       } catch (err) {
         throw new ServerError("Error finding community by id", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    // @ts-expect-error - TODO: type null not assignable
+    async findCoopbyID(_parent, { id }, _context, _info) {
+      try {
+        return await Coop.findOne({ _id: id }).populate("members");
+      } catch (err) {
+        throw new ServerError("Error finding coop by id", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    // @ts-expect-error - TODO: type null not assignable
+    async findProjectbyID(_parent, { id }, _context, _info) {
+      try {
+        return await Project.findOne({ _id: id }).populate("members");
+      } catch (err) {
+        throw new ServerError("Error finding project by id", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    async findProgrambyID(_parent, { id }, _context, _info) {
+      try {
+        return await Program.findOne({ _id: id });
+      } catch (err) {
+        throw new ServerError("Error finding program by id", {
           code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
           cause: err,
         });
@@ -441,6 +518,162 @@ const resolvers: Resolvers = {
           code: 1,
           response: `Error creating community: ${(err as Error).message}`,
         };
+      }
+    },
+
+    async createCoop(_parent, { userInput }, _context, _info) {
+      if (!userInput.userID || !userInput.name) {
+        throw new ServerError("User ID and name are required.", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
+      }
+      const newCoop = new Coop(userInput);
+
+      try {
+        await newCoop.save();
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(
+          `Error creating coop. ${(err as Error).message}`,
+          {
+            code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+            cause: err,
+          },
+        );
+      }
+    },
+
+    async createProject(_parent, { userInput }, _context, _info) {
+      if (!userInput.userID || !userInput.name) {
+        throw new ServerError("User ID and name are required.", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
+      }
+      const newProject = new Project(userInput);
+
+      try {
+        await newProject.save();
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(
+          `Error creating project. ${(err as Error).message}`,
+          {
+            code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+            cause: err,
+          },
+        );
+      }
+    },
+
+    async createProgram(_parent, { userInput }, _context, _info) {
+      if (!userInput.userID || !userInput.name) {
+        throw new ServerError("User ID and name are required.", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
+      }
+      const newProgram = new Program(userInput);
+
+      try {
+        await newProgram.save();
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(
+          `Error creating program. ${(err as Error).message}`,
+          {
+            code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+            cause: err,
+          },
+        );
+      }
+    },
+
+    async joinCoop(_parent, { userInput }, _context, _info) {
+      const { coopID, userID } = userInput;
+      try {
+        await Coop.updateOne({ _id: coopID }, { $push: { members: userID } });
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(`Error joining coop. ${(err as Error).message}`, {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    async leaveCoop(_parent, { userInput }, _context, _info) {
+      const { coopID, userID } = userInput;
+      try {
+        await Coop.updateOne({ _id: coopID }, { $pull: { members: userID } });
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(`Error leaving coop. ${(err as Error).message}`, {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    async joinProject(_parent, { userInput }, _context, _info) {
+      const { projectID, userID } = userInput;
+      try {
+        await Project.updateOne(
+          { _id: projectID },
+          { $push: { members: userID } },
+        );
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(`Error joining coop. ${(err as Error).message}`, {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    async leaveProject(_parent, { userInput }, _context, _info) {
+      const { projectID, userID } = userInput;
+      try {
+        await Project.updateOne(
+          { _id: projectID },
+          { $pull: { members: userID } },
+        );
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(`Error leaving coop. ${(err as Error).message}`, {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    async joinProgram(_parent, { userInput }, _context, _info) {
+      const { programID, userID } = userInput;
+      try {
+        await Program.updateOne(
+          { _id: programID },
+          { $push: { members: userID } },
+        );
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(`Error joining coop. ${(err as Error).message}`, {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    async leaveProgram(_parent, { userInput }, _context, _info) {
+      const { programID, userID } = userInput;
+      try {
+        await Program.updateOne(
+          { _id: programID },
+          { $pull: { members: userID } },
+        );
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(`Error leaving coop. ${(err as Error).message}`, {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
       }
     },
 
@@ -801,7 +1034,14 @@ const resolvers: Resolvers = {
       if (initiative) updateCommunity.initiative = initiative;
       if (members) updateCommunity.members = coerceExpandable(members, "id");
       if (tags) updateCommunity.tags = tags;
-      if (location) updateCommunity.location = location;
+      if (location) {
+        const { name, lng, lat } = location;
+        updateCommunity.location = {
+          name: name ?? "",
+          lng,
+          lat,
+        };
+      }
       // @ts-expect-error - Inferring issue with arrays in schema
       if (images) updateCommunity.images = images;
 
@@ -815,6 +1055,61 @@ const resolvers: Resolvers = {
         return {
           code: 1,
           response: `Error updating community: ${(err as Error).message}`,
+        };
+      }
+    },
+
+    async updateCoop(_parent, { userInput }, _context, _info) {
+      const { _id, ...updateCoop } = userInput;
+      try {
+        if (!_id)
+          throw new ServerError("Coop ID missing.", {
+            code: ServerErrorCodes.INVALID_INPUT,
+          });
+        await Coop.updateOne({ _id }, updateCoop, { runValidators: true });
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        return {
+          code: 1,
+          response: `Error updating coop: ${(err as Error).message}`,
+        };
+      }
+    },
+
+    async updateProject(_parent, { userInput }, _context, _info) {
+      const { _id, ...updateProject } = userInput;
+      try {
+        if (!_id)
+          throw new ServerError("Project ID missing.", {
+            code: ServerErrorCodes.INVALID_INPUT,
+          });
+        await Project.updateOne({ _id }, updateProject, {
+          runValidators: true,
+        });
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        return {
+          code: 1,
+          response: `Error updating project: ${(err as Error).message}`,
+        };
+      }
+    },
+
+    async updateProgram(_parent, { userInput }, _context, _info) {
+      const { _id, ...updateProgram } = userInput;
+      try {
+        if (!_id)
+          throw new ServerError("Program ID missing.", {
+            code: ServerErrorCodes.INVALID_INPUT,
+          });
+        await Program.updateOne({ _id }, updateProgram, {
+          runValidators: true,
+        });
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        return {
+          code: 1,
+          response: `Error updating project: ${(err as Error).message}`,
         };
       }
     },

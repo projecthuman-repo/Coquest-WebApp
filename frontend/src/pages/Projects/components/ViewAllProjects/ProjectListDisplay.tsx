@@ -58,8 +58,8 @@ function validateProject(project: Project) {
 		project === null ||
 		project.name === null ||
 		project.name === "" ||
-		project.description === null ||
-		project.description === ""
+		project.summary === null ||
+		project.summary === ""
 	) {
 		return false;
 	}

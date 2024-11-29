@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import SharedCalendar from "../../../components/SharedCalendar/SharedCalendar";
 import Quests from "../../../components/Quests";
 import Members from "../../../components/Members/index";
@@ -12,17 +12,15 @@ import "./Overview.css";
 import "./index.css";
 
 function ProgramOverview() {
-	const { program, setProgram } = useContext(ProgramContext);
+	const { program, updateProgram } = useContext(ProgramContext);
 
 	// edit program description, objective and initiative
 	const [editingDescStarted, setEditingDescStarted] = useState(false);
 	const [editedDescription, setEditedDescription] = useState(
-		program?.description,
+		program?.summary,
 	);
-	const [editedObjective, setEditedObjective] = useState(program?.objective);
-	const [editedInitiative, setEditedInitiative] = useState(
-		program?.initiative,
-	);
+	const [editedObjective, setEditedObjective] = useState(program?.mission);
+	const [editedInitiative, setEditedInitiative] = useState(program?.type);
 
 	const handleEditDescModal = () => {
 		setEditingDescStarted(!editingDescStarted);
@@ -40,25 +38,16 @@ function ProgramOverview() {
 			editedObjective &&
 			editedInitiative
 		) {
-			setProgram({
+			updateProgram({
 				...program,
-				description: editedDescription,
-				objective: editedObjective,
-				initiative: editedInitiative,
+				summary: editedDescription,
+				mission: editedObjective,
+				type: editedInitiative,
 			});
 		}
 
-		//TODO edit program description in backend
 		handleEditDescModal();
 	};
-
-	useEffect(() => {
-		if (!editingDescStarted) {
-			setEditedDescription(program?.description);
-			setEditedObjective(program?.objective);
-			setEditedInitiative(program?.initiative);
-		}
-	}, [editingDescStarted, program]);
 
 	return (
 		<>
@@ -80,7 +69,7 @@ function ProgramOverview() {
 								<textarea
 									rows={3}
 									placeholder=""
-									value={editedDescription}
+									value={editedDescription ?? ""}
 									onChange={(e) =>
 										setEditedDescription(e.target.value)
 									}
@@ -91,7 +80,7 @@ function ProgramOverview() {
 								<textarea
 									rows={3}
 									placeholder=""
-									value={editedObjective}
+									value={editedObjective ?? ""}
 									onChange={(e) =>
 										setEditedObjective(e.target.value)
 									}
@@ -102,7 +91,7 @@ function ProgramOverview() {
 								<textarea
 									rows={3}
 									placeholder=""
-									value={editedInitiative}
+									value={editedInitiative ?? ""}
 									onChange={(e) =>
 										setEditedInitiative(e.target.value)
 									}
@@ -133,25 +122,29 @@ function ProgramOverview() {
 							</button>
 						</div>
 						<p className="prg-o-sub-text margin-top margin-bottom">
-							{program?.description}
+							{program?.summary}
 						</p>
 						<h2 className="prg-o-sub-heading margin-bottom">
-							Project Objective
+							Program Objective
 						</h2>
 						<p className="prg-o-sub-text margin-bottom">
-							{program?.objective}
+							{program?.mission}
 						</p>
 						<h2 className="prg-o-sub-heading margin-bottom">
 							Initiative
 						</h2>
 						<p className="prg-o-sub-text margin-bottom">
-							{program?.initiative}
+							{program?.type}
 						</p>
 					</div>
 					{/* Members */}
 					<div className="prg-o-background">
 						<Members
-							users={["Test"]}
+							users={
+								program?.members?.map(
+									(member) => member.username ?? "",
+								) ?? []
+							}
 							userRole={["Role"]}
 							showAllLink={
 								window.location.pathname.slice(-1) === "/"
@@ -181,16 +174,20 @@ function ProgramOverview() {
 								Program Information
 							</h2>
 							<p className="prg-o-sub-text">
-								<b>Time: </b>
-								{program?.time}
+								<b>Recurring: </b>
+								{program?.recurring}
 							</p>
 							<p className="prg-o-sub-text">
-								<b>Date: </b>
-								{program?.date}
+								<b>Start Date: </b>
+								{program?.startDate}
+							</p>
+							<p className="prg-o-sub-text">
+								<b>End Date: </b>
+								{program?.endDate}
 							</p>
 							<p className="prg-o-sub-text">
 								<b>Location: </b>
-								{program?.location}
+								{program?.location?.name}
 							</p>
 							<p className="prg-o-sub-text">
 								<b>Spots Open: </b>
@@ -208,11 +205,11 @@ function ProgramOverview() {
 							<SharedCalendar />
 						</div>
 						{/* Quests */}
-						<div className="prg-o-background">
+						{/* <div className="prg-o-background">
 							<Quests
 								showAllLink={`${window.location.pathname}/quests`}
 							/>
-						</div>
+						</div> */}
 						{/* Funding */}
 						<div className="prg-o-background">
 							<Funding />
