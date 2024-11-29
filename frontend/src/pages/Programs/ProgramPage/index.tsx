@@ -1,5 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Repository from "../../../repositories/repository";
 import { Typography, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
 import OutlineButton from "../../../components/Buttons/OutlineButton";
@@ -94,10 +95,11 @@ const ProgramPage = () => {
 	const [value, setValue] = React.useState("one"); // which tab on program page user is on
 
 	const { id } = useParams() as { id: string };
-	const { programs, setPrograms } = useContext(ProgramsContext);
-	const [program, setProgram] = React.useState<Program | null>(
-		programs.filter((program) => program.id === id)[0],
-	);
+	// const { programs, setPrograms } = useContext(ProgramsContext);
+	// const [program, setProgram] = React.useState<Program | null>(
+	// 	programs.filter((program) => program.id === id)[0],
+	// );
+	const [programData, setProgramData] = useState<Program | null>(null);
 
 	// program sign up
 	const [programSignUp, setProgramSignUp] = React.useState(false);
@@ -125,27 +127,67 @@ const ProgramPage = () => {
 		//TODO send post request to backend to sign up for program
 	};
 
+	// useEffect(() => {
+	// 	setPrograms(
+	// 		programs.map((p) => {
+	// 			if (p.id) {
+	// 				return p.id === program?.id ? program : p;
+	// 			} else {
+	// 				return p;
+	// 			}
+	// 		}),
+	// 	); // updates programs if program was modified
+	// }, [program, programs, setPrograms]);
+
+	// Fetch for Program Data
 	useEffect(() => {
-		setPrograms(
-			programs.map((p) => {
-				if (p.id) {
-					return p.id === program?.id ? program : p;
+		const repository = Repository.getInstance("Program", Program);
+		const fetchProgram = async () => {
+			try {
+				// Initialize the default Program data
+				const programData = {
+					id,
+					name: "",
+					description: "",
+					objective: "",
+					initiative: "",
+					location: "",
+					cost: null,
+					progress: null,
+					time: null,
+					date: null,
+					spots: null,
+					milestones: [],
+					volunteerPositions: [],
+					openRoles: [],
+				};
+
+				const program = new Program(programData); // Create a Program instance
+				const fetchedProgram = await repository
+					.fetch(program)
+					.toPromise(); // Fetch data from repository
+
+				if (fetchedProgram && fetchedProgram.isValid()) {
+					setProgramData(fetchedProgram); // Update state with fetched program data
 				} else {
-					return p;
+					console.error("Program data not found or invalid");
 				}
-			}),
-		); // updates programs if program was modified
-	}, [program, programs, setPrograms]);
+			} catch (error) {
+				console.error("Error fetching program data:", error);
+			}
+		};
+		fetchProgram();
+	}, [id]);
 
 	return (
 		<>
-			{program ? (
+			{programData ? (
 				<Container>
 					{/* Step 1 of Program SignUp process */}
 					{programSignUpStarted && !programSignUp && (
 						<SignUpModal
-							name={program.name}
-							cost={program.cost}
+							name={programData.name}
+							cost={programData.cost}
 							handleSignUpModal={handleSignUpModal}
 							handleSignUp={handleSignUp}
 						/>
@@ -154,18 +196,18 @@ const ProgramPage = () => {
 					{/* Step 2 of Program SignUp process */}
 					{programSignUpStarted && programSignUp && (
 						<ConfirmationModal
-							name={program.name}
-							time={program.time}
-							date={program.date}
-							location={program.location}
-							cost={program.cost}
+							name={programData.name}
+							time={programData.time}
+							date={programData.date}
+							location={programData.location}
+							cost={programData.cost}
 							confirmationNumber={confirmationNumber}
 							handleSignUpModal={handleSignUpModal}
 						/>
 					)}
 
 					<Header>
-						<TitleField>{program.name}</TitleField>
+						<TitleField>{programData.name}</TitleField>
 						<OutlineButton
 							name={programSignUp ? "Signed up" : "Sign up"}
 							onClick={
@@ -247,21 +289,30 @@ const ProgramPage = () => {
 					</CustomTabs>
 					<TabPanel value={value} index="one">
 						<ProgramContext.Provider
-							value={{ program, setProgram }}
+							value={{
+								program: programData,
+								setProgram: setProgramData,
+							}}
 						>
 							<ProgramOverview />
 						</ProgramContext.Provider>
 					</TabPanel>
 					<TabPanel value={value} index="two">
 						<ProgramContext.Provider
-							value={{ program, setProgram }}
+							value={{
+								program: programData,
+								setProgram: setProgramData,
+							}}
 						>
 							<ProgramMilestones />
 						</ProgramContext.Provider>
 					</TabPanel>
 					<TabPanel value={value} index="three">
 						<ProgramContext.Provider
-							value={{ program, setProgram }}
+							value={{
+								program: programData,
+								setProgram: setProgramData,
+							}}
 						>
 							<ProgramVolunteering />
 						</ProgramContext.Provider>

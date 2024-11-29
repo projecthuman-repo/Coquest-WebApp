@@ -1,5 +1,5 @@
 import { InferSchemaType, Schema } from "mongoose";
-import { regenDb } from "../db/connection";
+import { regenDb } from "../../db/connection";
 
 //id of the logged in user
 const loggedInUsersSchema = new Schema({

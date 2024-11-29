@@ -414,6 +414,76 @@ const schema = gql`
     message: String
   }
 
+  type Program {
+    programName: String
+    charity: Boolean
+    initiativePurpose: String
+    participationType: String
+    hasProgramPlanningExperience: Boolean
+    startDate: String
+    endDate: String
+    startTime: String
+    endTime: String
+    recurring: String
+    location: String
+    ownsProgramSpace: Boolean
+    rentalSpaceBooked: Boolean
+    rentalSpaceDetails: String
+    volunteerOpportunities: String
+    budgetingItems: [BudgetItem]
+    openToBartering: Boolean
+    participationCost: Int
+    maxParticipants: Int
+    needsCrowdfunding: Boolean
+    crowdfundingAmount: Int
+    crowdfundingMessage: String
+    promotionImage: String
+    shareLink: String
+    invitedUsers: [String!]
+  }
+
+  input ProgramInput {
+    programName: String!
+    charity: Boolean
+    initiativePurpose: String
+    participationType: String
+    hasProgramPlanningExperience: Boolean
+    startDate: String
+    endDate: String
+    startTime: String
+    endTime: String
+    recurring: String
+    location: String
+    ownsProgramSpace: Boolean
+    rentalSpaceBooked: Boolean
+    rentalSpaceDetails: String
+    volunteerOpportunities: String
+    budgetingItems: [BudgetItemInput]
+    openToBartering: Boolean
+    participationCost: Int
+    maxParticipants: Int
+    needsCrowdfunding: Boolean
+    crowdfundingAmount: Int
+    crowdfundingMessage: String
+    promotionImage: String
+    shareLink: String
+    invitedUsers: [String!]
+  }
+
+  type BudgetItem {
+    itemName: String
+    quantity: Int
+    costEach: Int
+    costTotal: Int
+  }
+
+  input BudgetItemInput {
+    itemName: String
+    quantity: Int
+    costEach: Int
+    costTotal: Int
+  }
+
   input AddMemberToChatInput {
     _id: ID
     userID: String
@@ -510,6 +580,8 @@ const schema = gql`
     getToken: JWT @auth
 
     generatePresignedURL: String! @auth
+    getProgram(id: ID!): Program @auth
+    getPrograms: [Program] @auth
   }
 
   """
@@ -538,6 +610,10 @@ const schema = gql`
     deleteCookieToken: mutationResponse
 
     deleteFile(fileName: String!): mutationResponse @auth
+
+    createProgram(programInput: ProgramInput!): mutationResponse @auth
+    updateProgram(id: ID!, programInput: ProgramInput!): mutationResponse @auth
+    deleteProgram(id: ID!): mutationResponse
   }
 `;
 
