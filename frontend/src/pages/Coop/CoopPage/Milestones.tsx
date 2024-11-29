@@ -31,7 +31,7 @@ function CoopMilestones() {
 				_id: `${coop?.milestones.length + 1}`,
 				type: "coop",
 				title: milestoneTitle,
-				progress: 0,
+				completed: false,
 				description: milestoneDescription,
 				completedBy: "",
 				dateStarted: "",

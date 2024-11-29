@@ -194,7 +194,7 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 						<p className="prg-m-heading">{milestone.title}</p>
 						<div className="prg-m-mpb-container">
 							<MilestoneProgressBar
-								progress={milestone.progress}
+								progress={milestone.completed ? 100 : 0}
 							/>
 						</div>
 					</div>

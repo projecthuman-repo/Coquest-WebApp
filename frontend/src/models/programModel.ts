@@ -22,7 +22,7 @@ export interface Milestone {
 	type: string;
 	// type: "program" | "coop" | "project";
 	title: string;
-	progress: number;
+	completed: boolean;
 	description: string;
 	completedBy: string;
 	dateStarted: string;

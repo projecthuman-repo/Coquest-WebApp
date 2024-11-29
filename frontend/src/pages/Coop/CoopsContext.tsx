@@ -25,7 +25,7 @@ const data: Coop[] = [
 				_id: "1",
 				type: "coop",
 				title: "Milestone 1",
-				progress: 100,
+				completed: true,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				completedBy: "John Doe",
@@ -36,7 +36,7 @@ const data: Coop[] = [
 				_id: "2",
 				type: "coop",
 				title: "Milestone 2",
-				progress: 100,
+				completed: true,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Vitae cum eget dolor vehicula massa porttitor tortor eget. Vitae egestas lorem viverra sit. Arcu placerat suspendisse ac eget sed. Ut etiam ut sit cursus sem.",
 				completedBy: "John Doe",
@@ -47,7 +47,7 @@ const data: Coop[] = [
 				_id: "3",
 				type: "coop",
 				title: "Milestone 3",
-				progress: 20,
+				completed: false,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Vitae cum eget dolor vehicula massa porttitor tortor eget. Vitae egestas lorem viverra sit. Arcu placerat suspendisse ac eget sed. Ut etiam ut sit cursus sem.",
 				completedBy: "John Doe",
@@ -58,7 +58,7 @@ const data: Coop[] = [
 				_id: "4",
 				type: "coop",
 				title: "Milestone 4",
-				progress: 0,
+				completed: false,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Vitae cum eget dolor vehicula massa porttitor tortor eget. Vitae egestas lorem viverra sit. Arcu placerat suspendisse ac eget sed. Ut etiam ut sit cursus sem.",
 				completedBy: "John Doe",
@@ -313,7 +313,7 @@ const data: Coop[] = [
 				_id: "1",
 				type: "coop",
 				title: "Milestone 1",
-				progress: 17,
+				completed: false,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				completedBy: "John Doe",
@@ -324,7 +324,7 @@ const data: Coop[] = [
 				_id: "2",
 				type: "coop",
 				title: "Milestone 2",
-				progress: 7,
+				completed: false,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Vitae cum eget dolor vehicula massa porttitor tortor eget. Vitae egestas lorem viverra sit. Arcu placerat suspendisse ac eget sed. Ut etiam ut sit cursus sem.",
 				completedBy: "John Doe",
@@ -540,7 +540,7 @@ const data: Coop[] = [
 				_id: "1",
 				type: "coop",
 				title: "Milestone 1",
-				progress: 100,
+				completed: true,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
 				completedBy: "John Doe",
@@ -551,7 +551,7 @@ const data: Coop[] = [
 				_id: "2",
 				type: "coop",
 				title: "Milestone 2",
-				progress: 100,
+				completed: true,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Vitae cum eget dolor vehicula massa porttitor tortor eget. Vitae egestas lorem viverra sit. Arcu placerat suspendisse ac eget sed. Ut etiam ut sit cursus sem.",
 				completedBy: "John Doe",
@@ -562,7 +562,7 @@ const data: Coop[] = [
 				_id: "3",
 				type: "coop",
 				title: "Milestone 3",
-				progress: 20,
+				completed: false,
 				description:
 					"Lorem ipsum dolor sit amet consectetur. Vitae cum eget dolor vehicula massa porttitor tortor eget. Vitae egestas lorem viverra sit. Arcu placerat suspendisse ac eget sed. Ut etiam ut sit cursus sem.",
 				completedBy: "John Doe",
