@@ -142,7 +142,9 @@ function CoopOverview() {
 					{/* Members */}
 					<div className="prg-o-background">
 						<Members
-							users={["Test"]}
+							users={coop?.members?.map(
+								(member) => member.username ?? "",
+							) ?? []}
 							userRole={["Role"]}
 							showAllLink={
 								window.location.pathname.slice(-1) === "/"

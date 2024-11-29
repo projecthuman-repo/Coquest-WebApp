@@ -25,16 +25,16 @@ const Members = ({ users, showAllLink, userRole }: MemberProps) => {
 				</a>
 			</div>
 			{users.map((user, index) => {
-				const userContent = userRole[index];
+				// const userContent = userRole[index];
 				return (
 					<div key={index} className="members-container">
 						<div className="members-left">
 							<ProfileIcon className="margin-right" />
 							<p>{user}</p>
 						</div>
-						<button className="members-button-design">
+						{/* <button className="members-button-design">
 							{userContent}
-						</button>
+						</button> */}
 					</div>
 				);
 			})}
