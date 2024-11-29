@@ -39,17 +39,8 @@ function CoopOverview() {
 			});
 		}
 
-		//TODO edit coop description in backend
 		handleEditDescModal();
 	};
-
-	// useEffect(() => {
-	// 	if (!editingDescStarted) {
-	// 		setEditedDescription(coop?.description);
-	// 		setEditedObjective(coop?.objective);
-	// 		setEditedInitiative(coop?.initiative);
-	// 	}
-	// }, [editingDescStarted, coop]);
 
 	return (
 		<>

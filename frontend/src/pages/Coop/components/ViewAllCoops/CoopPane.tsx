@@ -6,7 +6,6 @@ import LinearProgress, {
 	linearProgressClasses,
 } from "@mui/material/LinearProgress";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-//import { Program } from "../../../../models/programModel";
 import { Coop } from "../../../../models/coopModel";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -26,8 +25,6 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 interface CoopProps {
 	coop: Coop;
-	// expanded: boolean;
-	// onToggleExpand: () => void;
 }
 const Container = styled("div")(({ theme }) => ({
 	width: "100%",
@@ -47,9 +44,7 @@ const GridCol = styled(Grid)({
 	flexDirection: "column",
 	justifyContent: "center",
 });
-const CoopPane = (props: CoopProps) => {
-	const { coop } = props;
-
+const CoopPane = ({ coop }: CoopProps) => {
 	const navigate = useNavigate();
 
 	return (

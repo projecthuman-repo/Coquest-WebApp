@@ -43,7 +43,6 @@ function CoopMilestones() {
 					milestones: [...coop.milestones, newMilestone],
 				});
 		}
-		//TODO: update program milestones in backend
 
 		// Resetting previous values
 		handleAddModal();
