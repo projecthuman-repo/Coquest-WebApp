@@ -278,8 +278,8 @@ const Location = ({
 						updateCreateCoopData({
 							// converting to boolean
 							haveNeutralMeetingSpace: e.target.value === "true",
-						})}
-					}
+						});
+					}}
 				>
 					<CustomRadio
 						value={"true"}

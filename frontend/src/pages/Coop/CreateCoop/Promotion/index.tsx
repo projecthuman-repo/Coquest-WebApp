@@ -150,7 +150,10 @@ function CoopPromotion() {
 						updateCreateCoopData={updateCreateCoopData}
 					/>
 					<InviteAndShare />
-					<PrimaryButton onClick={handleSubmit} name="Submit"></PrimaryButton>
+					<PrimaryButton
+						onClick={handleSubmit}
+						name="Submit"
+					></PrimaryButton>
 				</Form>
 			</Page>
 		</>

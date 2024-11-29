@@ -117,7 +117,9 @@ function CheckBox({ updateCreateCoopData, createCoopData }: CreateCoopProps) {
 						checkedIcon={<RadioButtonCheckedIcon />}
 						size="small"
 						color="default"
-						defaultChecked={createCoopData.notificationAllowed ?? false}
+						defaultChecked={
+							createCoopData.notificationAllowed ?? false
+						}
 						onChange={(e) =>
 							updateCreateCoopData({
 								notificationAllowed: e.target.checked,

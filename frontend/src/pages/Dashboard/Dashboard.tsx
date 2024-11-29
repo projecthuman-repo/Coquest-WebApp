@@ -107,11 +107,7 @@ function Dashboard() {
 										Communities
 									</h2>
 									<button
-										onClick={() =>
-											navigate(
-												`/communities`,
-											)
-										}
+										onClick={() => navigate(`/communities`)}
 									>
 										<img
 											src="icons/next-button-chevron.png"
@@ -127,11 +123,7 @@ function Dashboard() {
 										My Projects
 									</h2>
 									<button
-										onClick={() =>
-											navigate(
-												`/projects`,
-											)
-										}
+										onClick={() => navigate(`/projects`)}
 									>
 										<img
 											src="icons/next-button-chevron.png"
@@ -147,11 +139,7 @@ function Dashboard() {
 										Open Projects
 									</h2>
 									<button
-										onClick={() =>
-											navigate(
-												`/projects`,
-											)
-										}
+										onClick={() => navigate(`/projects`)}
 									>
 										<img
 											src="icons/next-button-chevron.png"
@@ -164,13 +152,7 @@ function Dashboard() {
 							<div className="db-widget">
 								<div className="db-flex-container">
 									<h2 className="db-widget-heading">Posts</h2>
-									<button
-										onClick={() =>
-											navigate(
-												`/posts`,
-											)
-										}
-									>
+									<button onClick={() => navigate(`/posts`)}>
 										<img
 											src="icons/next-button-chevron.png"
 											alt="search-icon"

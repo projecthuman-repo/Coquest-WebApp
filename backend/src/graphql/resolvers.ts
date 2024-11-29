@@ -881,7 +881,7 @@ const resolvers: Resolvers = {
           name: name ?? "",
           lng,
           lat,
-        }
+        };
       }
       // @ts-expect-error - Inferring issue with arrays in schema
       if (images) updateCommunity.images = images;
