@@ -96,11 +96,9 @@ const CoopPage = () => {
 	const [user, setUser] = React.useState<User>();
 	const { coop } = useContext(CoopContext);
 	// coop sign up
-	const [coopSignUp, setCoopSignUp] = React.useState(
-		coop?.members?.find((member) => member?.userID === user?.id)
-			? true
-			: false,
-	);
+	const [coopSignUp, setCoopSignUp] = React.useState<boolean>();
+	console.log(coop);
+	console.log(user);
 	const [coopSignUpStarted, setCoopSignUpStarted] = React.useState(false);
 	const [confirmationNumber, setConfirmationNumber] = React.useState(0);
 
@@ -147,6 +145,16 @@ const CoopPage = () => {
 			}
 		};
 	}, []);
+
+	useEffect(() => {
+		if (coop?.members) {
+			setCoopSignUp(
+				coop.members.find((member) => member?._id === user?.id)
+					? true
+					: false,
+			);
+		}
+	}, [coop, user]);
 
 	if (!coop) {
 		return (

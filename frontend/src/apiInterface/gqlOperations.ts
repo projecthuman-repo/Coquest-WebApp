@@ -43,7 +43,7 @@ export const GET_COOPS = graphql(`
 	query GetCoops {
 		getCoops {
 			_id
-			# userID
+			userID
 			name
 			type
 			summary
@@ -65,7 +65,7 @@ export const GET_COOPS = graphql(`
 			# }
 			# openToBartering
 			members {
-				userID
+				_id
 				username
 			}
 			# participationCost

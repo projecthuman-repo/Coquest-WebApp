@@ -3,6 +3,7 @@ import { CoopRole } from "./roleModel";
 
 export interface Coop {
 	readonly _id: string | undefined;
+	userID?: string | null;
 	name?: string | null;
 	summary?: string | null;
 	mission?: string | null;
@@ -18,10 +19,12 @@ export interface Coop {
 	milestones?: Milestone[] | null;
 	volunteerPositions?: VolunteerPosition[] | null;
 	openRoles?: CoopRole[];
-	members?: {
-		userID?: string | null;
-		username?: string | null;
-	}[] | null;
+	members?:
+		| {
+				_id?: string | null;
+				username?: string | null;
+		  }[]
+		| null;
 
 	// progress has to be computed from milestones
 	progress?: number | null;

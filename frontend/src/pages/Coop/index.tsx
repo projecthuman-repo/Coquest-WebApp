@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Typography, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
 import SearchBar from "../../components/SearchBar";
 import CoopListDisplay from "./components/ViewAllCoops/CoopListDisplay";
 
 import { CoopsContext } from "./CoopsContext";
+import { subscribeToUserModelSubject } from "@/observers/userobserver";
+import { User } from "@/models/usermodel";
 
 const Container = styled("div")({
 	display: "flex",
@@ -75,10 +77,41 @@ function TabPanel(props: any) {
 const ViewAllCoops = () => {
 	const { coops } = useContext(CoopsContext);
 	const [value, setValue] = React.useState("one");
+	const [user, setUser] = React.useState<User>();
+
+	const completedCoops = coops.filter((coop) => coop.progress === 100);
+	const createdByMeCoops = coops.filter((coop) => coop.userID === user?.id);
+	const participatingInCoops = coops.filter((coop) =>
+		coop.members?.some((member) => member._id === user?.id),
+	);
+	const otherCoops = coops.filter(
+		(coop) =>
+			!createdByMeCoops.includes(coop) &&
+			!participatingInCoops.includes(coop) &&
+			!completedCoops.includes(coop),
+	);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
 	};
+
+	useEffect(() => {
+		let unsubscribe: (() => void) | null | undefined = null;
+
+		const setupSubscription = async () => {
+			unsubscribe = await subscribeToUserModelSubject((user) => {
+				setUser(user); // Update to use the 'name' field
+			});
+		};
+
+		setupSubscription();
+
+		return () => {
+			if (unsubscribe) {
+				unsubscribe(); // Ensure proper cleanup on component unmount
+			}
+		};
+	}, []);
 
 	return (
 		<Container>
@@ -124,15 +157,28 @@ const ViewAllCoops = () => {
 					sx={{ textTransform: "none" }}
 					label="Completed"
 				/>
+				<CustomTab
+					style={
+						value === "four"
+							? tabStyle.active_tab
+							: tabStyle.default_tab
+					}
+					value="four"
+					sx={{ textTransform: "none" }}
+					label="Other"
+				/>
 			</CustomTabs>
 			<TabPanel value={value} index="one">
-				<CoopListDisplay coopList={coops} />
+				<CoopListDisplay coopList={createdByMeCoops} />
 			</TabPanel>
 			<TabPanel value={value} index="two">
-				<div className="">Second page</div>
+				<CoopListDisplay coopList={participatingInCoops} />
 			</TabPanel>
 			<TabPanel value={value} index="three">
-				<div className="">Third page</div>
+				<CoopListDisplay coopList={completedCoops} />
+			</TabPanel>
+			<TabPanel value={value} index="four">
+				<CoopListDisplay coopList={otherCoops} />
 			</TabPanel>
 		</Container>
 	);
