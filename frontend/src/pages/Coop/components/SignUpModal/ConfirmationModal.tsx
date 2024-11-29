@@ -8,7 +8,7 @@ interface ConfirmationModalProps {
 	startDate: string | null;
 	endDate: string | null;
 	location: string;
-	cost: number | null;
+	cost: number | null | undefined;
 	confirmationNumber: number;
 	handleSignUpModal: () => void;
 }

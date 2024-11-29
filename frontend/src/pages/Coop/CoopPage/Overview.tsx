@@ -71,7 +71,7 @@ function CoopOverview() {
 								<textarea
 									rows={3}
 									placeholder=""
-									value={editedDescription}
+									value={editedDescription ?? ""}
 									onChange={(e) =>
 										setEditedDescription(e.target.value)
 									}
@@ -82,7 +82,7 @@ function CoopOverview() {
 								<textarea
 									rows={3}
 									placeholder=""
-									value={editedObjective}
+									value={editedObjective ?? ""}
 									onChange={(e) =>
 										setEditedObjective(e.target.value)
 									}
@@ -93,7 +93,7 @@ function CoopOverview() {
 								<textarea
 									rows={3}
 									placeholder=""
-									value={editedInitiative}
+									value={editedInitiative ?? ""}
 									onChange={(e) =>
 										setEditedInitiative(e.target.value)
 									}
@@ -185,7 +185,7 @@ function CoopOverview() {
 							</p>
 							<p className="prg-o-sub-text">
 								<b>Location: </b>
-								{coop?.location.name}
+								{coop?.location?.name}
 							</p>
 							<p className="prg-o-sub-text">
 								<b>Spots Open: </b>

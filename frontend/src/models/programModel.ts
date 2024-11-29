@@ -19,19 +19,19 @@ export interface Program {
 
 export interface Milestone {
 	readonly _id?: string;
-	type: string;
+	type?: string;
 	// type: "program" | "coop" | "project";
-	title: string;
-	completed: boolean;
-	description: string;
-	completedBy: string;
-	dateStarted: string;
-	dateCompleted: string;
+	title?: string | null;
+	completed?: boolean | null;
+	description?: string | null;
+	completedBy?: string | null;
+	dateStarted?: string | null;
+	dateCompleted?: string | null;
 }
 
 export interface VolunteerPosition {
-	readonly id: string | undefined;
-	title: string;
-	responsibilities: string;
-	skills: string[];
+	readonly id?: string;
+	title?: string | null;
+	responsibilities?: string | null;
+	skills?: string[] | null;
 }

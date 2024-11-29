@@ -171,11 +171,11 @@ function VolunteerPositionCard({
 							<p className="prg-m-text">{responsibilities}</p>
 						</div>
 					)}
-					{expanded && skills.length > 0 && (
+					{expanded && skills?.length && (
 						<div className="volunteer-skills">
 							<b>Skills and certifications</b>
 							<ul>
-								{skills.map((skill, index) => (
+								{skills?.map((skill, index) => (
 									<li key={index}>{skill}</li>
 								))}
 							</ul>

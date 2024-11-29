@@ -78,7 +78,7 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 		} else if (type === "coop" && coop) {
 			updateCoop({
 				...coop,
-				milestones: coop.milestones.map((m) => {
+				milestones: coop?.milestones?.map((m) => {
 					if (m._id === milestone._id) {
 						return {
 							...m,
@@ -112,6 +112,7 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 				),
 			});
 		} else if (type === "coop" && coop) {
+			if (!coop.milestones) return;
 			updateCoop({
 				...coop,
 				milestones: coop.milestones.filter(
@@ -127,10 +128,11 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 		// setMilestoneType(milestone.type);
 		setMilestoneTitle(milestone.title);
 		setMilestoneDescription(milestone.description);
-
-		if (milestone.description.length > 350 && !expanded) {
-			setDisplayDesc(milestone.description.slice(0, 350) + "...");
-		} else setDisplayDesc(milestone.description);
+		if (milestone.description) {
+			if (milestone.description.length > 350 && !expanded) {
+				setDisplayDesc(milestone?.description?.slice(0, 350) + "...");
+			} else setDisplayDesc(milestone.description);
+		}
 	}, [
 		milestone.description,
 		expanded,
@@ -159,7 +161,7 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 								<input
 									type="text"
 									placeholder=""
-									value={milestoneTitle}
+									value={milestoneTitle ?? ""}
 									onChange={(e) =>
 										setMilestoneTitle(e.target.value)
 									}
@@ -170,7 +172,7 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 								<textarea
 									rows={5}
 									placeholder=""
-									value={milestoneDescription}
+									value={milestoneDescription ?? ""}
 									onChange={(e) =>
 										setMilestoneDescription(e.target.value)
 									}
@@ -210,10 +212,13 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 					{expanded && (
 						<p className="prg-m-sub-text">
 							<b>Date Started: </b>
-							{new Date(milestone.dateStarted) instanceof Date &&
-							!isNaN(new Date(milestone.dateStarted).getTime())
+							{new Date(milestone.dateStarted ?? "") instanceof
+								Date &&
+							!isNaN(
+								new Date(milestone.dateStarted ?? "").getTime(),
+							)
 								? new Date(
-										milestone.dateStarted,
+										milestone.dateStarted ?? "",
 									).toLocaleDateString("en-US", {
 										year: "numeric",
 										month: "long",
@@ -225,11 +230,15 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 					{expanded && (
 						<p className="prg-m-sub-text">
 							<b>Date Completed: </b>
-							{new Date(milestone.dateCompleted) instanceof
+							{new Date(milestone.dateCompleted ?? "") instanceof
 								Date &&
-							!isNaN(new Date(milestone.dateCompleted).getTime())
+							!isNaN(
+								new Date(
+									milestone.dateCompleted ?? "",
+								).getTime(),
+							)
 								? new Date(
-										milestone.dateCompleted,
+										milestone.dateCompleted ?? "",
 									).toLocaleDateString("en-US", {
 										year: "numeric",
 										month: "long",

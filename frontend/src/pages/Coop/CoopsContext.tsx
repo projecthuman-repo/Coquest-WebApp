@@ -1,7 +1,8 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Coop } from "../../models/coopModel";
 import graphQLClient from "@/apiInterface/client";
 import { GET_COOPS } from "@/apiInterface/gqlOperations";
+import { Milestone } from "@/models/programModel";
 
 // TODO fetch post data from backend
 const data: Coop[] = [
@@ -579,7 +580,170 @@ const data: Coop[] = [
 				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 		],
-		openRoles: null,
+		openRoles: [
+			{
+				id: "1",
+				title: "Software Developer",
+				coop: "An Interesting Coop", // When sorted by coop, this one should come first
+				location: "Toronto, ON",
+				description:
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem. Cras eu tempus neque. Suspendisse vitae lacus condimentum, malesuada est et, ultrices ligula. Praesent sit amet massa tincidunt, egestas metus vel, pharetra mauris.",
+				qualifications:
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem. Cras eu tempus neque. Suspendisse vitae lacus condimentum, malesuada est et, ultrices ligula. Praesent sit amet massa tincidunt, egestas metus vel, pharetra mauris.",
+				datePosted: "2024-08-08", // when sorted by date, this one should come first (latest)
+				salary: null,
+				applicants: [
+					{
+						id: "1",
+						dateApplied: "2024-08-05",
+						name: "John Doe",
+						companyName: "Company",
+						address: "123 Street, Toronto, ON",
+						phone: "123-456-7890",
+						email: "john.doe@email.com",
+						education: [
+							{
+								title: "Bachelor of Computer Science",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2020-09-01",
+								endDate: "2024-06-01",
+								completionStatus: true,
+							},
+						],
+						experience: [
+							{
+								title: "Software Developer",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2024-06-01",
+								endDate: "2024-08-01",
+							},
+						],
+						certifications: [
+							{
+								title: "Certificate of Completion",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								issueDate: "2024-08-01",
+							},
+						],
+						availability: [
+							{
+								day: "Monday",
+								from: "09:00",
+								to: "17:00",
+							},
+						],
+						previousProjects: [
+							{
+								title: "Project 1",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2024-06-01",
+								endDate: "2024-08-01",
+							},
+						],
+						badges: [
+							{
+								title: "Badge 1",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+							},
+						],
+						references: [
+							{
+								name: "Jane Doe",
+								companyName: "Company",
+								phone: "123-456-7890",
+								email: "jane.doe@email.com",
+							},
+						],
+					},
+				],
+			},
+			{
+				id: "2",
+				title: "A HR Manager", // When sorted by title, this one should come first
+				coop: "Interesting Coop",
+				location: "Toronto, ON",
+				description:
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem. Cras eu tempus neque. Suspendisse vitae lacus condimentum, malesuada est et, ultrices ligula. Praesent sit amet massa tincidunt, egestas metus vel, pharetra mauris.",
+				qualifications:
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem. Cras eu tempus neque. Suspendisse vitae lacus condimentum, malesuada est et, ultrices ligula. Praesent sit amet massa tincidunt, egestas metus vel, pharetra mauris.",
+				datePosted: "2024-08-05",
+				salary: null,
+				applicants: [
+					{
+						id: "1",
+						dateApplied: "2024-08-05",
+						name: "John Doe",
+						companyName: "Company",
+						address: "123 Street, Toronto, ON",
+						phone: "123-456-7890",
+						email: "john.doe@email.com",
+						education: [
+							{
+								title: "Bachelor of Computer Science",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2020-09-01",
+								endDate: "2024-06-01",
+								completionStatus: true,
+							},
+						],
+						experience: [
+							{
+								title: "Software Developer",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2024-06-01",
+								endDate: "2024-08-01",
+							},
+						],
+						certifications: [
+							{
+								title: "Certificate of Completion",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								issueDate: "2024-08-01",
+							},
+						],
+						availability: [
+							{
+								day: "Monday",
+								from: "09:00",
+								to: "17:00",
+							},
+						],
+						previousProjects: [
+							{
+								title: "Project 1",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+								startDate: "2024-06-01",
+								endDate: "2024-08-01",
+							},
+						],
+						badges: [
+							{
+								title: "Badge 1",
+								description:
+									"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula finibus placerat. In hac habitasse platea dictumst. Sed iaculis mollis tellus id vulputate. Aliquam nisl ligula, tempor eu ipsum vel, faucibus egestas ipsum. Vestibulum volutpat purus risus, sit amet posuere sem laoreet ac. Sed ac nibh eleifend, dictum ipsum in, aliquet lorem.",
+							},
+						],
+						references: [
+							{
+								name: "Jane Doe",
+								companyName: "Company",
+								phone: "123-456-7890",
+								email: "jane.doe@email.com",
+							},
+						],
+					},
+				],
+			},
+		],
 	},
 ];
 
@@ -602,7 +766,33 @@ export const CoopsContextProvider = ({
 }: CoopsContextProviderProps) => {
 	const [coops, setCoops] = useState<Coop[]>(data);
 
-	// graphQLClient.request(GET_COOPS).then(({ getCoops }) => setCoops(getCoops));
+	useEffect(() => {
+		const fetchCoops = async () => {
+			const { getCoops } = await graphQLClient.request(GET_COOPS);
+
+			if (!getCoops) return;
+
+			const coopsWithProgress = getCoops.map((coop: Coop) => {
+				if (!coop.milestones || coop.milestones.length === 0) {
+					return { ...coop, progress: 0 };
+				}
+
+				const completedMilestones = coop.milestones.filter(
+					(milestone: Milestone) => milestone.completed,
+				);
+
+				const progress = Math.round(
+					(completedMilestones.length / coop.milestones.length) * 100,
+				);
+
+				return { ...coop, progress };
+			});
+
+			setCoops(coopsWithProgress);
+		};
+
+		fetchCoops();
+	}, []);
 
 	return (
 		<CoopsContext.Provider value={{ coops, setCoops }}>

@@ -43,49 +43,44 @@ export const GET_COOPS = graphql(`
 	query GetCoops {
 		getCoops {
 			_id
-			userID
+			# userID
 			name
 			type
 			summary
 			mission
-			locationAllowed
-			notificationAllowed
+			# locationAllowed
+			# notificationAllowed
 			startDate
 			endDate
 			recurring
-			radius
-			haveNeutralMeetingSpace
-			venues
-			additionalInfo
-			budgetingItems {
-				name
-				quantity
-				costEach
-				costTotal
-			}
-			openToBartering
+			# radius
+			# haveNeutralMeetingSpace
+			# venues
+			# additionalInfo
+			# budgetingItems {
+			# 	name
+			# 	quantity
+			# 	costEach
+			# 	costTotal
+			# }
+			# openToBartering
 			members {
-				_id
 				userID
 				username
-				email
-				motives
-				biography
-				topics
-				currentLevel
 			}
-			participationCost
-			maxParticipants
-			needsCrowdfunding
-			crowdfundingAmount
-			crowdfundingMessage
-			materialHelp
-			serviceHelp
-			operationHelp
-			promotionImage
-			shareLink
-			invitedUsers
+			# participationCost
+			# maxParticipants
+			# needsCrowdfunding
+			# crowdfundingAmount
+			# crowdfundingMessage
+			# materialHelp
+			# serviceHelp
+			# operationHelp
+			# promotionImage
+			# shareLink
+			# invitedUsers
 			location {
+				name
 				lng
 				lat
 			}
@@ -96,10 +91,15 @@ export const GET_COOPS = graphql(`
 				dateStarted
 				dateCompleted
 			}
-			promotionArea {
-				lat
-				lng
+			volunteerPositions {
+				title
+				responsibilities
+				skills
 			}
+			# promotionArea {
+			# 	lat
+			# 	lng
+			# }
 		}
 	}
 `);

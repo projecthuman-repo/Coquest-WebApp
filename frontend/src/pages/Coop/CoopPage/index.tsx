@@ -97,7 +97,9 @@ const CoopPage = () => {
 	const { coop } = useContext(CoopContext);
 	// coop sign up
 	const [coopSignUp, setCoopSignUp] = React.useState(
-		coop?.members?.find((member) => member.id === user?.id) ? true : false,
+		coop?.members?.find((member) => member?.userID === user?.id)
+			? true
+			: false,
 	);
 	const [coopSignUpStarted, setCoopSignUpStarted] = React.useState(false);
 	const [confirmationNumber, setConfirmationNumber] = React.useState(0);
@@ -161,7 +163,7 @@ const CoopPage = () => {
 					{/* Step 1 of Coop SignUp process */}
 					{coopSignUpStarted && !coopSignUp && (
 						<SignUpModal
-							name={coop.name}
+							name={coop?.name ?? ""}
 							cost={coop.cost}
 							handleSignUpModal={handleSignUpModal}
 							handleSignUp={handleSignUp}
@@ -171,11 +173,11 @@ const CoopPage = () => {
 					{/* Step 2 of Coop SignUp process */}
 					{coopSignUpStarted && coopSignUp && (
 						<ConfirmationModal
-							name={coop.name}
-							time={coop.recurring}
-							startDate={coop.startDate}
-							endDate={coop.endDate}
-							location={coop.location.name}
+							name={coop.name ?? ""}
+							time={coop.recurring ?? ""}
+							startDate={coop.startDate ?? ""}
+							endDate={coop.endDate ?? ""}
+							location={coop?.location?.name ?? ""}
 							cost={coop.cost}
 							confirmationNumber={confirmationNumber}
 							handleSignUpModal={handleSignUpModal}

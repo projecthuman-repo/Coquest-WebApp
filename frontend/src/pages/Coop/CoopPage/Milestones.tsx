@@ -28,7 +28,6 @@ function CoopMilestones() {
 	function handleMilestoneAdd() {
 		if (coop) {
 			const newMilestone: Milestone = {
-				_id: `${coop?.milestones.length + 1}`,
 				type: "coop",
 				title: milestoneTitle,
 				completed: false,
@@ -38,10 +37,11 @@ function CoopMilestones() {
 				dateCompleted: "",
 			};
 
-			updateCoop({
-				...coop,
-				milestones: [...coop.milestones, newMilestone],
-			});
+			if (coop.milestones)
+				updateCoop({
+					...coop,
+					milestones: [...coop.milestones, newMilestone],
+				});
 		}
 		//TODO: update program milestones in backend
 
@@ -122,7 +122,7 @@ function CoopMilestones() {
 			</div>
 
 			<div className="program-milestones">
-				{coop?.milestones.map((milestone) => (
+				{coop?.milestones?.map((milestone) => (
 					<MilestoneCard
 						key={milestone._id}
 						milestone={milestone}

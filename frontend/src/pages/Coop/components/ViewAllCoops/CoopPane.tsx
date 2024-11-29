@@ -57,46 +57,35 @@ const CoopPane = (props: CoopProps) => {
 			<Grid container spacing={2}>
 				<Grid item xs={6} sm={7}>
 					<Typography>
-						{coop.location.name !== null &&
-						coop.location.name !== ""
-							? coop.location.name
-							: "(Not set yet)"}
+						{coop?.location?.name || ""}
 					</Typography>
 					<Title>{coop.name}</Title>
 					<Typography>{coop.summary}</Typography>
 				</Grid>
 				<GridCol item xs={4} sm={4}>
-					<Typography>
-						Progress: {coop.progress !== null ? coop.progress : 0}%
-					</Typography>
+					<Typography>Progress: {coop.progress || 0}%</Typography>
 
 					<BorderLinearProgress
 						variant="determinate"
-						value={coop.progress !== null ? coop.progress : 0}
+						value={coop.progress ?? 0}
 					/>
 
 					<Typography>
 						<strong>Recurring: </strong>
-						{coop.recurring !== null && coop.recurring !== ""
-							? coop.recurring
-							: "(Not set yet)"}
+						{coop.recurring || "(Not set yet)"}
 					</Typography>
 					<Typography>
 						<strong>Start Date: </strong>
-						{coop.startDate !== null && coop.startDate !== ""
-							? coop.startDate
-							: "(Not set yet)"}
+						{coop.startDate || "(Not set yet)"}
 					</Typography>
 					<Typography>
 						<strong>End Date: </strong>
-						{coop.endDate !== null && coop.endDate !== ""
-							? coop.endDate
-							: "(Not set yet)"}
+						{coop.endDate || "(Not set yet)"}
 					</Typography>
-					<Typography>
+					{/* <Typography>
 						<strong>Spots open: </strong>
 						{coop.spots !== null ? coop.spots : 0} seats left
-					</Typography>
+					</Typography> */}
 				</GridCol>
 				<GridCol item xs={1}>
 					<IconButton onClick={() => navigate(`/coops/${coop._id}`)}>
