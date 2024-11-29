@@ -1,27 +1,30 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Project } from "../../models/projectModel";
+import { Milestone } from "@/models/programModel";
+import graphQLClient from "@/apiInterface/client";
+import { GET_PROJECTS } from "@/apiInterface/gqlOperations";
 
 // TODO fetch post data from backend
 const data: Project[] = [
 	{
-		id: "1",
+		_id: "672df962b1baba192c70b600",
 		name: "Project 1",
 		progress: 50,
-		description:
+		summary:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		objective:
+		mission:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		initiative:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		time: "every Mon and Wed, 6:00 - 6:30pm",
-		date: "Jan 1 - 31, 2023",
-		location: "Community center",
+		type: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		recurring: "every Mon and Wed, 6:00 - 6:30pm",
+		startDate: "Jan 1 - 31, 2023",
+		endDate: "Jan 2 - 31, 2023",
+		location: { name: "Community center" },
 		spots: 3,
 		cost: 15,
 		milestones: [
 			{
 				_id: "1",
-				type: "Milestone",
+				type: "project",
 				title: "Milestone 1",
 				completed: true,
 				description:
@@ -32,7 +35,7 @@ const data: Project[] = [
 			},
 			{
 				_id: "2",
-				type: "Milestone",
+				type: "project",
 				title: "Milestone 2",
 				completed: true,
 				description:
@@ -43,7 +46,7 @@ const data: Project[] = [
 			},
 			{
 				_id: "3",
-				type: "Milestone",
+				type: "project",
 				title: "Milestone 3",
 				completed: false,
 				description:
@@ -54,7 +57,7 @@ const data: Project[] = [
 			},
 			{
 				_id: "4",
-				type: "Milestone",
+				type: "project",
 				title: "Milestone 4",
 				completed: false,
 				description:
@@ -292,24 +295,24 @@ const data: Project[] = [
 		],
 	},
 	{
-		id: "2",
+		_id: "2",
 		name: "Project 2",
 		progress: 15,
-		description:
+		summary:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		objective:
+		mission:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		initiative:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		time: "every Mon and Wed, 6:00 - 6:30pm",
-		date: "Jan 1 - 31, 2023",
-		location: "Community center",
+		type: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		recurring: "every Mon and Wed, 6:00 - 6:30pm",
+		startDate: "Jan 1 - 31, 2023",
+		endDate: "Jan 2 - 31, 2023",
+		location: { name: "Community center" },
 		spots: 11,
 		cost: 20,
 		milestones: [
 			{
 				_id: "1",
-				type: "Milestone",
+				type: "project",
 				title: "Milestone 1",
 				completed: false,
 				description:
@@ -320,7 +323,7 @@ const data: Project[] = [
 			},
 			{
 				_id: "2",
-				type: "Milestone",
+				type: "project",
 				title: "Milestone 2",
 				completed: false,
 				description:
@@ -519,24 +522,24 @@ const data: Project[] = [
 		],
 	},
 	{
-		id: "3",
+		_id: "3",
 		name: "Project 3",
 		progress: 88,
-		description:
+		summary:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		objective:
+		mission:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		initiative:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		time: "every Mon and Wed, 6:00 - 6:30pm",
-		date: "Jan 1 - 31, 2023",
-		location: "Community center",
+		type: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		recurring: "every Mon and Wed, 6:00 - 6:30pm",
+		startDate: "Jan 1 - 31, 2023",
+		endDate: "Jan 2 - 31, 2023",
+		location: { name: "Community center" },
 		spots: 5,
 		cost: 75,
 		milestones: [
 			{
 				_id: "1",
-				type: "Milestone",
+				type: "project",
 				title: "Milestone 1",
 				completed: true,
 				description:
@@ -547,7 +550,7 @@ const data: Project[] = [
 			},
 			{
 				_id: "2",
-				type: "Milestone",
+				type: "project",
 				title: "Milestone 2",
 				completed: true,
 				description:
@@ -558,7 +561,7 @@ const data: Project[] = [
 			},
 			{
 				_id: "3",
-				type: "Milestone",
+				type: "project",
 				title: "Milestone 3",
 				completed: false,
 				description:
@@ -599,6 +602,35 @@ export const ProjectsContextProvider = ({
 	children,
 }: ProjectsContextProviderProps) => {
 	const [projects, setProjects] = useState<Project[]>(data);
+
+	useEffect(() => {
+		const fetchProjects = async () => {
+			const { getProjects } = await graphQLClient.request(GET_PROJECTS);
+
+			if (!getProjects) return;
+
+			const projectsWithProgress = getProjects.map((project: Project) => {
+				if (!project.milestones || project.milestones.length === 0) {
+					return { ...project, progress: 0 };
+				}
+
+				const completedMilestones = project.milestones.filter(
+					(milestone: Milestone) => milestone.completed,
+				);
+
+				const progress = Math.round(
+					(completedMilestones.length / project.milestones.length) *
+						100,
+				);
+
+				return { ...project, progress };
+			});
+
+			setProjects(projectsWithProgress);
+		};
+
+		fetchProjects();
+	}, []);
 
 	return (
 		<ProjectsContext.Provider value={{ projects, setProjects }}>

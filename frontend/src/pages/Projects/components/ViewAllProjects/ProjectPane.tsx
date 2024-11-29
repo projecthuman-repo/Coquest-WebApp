@@ -51,45 +51,36 @@ const ProjectPane = ({ project }: ProjectProps) => {
 		<Container>
 			<Grid container spacing={2}>
 				<Grid item xs={6} sm={7}>
-					<Typography>
-						{project.location !== null && project.location !== ""
-							? project.location
-							: "(Not set yet)"}
-					</Typography>
+					<Typography>{project?.location?.name}</Typography>
 					<Title>{project.name}</Title>
-					<Typography>{project.description}</Typography>
+					<Typography>{project.summary}</Typography>
 				</Grid>
 				<GridCol item xs={4} sm={4}>
-					<Typography>
-						Progress:{" "}
-						{project.progress !== null ? project.progress : 0}%
-					</Typography>
-
+					<Typography>Progress: {project.progress || 0}%</Typography>
 					<BorderLinearProgress
 						variant="determinate"
-						value={project.progress !== null ? project.progress : 0}
+						value={project.progress ?? 0}
 					/>
-
 					<Typography>
-						<strong>Time: </strong>
-						{project.time !== null && project.time !== ""
-							? project.time
-							: "(Not set yet)"}
+						<strong>Recurring: </strong>
+						{project.recurring || "(Not set yet)"}
 					</Typography>
 					<Typography>
-						<strong>Date: </strong>
-						{project.date !== null && project.date !== ""
-							? project.date
-							: "(Not set yet)"}
+						<strong>Start Date: </strong>
+						{project.startDate || "(Not set yet)"}
 					</Typography>
 					<Typography>
+						<strong>End Date: </strong>
+						{project.endDate || "(Not set yet)"}
+					</Typography>
+					{/* <Typography>
 						<strong>Spots open: </strong>
 						{project.spots !== null ? project.spots : 0} seats left
-					</Typography>
+					</Typography> */}
 				</GridCol>
 				<GridCol item xs={1}>
 					<IconButton
-						onClick={() => navigate(`/projects/${project.id}`)}
+						onClick={() => navigate(`/projects/${project._id}`)}
 					>
 						<ArrowForwardIosIcon />
 					</IconButton>
