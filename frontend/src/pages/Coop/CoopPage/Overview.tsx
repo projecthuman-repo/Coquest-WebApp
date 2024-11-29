@@ -142,9 +142,11 @@ function CoopOverview() {
 					{/* Members */}
 					<div className="prg-o-background">
 						<Members
-							users={coop?.members?.map(
-								(member) => member.username ?? "",
-							) ?? []}
+							users={
+								coop?.members?.map(
+									(member) => member.username ?? "",
+								) ?? []
+							}
 							userRole={["Role"]}
 							showAllLink={
 								window.location.pathname.slice(-1) === "/"
@@ -205,11 +207,11 @@ function CoopOverview() {
 							<SharedCalendar />
 						</div>
 						{/* Quests */}
-						<div className="prg-o-background">
+						{/* <div className="prg-o-background">
 							<Quests
 								showAllLink={`${window.location.pathname}/quests`}
 							/>
-						</div>
+						</div> */}
 						{/* Funding */}
 						<div className="prg-o-background">
 							<Funding />

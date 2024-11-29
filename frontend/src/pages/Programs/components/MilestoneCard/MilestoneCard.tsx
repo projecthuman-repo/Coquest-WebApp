@@ -27,6 +27,9 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 	const [editingStarted, setEditingStarted] = useState(false);
 	const [milestoneType, _setMilestoneType] = useState(type);
 	const [milestoneTitle, setMilestoneTitle] = useState(milestone.title);
+	const [milestoneCompleted, setMilestoneCompleted] = useState(
+		milestone.completed,
+	);
 	const [milestoneDescription, setMilestoneDescription] = useState(
 		milestone.description,
 	);
@@ -44,17 +47,26 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 		}
 	}
 
-	function handleMilestoneEdit() {
+	function handleMilestoneEdit({
+		milestoneCompleted,
+	}: { milestoneCompleted?: boolean } = {}) {
 		if (type === "program" && program) {
 			setProgram({
 				...program,
 				milestones: program.milestones.map((m) => {
-					if (m._id === milestone._id) {
+					if (
+						`${m.title} + ${m.dateStarted}` ===
+						`${milestone.title} + ${milestone.dateStarted}`
+					) {
 						return {
 							...m,
 							type: milestoneType,
 							title: milestoneTitle,
 							description: milestoneDescription,
+							completed: milestoneCompleted,
+							dateCompleted: milestoneCompleted
+								? new Date().toISOString()
+								: "",
 						};
 					}
 					return m;
@@ -64,12 +76,19 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 			setProject({
 				...project,
 				milestones: project.milestones.map((m) => {
-					if (m._id === milestone._id) {
+					if (
+						`${m.title} + ${m.dateStarted}` ===
+						`${milestone.title} + ${milestone.dateStarted}`
+					) {
 						return {
 							...m,
 							type: milestoneType,
 							title: milestoneTitle,
 							description: milestoneDescription,
+							completed: milestoneCompleted,
+							dateCompleted: milestoneCompleted
+								? new Date().toISOString()
+								: "",
 						};
 					}
 					return m;
@@ -79,12 +98,20 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 			updateCoop({
 				...coop,
 				milestones: coop?.milestones?.map((m) => {
-					if (m._id === milestone._id) {
+					`${milestone.title} + ${milestone.dateStarted}`;
+					if (
+						`${m.title} + ${m.dateStarted}` ===
+						`${milestone.title} + ${milestone.dateStarted}`
+					) {
 						return {
 							...m,
 							type: milestoneType,
 							title: milestoneTitle,
 							description: milestoneDescription,
+							completed: milestoneCompleted,
+							dateCompleted: milestoneCompleted
+								? new Date().toISOString()
+								: "",
 						};
 					}
 					return m;
@@ -101,14 +128,18 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 			setProgram({
 				...program,
 				milestones: program.milestones.filter(
-					(m) => m._id !== milestone._id,
+					(m) =>
+						`${m.title} + ${m.dateStarted}` !=
+						`${milestone.title} + ${milestone.dateStarted}`,
 				),
 			});
 		} else if (type === "project" && project) {
 			setProject({
 				...project,
 				milestones: project.milestones.filter(
-					(m) => m._id !== milestone._id,
+					(m) =>
+						`${m.title} + ${m.dateStarted}` !=
+						`${milestone.title} + ${milestone.dateStarted}`,
 				),
 			});
 		} else if (type === "coop" && coop) {
@@ -116,7 +147,9 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 			updateCoop({
 				...coop,
 				milestones: coop.milestones.filter(
-					(m) => m._id !== milestone._id,
+					(m) =>
+						`${m.title} + ${m.dateStarted}` !=
+						`${milestone.title} + ${milestone.dateStarted}`,
 				),
 			});
 		}
@@ -254,6 +287,29 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 								name="Edit"
 								onClick={handleEditModal}
 							/>
+							{milestoneCompleted ? (
+								<OutlineButton
+									name="Mark Incomplete"
+									onClick={() => {
+										setMilestoneCompleted(false);
+										handleMilestoneEdit({
+											milestoneCompleted: false,
+										});
+										setEditingStarted(false);
+									}}
+								/>
+							) : (
+								<OutlineButton
+									name="Mark Complete"
+									onClick={() => {
+										setMilestoneCompleted(true);
+										handleMilestoneEdit({
+											milestoneCompleted: true,
+										});
+										setEditingStarted(false);
+									}}
+								/>
+							)}
 						</div>
 					)}
 					<button onClick={() => setExpanded(!expanded)}>

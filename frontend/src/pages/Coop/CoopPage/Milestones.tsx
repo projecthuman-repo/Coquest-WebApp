@@ -33,7 +33,7 @@ function CoopMilestones() {
 				completed: false,
 				description: milestoneDescription,
 				completedBy: "",
-				dateStarted: "",
+				dateStarted: new Date().toISOString(),
 				dateCompleted: "",
 			};
 
@@ -124,7 +124,7 @@ function CoopMilestones() {
 			<div className="program-milestones">
 				{coop?.milestones?.map((milestone) => (
 					<MilestoneCard
-						key={milestone.title}
+						key={`${milestone.title} + ${milestone.dateStarted}`}
 						milestone={milestone}
 						type="coop"
 					/>
