@@ -103,3 +103,12 @@ export const GET_COOPS = graphql(`
 		}
 	}
 `);
+
+export const UPDATE_COOP_MUTATION = graphql(`
+	mutation Mutation($userInput: CoopInput!) {
+		updateCoop(userInput: $userInput) {
+			code
+			id
+		}
+	}
+`);

@@ -124,7 +124,7 @@ function CoopMilestones() {
 			<div className="program-milestones">
 				{coop?.milestones?.map((milestone) => (
 					<MilestoneCard
-						key={milestone._id}
+						key={milestone.title}
 						milestone={milestone}
 						type="coop"
 					/>

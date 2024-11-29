@@ -875,7 +875,14 @@ const resolvers: Resolvers = {
       if (initiative) updateCommunity.initiative = initiative;
       if (members) updateCommunity.members = coerceExpandable(members, "id");
       if (tags) updateCommunity.tags = tags;
-      if (location) updateCommunity.location = location;
+      if (location) {
+        const { name, lng, lat } = location;
+        updateCommunity.location = {
+          name: name ?? "",
+          lng,
+          lat,
+        }
+      }
       // @ts-expect-error - Inferring issue with arrays in schema
       if (images) updateCommunity.images = images;
 
@@ -894,13 +901,13 @@ const resolvers: Resolvers = {
     },
 
     async updateCoop(_parent, { userInput }, _context, _info) {
-      const { id, ...updateCoop } = userInput;
+      const { _id, ...updateCoop } = userInput;
       try {
-        if (!id)
+        if (!_id)
           throw new ServerError("Coop ID missing.", {
             code: ServerErrorCodes.INVALID_INPUT,
           });
-        await Coop.updateOne({ _id: id }, updateCoop, { runValidators: true });
+        await Coop.updateOne({ _id }, updateCoop, { runValidators: true });
         return { code: 0, response: "successful" };
       } catch (err) {
         return {

@@ -56,20 +56,16 @@ const CoopPane = (props: CoopProps) => {
 		<Container>
 			<Grid container spacing={2}>
 				<Grid item xs={6} sm={7}>
-					<Typography>
-						{coop?.location?.name || ""}
-					</Typography>
+					<Typography>{coop?.location?.name}</Typography>
 					<Title>{coop.name}</Title>
 					<Typography>{coop.summary}</Typography>
 				</Grid>
 				<GridCol item xs={4} sm={4}>
 					<Typography>Progress: {coop.progress || 0}%</Typography>
-
 					<BorderLinearProgress
 						variant="determinate"
 						value={coop.progress ?? 0}
 					/>
-
 					<Typography>
 						<strong>Recurring: </strong>
 						{coop.recurring || "(Not set yet)"}

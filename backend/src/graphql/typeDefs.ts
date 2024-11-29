@@ -97,9 +97,9 @@ const schema = gql`
   }
 
   input LocationInput {
-    name: String!
-    lat: Float!
-    lng: Float!
+    name: String
+    lat: Float
+    lng: Float
   }
 
   type Comment {
@@ -282,7 +282,7 @@ const schema = gql`
   }
 
   input VolunteerPositionInput {
-    title: String!
+    title: String
     responsibilities: String
     skills: [String!]
   }
@@ -360,7 +360,7 @@ const schema = gql`
   }
 
   input CoopInput {
-    id: ID
+    _id: ID
     userID: ID
     name: String
     type: String

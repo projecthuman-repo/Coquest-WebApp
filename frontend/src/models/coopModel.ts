@@ -1,6 +1,5 @@
 import { Milestone, VolunteerPosition } from "./programModel";
 import { CoopRole } from "./roleModel";
-import { User } from "./usermodel";
 
 export interface Coop {
 	readonly _id: string | undefined;
