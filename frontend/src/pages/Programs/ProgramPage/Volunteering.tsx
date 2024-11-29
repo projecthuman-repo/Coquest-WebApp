@@ -15,7 +15,7 @@ function ProgramVolunteering() {
 				</div>
 
 				<div className="volunteering-positions">
-					{program?.volunteerPositions.map(
+					{program?.volunteerPositions?.map(
 						(volunteerPosition, index) => (
 							<VolunteerPositionCard
 								key={index}

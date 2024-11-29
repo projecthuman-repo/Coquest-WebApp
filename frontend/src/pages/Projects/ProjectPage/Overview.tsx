@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
-import SharedCalendar from "../../../components/SharedCalendar/SharedCalendar";
-import Quests from "../../../components/Quests";
-import Members from "../../../components/Members/index";
-import ProgramProgressBar from "../../../components/ProgramProgressBar/ProgramProgressBar";
-import Budget from "../../../components/Budget/Budget";
-import Funding from "../../../components/Funding/Funding";
-import Input from "../../../components/Input";
-import PrimaryButton from "../../../components/Buttons/PrimaryButton";
+import SharedCalendar from "@/components/SharedCalendar/SharedCalendar";
+import Quests from "@/components/Quests";
+import Members from "@/components/Members/index";
+import ProgramProgressBar from "@/components/ProgramProgressBar/ProgramProgressBar";
+import Budget from "@/components/Budget/Budget";
+import Funding from "@/components/Funding/Funding";
+import Input from "@/components/Input";
+import PrimaryButton from "@/components/Buttons/PrimaryButton";
 import { ProjectContext } from "./ProjectContext";
 import "./Overview.css";
 import "./index.css";
@@ -65,7 +65,7 @@ function ProjectOverview() {
 						</div>
 
 						<div className="editing-form">
-							<Input label="Coop description">
+							<Input label="Project description">
 								<textarea
 									rows={3}
 									placeholder=""
@@ -76,7 +76,7 @@ function ProjectOverview() {
 								></textarea>
 							</Input>
 
-							<Input label="Coop objective">
+							<Input label="Project objective">
 								<textarea
 									rows={3}
 									placeholder=""
@@ -87,7 +87,7 @@ function ProjectOverview() {
 								></textarea>
 							</Input>
 
-							<Input label="Coop initiative">
+							<Input label="Project initiative">
 								<textarea
 									rows={3}
 									placeholder=""
@@ -112,7 +112,7 @@ function ProjectOverview() {
 					<div className="prg-o-background">
 						<div className="prg-o-heading-container">
 							<h2 className="prg-o-sub-heading">
-								Coop Description
+								Project Description
 							</h2>
 							<button
 								className="prg-o-link"
@@ -168,10 +168,10 @@ function ProjectOverview() {
 
 				<div>
 					<div className="prg-o-right">
-						{/* Coop Information */}
+						{/* Project Information */}
 						<div className="prg-o-background">
 							<h2 className="prg-o-sub-heading margin-bottom">
-								Coop Information
+								Project Information
 							</h2>
 							<p className="prg-o-sub-text">
 								<b>Recurring: </b>

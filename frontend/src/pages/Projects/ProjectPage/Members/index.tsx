@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import { Typography, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
-import BackButton from "../../../../components/Buttons/BackButton";
-import FilterChip from "../../../../components/FilterChip";
+import BackButton from "@/components/Buttons/BackButton";
+import FilterChip from "@/components/FilterChip";
 import Assigned from "./Assigned";
 import OpenRoles from "./OpenRoles";
 import Released from "./Released";
@@ -101,7 +101,7 @@ function TabPanel(props: any) {
 }
 
 const ProjectMembers = () => {
-	const { project, setProject } = useContext(ProjectContext);
+	const { project, updateProject } = useContext(ProjectContext);
 	const [value, setValue] = useState("one");
 
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -113,7 +113,7 @@ const ProjectMembers = () => {
 			project.openRoles.sort((a, b) => {
 				return a.title.localeCompare(b.title);
 			});
-			setProject({ ...project });
+			updateProject({ ...project });
 		}
 	}
 
@@ -122,7 +122,7 @@ const ProjectMembers = () => {
 			project.openRoles.sort((a, b) => {
 				return a.project.localeCompare(b.project);
 			});
-			setProject({ ...project });
+			updateProject({ ...project });
 		}
 	}
 
@@ -134,7 +134,7 @@ const ProjectMembers = () => {
 					new Date(b.datePosted).getTime()
 				);
 			});
-			setProject({ ...project });
+			updateProject({ ...project });
 		}
 	}
 

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import Input from "../../../../components/Input";
+import Input from "@/components/Input";
 import { styled } from "@mui/system";
-import OutlineButton from "../../../../components/Buttons/OutlineButton";
-import PrimaryButton from "../../../../components/Buttons/PrimaryButton";
-import BackButton from "../../../../components/Buttons/BackButton";
+import OutlineButton from "@/components/Buttons/OutlineButton";
+import PrimaryButton from "@/components/Buttons/PrimaryButton";
+import BackButton from "@/components/Buttons/BackButton";
 import {
 	ProgramRole,
 	ProjectRole,
@@ -16,9 +16,10 @@ import {
 	PreviousProject,
 	Badge,
 	Reference,
-} from "../../../../models/roleModel";
-import { ProgramContext } from "../../ProgramPage/ProgramContext";
-import { ProjectContext } from "../../../Projects/ProjectPage/ProjectContext";
+} from "@/models/roleModel";
+import { ProgramContext } from "@/pages/Programs/ProgramPage/ProgramContext";
+import { ProjectContext } from "@/pages/Projects/ProjectPage/ProjectContext";
+import { CoopContext } from "@/pages/Coop/CoopPage/CoopContext";
 import "./RoleApply.css";
 
 const Container = styled("div")({
@@ -49,8 +50,9 @@ function isProgramRole(role: Role): role is ProgramRole {
 }
 
 function RoleApply({ type }: RoleApplyProps) {
-	const { program, setProgram } = useContext(ProgramContext);
-	const { project, setProject } = useContext(ProjectContext);
+	const { program, updateProgram } = useContext(ProgramContext);
+	const { project, updateProject } = useContext(ProjectContext);
+	const { coop, updateCoop } = useContext(CoopContext);
 	const [role, setRole] = useState<Role | null>(null);
 	const [readyForSubmit, setReadyForSubmit] = useState(false);
 	const [name, setName] = useState("");
@@ -345,7 +347,7 @@ function RoleApply({ type }: RoleApplyProps) {
 
 			if (type === "program") {
 				if (program?.openRoles) {
-					setProgram({
+					updateProgram({
 						...program,
 						openRoles: program.openRoles.map((openRole) =>
 							openRole.id === role.id
@@ -368,12 +370,12 @@ function RoleApply({ type }: RoleApplyProps) {
 				// for testing purposes to see that the application is added to the role
 				// navigate("/programs/" + program?.id + "/members/" + role.id + "/applications");
 
-				navigate("/programs/" + program?.id);
+				navigate("/programs/" + program?._id);
 			}
 
 			if (type === "project") {
 				if (project?.openRoles) {
-					setProject({
+					updateProject({
 						...project,
 						openRoles: project.openRoles.map((openRole) =>
 							openRole.id === role.id
@@ -396,7 +398,35 @@ function RoleApply({ type }: RoleApplyProps) {
 				// for testing purposes to see that the application is added to the role
 				// navigate("/programs/" + program?.id + "/members/" + role.id + "/applications");
 
-				navigate("/projects/" + project?.id);
+				navigate("/projects/" + project?._id);
+			}
+
+			if (type === "coop") {
+				if (coop?.openRoles) {
+					updateCoop({
+						...coop,
+						openRoles: coop.openRoles.map((openRole) =>
+							openRole.id === role.id
+								? {
+										...openRole,
+										applicants: openRole.applicants
+											? [
+													...openRole.applicants,
+													newApplicant,
+												]
+											: [newApplicant],
+									}
+								: openRole,
+						),
+					});
+				}
+
+				// TODO: add new applicant to the program's role on backend
+
+				// for testing purposes to see that the application is added to the role
+				// navigate("/programs/" + program?.id + "/members/" + role.id + "/applications");
+
+				navigate("/coops/" + coop?._id);
 			}
 		}
 	}

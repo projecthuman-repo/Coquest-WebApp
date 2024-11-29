@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import MilestoneProgressBar from "../../../../components/ProgramProgressBar/MilestoneProgressBar";
-import DeleteButton from "../../../../components/Buttons/DeleteButton";
-import OutlineButton from "../../../../components/Buttons/OutlineButton";
-import Input from "../../../../components/Input";
-import PrimaryButton from "../../../../components/Buttons/PrimaryButton";
-import { Milestone } from "../../../../models/programModel";
-import { ProgramContext } from "../../ProgramPage/ProgramContext";
-import { ProjectContext } from "../../../Projects/ProjectPage/ProjectContext";
+import MilestoneProgressBar from "@/components/ProgramProgressBar/MilestoneProgressBar";
+import DeleteButton from "@/components/Buttons/DeleteButton";
+import OutlineButton from "@/components/Buttons/OutlineButton";
+import Input from "@/components/Input";
+import PrimaryButton from "@/components/Buttons/PrimaryButton";
+import { Milestone } from "@/models/programModel";
+import { ProgramContext } from "@/pages/Programs/ProgramPage/ProgramContext";
+import { ProjectContext } from "@/pages//Projects/ProjectPage/ProjectContext";
 import "./MilestoneCard.css";
 import { CoopContext } from "@/pages/Coop/CoopPage/CoopContext";
 
@@ -16,8 +16,8 @@ interface MilestoneCardProps {
 }
 
 function MilestoneCard({ milestone, type }: MilestoneCardProps) {
-	const { program, setProgram } = useContext(ProgramContext);
-	const { project, setProject } = useContext(ProjectContext);
+	const { program, updateProgram } = useContext(ProgramContext);
+	const { project, updateProject } = useContext(ProjectContext);
 	const { coop, updateCoop } = useContext(CoopContext);
 	const [expanded, setExpanded] = useState(false);
 	const [displayDesc, setDisplayDesc] = useState(milestone.description);
@@ -51,9 +51,9 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 		milestoneCompleted,
 	}: { milestoneCompleted?: boolean } = {}) {
 		if (type === "program" && program) {
-			setProgram({
+			updateProgram({
 				...program,
-				milestones: program.milestones.map((m) => {
+				milestones: program.milestones?.map((m) => {
 					if (
 						`${m.title} + ${m.dateStarted}` ===
 						`${milestone.title} + ${milestone.dateStarted}`
@@ -73,9 +73,9 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 				}),
 			});
 		} else if (type === "project" && project) {
-			setProject({
+			updateProject({
 				...project,
-				milestones: project.milestones.map((m) => {
+				milestones: project.milestones?.map((m) => {
 					if (
 						`${m.title} + ${m.dateStarted}` ===
 						`${milestone.title} + ${milestone.dateStarted}`
@@ -125,18 +125,18 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 
 	function handleDelete() {
 		if (type === "program" && program) {
-			setProgram({
+			updateProgram({
 				...program,
-				milestones: program.milestones.filter(
+				milestones: program.milestones?.filter(
 					(m) =>
 						`${m.title} + ${m.dateStarted}` !=
 						`${milestone.title} + ${milestone.dateStarted}`,
 				),
 			});
 		} else if (type === "project" && project) {
-			setProject({
+			updateProject({
 				...project,
-				milestones: project.milestones.filter(
+				milestones: project.milestones?.filter(
 					(m) =>
 						`${m.title} + ${m.dateStarted}` !=
 						`${milestone.title} + ${milestone.dateStarted}`,

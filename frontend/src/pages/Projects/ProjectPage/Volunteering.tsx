@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import VolunteerPositionCard from "../../Programs/components/VolunteerPositionCard/VolunteerPositionCard";
+import VolunteerPositionCard from "@/pages/Programs/components/VolunteerPositionCard/VolunteerPositionCard";
 import { ProjectContext } from "./ProjectContext";
 import "./Volunteering.css";
 import "./index.css";
@@ -15,7 +15,7 @@ function ProjectVolunteering() {
 				</div>
 
 				<div className="volunteering-positions">
-					{project?.volunteerPositions.map(
+					{project?.volunteerPositions?.map(
 						(volunteerPosition, index) => (
 							<VolunteerPositionCard
 								key={index}

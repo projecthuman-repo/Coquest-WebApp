@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Typography, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
-import OutlineButton from "../../../components/Buttons/OutlineButton";
+import OutlineButton from "@/components/Buttons/OutlineButton";
 
 import SignUpModal from "../../Programs/components/SignUpModal/SignUpModal";
 import ConfirmationModal from "../../Programs/components/SignUpModal/ConfirmationModal";
@@ -98,8 +98,9 @@ const ProjectPage = () => {
 	const [user, setUser] = React.useState<User>();
 	const { project } = useContext(ProjectContext);
 	// project sign up
-	const [projectSignUp, setCoopSignUp] = React.useState<boolean>();
-	const [projectSignUpStarted, setCoopSignUpStarted] = React.useState(false);
+	const [projectSignUp, setProjectSignUp] = React.useState<boolean>();
+	const [projectSignUpStarted, setProjectSignUpStarted] =
+		React.useState(false);
 	const [confirmationNumber, setConfirmationNumber] = React.useState(0);
 
 	const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -107,7 +108,7 @@ const ProjectPage = () => {
 	};
 
 	const handleSignUpModal = () => {
-		setCoopSignUpStarted(!projectSignUpStarted);
+		setProjectSignUpStarted(!projectSignUpStarted);
 
 		if (!projectSignUpStarted) {
 			document.body.style.overflow = "hidden";
@@ -116,14 +117,15 @@ const ProjectPage = () => {
 	};
 
 	const handleSignUp = async () => {
-		if (!project?._id) throw new Error("Coop ID not found in CoopPage");
-		if (!user?.id) throw new Error("User ID not found in CoopPage");
+		if (!project?._id)
+			throw new Error("Project ID not found in ProjectPage");
+		if (!user?.id) throw new Error("User ID not found in ProjectPage");
 		await graphQLClient
 			.request(JOIN_PROJECT_MUTATION, {
 				userInput: { projectID: project?._id, userID: user?.id },
 			})
 			.then(() => {
-				setCoopSignUp(true);
+				setProjectSignUp(true);
 				setConfirmationNumber(Math.floor(Math.random() * 1000000)); // TODO: fetch confirmation number from backend
 			})
 			.catch(console.error);
@@ -148,7 +150,7 @@ const ProjectPage = () => {
 
 	useEffect(() => {
 		if (project?.members) {
-			setCoopSignUp(
+			setProjectSignUp(
 				project.members.find((member) => member?._id === user?.id)
 					? true
 					: false,
@@ -159,7 +161,7 @@ const ProjectPage = () => {
 	if (!project) {
 		return (
 			<Container>
-				<TitleField>Coop Not Found</TitleField>
+				<TitleField>Project Not Found</TitleField>
 			</Container>
 		);
 	}
@@ -168,7 +170,7 @@ const ProjectPage = () => {
 		<>
 			{project ? (
 				<Container>
-					{/* Step 1 of Coop SignUp process */}
+					{/* Step 1 of Project SignUp process */}
 					{projectSignUpStarted && !projectSignUp && (
 						<SignUpModal
 							name={project?.name ?? ""}
@@ -178,7 +180,7 @@ const ProjectPage = () => {
 						/>
 					)}
 
-					{/* Step 2 of Coop SignUp process */}
+					{/* Step 2 of Project SignUp process */}
 					{projectSignUpStarted && projectSignUp && (
 						<ConfirmationModal
 							name={project.name ?? ""}
