@@ -21,6 +21,7 @@ import { Resolvers } from "../__generated__/graphql";
 import { Motive } from "../models/Motive";
 import { Topic } from "../models/Topic";
 import { ServerError, ServerErrorCodes } from "./ServerError";
+import { Project } from "../models/Project";
 
 const storage = new Storage();
 
@@ -102,6 +103,19 @@ const resolvers: Resolvers = {
       }
     },
 
+    // @ts-expect-error - ObjectID is not assignable to type 'string'
+    async getProjects() {
+      try {
+        const projects = await Project.find();
+        return projects;
+      } catch (err) {
+        throw new ServerError("Error getting projects", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
     //this method finds a user by their id
     // @ts-expect-error - registered is populated with its directive, it is expected here that its type won't match the schema
     async findUserbyID(_parent, { id, _ }, _context, _info) {
@@ -164,6 +178,18 @@ const resolvers: Resolvers = {
         return await Coop.findOne({ _id: id }).populate("members");
       } catch (err) {
         throw new ServerError("Error finding coop by id", {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    // @ts-expect-error - TODO: type null not assignable
+    async findProjectbyID(_parent, { id }, _context, _info) {
+      try {
+        return await Project.findOne({ _id: id }).populate("members");
+      } catch (err) {
+        throw new ServerError("Error finding project by id", {
           code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
           cause: err,
         });
@@ -492,6 +518,28 @@ const resolvers: Resolvers = {
       }
     },
 
+    async createProject(_parent, { userInput }, _context, _info) {
+      if (!userInput.userID || !userInput.name) {
+        throw new ServerError("User ID and name are required.", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
+      }
+      const newProject = new Project(userInput);
+
+      try {
+        await newProject.save();
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(
+          `Error creating project. ${(err as Error).message}`,
+          {
+            code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+            cause: err,
+          },
+        );
+      }
+    },
+
     async joinCoop(_parent, { userInput }, _context, _info) {
       const { coopID, userID } = userInput;
       try {
@@ -509,6 +557,38 @@ const resolvers: Resolvers = {
       const { coopID, userID } = userInput;
       try {
         await Coop.updateOne({ _id: coopID }, { $pull: { members: userID } });
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(`Error leaving coop. ${(err as Error).message}`, {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    async joinProject(_parent, { userInput }, _context, _info) {
+      const { projectID, userID } = userInput;
+      try {
+        await Project.updateOne(
+          { _id: projectID },
+          { $push: { members: userID } },
+        );
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        throw new ServerError(`Error joining coop. ${(err as Error).message}`, {
+          code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+          cause: err,
+        });
+      }
+    },
+
+    async leaveProject(_parent, { userInput }, _context, _info) {
+      const { projectID, userID } = userInput;
+      try {
+        await Project.updateOne(
+          { _id: projectID },
+          { $pull: { members: userID } },
+        );
         return { code: 0, response: "successful" };
       } catch (err) {
         throw new ServerError(`Error leaving coop. ${(err as Error).message}`, {
@@ -913,6 +993,25 @@ const resolvers: Resolvers = {
         return {
           code: 1,
           response: `Error updating coop: ${(err as Error).message}`,
+        };
+      }
+    },
+
+    async updateProject(_parent, { userInput }, _context, _info) {
+      const { _id, ...updateProject } = userInput;
+      try {
+        if (!_id)
+          throw new ServerError("Project ID missing.", {
+            code: ServerErrorCodes.INVALID_INPUT,
+          });
+        await Project.updateOne({ _id }, updateProject, {
+          runValidators: true,
+        });
+        return { code: 0, response: "successful" };
+      } catch (err) {
+        return {
+          code: 1,
+          response: `Error updating project: ${(err as Error).message}`,
         };
       }
     },
