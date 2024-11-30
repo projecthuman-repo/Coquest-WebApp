@@ -4,7 +4,7 @@ import { styled } from "@mui/system";
 import { Link } from "react-router-dom";
 import AddContainer from "../components/AddContainer";
 import AvailabilityGrid from "../components/AvailabilityGrid";
-import SkillsCertsSearch from "../components/SkillsCertsSearch";
+import SkillsCertsSearch from "../components/Search/SkillsCertsSearch";
 import FileUploadComponent from "../components/FileUploadComponent";
 import FileCard from "../components/FileCard";
 

@@ -47,6 +47,13 @@ const itemPreview = withRequestPreSendUpdate(
 	},
 );
 
+export function DragDropIMGRemoveRequest(path: string) {
+	const fname = path.split("/").pop();
+	graphQLClient.request(deleteImage, { fileName: fname }).catch((error) => {
+		console.error(error);
+	});
+}
+
 const DragDrop = (props: any) => {
 	const [readyForUpload, setReadyForUpload] = useState(true);
 	const { attachments } = useContext(DragDropContext);

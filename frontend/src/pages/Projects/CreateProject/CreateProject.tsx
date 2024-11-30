@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import ProgressStepper from "../components/ProgressStepper";
+import ProgressStepper from "../../Programs/components/ProgressStepper";
 import PrimaryButton from "@/components/Buttons/PrimaryButton";
 import BackButton from "@/components/Buttons/BackButton";
-import { ProgramProvider } from "./ProgramContext";
-import { useProgram } from "./ProgramContext";
+import { ProjectProvider } from "./ProjectContext";
+import { useProject } from "./ProjectContext";
 import { useNavigate } from "react-router-dom";
-import "./CreateProgram.css";
+import "./CreateProject.css";
 
 const getCurrPath = (fullpath: string) => {
 	return fullpath.substring(17, fullpath.length);
 };
 
-const CreateProgramContent = () => {
-	const { program, stepsCompleted, updateStepsCompleted } = useProgram();
+const CreateProjectContent = () => {
+	const { project, stepsCompleted, updateStepsCompleted } = useProject();
 	const [canProceed, setCanProceed] = useState(false);
 	const location = useLocation();
 	const [pageIndex, setPageIndex] = useState(0);
@@ -26,13 +26,14 @@ const CreateProgramContent = () => {
 	];
 
 	const navigate = useNavigate();
-	
+
 	useEffect(() => {
 		// Update pageIndex and canProceed when user navigates to a different step
 		const newPath = getCurrPath(location.pathname);
 		setPageIndex(paths.indexOf(newPath));
-		if (stepsCompleted[newPath])
-			setCanProceed(stepsCompleted[newPath].canProceed);
+		if (!stepsCompleted[newPath]) return;
+
+		setCanProceed(stepsCompleted[newPath].canProceed);
 
 		// make sure users can not enter a step if they have not completed the previous steps
 		const nextStepToComplete = Object.entries(stepsCompleted).find(
@@ -44,7 +45,7 @@ const CreateProgramContent = () => {
 			newPath.localeCompare(nextStepToComplete[0]) > 0
 		) {
 			setPageIndex(paths.indexOf(nextStepToComplete[0]));
-			navigate(`/programs/create/${nextStepToComplete[0]}`);
+			navigate(`/projects/create/${nextStepToComplete[0]}`);
 		}
 	}, [location.pathname, stepsCompleted]);
 
@@ -58,7 +59,7 @@ const CreateProgramContent = () => {
 		const nextIndex = pageIndex + 1;
 		if (nextIndex < paths.length) {
 			setPageIndex(nextIndex);
-			navigate(`/programs/create/${paths[nextIndex]}`);
+			navigate(`/projects/create/${paths[nextIndex]}`);
 		}
 	};
 
@@ -66,7 +67,7 @@ const CreateProgramContent = () => {
 		const prevIndex = pageIndex - 1;
 		if (prevIndex >= 0) {
 			setPageIndex(prevIndex);
-			navigate(`/programs/create/${paths[prevIndex]}`);
+			navigate(`/projects/create/${paths[prevIndex]}`);
 		}
 	};
 
@@ -87,7 +88,7 @@ const CreateProgramContent = () => {
 							name="Finish"
 							onClick={() => {
 								setPageIndex(0);
-								navigate(`/programs/${program.id}`); // TODO: Redirect to newly created program using its ID
+								navigate(`/projects/${project.id}`); // TODO: Redirect to newly created project using its ID
 							}}
 						/>
 					)}
@@ -97,10 +98,10 @@ const CreateProgramContent = () => {
 	);
 };
 
-const CreateProgram = () => (
-	<ProgramProvider>
-		<CreateProgramContent />
-	</ProgramProvider>
+const CreateProject = () => (
+	<ProjectProvider>
+		<CreateProjectContent />
+	</ProjectProvider>
 );
 
-export default CreateProgram;
+export default CreateProject;

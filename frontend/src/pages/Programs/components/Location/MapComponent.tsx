@@ -1,0 +1,222 @@
+import React, { useState } from "react";
+import {
+	GoogleMap,
+	useJsApiLoader,
+	Marker,
+	Autocomplete,
+	Circle,
+} from "@react-google-maps/api";
+import styled from "@emotion/styled";
+import {
+	Grid,
+	InputBase,
+	MenuItem,
+	Select,
+	SelectChangeEvent,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+
+const SearchInputContainer = styled("div")({
+	display: "flex",
+	width: "95%",
+	flexDirection: "row-reverse",
+	alignItems: "center",
+	border: "1px solid black",
+	borderRadius: 28,
+	overflow: "scroll",
+	"::-webkit-scrollbar": {
+		display: "none",
+	},
+});
+const SearchIconWrapper = styled("div")({
+	margin: 8,
+	fontSize: 12,
+	color: "#666666",
+});
+
+const MapInputContainer = styled(Grid)({
+	display: "flex",
+	alignItems: "center",
+});
+
+const Spacer = styled("div")({
+	width: "100%",
+	height: 19,
+});
+
+const SelectContainer = styled(Select)({
+	width: "100%",
+});
+
+interface LatLng {
+	lat: number;
+	lng: number;
+}
+
+interface MapComponentProps {
+	promotionArea: {
+		locationName: string;
+		latitude: number;
+		longitude: number;
+		radius: number;
+	} | null;
+	setPromotionArea: (promotionArea: {
+		locationName: string;
+		latitude: number;
+		longitude: number;
+		radius: number;
+	}) => void;
+}
+
+const MapComponent: React.FC<MapComponentProps> = ({
+	promotionArea,
+	setPromotionArea,
+}) => {
+	const { isLoaded } = useJsApiLoader({
+		id: "google-map-script",
+		googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+		libraries: ["places"],
+	});
+
+	const [autocomplete, setAutocomplete] =
+		useState<google.maps.places.Autocomplete | null>(null);
+	const [mapCenter, setMapCenter] = useState<LatLng>({
+		lat: 43.65107,
+		lng: -79.347015,
+	});
+	const [radius, setRadius] = useState<number>(50000);
+	const [zoom, setZoom] = useState<number>(10);
+
+	const onLoad = (autocompleteInstance: google.maps.places.Autocomplete) => {
+		setAutocomplete(autocompleteInstance);
+	};
+
+	const onPlaceChanged = () => {
+		if (autocomplete !== null) {
+			const place = autocomplete.getPlace();
+			if (place.geometry && place.geometry.location) {
+				setMapCenter({
+					lat: place.geometry.location.lat(),
+					lng: place.geometry.location.lng(),
+				});
+				setPromotionArea({
+					locationName: place.name || "",
+					latitude: place.geometry.location.lat(),
+					longitude: place.geometry.location.lng(),
+					radius: radius,
+				});
+			}
+		}
+	};
+
+	const handleRadiusChange = (event: SelectChangeEvent<unknown>) => {
+		const newRadius = parseInt(event.target.value as string, 10);
+
+		const radiusToZoomMap = [
+			{ radius: 0, zoom: 16 },
+			{ radius: 500, zoom: 17 },
+			{ radius: 1000, zoom: 16 },
+			{ radius: 5000, zoom: 14 },
+			{ radius: 10000, zoom: 13 },
+			{ radius: 20000, zoom: 12 },
+			{ radius: 50000, zoom: 10 },
+		];
+
+		const selectedZoom =
+			radiusToZoomMap.find((r) => r.radius === newRadius)?.zoom || 16;
+
+		setZoom(selectedZoom);
+		setRadius(newRadius);
+		if (promotionArea) {
+			setPromotionArea({
+				locationName: promotionArea.locationName,
+				latitude: mapCenter.lat,
+				longitude: mapCenter.lng,
+				radius: newRadius,
+			});
+		} else {
+			setPromotionArea({
+				locationName: "",
+				latitude: mapCenter.lat,
+				longitude: mapCenter.lng,
+				radius: newRadius,
+			});
+		}
+	};
+
+	if (!isLoaded) return <div>Loading map...</div>;
+
+	return (
+		<>
+			<MapInputContainer container spacing={0}>
+				<Grid item xs={10}>
+					<Autocomplete
+						onLoad={onLoad}
+						onPlaceChanged={onPlaceChanged}
+					>
+						<SearchInputContainer>
+							<InputBase
+								placeholder="Search location"
+								className="placeholder-mod"
+								style={{ width: "95%" }}
+								inputProps={{ "aria-label": "search" }}
+							/>
+							<SearchIconWrapper>
+								<SearchIcon />
+							</SearchIconWrapper>
+						</SearchInputContainer>
+					</Autocomplete>
+				</Grid>
+				<Grid item xs={2}>
+					<SelectContainer
+						value={radius}
+						label="Radius"
+						className="placeholder-mod"
+						onChange={handleRadiusChange}
+					>
+						<MenuItem value={0}>Off</MenuItem>
+						<MenuItem value={500}>0.5 km</MenuItem>
+						<MenuItem value={1000}>1 km</MenuItem>
+						<MenuItem value={5000}>5 km</MenuItem>
+						<MenuItem value={10000}>10 km</MenuItem>
+						<MenuItem value={20000}>20 km</MenuItem>
+						<MenuItem value={50000}>50 km</MenuItem>
+					</SelectContainer>
+				</Grid>
+			</MapInputContainer>
+			<Spacer />
+			<Map center={mapCenter} radius={radius} zoom={zoom} />
+		</>
+	);
+};
+
+interface MapProps {
+	center: LatLng;
+	radius: number;
+	zoom: number;
+}
+
+const Map: React.FC<MapProps> = ({ center, radius, zoom }) => {
+	return (
+		<GoogleMap
+			zoom={zoom}
+			center={center}
+			mapContainerClassName="map-styling"
+		>
+			<Circle
+				options={{
+					strokeOpacity: 0,
+					strokeWeight: 2,
+					fillOpacity: 0.2,
+					editable: false,
+					zIndex: 1,
+				}}
+				center={center}
+				radius={radius}
+			/>
+			<Marker position={center} />
+		</GoogleMap>
+	);
+};
+
+export default MapComponent;

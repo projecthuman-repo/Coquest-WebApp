@@ -4,9 +4,12 @@ import { styled } from "@mui/system";
 import { IconButton, Typography } from "@mui/material";
 
 const AddProfileContainer = styled("div")({
-	marginTop: 26,
 	display: "flex",
 	alignItems: "center",
+});
+
+const AddButtonContainer = styled(IconButton)({
+	padding: 0,
 });
 
 const AddButton = styled(AddIcon)({
@@ -29,9 +32,9 @@ export interface AddContainerProps {
 const AddContainer = ({ label, onClick }: AddContainerProps) => {
 	return (
 		<AddProfileContainer>
-			<IconButton>
-				<AddButton onClick={onClick} />
-			</IconButton>
+			<AddButtonContainer onClick={onClick? onClick : undefined}>
+				<AddButton />
+			</AddButtonContainer>
 			<AddProfileText>{label}</AddProfileText>
 		</AddProfileContainer>
 	);
