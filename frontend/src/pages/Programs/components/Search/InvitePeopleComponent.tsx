@@ -20,7 +20,8 @@ const SearchInputContainer = styled("div")({
 	},
 });
 
-export interface UsernameSearchProps extends Omit<TagSearchProps, "tags" | "onChange"> {
+export interface UsernameSearchProps
+	extends Omit<TagSearchProps, "tags" | "onChange"> {
 	usernames: string[];
 	onChange: (selectedUsernames: string[]) => void;
 }

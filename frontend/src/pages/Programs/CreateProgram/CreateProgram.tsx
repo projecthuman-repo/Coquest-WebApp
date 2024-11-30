@@ -26,7 +26,7 @@ const CreateProgramContent = () => {
 	];
 
 	const navigate = useNavigate();
-	
+
 	useEffect(() => {
 		// Update pageIndex and canProceed when user navigates to a different step
 		const newPath = getCurrPath(location.pathname);

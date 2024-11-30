@@ -32,7 +32,7 @@ export interface AddContainerProps {
 const AddContainer = ({ label, onClick }: AddContainerProps) => {
 	return (
 		<AddProfileContainer>
-			<AddButtonContainer onClick={onClick? onClick : undefined}>
+			<AddButtonContainer onClick={onClick ? onClick : undefined}>
 				<AddButton />
 			</AddButtonContainer>
 			<AddProfileText>{label}</AddProfileText>

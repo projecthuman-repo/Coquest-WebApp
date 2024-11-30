@@ -21,7 +21,7 @@ function ProgressStepper(props: { pgnum: number }) {
 
 	useEffect(() => {
 		setActiveStep(props.pgnum);
-		
+
 		handleResize();
 		window.addEventListener("resize", handleResize);
 		return () => {

@@ -4,7 +4,7 @@ import "./Buttons.css";
 // type: muted (button with muted color)
 function PrimaryButton(props: {
 	name: string;
-	type?: string;	// type: muted (button with muted color)
+	type?: string; // type: muted (button with muted color)
 	onClick?: () => void;
 }) {
 	function onClick() {

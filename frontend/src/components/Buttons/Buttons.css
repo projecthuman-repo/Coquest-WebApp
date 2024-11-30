@@ -69,7 +69,7 @@ button {
   align-items: center;
 }
 
-.add-button>* {
+.add-button > * {
   height: 24px;
   width: fit-content;
   object-fit: contain;
@@ -85,7 +85,7 @@ button {
   border: none;
 }
 
-.delete-button>* {
+.delete-button > * {
   color: #ba4b4b !important;
 }
 

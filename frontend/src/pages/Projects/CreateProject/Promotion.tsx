@@ -100,7 +100,10 @@ const Promotion: React.FC = () => {
 			<p className="subtitle-field" style={{ marginBottom: "28px" }}>
 				Set the promotion area of the project
 			</p>
-			<MapComponent promotionArea={promotionArea} setPromotionArea={setPromotionArea} />
+			<MapComponent
+				promotionArea={promotionArea}
+				setPromotionArea={setPromotionArea}
+			/>
 
 			{/* Header Image with Drag and Drop Upload */}
 			<p className="subtitle-field" style={{ marginBottom: "28px" }}>

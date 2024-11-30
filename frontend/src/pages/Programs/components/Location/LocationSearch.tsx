@@ -52,15 +52,14 @@ const LocationSearch: React.FC<LocationSearchProps> = ({
 		if (autocomplete) {
 			onChange(autocomplete.getPlace().formatted_address);
 		}
-	}
+	};
 
 	if (!isLoaded) return <div className="">loading...</div>;
 	return (
 		<SearchBarContainer>
-
 			<Autocomplete onLoad={onLoad} onPlaceChanged={handleLocationChange}>
 				<SearchInputContainer>
-				<SearchIconWrapper>
+					<SearchIconWrapper>
 						<SearchIcon />
 					</SearchIconWrapper>
 					<InputBase
@@ -70,7 +69,6 @@ const LocationSearch: React.FC<LocationSearchProps> = ({
 						style={{ width: "95%" }}
 						inputProps={{ "aria-label": "search" }}
 					/>
-					
 				</SearchInputContainer>
 			</Autocomplete>
 		</SearchBarContainer>
