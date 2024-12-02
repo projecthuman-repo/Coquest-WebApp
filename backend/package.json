@@ -43,7 +43,7 @@
     "@google-cloud/functions-framework": "^3.3.0",
     "@graphql-codegen/cli": "5.0.2",
     "@graphql-codegen/typescript": "4.0.9",
-    "@graphql-codegen/typescript-resolvers": "4.2.1",
+    "@graphql-codegen/typescript-resolvers": "4.4.1",
     "@parcel/watcher": "^2.4.1",
     "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
