@@ -4,7 +4,7 @@ import { styled } from "@mui/system";
 import { Link } from "react-router-dom";
 import AddContainer from "../components/AddContainer";
 import AvailabilityGrid from "../components/AvailabilityGrid";
-import SkillsCertsSearch from "../components/SkillsCertsSearch";
+import SkillsCertsSearch from "../components/Search/SkillsCertsSearch";
 import FileUploadComponent from "../components/FileUploadComponent";
 import FileCard from "../components/FileCard";
 
@@ -122,20 +122,18 @@ const EditProfile = () => {
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [email, setEmail] = useState("");
 	const [files, setFiles] = useState<any[]>([]);
-	const [badgeNames, setBadgeNames] = useState<string[]>([]);
+	const [badges, setBadges] = useState<string[]>([]);
 
 	const handleFileUpload = (file: any) => {
 		setFiles([...files, file]); // add the file to the files state
 	};
 
-	// Fetches on page load
 	useEffect(() => {
-		const tempBadges: string[] = [];
-
-		for (let i = 0; i <= 3; i++) {
-			tempBadges.push(`Badge Name`);
-		}
-		setBadgeNames(tempBadges);
+		// TODO: fetch badges from backend
+		const tempBadges: string[] = Array.from({ length: 100 }, (_, i) => {
+			return `Badge ${i + 1}`;
+		});
+		setBadges(tempBadges);
 	}, []);
 
 	const add = () => {
@@ -263,8 +261,16 @@ const EditProfile = () => {
 			but does not print skills and certs, instead prints badge names */}
 			<AddWrapper>
 				<SkillsCertsSearch
-					skills={badgeNames}
+					skills={badges}
 					label="Search Badges and Rewards"
+					onChange={(selectedBadges) => {
+						if (
+							JSON.stringify(selectedBadges) !==
+							JSON.stringify(badges)
+						) {
+							setBadges(selectedBadges);
+						}
+					}}
 				/>
 			</AddWrapper>
 			<SubtitleWrapper>

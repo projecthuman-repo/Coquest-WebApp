@@ -22,7 +22,8 @@ button {
 
 .primary-button {
   width: 163px;
-  height: 40px;
+  height: fit-content;
+  padding: 5px 10px;
 
   background-color: #26a5e7;
   border-radius: 20px;
