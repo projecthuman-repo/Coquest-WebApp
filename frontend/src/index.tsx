@@ -2,6 +2,7 @@ import {
 	BrowserRouter,
 	createBrowserRouter,
 	RouterProvider,
+	Navigate,
 } from "react-router-dom";
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -19,13 +20,21 @@ import UserProfile from "./pages/Profile/UserProfile"; // Import UserProfile pag
 
 // Program flow Imports
 import {
-	BasicInformation,
-	Budgeting,
 	CreateProgram,
-	Operations,
-	Promotion,
+	BasicInformation as ProgramBasicInformation,
+	Operations as ProgramOperations,
+	Budgeting as ProgramBudgeting,
+	Promotion as ProgramPromotion,
+	FinishPage as ProgramFinishPage,
 } from "./pages/Programs/CreateProgram";
-import FinishPage from "./pages/Programs/CreateProgram/FinishPage";
+import {
+	CreateProject,
+	BasicInformation as ProjectBasicInformation,
+	Operations as ProjectOperations,
+	Budgeting as ProjectBudgeting,
+	Promotion as ProjectPromotion,
+	FinishPage as ProjectFinishPage,
+} from "./pages/Projects/CreateProject";
 
 import {
 	CreateCoop,
@@ -237,24 +246,30 @@ const router = createBrowserRouter([
 				element: <CreateProgram />,
 				children: [
 					{
+						index: true, // redirect from /create to /create/basic-information
+						element: (
+							<Navigate to="/programs/create/basic-information" />
+						),
+					},
+					{
 						path: "basic-information",
-						element: <BasicInformation />,
+						element: <ProgramBasicInformation />,
 					},
 					{
 						path: "operations",
-						element: <Operations />,
+						element: <ProgramOperations />,
 					},
 					{
 						path: "budgeting",
-						element: <Budgeting />,
+						element: <ProgramBudgeting />,
 					},
 					{
 						path: "promotion",
-						element: <Promotion />,
+						element: <ProgramPromotion />,
 					},
 					{
 						path: "finish",
-						element: <FinishPage />,
+						element: <ProgramFinishPage />,
 					},
 				],
 			},
@@ -462,6 +477,38 @@ const router = createBrowserRouter([
 								),
 							},
 						],
+					},
+				],
+			},
+			{
+				path: "create",
+				element: <CreateProject />,
+				children: [
+					{
+						index: true, // redirect from /create to /create/basic-information
+						element: (
+							<Navigate to="/projects/create/basic-information" />
+						),
+					},
+					{
+						path: "basic-information",
+						element: <ProjectBasicInformation />,
+					},
+					{
+						path: "operations",
+						element: <ProjectOperations />,
+					},
+					{
+						path: "budgeting",
+						element: <ProjectBudgeting />,
+					},
+					{
+						path: "promotion",
+						element: <ProjectPromotion />,
+					},
+					{
+						path: "finish",
+						element: <ProjectFinishPage />,
 					},
 				],
 			},

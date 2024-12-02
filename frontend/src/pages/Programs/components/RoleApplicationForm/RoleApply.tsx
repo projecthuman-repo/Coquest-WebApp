@@ -349,18 +349,19 @@ function RoleApply({ type }: RoleApplyProps) {
 				if (program?.openRoles) {
 					updateProgram({
 						...program,
-						openRoles: program.openRoles.map((openRole) =>
-							openRole.id === role.id
-								? {
-										...openRole,
-										applicants: openRole.applicants
-											? [
-													...openRole.applicants,
-													newApplicant,
-												]
-											: [newApplicant],
-									}
-								: openRole,
+						openRoles: program.openRoles.map(
+							(openRole: ProgramRole) =>
+								openRole.id === role.id
+									? {
+											...openRole,
+											applicants: openRole.applicants
+												? [
+														...openRole.applicants,
+														newApplicant,
+													]
+												: [newApplicant],
+										}
+									: openRole,
 						),
 					});
 				}
@@ -377,18 +378,19 @@ function RoleApply({ type }: RoleApplyProps) {
 				if (project?.openRoles) {
 					updateProject({
 						...project,
-						openRoles: project.openRoles.map((openRole) =>
-							openRole.id === role.id
-								? {
-										...openRole,
-										applicants: openRole.applicants
-											? [
-													...openRole.applicants,
-													newApplicant,
-												]
-											: [newApplicant],
-									}
-								: openRole,
+						openRoles: project.openRoles.map(
+							(openRole: ProjectRole) =>
+								openRole.id === role.id
+									? {
+											...openRole,
+											applicants: openRole.applicants
+												? [
+														...openRole.applicants,
+														newApplicant,
+													]
+												: [newApplicant],
+										}
+									: openRole,
 						),
 					});
 				}
@@ -458,7 +460,7 @@ function RoleApply({ type }: RoleApplyProps) {
 				if (type === "program") {
 					if (!isNaN(roleId) && program && program.openRoles) {
 						const role = program.openRoles.find(
-							(role) =>
+							(role: ProgramRole) =>
 								role.id?.localeCompare(roleId.toString()) === 0,
 						);
 						if (role) {
@@ -470,7 +472,7 @@ function RoleApply({ type }: RoleApplyProps) {
 				if (type === "project") {
 					if (!isNaN(roleId) && project && project.openRoles) {
 						const role = project.openRoles.find(
-							(role) =>
+							(role: ProjectRole) =>
 								role.id?.localeCompare(roleId.toString()) === 0,
 						);
 						if (role) {
