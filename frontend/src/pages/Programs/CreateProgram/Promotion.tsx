@@ -12,8 +12,12 @@ import "./CreateProgram.css";
 const Promotion: React.FC = () => {
 	const { program, updateProgram, updateStepsCompleted } = useProgram();
 
-	const [promotionArea, setPromotionArea] = useState<Location | null>(program.promotionArea || null);
-	const [radius, setRadius] = useState<number | null>(program.radius ? parseInt(program.radius) : null);
+	const [promotionArea, setPromotionArea] = useState<Location | null>(
+		program.promotionArea || null,
+	);
+	const [radius, setRadius] = useState<number | null>(
+		program.radius ? parseInt(program.radius) : null,
+	);
 	const [headerImage, setHeaderImage] = useState<any[]>(
 		program.promotionImage ? [program.promotionImage] : [],
 	);

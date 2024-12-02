@@ -73,28 +73,28 @@ const data: Project[] = [
 				title: "Volunteering Title 1",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
-				skills: [ "Skill 1", "Skill 2", "Skill 3" ],
+				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 			{
 				id: "2",
 				title: "Volunteering Title 2",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
-				skills: [ "Skill 1", "Skill 2", "Skill 3" ],
+				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 			{
 				id: "3",
 				title: "Volunteering Title 3",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
-				skills: [ "Skill 1", "Skill 2", "Skill 3" ],
+				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 			{
 				id: "4",
 				title: "Volunteering Title 4",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
-				skills: [ "Skill 1", "Skill 2", "Skill 3" ],
+				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 		],
 		openRoles: [
@@ -339,21 +339,21 @@ const data: Project[] = [
 				title: "Volunteering Title 1",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
-				skills: [ "Skill 1", "Skill 2", "Skill 3" ],
+				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 			{
 				id: "2",
 				title: "Volunteering Title 2",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
-				skills: [ "Skill 1", "Skill 2", "Skill 3" ],
+				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 			{
 				id: "3",
 				title: "Volunteering Title 3",
 				responsibilities:
 					"Lorem ipsum dolor sit amet consectetur. Id maecenas tortor porta ultrices faucibus. Sed potenti ac egestas in. Vitae pellentesque arcu ornare eu elit habitant in odio. Quis urna montes risus luctus. Tortor arcu sit condimentum commodo sit sed suscipit vel. Viverra diam nisl tristique mauris diam. Facilisi quam id tincidunt faucibus non gravida nisl vivamus faucibus. Dignissim vitae gravida amet id cursus at. Erat tincidunt amet id lacus nunc suspendisse ac sit auctor. Ut integer eget ut massa mattis quam donec consequat at.",
-				skills: [ "Skill 1", "Skill 2", "Skill 3" ],
+				skills: ["Skill 1", "Skill 2", "Skill 3"],
 			},
 		],
 		openRoles: [

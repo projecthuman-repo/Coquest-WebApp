@@ -27,15 +27,11 @@ const BasicInformation = () => {
 	const [isCharity, setIsCharity] = useState<boolean | undefined>(
 		project.isCharity || undefined,
 	);
-	const [type, setType] = useState<string>(
-		project.type || "",
-	);
+	const [type, setType] = useState<string>(project.type || "");
 	const [isPublic, setIsPublic] = useState<boolean | undefined>(
 		project.isPublic || undefined,
 	);
-	const [experience, setExperience] = useState(
-		project.experienceInPlanning,
-	);
+	const [experience, setExperience] = useState(project.experienceInPlanning);
 
 	useEffect(() => {
 		// TODO: fetch categories from backend

@@ -85,8 +85,8 @@ const ViewAllProjects = () => {
 	const createdByMeProjects = projects.filter(
 		(project) => project.userID === user?.id,
 	);
-	const participatingInProjects = projects.filter((project) =>
-		project.members?.some((member) => member._id === user?.id),		// member._id is User ID of the member
+	const participatingInProjects = projects.filter(
+		(project) => project.members?.some((member) => member._id === user?.id), // member._id is User ID of the member
 	);
 	const otherProjects = projects.filter(
 		(project) =>

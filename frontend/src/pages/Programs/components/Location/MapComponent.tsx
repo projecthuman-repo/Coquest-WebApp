@@ -95,7 +95,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
 		setRadius(newRadius);
 
 		if (promotionArea) {
-			setPromotionArea(promotionArea)
+			setPromotionArea(promotionArea);
 			setRadius(newRadius);
 		} else {
 			setPromotionArea({

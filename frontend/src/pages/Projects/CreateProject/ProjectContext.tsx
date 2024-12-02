@@ -48,7 +48,7 @@ export const ProjectProvider: React.FC<PropsWithChildren> = ({ children }) => {
 		isCharity: undefined,
 		isPublic: undefined,
 		hashtags: null,
-		progress: 0,	// default 0
+		progress: 0, // default 0
 		spots: null,
 		cost: null,
 		experienceInPlanning: undefined,
@@ -56,7 +56,7 @@ export const ProjectProvider: React.FC<PropsWithChildren> = ({ children }) => {
 		bookedRentalSpace: undefined,
 		additionalInfo: null,
 		budgetingItems: null,
-		totalBudgetExpenses: 0,	// default 0
+		totalBudgetExpenses: 0, // default 0
 		openToBartering: undefined,
 		needsCrowdfunding: undefined,
 		crowdfundingAmount: null,

@@ -39,7 +39,7 @@ const LocationSearch: React.FC<LocationSearchProps> = ({
 	onChange,
 	value = "",
 	onLoad = undefined,
-	handleLocationChange = undefined
+	handleLocationChange = undefined,
 }) => {
 	const { isLoaded } = useLoadScript({
 		libraries: ["places"],
@@ -60,7 +60,7 @@ const LocationSearch: React.FC<LocationSearchProps> = ({
 				onChange(
 					autocomplete.getPlace().formatted_address,
 					autocomplete.getPlace().geometry.location.lat(),
-					autocomplete.getPlace().geometry.location.lng()
+					autocomplete.getPlace().geometry.location.lng(),
 				);
 			}
 		};

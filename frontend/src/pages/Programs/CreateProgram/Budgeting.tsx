@@ -75,7 +75,9 @@ const Budgeting: React.FC = () => {
 			spots: noLimit ? null : spots,
 			crowdfundingNeeded,
 			crowdfundingAmount: crowdfundAmount,
-			crowdfundingDate: crowdfundDateOfFunding ? crowdfundDateOfFunding.toISOString() : null,
+			crowdfundingDate: crowdfundDateOfFunding
+				? crowdfundDateOfFunding.toISOString()
+				: null,
 			crowdfundingMessage: crowdfundThankyouMessage,
 		};
 
