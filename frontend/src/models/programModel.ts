@@ -8,8 +8,8 @@ export interface Program {
 	mission?: string | null; // Objective
 	type?: string | null; // Initiative
 	recurring?: string | null;
-	startDate?: string | null; // prev date
-	endDate?: string | null; // prev date
+	startDate?: string | null;
+	endDate?: string | null;
 	startTime?: string | null;
 	endTime?: string | null;
 	location?: Location | null;
@@ -30,23 +30,23 @@ export interface Program {
 	cost?: number | null;
 
 	experienceInPlanning?: boolean | undefined;
-	haveNeutralMeetingSpace?: boolean | undefined; // previously ownSpace
+	haveNeutralMeetingSpace?: boolean | undefined;
 	bookedRentalSpace?: boolean | undefined;
 	additionalInfo?: string | null;
 
-	budgetingItems?: BudgetItem[] | null; // previously budgetExpenses
+	budgetingItems?: BudgetItem[] | null;
 	totalBudgetExpenses?: number | null;
-	openToBartering?: boolean | undefined; // previously isOpenToBarter
-	needsCrowdfunding?: boolean | undefined; // prev needed
-	crowdfundingAmount?: number | null; // prev amount
-	crowdfundingDate?: string | null; // prev date
-	crowdfundingMessage?: string | null; // prev thankYouMessage
+	openToBartering?: boolean | undefined;
+	needsCrowdfunding?: boolean | undefined;
+	crowdfundingAmount?: number | null;
+	crowdfundingDate?: string | null;
+	crowdfundingMessage?: string | null;
 
 	promotionArea?: Location | null;
 	radius?: string | null;
 	promotionImage?: string | null;
-	shareLink?: string | null; // prev sharelink
-	members?: Member[] | null; // previously invitedPeople: User[]
+	shareLink?: string | null;
+	members?: Member[] | null;
 }
 
 export interface Milestone {
