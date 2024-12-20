@@ -13,12 +13,7 @@ function BackButton(props: { onClick?: () => void }) {
 			onClick={onClick}
 			style={{ cursor: "pointer" }}
 		>
-			<img
-				src="/icons/back-button-chevron.png"
-				height="12"
-				alt="Back Button Chevron"
-			></img>
-			<SecondaryButton name="Back" />
+			<SecondaryButton name="< Back" />
 		</div>
 	);
 }

@@ -20,13 +20,13 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 	const { project, updateProject } = useContext(ProjectContext);
 	const { coop, updateCoop } = useContext(CoopContext);
 	const [expanded, setExpanded] = useState(false);
-	const [displayDesc, setDisplayDesc] = useState(milestone.description);
+	const [displayDesc, setDisplayDesc] = useState(milestone.description ?? "");
 
 	//edit milestone states
 	const [scrollY, setScrollY] = useState(0);
 	const [editingStarted, setEditingStarted] = useState(false);
 	const [milestoneType, _setMilestoneType] = useState(type);
-	const [milestoneTitle, setMilestoneTitle] = useState(milestone.title);
+	const [milestoneTitle, setMilestoneTitle] = useState(milestone.title ?? "");
 	const [milestoneCompleted, setMilestoneCompleted] = useState(
 		milestone.completed,
 	);
@@ -53,51 +53,45 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 		if (type === "program" && program) {
 			updateProgram({
 				...program,
-				milestones: program.milestones?.map((m) => {
-					if (
-						`${m.title} + ${m.dateStarted}` ===
-						`${milestone.title} + ${milestone.dateStarted}`
-					) {
-						return {
-							...m,
-							type: milestoneType,
-							title: milestoneTitle,
-							description: milestoneDescription,
-							completed: milestoneCompleted,
-							dateCompleted: milestoneCompleted
-								? new Date().toISOString()
-								: "",
-						};
-					}
-					return m;
-				}),
+				milestones:
+					program.milestones?.map((m: Milestone) => {
+						if (m._id === milestone._id) {
+							return {
+								...m,
+								title: milestoneTitle,
+								description: milestoneDescription,
+								completed: milestoneCompleted ?? m.completed,
+								dateCompleted: milestoneCompleted
+									? new Date().toISOString()
+									: null,
+							};
+						}
+						return m;
+					}) ?? null,
 			});
 		} else if (type === "project" && project) {
 			updateProject({
 				...project,
-				milestones: project.milestones?.map((m) => {
-					if (
-						`${m.title} + ${m.dateStarted}` ===
-						`${milestone.title} + ${milestone.dateStarted}`
-					) {
-						return {
-							...m,
-							type: milestoneType,
-							title: milestoneTitle,
-							description: milestoneDescription,
-							completed: milestoneCompleted,
-							dateCompleted: milestoneCompleted
-								? new Date().toISOString()
-								: "",
-						};
-					}
-					return m;
-				}),
+				milestones:
+					project.milestones?.map((m: Milestone) => {
+						if (m._id === milestone._id) {
+							return {
+								...m,
+								title: milestoneTitle,
+								description: milestoneDescription,
+								completed: milestoneCompleted ?? m.completed,
+								dateCompleted: milestoneCompleted
+									? new Date().toISOString()
+									: null,
+							};
+						}
+						return m;
+					}) ?? null,
 			});
 		} else if (type === "coop" && coop) {
 			updateCoop({
 				...coop,
-				milestones: coop?.milestones?.map((m) => {
+				milestones: coop?.milestones?.map((m: Milestone) => {
 					`${milestone.title} + ${milestone.dateStarted}`;
 					if (
 						`${m.title} + ${m.dateStarted}` ===
@@ -127,20 +121,18 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 		if (type === "program" && program) {
 			updateProgram({
 				...program,
-				milestones: program.milestones?.filter(
-					(m) =>
-						`${m.title} + ${m.dateStarted}` !=
-						`${milestone.title} + ${milestone.dateStarted}`,
-				),
+				milestones:
+					program.milestones?.filter(
+						(m: Milestone) => m._id !== milestone._id,
+					) ?? null,
 			});
 		} else if (type === "project" && project) {
 			updateProject({
-				...project,
-				milestones: project.milestones?.filter(
-					(m) =>
-						`${m.title} + ${m.dateStarted}` !=
-						`${milestone.title} + ${milestone.dateStarted}`,
-				),
+				...program,
+				milestones:
+					project.milestones?.filter(
+						(m: Milestone) => m._id !== milestone._id,
+					) ?? null,
 			});
 		} else if (type === "coop" && coop) {
 			if (!coop.milestones) return;
@@ -159,8 +151,8 @@ function MilestoneCard({ milestone, type }: MilestoneCardProps) {
 
 	useEffect(() => {
 		// setMilestoneType(milestone.type);
-		setMilestoneTitle(milestone.title);
-		setMilestoneDescription(milestone.description);
+		setMilestoneTitle(milestone.title ?? "");
+		setMilestoneDescription(milestone.description ?? "");
 		if (milestone.description) {
 			if (milestone.description.length > 350 && !expanded) {
 				setDisplayDesc(milestone?.description?.slice(0, 350) + "...");
