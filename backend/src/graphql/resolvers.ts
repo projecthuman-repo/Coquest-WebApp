@@ -13,6 +13,7 @@ import { coerceExpandable } from "../utils/expandable";
 import { getSecret } from "../utils/gcloud";
 import CONFIG from "../config";
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 /* To resolve this import please run "npm run codegen"
  * If you run "npm run dev", the codegen command will run automatically
  * This will generate the necessary types for this file
@@ -23,6 +24,7 @@ import { Topic } from "../models/Topic";
 import { ServerError, ServerErrorCodes } from "./ServerError";
 import { Project } from "../models/Project";
 import { Program } from "../models/Program";
+import { validateEmail } from "../utils/misc";
 
 const storage = new Storage();
 
@@ -295,8 +297,6 @@ const resolvers: Resolvers = {
       }
     },
 
-    //this method is used to login a regenquest user
-
     //this method gets all the notification for a user by thier id
     // @ts-expect-error - ObjectID is not assignable to type 'string'
     async getNotifications(_parent, { userID }, _context, _info) {
@@ -333,11 +333,10 @@ const resolvers: Resolvers = {
       }
     },
 
+    // @ts-expect-error - string is not assignable to Jwt
     async getToken(_parent, _, context, _info) {
       return jwt.verify(
         context.req.cookies[CONFIG.AUTH_COOKIE_NAME],
-        // @ts-expect-error - I think an error should be thrown by the program if getSecret returns undefined
-        // which is why I'm not assigning a deafult string value to the return value of getSecret
         await getSecret(CONFIG.ACCESS_JWT_NAME),
       );
     },
@@ -379,6 +378,8 @@ const resolvers: Resolvers = {
         userInput: {
           name,
           username,
+          password,
+          phoneNumber,
           email,
           location,
           images,
@@ -395,11 +396,42 @@ const resolvers: Resolvers = {
       _context,
       _info,
     ) {
+      if (!name || !username || !password || !email) {
+        throw new ServerError("Missing required fields", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
+      }
+
+      if (!validateEmail(email)) {
+        throw new ServerError("Invalid email", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
+      }
+
+      const existingUser = await User.exists({ email });
+
+      if (existingUser) {
+        throw new ServerError("Email already exists", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
+      }
+
+      const existingUsername = await User.exists({ username });
+      if (existingUsername) {
+        throw new ServerError("Username already exists", {
+          code: ServerErrorCodes.INVALID_INPUT,
+        });
+      }
+
+      const saltRounds = 10;
+      const passwordHash = await bcrypt.hash(password, saltRounds);
       const newUser = new User({
-        userID: null,
+        userID: null, // To be populated once crossplatform user is created/found
         name,
         username,
         email,
+        phoneNumber,
+        passwordHash,
         registered: false,
         location,
         images,
@@ -414,36 +446,67 @@ const resolvers: Resolvers = {
         recommendations,
       });
 
-      // Add the user to the database
-      try {
-        // Check if a cross-platform user already exists
-        const crossPlatformUserExists = await CrossPlatformUser.findOne({
+      // Check if a cross-platform user already exists
+      let crossPlatformUserExists = await CrossPlatformUser.findOne({
+        email,
+      });
+
+      if (!crossPlatformUserExists) {
+        crossPlatformUserExists = await CrossPlatformUser.create({
           email,
+          phoneNumber,
+          regenquestUserId: newUser._id.toString(),
+        });
+      }
+
+      newUser.userID = crossPlatformUserExists._id;
+      await newUser.save();
+
+      return { code: 0, response: "successful", id: newUser._id };
+    },
+
+    async loginUser(_parent, { userInput }, context, _info) {
+      const { usernameOrEmail, password } = userInput;
+      const isEmail = validateEmail(usernameOrEmail);
+      const user = isEmail
+        ? await User.findOne({ email: usernameOrEmail })
+        : await User.findOne({ username: usernameOrEmail });
+
+      if (!user)
+        throw new ServerError("Invalid Credentials", {
+          code: ServerErrorCodes.INVALID_INPUT,
+          privateMessage: "User not found",
         });
 
-        if (!crossPlatformUserExists) {
-          // This should not occur based on registration logic
-          // This is a INTERNAL_SERVER_ERROR because it should never happen
-          throw new ServerError("There was an error with your account", {
-            code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
-            cause: new Error("CrossPlatform user does not exist"),
-            privateMessage:
-              "This should not occur based on registration logic. You'll need to delete the user and try again.",
-          });
-        }
+      const isMatch = bcrypt.compare(password, user.passwordHash);
+      if (!isMatch)
+        throw new ServerError("Invalid Credentials", {
+          code: ServerErrorCodes.INVALID_INPUT,
+          privateMessage: "Password incorrect",
+        });
 
-        newUser.userID = crossPlatformUserExists._id;
-        await newUser.save();
-        crossPlatformUserExists.regenquestUserId = newUser._id.toString();
-        await crossPlatformUserExists.save();
+      // Password is correct,
+      const userForToken = {
+        name: {
+          first: user.name?.first,
+          last: user.name?.last,
+        },
+        username: user.username,
+        email: user.email,
+      };
 
-        return { code: 0, response: "successful", id: newUser._id };
-      } catch (err) {
-        return {
-          code: 1,
-          response: `Error creating user: ${(err as Error).message}`,
-        };
-      }
+      const secret = await getSecret(CONFIG.ACCESS_JWT_NAME);
+
+      const token = jwt.sign(userForToken, secret, {
+        expiresIn: "1d",
+      });
+
+      context.res.setHeader(
+        "Set-Cookie",
+        `${CONFIG.AUTH_COOKIE_NAME}=${token}; HttpOnly; Secure; Path=/; SameSite=None`,
+      );
+
+      return { code: 0, response: "successful" };
     },
 
     //resolver for createPost,

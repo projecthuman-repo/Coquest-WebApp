@@ -183,6 +183,8 @@ const schema = gql`
     userID: String
     name: NameInput
     username: String
+    password: String
+    phoneNumber: String
     email: String
     registered: registeredInput
     location: LocationInput
@@ -664,9 +666,9 @@ const schema = gql`
     userID: String
   }
 
-  input loginUser {
-    username: String
-    password: String
+  input LoginUserInput {
+    usernameOrEmail: String!
+    password: String!
   }
 
   type Chat {
@@ -838,7 +840,7 @@ const schema = gql`
   TODO: Declare and implement delete routines for all necessary models
   """
   type Mutation {
-    createUser(userInput: UserInput!): mutationResponse @auth
+    createUser(userInput: UserInput!): mutationResponse
     createPost(userInput: PostInput!): mutationResponse @auth
     createCoop(userInput: CoopInput!): mutationResponse @auth
     createProject(userInput: ProjectInput!): mutationResponse @auth
@@ -870,6 +872,8 @@ const schema = gql`
     markAllNotificationsAsRead(userID: String): mutationResponse @auth
     deleteNotification(notificationID: String): mutationResponse @auth
 
+    loginUser(userInput: LoginUserInput!): mutationResponse
+    logoutUser: mutationResponse @auth
     setCookieWithToken(token: String!): mutationResponse @verifyToken
     deleteCookieToken: mutationResponse
 

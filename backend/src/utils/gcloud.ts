@@ -1,5 +1,6 @@
 import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
 import CONFIG from "../config";
+import { ServerError, ServerErrorCodes } from "../graphql/ServerError";
 const client = new SecretManagerServiceClient({
   keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
 });
@@ -19,5 +20,11 @@ export async function getSecret(secretName: string) {
   }
   const payload = version?.payload?.data?.toString();
 
+  if (!payload) {
+    throw new ServerError("There was an internal server error.", {
+      code: ServerErrorCodes.INTERNAL_SERVER_ERROR,
+      cause: new Error("Failed to fetch secret from GCP Secret Manager."),
+    });
+  }
   return payload;
 }
