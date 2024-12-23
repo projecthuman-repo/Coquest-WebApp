@@ -131,7 +131,7 @@ function UploadImage(props: any) {
 			{!filesAdded ? (
 				<>
 					<img
-						src={images[0].path}
+						src={images[0]?.path}
 						alt="generated img"
 						style={{ height: "175px", borderRadius: "50%" }}
 					/>

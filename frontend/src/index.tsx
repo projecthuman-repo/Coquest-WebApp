@@ -90,6 +90,8 @@ import CoopQuests from "./pages/Coop/CoopPage/Quests/Quests";
 import ViewAllCoops from "./pages/Coop";
 
 import RoleApply from "./pages/Programs/components/RoleApplicationForm/RoleApply";
+import { Login } from "./pages/Login";
+import CreateUser from "./pages/CreateUser";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement,
@@ -98,19 +100,19 @@ const root = ReactDOM.createRoot(
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: (
-			<UserRegistrationProvider>
-				<Dashboard />
-			</UserRegistrationProvider>
-		),
+		element: <Dashboard />,
+	},
+	{
+		path: "/login",
+		element: <Login />,
+	},
+	{
+		path: "/create",
+		element: <CreateUser />,
 	},
 	{
 		path: "/registration",
-		element: (
-			<UserRegistrationProvider>
-				<OrientationRedirector />
-			</UserRegistrationProvider>
-		),
+		element: <OrientationRedirector />,
 		children: [
 			{
 				path: ":id",
@@ -521,18 +523,18 @@ const Container = styled("div")({
 });
 
 root.render(
-	<Container>
-		<React.StrictMode>
-			<ThemeProvider theme={theme}>
-				<BrowserRouter>
-					<UserRegistrationProvider>
+	<React.StrictMode>
+		<UserRegistrationProvider>
+			<Container>
+				<ThemeProvider theme={theme}>
+					<BrowserRouter>
 						<GlobalRedirect />
 						{/* Prevent the user from accessing links to top-level views while registering */}
 						<RemoveNavComponents />
-					</UserRegistrationProvider>
-				</BrowserRouter>
-				<RouterProvider router={router} />
-			</ThemeProvider>
-		</React.StrictMode>
-	</Container>,
+					</BrowserRouter>
+					<RouterProvider router={router} />
+				</ThemeProvider>
+			</Container>
+		</UserRegistrationProvider>
+	</React.StrictMode>,
 );

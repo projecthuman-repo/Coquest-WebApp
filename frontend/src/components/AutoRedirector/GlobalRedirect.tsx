@@ -1,18 +1,10 @@
 import { useEffect } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUserRegistration } from "./UserRegistration";
 import { isCompleteRegistration } from "../../models/common";
 import { gql } from "graphql-request";
 import graphQLClient from "../../apiInterface/client";
-
-const setAuthCookieMutation = gql`
-	mutation SetCookieWithToken($token: String!) {
-		setCookieWithToken(token: $token) {
-			response
-			code
-		}
-	}
-`;
+import { getTokenQuery } from "@/models/jwt";
 
 const deleteAuthCookieMutation = gql`
 	mutation DeleteCookieToken {
@@ -34,83 +26,57 @@ function GlobalRedirect({ logout }: GlobalRedirectProps) {
 	const loc = useLocation();
 	const navigate = useNavigate();
 
-	// TODO: replace token exchange mechanism with PKCE
-	const [searchParams] = useSearchParams();
-	const token = searchParams.get("token");
-
-	// Improved Integration with Authentication Flow
-	// useEffect(() => {
-	//     // Check if process is done and user is not yet authenticated
-	//     if (done && !authenticated) {
-	//         if (token) {
-	//             console.log('setting cookie with token', token);
-	//             graphQLClient.request(setAuthCookieMutation, { token: token })
-	//                 .then(() => {
-	//                     setAuthenticated(true);
-	//                     // After setting authenticated, redirect away or reset the URL to clean the token
-	//                     navigate('/path-after-auth', { replace: true });  // Adjust the path as needed
-	//                 })
-	//                 .catch((error) => {
-	//                     console.error('Authentication error:', error);
-	//                     // Handle error, maybe navigate to an error page or login page
-	//                     navigate('/login', { replace: true });
-	//                 });
-	//         } else {
-	//             // Redirect to authentication URI
-	//             window.location.href = `${import.meta.env.VITE_AUTH_FRONTEND_URI}?appId=2`;
-	//         }
-	//     } else if (authenticated && !isCompleteRegistration(registered) && loc.pathname !== "/registration") {
-	//         navigate('/registration', { replace: true });
-	//     }
-	// }, [done, authenticated, registered, token, loc, navigate]);
-
 	useEffect(() => {
-		if (logout && logout === true) {
-			graphQLClient.request(deleteAuthCookieMutation).then(() => {
-				localStorage.removeItem("userCache");
-				if (!localStorage.getItem("userCache")) {
-					console.log(
-						"User cache successfully removed from LocalStorage.",
-					);
-				} else {
-					console.error(
-						"Failed to remove user cache from LocalStorage.",
-					);
-				}
+		if (logout) {
+			setAuthenticated(false);
+			localStorage.removeItem("userCache");
+			graphQLClient.request(deleteAuthCookieMutation);
+			return;
+		}
 
-				setAuthenticated(false);
-				window.location.href = `${import.meta.env.VITE_AUTH_FRONTEND_URI}?appId=2`;
-			});
-		} else if (done) {
-			if (!authenticated) {
-				if (token) {
-					console.log("setting cookie with token", token);
-					graphQLClient
-						.request(setAuthCookieMutation, { token: token })
-						.then(() => {
-							setAuthenticated(true);
-						});
-				} else {
-					// TODO: dynamically fetch appId from DB
-					window.location.href = `${import.meta.env.VITE_AUTH_FRONTEND_URI}?appId=2`;
-				}
-				// Explicitly check for "/registration" pathname to prevent endless reload loop
-			} else if (
-				!isCompleteRegistration(registered) &&
-				loc.pathname !== "/registration"
-			) {
-				// TODO: replace temporary navigation solution with one that doesn't briefly display originally requested page
-				navigate("/registration", { replace: true });
-				// Temporary fix: refresh page after navigating to /registration
-				// https://stackoverflow.com/a/71642098
-				navigate(0);
-			}
+		if (
+			!authenticated &&
+			loc.pathname !== "/login" &&
+			loc.pathname !== "/create"
+		) {
+			// Using navigate(0) with all navigations causes
+			// the context to be reset, which is not desired
+			// this is a temporary solution to correctly set
+			// the auth state on every page change
+			// it sends a request to the server, if it gets a
+			// response it sets the auth state to true,
+			// it does not matter which query I actually send
+			// as long as it was a protected route
+
+			graphQLClient
+				.request(getTokenQuery)
+				.then(() => {
+					setAuthenticated(true);
+				})
+				.catch(() => {
+					navigate("/login");
+					navigate(0);
+				});
+			return;
+		}
+
+		if (
+			authenticated &&
+			!isCompleteRegistration(registered) &&
+			// Explicitly check for "/registration" pathname to prevent endless reload loop
+			loc.pathname !== "/registration"
+		) {
+			// TODO: replace temporary navigation solution with one that doesn't briefly display originally requested page
+			navigate("/registration");
+			// Temporary fix: refresh page after navigating to /registration
+			// https://stackoverflow.com/a/71642098
+			navigate(0);
+			return;
 		}
 	}, [
 		done,
 		authenticated,
 		registered,
-		token,
 		loc,
 		navigate,
 		setAuthenticated,

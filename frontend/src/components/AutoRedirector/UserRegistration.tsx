@@ -51,6 +51,7 @@ export function UserRegistrationProvider({ children }: UserRegistrationProps) {
 				setAuthenticated(true);
 			},
 			() => {
+				localStorage.removeItem("userCache");
 				setAuthenticated(false);
 				setDone(true);
 			},

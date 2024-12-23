@@ -25,6 +25,12 @@ export async function verifyToken(token: string, secret: string, context) {
       });
     }
 
+    // TODO: Implement refresh tokens, the below commented code was used with login process
+    // currently, we issue the auth token without the refresh token
+    // the auth token is stored in an http only cookie so it's alright but we should still implement
+    // refresh tokens. As a future reference, the loginUser mutation should set both the cookies
+
+    /*
     try {
       // Verification failed, attempting to refresh the token
       const fetchRes = await fetch(
@@ -62,5 +68,6 @@ export async function verifyToken(token: string, secret: string, context) {
         cause: refreshError,
       });
     }
+    */
   }
 }

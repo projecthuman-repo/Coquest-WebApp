@@ -43,8 +43,13 @@ const userSchema = new Schema({
     middle: { type: String },
     last: { type: String, required: true },
   },
+
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
+  phoneNumber: { type: String, unique: true },
+  passwordHash: { type: String, required: true },
+  refreshToken: { type: String },
+
   registered: {
     type: Schema.Types.Mixed,
     required: true,

@@ -107,8 +107,7 @@ const DropdownMenu = () => {
 
 	const handleNavigation = (path: string) => {
 		navigate(path);
-		window.location.reload();
-
+		navigate(0);
 		// Future implementation without reload:
 		// navigate(path);
 	};
