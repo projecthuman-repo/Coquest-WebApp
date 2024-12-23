@@ -52,7 +52,7 @@ const Toolbar = () => {
 	const handleHomeClick = () => {
 		console.log("Home icon clicked");
 		navigate("/");
-		window.location.reload(); // Temporary fix to ensure the page loads
+		navigate(0); // Temporary fix to ensure the page loads
 	};
 
 	return (

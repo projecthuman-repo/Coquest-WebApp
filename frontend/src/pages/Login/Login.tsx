@@ -1,9 +1,36 @@
-import React from "react";
-import Divider from "@mui/material/Divider";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import { useNavigate } from "react-router";
+import { LoginUserInput } from "@/__generated__/graphql";
+import { Button } from "@mui/material";
+import graphQLClient from "@/apiInterface/client";
+import { LOGIN_USER_MUTATION } from "@/apiInterface/gqlOperations";
+import { useUserRegistration } from "@/components/AutoRedirector/UserRegistration";
 
 function Login() {
+	const navigate = useNavigate();
+	const { setAuthenticated } = useUserRegistration();
+	const loginInput: LoginUserInput = {
+		usernameOrEmail: "",
+		password: "",
+	};
+	const [loginData, setLoginData] = useState(loginInput);
+
+	const handleChange = (data: Partial<typeof loginInput>) => {
+		setLoginData({ ...loginData, ...data });
+	};
+
+	const handleSubmit = async () => {
+		await graphQLClient
+			.request(LOGIN_USER_MUTATION, {
+				userInput: loginData,
+			})
+			.then(() => {
+				setAuthenticated(true);
+				navigate("../", { replace: true });
+			});
+	};
+
 	return (
 		<div
 			style={{
@@ -16,103 +43,38 @@ function Login() {
 		>
 			<div
 				style={{
-					width: "100%",
-					display: "flex",
-					justifyContent: "end",
-				}}
-			>
-				<Button
-					style={{
-						color: "black",
-						fontWeight: 700,
-						textTransform: "none",
-						fontSize: 16,
-						borderRadius: 30,
-					}}
-				>
-					{"<"} Back
-				</Button>
-				<Button
-					variant="contained"
-					disableElevation
-					style={{
-						backgroundColor: "rgb(217, 217, 217)",
-						color: "black",
-						fontWeight: 700,
-						textTransform: "none",
-						fontSize: 16,
-						borderRadius: 30,
-					}}
-				>
-					Next
-				</Button>
-			</div>
-			<div
-				style={{
 					display: "flex",
 					flexDirection: "column",
 					width: "300px",
 					gap: 10,
 				}}
 			>
-				<b style={{ fontSize: 24 }}>Sign up with social media</b>
-
-				<div
-					style={{
-						display: "flex",
-						gap: 20,
-						justifyContent: "center",
-					}}
-				>
-					<div
-						style={{
-							height: 50,
-							width: 50,
-							border: "1px solid black",
-						}}
-					>
-						F
-					</div>
-					<div
-						style={{
-							height: 50,
-							width: 50,
-							border: "1px solid black",
-						}}
-					>
-						T
-					</div>
-					<div
-						style={{
-							height: 50,
-							width: 50,
-							border: "1px solid black",
-						}}
-					>
-						I
-					</div>
-					<div
-						style={{
-							height: 50,
-							width: 50,
-							border: "1px solid black",
-						}}
-					>
-						G
-					</div>
-				</div>
-
-				<Divider>or sign up with your email</Divider>
-				<TextField label="Full name" variant="outlined" />
-				<TextField label="Email" variant="outlined" />
-				<TextField label="Username" variant="outlined" />
+				<TextField
+					label="Email or Username"
+					variant="outlined"
+					value={loginData.usernameOrEmail}
+					onChange={(e) =>
+						handleChange({ usernameOrEmail: e.target.value })
+					}
+				/>
 				<TextField
 					label="Password"
 					variant="outlined"
 					type="password"
+					value={loginData.password}
+					onChange={(e) => handleChange({ password: e.target.value })}
 				/>
+				{/* Submit Button */}
+				<Button
+					variant="contained"
+					color="primary"
+					onClick={handleSubmit}
+					style={{ marginTop: "10px" }}
+				>
+					Login
+				</Button>
 				<b>
-					Already have an account? <a href="#">Sign in</a>
+					Don&apos;t have an acccount? <a href="/create">Sign up</a>
 				</b>
 			</div>
 		</div>

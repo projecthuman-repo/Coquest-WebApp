@@ -19,3 +19,23 @@ export const motivesQuery = graphql(`
 		}
 	}
 `);
+
+export const CREATE_USER_MUTATION = graphql(`
+	mutation CreateUser($userInput: UserInput!) {
+		createUser(userInput: $userInput) {
+			code
+			id
+			response
+		}
+	}
+`);
+
+export const LOGIN_USER_MUTATION = graphql(`
+	mutation LoginUser($userInput: LoginUserInput!) {
+		loginUser(userInput: $userInput) {
+			code
+			id
+			response
+		}
+	}
+`);

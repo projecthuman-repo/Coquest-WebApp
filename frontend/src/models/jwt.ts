@@ -19,7 +19,7 @@ const getCrossUserQuery = gql`
 	}
 `;
 
-const getTokenQuery = gql`
+export const getTokenQuery = gql`
 	query GetToken {
 		getToken {
 			name {
